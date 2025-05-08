@@ -10,6 +10,7 @@ library(CuratedAtlasQueryR)
 library(targets)
 library(crew)
 library(crew.cluster)
+library(duckdb)
 directory = "/vast/scratch/users/shen.m/Census_final_run/split_h5ad_based_on_sample_id/"
 sample_anndata <- dir(glue("{directory}"), full.names = T)
 downloaded_samples_tbl <- read_parquet("/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/census_samples_to_download_groups_MODIFIED.parquet")
@@ -26,7 +27,7 @@ downloaded_samples_tbl <- downloaded_samples_tbl |>
 result_directory = "/vast/projects/cellxgene_curated/metadata_cellxgenedp_Apr_2024"
 
 sample_meta <- tar_read(metadata_dataset_id_common_sample_columns, store = glue("{result_directory}/_targets"))
-sample_tbl = downloaded_samples_tbl |> left_join(get_metadata() |> dplyr::select(dataset_id, contains("norm")) |>
+sample_tbl = downloaded_samples_tbl |> left_join(CuratedAtlasQueryR::get_metadata() |> dplyr::select(dataset_id, contains("norm")) |>
                                                    distinct() |> dplyr::filter(!is.na(x_normalization)) |>
                                                    as_tibble(), by = "dataset_id")
 
@@ -58,25 +59,6 @@ sample_tbl <- sample_tbl |> left_join(sample_meta, by = "dataset_id") |> distinc
                              x_normalization == "normalized" ~ "round negative value to 0"
   ))
 
-
-
-
-# Set the parent directory where the subdirectories will be created
-# parent_dir <- "~/scratch/Census_final_run/"
-# 
-# # Directory names to create
-# dir_names <- paste0("run", 1:25)
-# 
-# # Full paths of the directories
-# full_dir_paths <- file.path(parent_dir, dir_names)
-# 
-# # Create each directory if it does not exist
-# for (dir_path in full_dir_paths) {
-#   if (!dir_exists(dir_path)) {
-#     dir_create(dir_path)
-#   }
-# }
-
 # Run 1000 samples per run. Save log and result in the corresponding store
 
 # setwd(glue("{store}"))
@@ -94,12 +76,12 @@ sample_names <-
   pull(file_name) |> 
   str_replace("/home/users/allstaff/shen.m/scratch", "/vast/scratch/users/shen.m") |> 
   set_names(sliced_sample_tbl |> pull(sample_2))
-tiers = sliced_sample_tbl |> pull(tier)
 functions = sliced_sample_tbl |> pull(method_to_apply)
 # rm(sliced_sample_tbl)
 # gc()
 
-sample_names <- saveRDS("/vast/scratch/users/shen.m/Census_final_run/sample_names_filtered_by_mengyuan_apr_2024.rds")
+sample_names <- saveRDS("/vast/scratch/users/shen.m/cellNexus_run/sample_names_filtered_by_mengyuan_apr_2024.rds")
+functions <- saveRDS("/vast/scratch/users/shen.m/cellNexus_run/functions.rds")
 my_store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/"
 job::job({
   
@@ -118,10 +100,10 @@ job::job({
           workers = 300,
           tasks_max = 20,
           seconds_idle = 30,
-          crashes_error = 5,
+          crashes_error = 10,
           options_cluster = crew.cluster::crew_options_slurm(
-            memory_gigabytes_required = c(40, 70, 80, 90, 200), 
-            cpus_per_task = 2, 
+            memory_gigabytes_required = c(30, 50, 80, 120, 150), 
+            cpus_per_task = c(2, 2, 5, 10, 20), 
             time_minutes = c(60, 60*4, 60*4, 60*24, 60*24),
             verbose = T
           )
@@ -146,29 +128,42 @@ job::job({
     # Cell type harmonisation
     celltype_consensus_constructor(target_input = "sce_transformed",
                                    target_output = "cell_type_concensus_tbl") |>
-
+    
+    # Alive identification
+    remove_dead_scuttle(target_input = "sce_transformed", target_annotation = "cell_type_concensus_tbl",
+                        group_by = "cell_type_unified_ensemble") |>
+    
+    # Doublets identification
+    remove_doublets_scDblFinder(target_input = "sce_transformed") |>
+    
     # Pseudobulk
     calculate_pseudobulk(group_by = "cell_type_unified_ensemble",
                          target_input = "sce_transformed"
     ) |>
-    
+
     # metacell
-    cluster_metacell(target_input = "sce_transformed",  group_by = "cell_type_unified_ensemble") |>
+    cluster_metacell(target_input = "sce_transformed",  group_by = "cell_type_unified_ensemble",
+                     cell_per_metacell = 10) |>
+    
+    # Cell Chat
+    ligand_receptor_cellchat(target_input = "sce_transformed",
+                             group_by = "cell_type_unified_ensemble") |>
     
     print()
   
   
 })
-
+#tar_invalidate(names = metacell_tbl, store = my_store )
 tar_meta(store = my_store) |> filter(!is.na(error)) |>  arrange(desc(time)) |> View()
-
+tar_meta(store = my_store) |> filter(!is.na(error)) |> distinct(name, error)
 tar_meta(starts_with("annotation_tbl_"), store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/") |> 
   filter(!data |> is.na()) |> arrange(desc(time)) |> select(error, name)
 
 # I have to check the input of this NULL target 
 # annotation_tbl_tier_1_ecac957542df0c20
 
-tar_workspace(annotation_tbl_tier_4_a95d2334c8388111, store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/")
+tar_workspace(annotation_tbl_a49b50ee128a1da8, store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/", 
+              script = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk")
 annotation_label_transfer(sce_transformed_tier_4, empty_droplets_tbl = empty_tbl_tier_4, reference_azimuth = "pbmcref", feature_nomenclature = gene_nomenclature)
 
 
@@ -325,6 +320,8 @@ job::job({
 library(arrow)
 library(dplyr)
 library(duckdb)
+library(targets)
+library(cellNexus)
 
 cellNexus:::duckdb_write_parquet = function(data_tbl, output_parquet, compression = "gzip") {
   
@@ -354,7 +351,7 @@ cellNexus:::duckdb_write_parquet = function(data_tbl, output_parquet, compressio
 cell_metadata <- 
   tbl(
     dbConnect(duckdb::duckdb(), dbdir = ":memory:"),
-    sql("SELECT * FROM read_parquet('/vast/scratch/users/shen.m/Census_final_run/cell_metadata.parquet')")
+    sql("SELECT * FROM read_parquet('/vast/scratch/users/shen.m/cellNexus_run/cell_metadata.parquet')")
   ) |>
   mutate(cell_ = paste0(cell_, "___", dataset_id)) |> 
   select(cell_, observation_joinid, contains("cell_type"), dataset_id,  self_reported_ethnicity, tissue, donor_id,  sample_id, is_primary_data, assay)
@@ -373,73 +370,20 @@ cell_annotation = cell_annotation |> mutate(
   monaco_first_labels_fine = ifelse(is.na(monaco_first_labels_fine), "Other", monaco_first_labels_fine),
   azimuth_predicted_celltype_l2=ifelse(is.na(azimuth_predicted_celltype_l2), "Other", azimuth_predicted_celltype_l2))
 
-cell_annotation |> write_parquet_to_parquet("/vast/scratch/users/shen.m/Census_final_run/annotation_tbl_light.parquet")
-
-
-
-# Step 3 - Generate cell_type concensus from Dharmesh cell type concensus script
-data(celltype_unification_maps)
-data(nonimmune_cellxgene)
-
-cell_annotation =
-  tbl(
-    dbConnect(duckdb::duckdb(), dbdir = ":memory:"),
-    sql("SELECT * FROM read_parquet('/vast/scratch/users/shen.m/Census_final_run/annotation_tbl_light.parquet')")
-  )
-
-# unify cell types
-cell_annotation = cell_annotation |>
-  left_join(celltype_unification_maps$azimuth, copy = TRUE) |>
-  left_join(celltype_unification_maps$blueprint, copy = TRUE) |>
-  left_join(celltype_unification_maps$monaco, copy = TRUE) |>
-  left_join(celltype_unification_maps$cellxgene, copy = TRUE) |>
-  mutate(ensemble_joinid = paste(azimuth, blueprint, monaco, cell_type_unified, sep = "_"))
-
-# produce the ensemble map
-df_map = cell_annotation |>
-  count(ensemble_joinid, azimuth, blueprint, monaco, cell_type_unified, name = "NCells") |>
-  as_tibble() |>
-  mutate(
-    cellxgene = if_else(cell_type_unified %in% nonimmune_cellxgene, "non immune", cell_type_unified),
-    data_driven_ensemble = ensemble_annotation(cbind(azimuth, blueprint, monaco), override_celltype = c("non immune", "nkt", "mast")),
-    cell_type_unified_ensemble = ensemble_annotation(cbind(azimuth, blueprint, monaco, cellxgene), method_weights = c(1, 1, 1, 2), override_celltype = c("non immune", "nkt", "mast")),
-    cell_type_unified_ensemble = case_when(
-      cell_type_unified_ensemble == "non immune" & cellxgene == "non immune" ~ cell_type_unified,
-      cell_type_unified_ensemble == "non immune" & cellxgene != "non immune" ~ "other",
-      .default = cell_type_unified_ensemble
-    ),
-    is_immune = !cell_type_unified_ensemble %in% nonimmune_cellxgene
-  ) |>
-  select(
-    ensemble_joinid,
-    data_driven_ensemble,
-    cell_type_unified_ensemble,
-    is_immune
-  )
-
-# cell_type_consensus = tar_read(cell_type_concensus_tbl, store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/") |>
-#   bind_rows() |>
-#   dplyr::rename(cell_ = .cell)
-
-# use map to perform cell type ensemble
-cell_annotation = cell_annotation |>
-  left_join(df_map, by = join_by(ensemble_joinid), copy = TRUE) |> 
-  
-  # Match to how pseudobulk annotations get parsed in HPCell/R/functions preprocessing_output()
-  mutate(cell_type_unified_ensemble = ifelse(cell_type_unified_ensemble |> is.na(), "Unknown", cell_type_unified_ensemble),
-         data_driven_ensemble = ifelese(data_driven_ensemble |> is.na(), "Unknown", data_driven_ensemble),
-         blueprint_first_labels_fine = ifelse(blueprint_first_labels_fine |> is.na(), "Other", blueprint_first_labels_fine),
-         monaco_first_labels_fine = ifelse(monaco_first_labels_fine |> is.na(), "Other", monaco_first_labels_fine),
-         azimuth_predicted_celltype_l2 = ifelse(azimuth_predicted_celltype_l2 | is.na(), "Other", azimuth_predicted_celltype_l2),
-         azimuth = ifelse(azimuth |> is.na(), "Other", azimuth),
-         blueprint = ifelse(blueprint |> is.na(), "Other", blueprint),
-         monaco = ifelse(monaco |> is.na(), "Other", monaco))
-
-cell_annotation |> write_parquet_to_parquet(path = "~/scratch/Census_final_run/cell_annotation_new_substitute_cell_type_na_to_unknown_2.parquet")
-
+cell_annotation |> write_parquet_to_parquet("/vast/scratch/users/shen.m/cellNexus_run/annotation_tbl_light.parquet")
 
 empty_droplet = 
   tar_read(empty_tbl, store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/") |>
+  bind_rows() |>
+  dplyr::rename(cell_ = .cell)
+
+alive_cells = 
+  tar_read(alive_tbl, store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/") |>
+  bind_rows() |>
+  dplyr::rename(cell_ = .cell)
+
+doublet_cells =
+  tar_read(doublet_tbl, store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/") |>
   bind_rows() |>
   dplyr::rename(cell_ = .cell)
 
@@ -457,26 +401,45 @@ metacell =
          metacell_256 = gamma256,
          metacell_512 = gamma512,
          metacell_1024 = gamma1024,
-         metacell_2048 = gamma2048)
-
-
-# This command needs a big memory machine
-cell_metadata |> 
-  left_join(empty_droplet, copy=TRUE) |>  
-  left_join(cell_annotation, copy=TRUE) |>  
-  left_join(metacell, copy=TRUE) |>
-  cellNexus:::duckdb_write_parquet("/vast/scratch/users/shen.m/Census_final_run/cell_annotation.parquet")
+         metacell_2048 = gamma2048,
+         metacell_4096 = gamma4096,
+         metacell_8192 = gamma8192)
 
 # Save cell type concensus tbl from HPCell output to disk
-cell_type_concensus_tbl = tar_read(cell_type_concensus_tbl, store = my_store)
-cell_type_concensus_tbl = cell_type_concensus_tbl |> bind_rows()
-cell_type_concensus_tbl |> mutate(cell_type_unified_ensemble = 
+cell_type_concensus_tbl = tar_read(cell_type_concensus_tbl, store = "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk/") |>  
+  bind_rows() |> 
+  dplyr::rename(cell_ = .cell)
+
+cell_type_concensus_tbl = cell_type_concensus_tbl |> mutate(cell_type_unified_ensemble = 
                                     ifelse(is.na(cell_type_unified_ensemble),
                                            "Unknown",
-                                           cell_type_unified_ensemble))
-cell_type_concensus_tbl |> arrow::write_parquet("~/scratch/Census_final_run/cell_type_concensus_tbl_from_hpcell.parquet")
+                                           cell_type_unified_ensemble)) 
+cell_type_concensus_tbl |> arrow::write_parquet("/vast/scratch/users/shen.m/cellNexus_run/cell_type_concensus_tbl_from_hpcell.parquet")
 
+# This command needs a big memory machine
+cell_metadata_joined = cell_metadata |> 
+  left_join(empty_droplet, copy=TRUE) |>  
+  left_join(cell_type_concensus_tbl, copy=TRUE) |>
+  #left_join(cell_annotation, copy=TRUE) |>  
+  left_join(alive_cells, copy=TRUE) |> 
+  left_join(doublet_cells, copy=TRUE) |>
+  left_join(metacell, copy=TRUE)
 
+cell_metadata_joined |> filter(is.na(blueprint_first_labels_fine))
+
+cell_metadata_joined2 = cell_metadata_joined |> as_tibble() |> 
+  # Match to how pseudobulk annotations get parsed in HPCell/R/functions preprocessing_output()
+  mutate(cell_type_unified_ensemble = ifelse(cell_type_unified_ensemble |> is.na(), "Unknown", cell_type_unified_ensemble)) |>
+  mutate(data_driven_ensemble = ifelse(data_driven_ensemble |> is.na(), "Unknown", data_driven_ensemble))   |>
+  mutate(blueprint_first_labels_fine = ifelse(blueprint_first_labels_fine |> is.na(), "Other", blueprint_first_labels_fine)) |> 
+  mutate(monaco_first_labels_fine = ifelse(monaco_first_labels_fine |> is.na(), "Other", monaco_first_labels_fine)) |> 
+  mutate(azimuth_predicted_celltype_l2 = ifelse(azimuth_predicted_celltype_l2 |> is.na(), "Other", azimuth_predicted_celltype_l2)) |> 
+  mutate(azimuth = ifelse(azimuth |> is.na(), "Other", azimuth)) |> 
+  mutate(blueprint = ifelse(blueprint |> is.na(), "Other", blueprint)) |> 
+  mutate(monaco = ifelse(monaco |> is.na(), "Other", monaco))
+
+cell_metadata_joined2 |>
+  arrow::write_parquet("/vast/scratch/users/shen.m/cellNexus_run/cell_annotation.parquet")
 
 write_parquet_to_parquet = function(data_tbl, output_parquet, compression = "gzip") {
   

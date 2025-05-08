@@ -52,6 +52,7 @@ job::job({
       dbplyr::window_order(cell_count) |>  # Ensure dataset_id order
       mutate(sample_index = row_number()) |>  # Create sequential index within each dataset
       mutate(sample_chunk = (sample_index - 1) %/% 1000 + 1) |>  # Assign chunks (up to 1000 samples per chunk)
+      mutate(sample_pseudobulk_chunk = (sample_index - 1) %/% 250 + 1) |> # Max combination of dataset_id, sample_pseudobulk_chunk and file_id_pseudobulk up to 10000
       mutate(cell_chunk = cumsum(cell_count) %/% 100000 + 1) |> # max 20K cells per sample
       ungroup() 
     
@@ -66,13 +67,13 @@ job::job({
                                                  "Unknown",
                                                  cell_type_unified_ensemble)) |>
       
-      left_join(sample_chunk_df |> select(dataset_id, sample_chunk, cell_chunk, sample_id), copy=TRUE) |> 
+      left_join(sample_chunk_df |> select(dataset_id, sample_chunk, sample_pseudobulk_chunk, cell_chunk, sample_id), copy=TRUE) |> 
       # # Make sure I cover cell type even if consensus of harmonisation is not present (it should be the vast minority)
       # mutate(temp_cell_type_label_for_file_id = if_else(cell_type_unified_ensemble |> is.na(), cell_type, cell_type_unified)) |> 
       # mutate(temp_cell_type_label_for_file_id = if_else(temp_cell_type_label_for_file_id |> is.na(), cell_type, temp_cell_type_label_for_file_id)) |> 
       # 
       # Define chunks
-      group_by(dataset_id, sample_chunk, cell_chunk, cell_type_unified_ensemble, sample_id) |>
+      group_by(dataset_id, sample_chunk, cell_chunk, sample_pseudobulk_chunk, cell_type_unified_ensemble, sample_id) |>
       summarise(cell_count = n(), .groups = "drop") |>
       group_by(dataset_id, sample_chunk, cell_chunk, cell_type_unified_ensemble) |>
       dbplyr::window_order(desc(cell_count)) |>
@@ -88,7 +89,11 @@ job::job({
       ) |> 
       
       # seudobulk file id
-      mutate(file_id_cellNexus_pseudobulk = file_id_cellNexus_single_cell)
+      #mutate(file_id_cellNexus_pseudobulk = paste0(dataset_id, ".h5ad"))
+      mutate(file_id_cellNexus_pseudobulk = 
+               glue::glue("{dataset_id}___{sample_pseudobulk_chunk}") |> 
+               sapply(digest::digest) |>
+               paste0("___", chunk, ".h5ad"))
     
   }
   
@@ -136,7 +141,7 @@ job::job({
   
   dbExecute(con, "
   CREATE VIEW file_id_cellNexus_single_cell AS
-  SELECT dataset_id, sample_chunk, cell_chunk, cell_type_unified_ensemble, sample_id, file_id_cellNexus_single_cell, file_id_cellNexus_pseudobulk
+  SELECT dataset_id, sample_chunk, cell_chunk, sample_pseudobulk_chunk, cell_type_unified_ensemble, sample_id, file_id_cellNexus_single_cell, file_id_cellNexus_pseudobulk
   FROM read_parquet('/vast/scratch/users/shen.m/cellNexus_run/file_id_cellNexus_single_cell.parquet')
 ")
   
@@ -173,7 +178,7 @@ job::job({
         
       WHERE cell_metadata.dataset_id NOT IN ('99950e99-2758-41d2-b2c9-643edcdf6d82', '9fcb0b73-c734-40a5-be9c-ace7eea401c9')  -- (THESE TWO DATASETS DOESNT contain meaningful data - no observation_joinid etc), thus was excluded in the final metadata.
         
-  ) TO '/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_10_mengyuan.parquet'
+  ) TO '/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_11_mengyuan.parquet'
   (FORMAT PARQUET, COMPRESSION 'gzip');
 "
   
@@ -191,7 +196,7 @@ job::job({
 cell_metadata = 
   tbl(
     dbConnect(duckdb::duckdb(), dbdir = ":memory:"),
-    sql("SELECT * FROM read_parquet('/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_10_mengyuan.parquet')")
+    sql("SELECT * FROM read_parquet('/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_11_mengyuan.parquet')")
   )
 
 library(targets)
@@ -698,12 +703,12 @@ tar_script({
     
     # The input DO NOT DELETE
     tar_target(my_store, "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk", deployment = "main"),
-    tar_target(cache_directory, "/vast/scratch/users/shen.m/cellNexus/cellxgene/24-02-2025", deployment = "main"),
+    tar_target(cache_directory, "/vast/scratch/users/shen.m/cellNexus/cellxgene/01-05-2025", deployment = "main"),
     # This is the store for retrieving missing cells between cellnexus metadata and sce. A different store as it was done separately
     #tar_target(cache_directory, "/vast/scratch/users/shen.m/debug2/cellxgene/19-12-2024", deployment = "main"),
     tar_target(
       cell_metadata,
-      "/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_10_mengyuan.parquet", 
+      "/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_11_mengyuan.parquet", 
       packages = c( "arrow","dplyr","duckdb")
       
     ),
@@ -818,17 +823,17 @@ missing_cells <- missing_cells_tbl |> pull(cell_id)
 cell_metadata |> filter(!cell_id %in% missing_cells) |> 
   
   # This method of save parquet to parquet is faster 
-  cellNexus:::duckdb_write_parquet(path = "/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_10_filtered_missing_cells_mengyuan.parquet")
+  cellNexus:::duckdb_write_parquet(path = "/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_11_filtered_missing_cells_mengyuan.parquet")
 
 
 # Copy files from scratch to vast project
-files_to_copy <- c("annotation_tbl_light.parquet", "cell_annotation_new_substitute_cell_type_na_to_unknown.parquet", "cell_annotation_new.parquet",
-                   "cell_annotation.parquet", "cell_metadata_cell_type_consensus_v1_0_6_mengyuan.parquet",
-                   "cell_metadata_cell_type_consensus_v1_0_8_mengyuan.parquet",
+files_to_copy <- c("annotation_tbl_light.parquet",
+                   "cell_annotation.parquet", "cell_metadata_cell_type_consensus_v1_0_11_mengyuan.parquet",
+                   "cell_metadata_cell_type_consensus_v1_0_11_filtered_missing_cells_mengyuan.parquet",
                    "cell_metadata.parquet",
                    "file_id_cellNexus_single_cell.parquet")
 
-source_dir <- "/vast/scratch/users/shen.m/Census_final_run/"
+source_dir <- "/vast/scratch/users/shen.m/cellNexus_run/"
 destination_dir <- "/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/"
 
 # Copy each file

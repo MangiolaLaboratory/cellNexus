@@ -20,6 +20,8 @@
 # function(file_id) {
 #   
 # }
+
+# Need to run step 3 before step 4
 library(targets)
 library(tidyverse)
 library(cellNexus)
@@ -53,7 +55,8 @@ tar_script({
           seconds_idle = 30,
           crashes_error = 10,
           options_cluster = crew_options_slurm(
-            memory_gigabytes_required = c(10, 20, 40, 80, 160), 
+            memory_gigabytes_required = c(40, 60, 80, 120, 160), 
+            #memory_gigabytes_required = c(200, 300, 350, 400, 500), 
             cpus_per_task = c(2, 2, 5, 10, 20), 
             time_minutes = c(30, 30, 30, 60*4, 60*24),
             verbose = T
@@ -98,7 +101,8 @@ tar_script({
           crashes_error = 5, 
           seconds_idle = 30,
           options_cluster = crew_options_slurm(
-            memory_gigabytes_required = c(40, 80, 160, 240), 
+            memory_gigabytes_required = c(40, 80, 100, 150, 240), 
+            #memory_gigabytes_required = c(200, 250, 350, 450), 
             cpus_per_task = c(2), 
             time_minutes = c(60*24),
             verbose = T
@@ -146,7 +150,7 @@ create_chunks_for_reading_and_saving = function(dataset_id_sample_id, cell_metad
         dbConnect(duckdb::duckdb(), dbdir = ":memory:"),
         sql(glue("SELECT * FROM read_parquet('{cell_metadata}')"))
       )   |> 
-        distinct(sample_id, sample_chunk, cell_chunk, 
+        distinct(sample_id, sample_pseudobulk_chunk, cell_chunk, 
                  cell_type_unified_ensemble,
                  file_id_cellNexus_pseudobulk) |> 
         as_tibble(), 
@@ -166,7 +170,8 @@ cbind_sce_by_dataset_id = function(target_name_grouped_by_dataset_id,
       dbConnect(duckdb::duckdb(), dbdir = ":memory:"),
       sql(glue("SELECT * FROM read_parquet('{file_id_db_file}')"))
     ) |> 
-    filter(cell_type_unified_ensemble == my_cell_type) |>
+    #dplyr::filter(dataset_id == my_dataset_id) |>
+    dplyr::filter(cell_type_unified_ensemble %in% my_cell_type) |>
     select(sample_id, dataset_id, cell_type_unified_ensemble,
            file_id_cellNexus_pseudobulk) 
 
@@ -269,6 +274,9 @@ save_anndata = function(dataset_id_sce, cache_directory){
   .y = dataset_id_sce |> pull(file_id_cellNexus_pseudobulk) |> _[[1]] |> str_remove("\\.h5ad")
   
   .x |> assays() |> names() = "counts"
+  
+  # Check if there is a memory issue 
+  assays(.x) <- assays(.x) |> map(DelayedArray::realize)
 
   # Save the experiment data to the specified counts cache directory
   .x |> save_experiment_data(glue("{cache_directory}/{.y}"))
@@ -284,10 +292,10 @@ list(
   
   # The input DO NOT DELETE
   tar_target(my_store, "/vast/scratch/users/shen.m/Census_final_run/target_store_for_pseudobulk", deployment = "main"),
-  tar_target(cache_directory, "/vast/scratch/users/shen.m/cellNexus/cellxgene/24-02-2025/pseudobulk", deployment = "main"),
+  tar_target(cache_directory, "/vast/scratch/users/shen.m/cellNexus/cellxgene/01-05-2025/pseudobulk", deployment = "main"),
   tar_target(
     cell_metadata,
-    "/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_10_mengyuan.parquet", 
+    "/vast/scratch/users/shen.m/cellNexus_run/cell_metadata_cell_type_consensus_v1_0_11_mengyuan.parquet", 
     packages = c( "arrow","dplyr","duckdb")
     
   ),
@@ -315,9 +323,14 @@ list(
     create_chunks_for_reading_and_saving(dataset_id_sample_id, cell_metadata) |> 
       
       # # FOR TESTING PURPOSE ONLY
-      # filter(file_id_cellNexus_pseudobulk == "20cf358f94b16b5cdba250ef3ffeee73___1.h5ad") |>
+      # filter(file_id_cellNexus_pseudobulk %in% c("9722bedfd71d069fe3665b4ae03fbeb9___2.h5ad",
+      #                                            "2996bb4263f9fb301d8460f4f0450848___2.h5ad")) |>
 
-      group_by(dataset_id, sample_chunk, cell_chunk, file_id_cellNexus_pseudobulk) |>
+      group_by(dataset_id,
+               sample_pseudobulk_chunk, 
+               # When using strategy file_id = dataset_id, dont group by cell_chunk as it will result in returning more than one SCEs for the same dataset_id
+               #cell_chunk, 
+               file_id_cellNexus_pseudobulk) |>
       tar_group(),
     iteration = "group",
     resources = tar_resources(
@@ -360,3 +373,5 @@ job::job({
   )
   
 })
+
+# Then run 5_unify_and_update_sce_metadata.R

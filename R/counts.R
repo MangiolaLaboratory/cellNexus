@@ -636,18 +636,15 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
     # Process specific to Pseudobulk
     # remove cell-level annotations
     cell_level_anno <- c("cell_id", "cell_type", "file_id_cellNexus_single_cell",
-                         "cell_annotation_blueprint_singler",
-                         "cell_annotation_monaco_singler", 
-                         "cell_annotation_azimuth_l2",
                          "cell_type_ontology_term_id",
                          "observation_joinid", "ensemble_joinid",
                          "nFeature_RNA", "data_driven_ensemble", "cell_type_unified",
-                         "empty_droplet", "observation_originalid")
+                         "empty_droplet", "observation_originalid", "alive", "scDblFinder.class")
     
     new_coldata <- df |>
       select(-dplyr::all_of(intersect(names(df), cell_level_anno))) |>
-      # Remove metacell annotations in pseudobulk
-      select(-contains("metacell")) |> 
+      # Remove metacell and single-cell level annotations in pseudobulk
+      select(-contains("metacell"), -matches("azimuth|monaco|blueprint|subsets_|high_")) |> 
       distinct() |>
       mutate(
         sample_identifier = glue("{sample_id}___{cell_type_unified_ensemble}"),

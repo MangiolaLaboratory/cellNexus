@@ -261,7 +261,11 @@ test_that("get_single_cell_experiment() expect to get local counts only", {
 test_that("get_pseudobulk() syncs appropriate files", {
   temp <- tempfile()
   id <- "4329386e014727c59bcc66ed974e654c___1.h5ad"
-  meta <- get_metadata(cache_directory = temp) |> filter(file_id_cellNexus_pseudobulk == id)
+  meta <- get_metadata(cache_directory = temp) |> 
+    filter(empty_droplet == "FALSE",
+           alive == "TRUE",
+           scDblFinder.class !="doublet",
+           file_id_cellNexus_pseudobulk == id)
   
   # The remote dataset should have many genes
   sme <- get_pseudobulk(meta, cache_directory = temp)

@@ -11,3 +11,5 @@ split_files.makeflow
 inst/doc
 /doc/
 /Meta/
+# Internal docs
+INTERNAL_*

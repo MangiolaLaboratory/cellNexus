@@ -97,7 +97,9 @@ Imports:
     checkmate,
     stringfish,
     tidySingleCellExperiment,
-    tidybulk
+    tidybulk,
+    shiny,
+    shinyWidgets
 Suggests:
     zellkonverter,
     rmarkdown,
@@ -125,7 +127,8 @@ biocViews:
     QualityControl,
     Sequencing,
     Transcription,
-    Transcriptomics
+    Transcriptomics,
+    ShinyApps
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 LazyDataCompression: xz
@@ -140,6 +143,7 @@ Collate:
     'data.R'
     'dev.R'
     'import_metadata_and_counts.R'
+    'interface_app.R'
     'metadata.R'
     'seurat.R'
     'unharmonised.R'

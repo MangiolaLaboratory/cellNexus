@@ -433,6 +433,41 @@ test_that("get_metacell() syncs appropriate files", {
   
 })
 
+test_that("get_metadata handles use_split_files correctly", {
+  cache = tempfile()
+  meta_single <- get_metadata(use_split_files = FALSE)
+  expect_s3_class(meta_single, "tbl_dbi") 
+  expect_gt(ncol(meta_single), 0)
+  
+  meta_split <- get_metadata(use_cache = FALSE, 
+                             use_split_files = TRUE)
+  expect_s3_class(meta_split, "tbl_dbi")
+  expect_gt(ncol(meta_split), 0)
+  
+  expect_gt(ncol(meta_split), ncol(meta_single))
+})
+
+test_that("join_census_table() returns an unique column",{
+  cache = tempfile()
+  col <- "cell_type"
+  meta <- get_metadata(use_split_files = T) |> head() |> 
+    join_census_table()
+  expect_true(col %in% colnames(meta))
+})
+
+test_that("join_metacell_table() returns an unique column",{
+  cache = tempfile()
+  meta <- get_metadata(use_split_files = T) |> head() |> 
+    join_metacell_table()
+  cols <- colnames(meta)
+  
+  # Detect metacell-related columns
+  metacell_cols <- cols[grepl("metacell", cols, ignore.case = TRUE)] 
+  
+  # Expect that metacell columns exist
+  expect_true(length(metacell_cols) > 0)
+})
+
 # unharmonised_data is not implemented yet
 # test_that("get_unharmonised_dataset works with one ID", {
 #     dataset_id = "838ea006-2369-4e2c-b426-b2a744a2b02b"

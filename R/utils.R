@@ -131,6 +131,92 @@ read_parquet <- function(conn, path, filename_column=FALSE){
     tbl(conn, from_clause)
 }
 
+#' Create indexed table from parquet file
+#' @param conn Database connection
+#' @param path Path to parquet file
+#' @param index_cols Columns to create index on
+#' @param table_name Name for the table (default: filename without extension)
+#' @param filename_column Whether to include filename column
+#' @return Table name (invisibly)
+#' @keywords internal
+#' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
+add_index_parquet <- function(conn, path, index_cols, table_name = NULL, filename_column = FALSE) {
+  if (inherits(conn, "tbl_sql")) {
+    conn <- conn$src$con  # extract underlying DBIConnection
+  }
+  
+  if (is.null(table_name)) {
+    table_name <- tools::file_path_sans_ext(basename(path))
+  }
+  # Create table from parquet
+  query <- glue_sql("
+    CREATE TABLE {`table_name`} AS
+    SELECT * 
+    FROM read_parquet([{`path`*}], union_by_name=true, filename={filename_column})
+  ", .con = conn)
+  dbExecute(conn, query)
+  
+  # Add index
+  index_name <- paste0(table_name, "_idx_", paste(index_cols, collapse = "_"))
+  dbExecute(conn, glue_sql("
+    CREATE INDEX {`index_name`} ON {`table_name`} ({`index_cols`*})
+  ", .con = conn))
+  
+  message(sprintf("Indexed table '%s' created from parquet with index on %s", 
+                  table_name, paste(index_cols, collapse = ", ")))
+  
+  invisible(table_name)
+}
+
+#' Join multiple parquet files with indexing
+#' @param conn Database connection
+#' @param path Vector of parquet file paths
+#' @param join_keys Columns to join on
+#' @param filename_column Whether to include filename column
+#' @return Lazy SQL table
+#' @keywords internal
+#' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
+read_and_join_parquets <- function(conn, path, join_keys, filename_column = FALSE) {
+  
+  # Read one parquet directly
+  if (length(path) == 1) return(read_parquet(conn, path, filename_column = filename_column))
+  
+  # Create database index for more than one parquet
+  if (length(path) >= 2) {
+    # Derive table names
+    table_names <- tools::file_path_sans_ext(basename(path))
+    
+    # Materialize + index each parquet
+    purrr::walk2(path, table_names, ~{
+      add_index_parquet(conn, .x, index_cols = join_keys, table_name = .y, filename_column = filename_column)
+    })
+    
+    # Handle version dot in parquet names for DuckDB
+    quoted_names <- DBI::dbQuoteIdentifier(conn, table_names)
+    
+    # Join by index
+    sql_join <- purrr::reduce(
+      quoted_names[-1],
+      ~ glue("{.x}\nLEFT JOIN {.y} USING ({paste(join_keys, collapse = ', ')})"),
+      .init = glue("SELECT * FROM {quoted_names[1]}")
+    )
+    
+    tbl(conn, sql(sql_join))
+  }
+}
+
+#' Get the connection from a tbl_sql object
+#' @param tbl_or_conn A tbl_sql object or a connection object
+#' @return A connection object
+#' @keywords internal
+#' @noRd
+get_conn <- function(tbl_or_conn) {
+  if (inherits(tbl_or_conn, "tbl_sql")) {
+    return(tbl_or_conn$src$con)
+  }
+  tbl_or_conn
+}
+
 #' Deletes specific counts and metadata from cache
 #' @importFrom purrr map
 #' @importFrom dplyr filter distinct pull collect
@@ -304,5 +390,35 @@ sync_metadata_assay_files <- function(data,
         )
       })
   }
+}
+
+#' Keep high-quality cells based on QC columns
+#'
+#' @param data A data frame or tibble containing single-cell metadata.
+#' @param empty_droplet_col A string specifying the column name 
+#'   that indicates empty droplets (default: `"empty_droplet"`). 
+#'   Expected logical vector
+#' @param alive_col A string specifying the column name 
+#'   that indicates whether cells are alive (default: `"alive"`). 
+#'   Expected logical vector
+#' @param doublet_col A string specifying the column name 
+#'   that indicates doublets (default: `"scDblFinder.class"`). 
+#'   Expected character vector: `"doublet"` and/or `"singlet"` and/or `"unknown"`.
+#'
+#' @return A filtered data frame containing only cells that pass all QC checks.
+#' @export
+#' @importFrom rlang .data
+#' @importFrom dplyr filter
+#' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
+keep_quality_cells <- function(data,
+                               empty_droplet_col = "empty_droplet",
+                               alive_col = "alive",
+                               doublet_col = "scDblFinder.class") {
+  data |>
+    filter(
+      .data[[empty_droplet_col]] == FALSE,
+      .data[[alive_col]] == TRUE,
+      .data[[doublet_col]] != "doublet"
+    )
 }
 

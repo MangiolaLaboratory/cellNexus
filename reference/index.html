@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.14</span>
       </span>
     </div>
 
@@ -73,6 +73,10 @@
         </td>
         <td><p>Create a Shiny app that allows users to generate filtering &amp; retreival code for cellNexus</p></td>
       </tr><tr><td>
+          <p><code><a href="create_joined_metadata_table.html">create_joined_metadata_table()</a></code> </p>
+        </td>
+        <td><p>Create a joined metadata table from parquet files This function reads metadata parquet files into DuckDB and joins them into a single lazy table. It is designed to handle split metadata files, specifically <code>sample_metadata</code> and <code>cellnexus_cell_metadata</code>. If both of these files are present, they will be joined on <code>sample_id</code> and <code>dataset_id</code>. Otherwise, all provided parquet files are read and returned without joining.</p></td>
+      </tr><tr><td>
           <p><code><a href="get_SingleCellExperiment.html">get_SingleCellExperiment()</a></code> </p>
         </td>
         <td><p>Gets a SingleCellExperiment from curated metadata</p></td>
@@ -116,6 +120,18 @@
           <p><code><a href="import_one_sce.html">import_one_sce()</a></code> </p>
         </td>
         <td><p>Import and process metadata and counts for a SingleCellExperiment object</p></td>
+      </tr><tr><td>
+          <p><code><a href="join_census_table.html">join_census_table()</a></code> </p>
+        </td>
+        <td><p>Join Census metadata to an existing data frame</p></td>
+      </tr><tr><td>
+          <p><code><a href="join_metacell_table.html">join_metacell_table()</a></code> </p>
+        </td>
+        <td><p>Join metacell metadata to an existing data frame</p></td>
+      </tr><tr><td>
+          <p><code><a href="keep_quality_cells.html">keep_quality_cells()</a></code> </p>
+        </td>
+        <td><p>Keep high-quality cells based on QC columns</p></td>
       </tr><tr><td>
           <p><code><a href="organize_inputs.html">organize_inputs()</a></code> </p>
         </td>

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.14</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <h1 data-toc-skip>cellNexus</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/vignettes/Introduction.Rmd" class="external-link"><code>vignettes/Introduction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/fix-56/vignettes/Introduction.Rmd" class="external-link"><code>vignettes/Introduction.Rmd</code></a></small>
       <div class="hidden name"><code>Introduction.Rmd</code></div>
 
     </div>
@@ -129,9 +129,9 @@ so a network connection is required for most functionality.</p>
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_metadata.html">get_metadata</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">metadata</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 1.96 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metadata.1.2.13.parquet to /tmp/RtmpASXkjz/metadata.1.2.13.parquet</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metadata.1.2.13.parquet to /tmp/RtmpZY7anE/metadata.1.2.13.parquet</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 94]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.3.2 [unknown@Linux 6.11.0-1018-azure:R 4.5.1/:memory:]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.5.1/:memory:]</span></span></span>
 <span><span class="co">#&gt;    cell_id                     dataset_id observation_joinid sample_id cell_type</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 10X383_6:CCTCATGGTACACGCC_… 0ee5ae70-… *|Vt;4ATOI         e732d3bf… leukocyte</span></span>
@@ -163,7 +163,7 @@ queries.</p>
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">tissue</span>, <span class="va">cell_type_unified_ensemble</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.3.2 [unknown@Linux 6.11.0-1018-azure:R 4.5.1/:memory:]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.5.1/:memory:]</span></span></span>
 <span><span class="co">#&gt;    tissue                      cell_type_unified_ensemble</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> hypothalamus                progenitor                </span></span>
@@ -180,17 +180,15 @@ queries.</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="quality-control">Quality Control<a class="anchor" aria-label="anchor" href="#quality-control"></a>
+<h3 id="quality-control">Quality control<a class="anchor" aria-label="anchor" href="#quality-control"></a>
 </h3>
 <p>cellNexus metadata applies standardised quality control to filter out
 empty droplets, dead or damaged cells, doublets, and samples with low
 gene counts.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">=</span> <span class="va">metadata</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">empty_droplet</span> <span class="op">==</span> <span class="cn">FALSE</span>,</span>
-<span>         <span class="va">alive</span> <span class="op">==</span> <span class="cn">TRUE</span>,</span>
-<span>         <span class="va">scDblFinder.class</span> <span class="op">!=</span> <span class="st">"doublet"</span>,</span>
-<span>         <span class="va">feature_count</span> <span class="op">&gt;=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">feature_count</span> <span class="op">&gt;=</span> <span class="fl">5000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/keep_quality_cells.html">keep_quality_cells</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="download-single-cell-rna-sequencing-counts">Download single-cell RNA sequencing counts<a class="anchor" aria-label="anchor" href="#download-single-cell-rna-sequencing-counts"></a>
@@ -580,7 +578,7 @@ ENSG00000085265 (FCN1) across all tissues</p>
 <p><img src="../reference/figures/FCN1_tissue_plot.png" width="1200"></p>
 </div>
 <div class="section level3">
-<h3 id="integrate-cloud-metadata-with-local-metadata">Integrate Cloud Metadata with Local Metadata<a class="anchor" aria-label="anchor" href="#integrate-cloud-metadata-with-local-metadata"></a>
+<h3 id="integrate-cloud-metadata-with-local-metadata">Integrate cloud metadata with local metadata<a class="anchor" aria-label="anchor" href="#integrate-cloud-metadata-with-local-metadata"></a>
 </h3>
 <p>CellNexus not only enables users to query our metadata but also
 allows integration with your local metadata. Additionally, users can
@@ -626,7 +624,7 @@ metadata.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/21-08-2025/counts/68aea852584d77f78e5c91204558316d___1.h5ad to /tmp/RtmpASXkjz/cellxgene/21-08-2025//counts/68aea852584d77f78e5c91204558316d___1.h5ad</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/21-08-2025/counts/68aea852584d77f78e5c91204558316d___1.h5ad to /tmp/RtmpZY7anE/cellxgene/21-08-2025//counts/68aea852584d77f78e5c91204558316d___1.h5ad</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> cellNexus says: Not all genes completely overlap across the provided objects.Counts are generated by genes intersection.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Compiling Experiment.</span></span>
@@ -769,7 +767,7 @@ groups.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_3.5.2    cellNexus_1.6.14</span></span>
+<span><span class="co">#&gt; [1] ggplot2_4.0.0    cellNexus_1.7.14</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;   [1] RcppAnnoy_0.0.22            splines_4.5.1              </span></span>
@@ -778,7 +776,7 @@ groups.</p>
 <span><span class="co">#&gt;   [7] fastDummies_1.7.5           lifecycle_1.0.4            </span></span>
 <span><span class="co">#&gt;   [9] rprojroot_2.1.1             globals_0.18.0             </span></span>
 <span><span class="co">#&gt;  [11] lattice_0.22-7              MASS_7.3-65                </span></span>
-<span><span class="co">#&gt;  [13] backports_1.5.0             magrittr_2.0.3             </span></span>
+<span><span class="co">#&gt;  [13] backports_1.5.0             magrittr_2.0.4             </span></span>
 <span><span class="co">#&gt;  [15] plotly_4.11.0               sass_0.4.10                </span></span>
 <span><span class="co">#&gt;  [17] rmarkdown_2.29              jquerylib_0.1.4            </span></span>
 <span><span class="co">#&gt;  [19] yaml_2.3.10                 httpuv_1.6.16              </span></span>
@@ -788,7 +786,7 @@ groups.</p>
 <span><span class="co">#&gt;  [27] cowplot_1.2.0               pbapply_1.7-4              </span></span>
 <span><span class="co">#&gt;  [29] DBI_1.2.3                   RColorBrewer_1.1-3         </span></span>
 <span><span class="co">#&gt;  [31] abind_1.4-8                 Rtsne_0.17                 </span></span>
-<span><span class="co">#&gt;  [33] GenomicRanges_1.61.1        purrr_1.1.0                </span></span>
+<span><span class="co">#&gt;  [33] GenomicRanges_1.61.2        purrr_1.1.0                </span></span>
 <span><span class="co">#&gt;  [35] BiocGenerics_0.55.1         IRanges_2.43.0             </span></span>
 <span><span class="co">#&gt;  [37] S4Vectors_0.47.0            ggrepel_0.9.6              </span></span>
 <span><span class="co">#&gt;  [39] irlba_2.3.5.1               listenv_0.9.1              </span></span>
@@ -800,10 +798,10 @@ groups.</p>
 <span><span class="co">#&gt;  [51] farver_2.1.2                shinyWidgets_0.9.0         </span></span>
 <span><span class="co">#&gt;  [53] matrixStats_1.5.0           stats4_4.5.1               </span></span>
 <span><span class="co">#&gt;  [55] spatstat.explore_3.5-2      Seqinfo_0.99.2             </span></span>
-<span><span class="co">#&gt;  [57] duckdb_1.3.2                jsonlite_2.0.0             </span></span>
+<span><span class="co">#&gt;  [57] duckdb_1.3.3                jsonlite_2.0.0             </span></span>
 <span><span class="co">#&gt;  [59] progressr_0.15.1            ggridges_0.5.7             </span></span>
 <span><span class="co">#&gt;  [61] survival_3.8-3              systemfonts_1.2.3          </span></span>
-<span><span class="co">#&gt;  [63] tools_4.5.1                 ragg_1.4.0                 </span></span>
+<span><span class="co">#&gt;  [63] tools_4.5.1                 ragg_1.5.0                 </span></span>
 <span><span class="co">#&gt;  [65] ica_1.0-3                   Rcpp_1.1.0                 </span></span>
 <span><span class="co">#&gt;  [67] glue_1.8.0                  gridExtra_2.3              </span></span>
 <span><span class="co">#&gt;  [69] SparseArray_1.9.1           xfun_0.53                  </span></span>
@@ -812,7 +810,7 @@ groups.</p>
 <span><span class="co">#&gt;  [75] fastmap_1.2.0               basilisk_1.21.5            </span></span>
 <span><span class="co">#&gt;  [77] rhdf5filters_1.21.0         digest_0.6.37              </span></span>
 <span><span class="co">#&gt;  [79] R6_2.6.1                    mime_0.13                  </span></span>
-<span><span class="co">#&gt;  [81] textshaping_1.0.1           scattermore_1.2            </span></span>
+<span><span class="co">#&gt;  [81] textshaping_1.0.3           scattermore_1.2            </span></span>
 <span><span class="co">#&gt;  [83] tensor_1.5.1                spatstat.data_3.1-8        </span></span>
 <span><span class="co">#&gt;  [85] h5mread_1.1.1               utf8_1.2.6                 </span></span>
 <span><span class="co">#&gt;  [87] tidyr_1.3.1                 generics_0.1.4             </span></span>
@@ -820,36 +818,37 @@ groups.</p>
 <span><span class="co">#&gt;  [91] htmlwidgets_1.6.4           S4Arrays_1.9.1             </span></span>
 <span><span class="co">#&gt;  [93] uwot_0.2.3                  pkgconfig_2.0.3            </span></span>
 <span><span class="co">#&gt;  [95] gtable_0.3.6                blob_1.2.4                 </span></span>
-<span><span class="co">#&gt;  [97] lmtest_0.9-40               SingleCellExperiment_1.31.1</span></span>
-<span><span class="co">#&gt;  [99] XVector_0.49.0              htmltools_0.5.8.1          </span></span>
-<span><span class="co">#&gt; [101] dotCall64_1.2               SeuratObject_5.2.0         </span></span>
-<span><span class="co">#&gt; [103] scales_1.4.0                Biobase_2.69.0             </span></span>
-<span><span class="co">#&gt; [105] png_0.1-8                   spatstat.univar_3.1-4      </span></span>
-<span><span class="co">#&gt; [107] knitr_1.50                  reshape2_1.4.4             </span></span>
-<span><span class="co">#&gt; [109] checkmate_2.3.3             nlme_3.1-168               </span></span>
-<span><span class="co">#&gt; [111] curl_7.0.0                  cachem_1.1.0               </span></span>
-<span><span class="co">#&gt; [113] zoo_1.8-14                  rhdf5_2.53.4               </span></span>
-<span><span class="co">#&gt; [115] stringr_1.5.1               KernSmooth_2.23-26         </span></span>
-<span><span class="co">#&gt; [117] parallel_4.5.1              miniUI_0.1.2               </span></span>
-<span><span class="co">#&gt; [119] zellkonverter_1.19.2        arrow_21.0.0.1             </span></span>
-<span><span class="co">#&gt; [121] desc_1.4.3                  pillar_1.11.0              </span></span>
-<span><span class="co">#&gt; [123] grid_4.5.1                  vctrs_0.6.5                </span></span>
-<span><span class="co">#&gt; [125] RANN_2.6.2                  promises_1.3.3             </span></span>
-<span><span class="co">#&gt; [127] dbplyr_2.5.0                xtable_1.8-4               </span></span>
-<span><span class="co">#&gt; [129] cluster_2.1.8.1             evaluate_1.0.5             </span></span>
-<span><span class="co">#&gt; [131] cli_3.6.5                   compiler_4.5.1             </span></span>
-<span><span class="co">#&gt; [133] rlang_1.1.6                 crayon_1.5.3               </span></span>
-<span><span class="co">#&gt; [135] future.apply_1.20.0         plyr_1.8.9                 </span></span>
-<span><span class="co">#&gt; [137] fs_1.6.6                    stringi_1.8.7              </span></span>
-<span><span class="co">#&gt; [139] viridisLite_0.4.2           deldir_2.0-4               </span></span>
-<span><span class="co">#&gt; [141] assertthat_0.2.1            lazyeval_0.2.2             </span></span>
-<span><span class="co">#&gt; [143] spatstat.geom_3.5-0         Matrix_1.7-4               </span></span>
-<span><span class="co">#&gt; [145] dir.expiry_1.17.0           RcppHNSW_0.6.0             </span></span>
-<span><span class="co">#&gt; [147] patchwork_1.3.2             bit64_4.6.0-1              </span></span>
-<span><span class="co">#&gt; [149] future_1.67.0               Rhdf5lib_1.31.0            </span></span>
-<span><span class="co">#&gt; [151] shiny_1.11.1                SummarizedExperiment_1.39.1</span></span>
-<span><span class="co">#&gt; [153] ROCR_1.0-11                 igraph_2.1.4               </span></span>
-<span><span class="co">#&gt; [155] bslib_0.9.0                 bit_4.6.0</span></span></code></pre></div>
+<span><span class="co">#&gt;  [97] lmtest_0.9-40               S7_0.2.0                   </span></span>
+<span><span class="co">#&gt;  [99] SingleCellExperiment_1.31.1 XVector_0.49.0             </span></span>
+<span><span class="co">#&gt; [101] htmltools_0.5.8.1           dotCall64_1.2              </span></span>
+<span><span class="co">#&gt; [103] SeuratObject_5.2.0          scales_1.4.0               </span></span>
+<span><span class="co">#&gt; [105] Biobase_2.69.0              png_0.1-8                  </span></span>
+<span><span class="co">#&gt; [107] spatstat.univar_3.1-4       knitr_1.50                 </span></span>
+<span><span class="co">#&gt; [109] reshape2_1.4.4              checkmate_2.3.3            </span></span>
+<span><span class="co">#&gt; [111] nlme_3.1-168                curl_7.0.0                 </span></span>
+<span><span class="co">#&gt; [113] cachem_1.1.0                zoo_1.8-14                 </span></span>
+<span><span class="co">#&gt; [115] rhdf5_2.53.4                stringr_1.5.2              </span></span>
+<span><span class="co">#&gt; [117] KernSmooth_2.23-26          parallel_4.5.1             </span></span>
+<span><span class="co">#&gt; [119] miniUI_0.1.2                zellkonverter_1.19.2       </span></span>
+<span><span class="co">#&gt; [121] arrow_21.0.0.1              desc_1.4.3                 </span></span>
+<span><span class="co">#&gt; [123] pillar_1.11.0               grid_4.5.1                 </span></span>
+<span><span class="co">#&gt; [125] vctrs_0.6.5                 RANN_2.6.2                 </span></span>
+<span><span class="co">#&gt; [127] promises_1.3.3              dbplyr_2.5.1               </span></span>
+<span><span class="co">#&gt; [129] xtable_1.8-4                cluster_2.1.8.1            </span></span>
+<span><span class="co">#&gt; [131] evaluate_1.0.5              cli_3.6.5                  </span></span>
+<span><span class="co">#&gt; [133] compiler_4.5.1              rlang_1.1.6                </span></span>
+<span><span class="co">#&gt; [135] crayon_1.5.3                future.apply_1.20.0        </span></span>
+<span><span class="co">#&gt; [137] plyr_1.8.9                  fs_1.6.6                   </span></span>
+<span><span class="co">#&gt; [139] stringi_1.8.7               viridisLite_0.4.2          </span></span>
+<span><span class="co">#&gt; [141] deldir_2.0-4                assertthat_0.2.1           </span></span>
+<span><span class="co">#&gt; [143] lazyeval_0.2.2              spatstat.geom_3.5-0        </span></span>
+<span><span class="co">#&gt; [145] Matrix_1.7-4                dir.expiry_1.17.0          </span></span>
+<span><span class="co">#&gt; [147] RcppHNSW_0.6.0              patchwork_1.3.2            </span></span>
+<span><span class="co">#&gt; [149] bit64_4.6.0-1               future_1.67.0              </span></span>
+<span><span class="co">#&gt; [151] Rhdf5lib_1.31.0             shiny_1.11.1               </span></span>
+<span><span class="co">#&gt; [153] SummarizedExperiment_1.39.1 ROCR_1.0-11                </span></span>
+<span><span class="co">#&gt; [155] igraph_2.1.4                bslib_0.9.0                </span></span>
+<span><span class="co">#&gt; [157] bit_4.6.0</span></span></code></pre></div>
 </div>
   </div>
 

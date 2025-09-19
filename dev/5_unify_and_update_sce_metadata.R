@@ -37,7 +37,8 @@ duckdb_write_parquet <- function(.tbl_sql, path, con) {
     .tbl_sql |>
     sql_render()
   
-  sql_call <- glue::glue("COPY ({sql_tbl}) TO '{path}' (COMPRESSION zstd, COMPRESSION_LEVEL 15)")
+  # zstd 15 compresses faster than brotli for binary/scientific datasets, whereas brotli reduce could save 100Mb
+  sql_call <- glue::glue("COPY ({sql_tbl}) TO '{path}' (FORMAT PARQUET, COMPRESSION 'brotli')")
   
   res <- dbExecute(con, sql_call)
   
@@ -90,14 +91,23 @@ metadata <- metadata |> select(
          cell_annotation_azimuth_l2 = azimuth_predicted_celltype_l2) |> 
   mutate(feature_count = as.integer(feature_count),
          published_at = as.character(published_at),
-         revised_at = as.character(revised_at))
+         revised_at = as.character(revised_at),
+         nFeature_expressed_in_sample = as.integer(nFeature_expressed_in_sample),
+         cell_count = as.integer(cell_count),
+         
+         # update metacell columns are integter to minimise file size
+         across(contains("metacell_"), as.integer),
+         across(contains("_chunk"), as.integer), 
+         across(contains("subsets_"), as.integer))
 
 # Add pseudobulk aggregated_cells column
 sample_celltype_count <- metadata |> filter(empty_droplet == F,
                                             alive == T,
                                             scDblFinder.class != "doublet") |> dplyr::count(sample_id, 
                                                               cell_type_unified_ensemble, 
-                                                              name = ".aggregated_cells")
+                                                              name = ".aggregated_cells") |> 
+  mutate(.aggregated_cells = as.integer(.aggregated_cells))
+
 metadata = metadata |> left_join(sample_celltype_count, by = c("sample_id", "cell_type_unified_ensemble"), copy=T)
 
 # (THESE TWO DATASETS DOESNT contain meaningful data - no observation_joinid etc), thus was excluded in the final metadata.
@@ -109,29 +119,17 @@ metadata |> mutate(atlas_id = paste0(atlas_id, "/", DATE) ) |>
   duckdb_write_parquet(path = metadata_path,
                        con = dbConnect(duckdb::duckdb(), dbdir = ":memory:"))
 
-
-# Split metadata to sample-level and cell-level
-sample_cols <- c(
-   "sample_id", "sample_", "donor_id", "dataset_id", "dataset_version_id",
-  "age_days", "assay", "assay_ontology_term_id", "development_stage",
-  "development_stage_ontology_term_id", "self_reported_ethnicity",
-  "self_reported_ethnicity_ontology_term_id", "experiment___",
-  "organism", "organism_ontology_term_id", "sex", "sex_ontology_term_id",
-  "tissue", "tissue_type", "tissue_ontology_term_id", "tissue_groups",
-  "disease", "disease_ontology_term_id", "is_primary_data",
-  "cell_count", "collection_id", "filetype", "sample_heuristic",
-  "mean_genes_per_cell", "published_at", "revised_at", "schema_version",
-  "tombstone", "explorer_url", "citation", "feature_count", "filesize",
-  "primary_cell_count", "raw_data_location", "title", "url", "x_approximate_distribution",
-  "X_umap1", "X_umap2", "atlas_id", "nFeature_expressed_in_sample","sample_chunk",
-  "sample_pseudobulk_chunk", ".aggregated_cells"
-)
-
-sample_metadata = metadata |> select(all_of(sample_cols)) |> 
-  mutate(atlas_id = paste0(atlas_id, "/", DATE) ) |>
-  duckdb_write_parquet(path = "/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/sample_metadata.1.0.13.parquet",
-                       con = dbConnect(duckdb::duckdb(), dbdir = ":memory:"))
+# Strip sample annotation from cellnexus annotation doesn't save too much (less than 3Mb), thus keep in one.
+remove_cols <- c("cell_chunk", "cell_type","cell_type_ontology_term_id",
+                 "data_driven_ensemble", "default_embedding","ensemble_joinid", 
+                 "observation_originalid", "run_from_cell_id", "suspension_type" )
   
+# New metadata contains columns that cellnexus generated
+metadata |> select(-any_of(remove_cols), -contains("metacell"),
+                   -contains("subsets_"), -contains("high_")) |> 
+  duckdb_write_parquet(path = "/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/cellnexus_metadata.1.2.13.parquet",
+                       con = dbConnect(duckdb::duckdb(), dbdir = ":memory:"))
+
 # Old metadata from cellxgene and census
 metadata |> select(observation_joinid, dataset_id, sample_id, cell_type, 
                    cell_type_ontology_term_id,default_embedding, run_from_cell_id, suspension_type
@@ -139,21 +137,16 @@ metadata |> select(observation_joinid, dataset_id, sample_id, cell_type,
   duckdb_write_parquet(path = "/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/census_cell_metadata.1.0.13.parquet",
                        con = dbConnect(duckdb::duckdb(), dbdir = ":memory:"))
 
-# New metadata contains columns that cellnexus generated
-metadata |> 
-  
-  # drop sample level columns
-  select(-all_of(setdiff(sample_cols, c("observation_joinid", "sample_id", "dataset_id"))),
-         -contains("metacell"), -cell_type, -cell_type_ontology_term_id,
-         -default_embedding, -run_from_cell_id, -suspension_type, -contains("subsets_"), -contains("high_")) |> 
-  duckdb_write_parquet(path = "/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/cellnexus_cell_metadata.1.0.13.parquet",
-                       con = dbConnect(duckdb::duckdb(), dbdir = ":memory:"))
-
 # Metacell metadata
 metadata |> 
   select(c("cell_id", "sample_id", "dataset_id"), contains("metacell")) |> 
   duckdb_write_parquet(path = "/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/metacell_metadata.1.0.13.parquet",
                        con = dbConnect(duckdb::duckdb(), dbdir = ":memory:"))
+
+# Check whether cellnexus_metadata parquet can be optimised further
+source("~/git_control/cellNexus/dev/data_optimisation_script.R")
+
+
 
   
 

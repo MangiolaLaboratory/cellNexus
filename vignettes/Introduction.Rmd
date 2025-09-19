@@ -121,7 +121,6 @@ metadata
 
 Metadata is saved to `get_default_cache_dir()` unless a custom path is provided via the cache_directory argument. The `metadata` variable can then be re-used for all subsequent queries. 
 
-
 ### Explore the tissue 
 
 ```{r}
@@ -129,15 +128,13 @@ metadata |>
     dplyr::distinct(tissue, cell_type_unified_ensemble) 
 ```
 
-## Quality Control
+## Quality control
 cellNexus metadata applies standardised quality control to filter out empty droplets, dead or damaged cells, doublets, and samples with low gene counts.
 
 ```{r}
 metadata = metadata |> 
-  dplyr::filter(empty_droplet == FALSE,
-         alive == TRUE,
-         scDblFinder.class != "doublet",
-         feature_count >= 5000)
+  dplyr::filter(feature_count >= 5000) |> 
+  keep_quality_cells()
 ```
 
 
@@ -396,7 +393,7 @@ find_figure("FCN1_tissue_plot.png") |> knitr::include_graphics()
 ```
 
 
-## Integrate Cloud Metadata with Local Metadata
+## Integrate cloud metadata with local metadata
 CellNexus not only enables users to query our metadata but also allows integration with your local metadata. Additionally, users can integrate with your metadata stored in the cloud. 
 
 To enable this feature, users must include `file_id_cellNexus_single_cell` (e.g sample_sce_obj.h5ad) 

@@ -396,7 +396,7 @@ find_figure("FCN1_tissue_plot.png") |> knitr::include_graphics()
 ```
 
 
-## Integrate Cloud Metadata with Local Metadata
+## Integrate cloud metadata with local metadata
 CellNexus not only enables users to query our metadata but also allows integration with your local metadata. Additionally, users can integrate with your metadata stored in the cloud. 
 
 To enable this feature, users must include `file_id_cellNexus_single_cell` (e.g sample_sce_obj.h5ad) 
@@ -431,8 +431,7 @@ cellNexus::sample_sce_obj |> zellkonverter::writeH5AD(file = sce_path,
 # A file from cloud 
 file_id_from_cloud <- "68aea852584d77f78e5c91204558316d___1.h5ad"
 
-get_metadata(local_metadata = meta_path,
-             cache_directory = local_cache) |>
+get_metadata(local_metadata = meta_path) |>
   
   # For illustration purpose, only filter a selected cloud metadata and the saved metadata 
   dplyr::filter(file_id_cellNexus_single_cell %in% c("sample_sce_obj.h5ad", file_id_from_cloud)) |>

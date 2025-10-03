@@ -44,16 +44,17 @@ an HTTP URL pointing to the location where the single cell data is stored.}
 \item{features}{An optional character vector of features (ie genes) to return
 the counts for. By default counts for all features will be returned.}
 }
+\value{
+A \code{SummarizedExperiment} object.
+}
 \description{
 Given a data frame of Curated Atlas metadata obtained from \code{\link[=get_metadata]{get_metadata()}},
 returns a \code{\link[SummarizedExperiment:SummarizedExperiment-class]{SummarizedExperiment::SummarizedExperiment}} object
 corresponding to the samples in that data frame
 }
 \examples{
-\dontrun{
-meta <- get_metadata() |> filter(tissue_harmonised == "lung")
+meta <- get_metadata() |> head(2)
 pseudobulk <- meta |> get_pseudobulk()
-}
 }
 \references{
 Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen,

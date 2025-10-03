@@ -34,6 +34,7 @@ UNHARMONISED_URL <- single_line_str(
 #' @importFrom duckdb duckdb
 #' @importFrom dplyr tbl filter
 #' @importFrom rlang .data
+#' @keywords internal
 #' @return A named list, where each name is a dataset file ID, and each value is
 #'   a "lazy data frame", ie a `tbl`.
 #' @examples
@@ -83,10 +84,10 @@ get_unharmonised_dataset <- function(
 #'    [get_metadata()]
 #'  * `unharmonised`: a nested tibble, with one row per cell in the input
 #'    `metadata`, containing unharmonised metadata
-#' @export
 #' @importFrom dplyr group_by summarise filter collect
 #' @importFrom rlang .data
 #' @importFrom dbplyr remote_con
+#' @keywords internal
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
 #'   immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.

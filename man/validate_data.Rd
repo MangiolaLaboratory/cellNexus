@@ -44,6 +44,10 @@ an HTTP URL pointing to the location where the single cell data is stored.}
 \item{features}{An optional character vector of features (ie genes) to return
 the counts for. By default counts for all features will be returned.}
 }
+\value{
+A list containing validated parameters including data, repository, assays,
+cache_directory, features, cell_aggregation, and atlas_name.
+}
 \description{
 Given a data frame of Curated Atlas metadata obtained from \code{\link[=get_metadata]{get_metadata()}},
 returns a list of parameters being validated.

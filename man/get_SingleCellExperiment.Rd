@@ -35,6 +35,9 @@ an HTTP URL pointing to the location where the single cell data is stored.}
 the counts for. By default counts for all features will be returned.}
   }}
 }
+\value{
+A \code{SingleCellExperiment} object.
+}
 \description{
 Given a data frame of Curated Atlas metadata obtained from \code{\link[=get_metadata]{get_metadata()}},
 returns a \code{\link[SingleCellExperiment:SingleCellExperiment]{SingleCellExperiment::SingleCellExperiment}} object

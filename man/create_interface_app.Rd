@@ -16,6 +16,15 @@ in the selected format.
 \description{
 Create a Shiny app that allows users to generate filtering & retreival code for cellNexus
 }
+\examples{
+\dontrun{
+# Create the interface app with metadata
+metadata <- get_metadata()
+app <- create_interface_app(metadata)
+# Run the app
+shiny::runApp(app)
+}
+}
 \author{
 Jared Andrews
 }

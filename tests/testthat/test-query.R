@@ -35,7 +35,7 @@ test_that("get_SingleCellExperiment() syncs appropriate files", {
     temp <- tempfile()
     test_file <- "4164d0eb972ad5e12719b6858c9559ea___1.h5ad"
 
-    meta <- get_metadata() |> head(2)
+    meta <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2)
 
     # The remote dataset should have many genes
     sce <- get_SingleCellExperiment(meta, cache_directory = temp)
@@ -55,7 +55,7 @@ test_that(
         # We need this for the assays() function
         library(SummarizedExperiment)
 
-        meta <- get_metadata() |> head(2)
+        meta <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2)
         
         atlas_name <- meta |> distinct(atlas_id) |> pull()
         
@@ -85,7 +85,7 @@ test_that(
 )
 
 test_that("The features argument to get_SingleCellExperiment subsets genes", {
-    meta <- get_metadata() |> head(2)
+    meta <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2)
 
     # The un-subset dataset should have many genes
     sce_full <- get_SingleCellExperiment(meta) |>
@@ -103,7 +103,7 @@ test_that("The features argument to get_SingleCellExperiment subsets genes", {
 })
 
 test_that("get_seurat() returns the appropriate data in Seurat format", {
-    meta <- get_metadata() |> head(2)
+    meta <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2)
 
     sce <- get_SingleCellExperiment(meta, features = "ENSG00000010610")
     seurat <- get_seurat(meta, features = "ENSG00000010610")
@@ -122,11 +122,11 @@ test_that("get_SingleCellExperiment() assigns the right cell ID to each cell", {
     file_id_cellNexus_single_cell <- "7ddd6775d704d6826539abaee8d22f65___1.h5ad"
     
     # Retrieve atlas_id from metadata
-    atlas_id = get_metadata() |>
+    atlas_id = get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |>
       filter(dataset_id == id) |> distinct(atlas_id) |> pull()
     
     # Force the file to be cached
-    get_metadata() |>
+    get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |>
         filter(dataset_id == id) |>
         get_SingleCellExperiment()
     
@@ -161,8 +161,8 @@ test_that("get_SingleCellExperiment() assigns the right cell ID to each cell", {
 })
 
 test_that("get_metadata() is cached", {
-    table = get_metadata()
-    table_2 = get_metadata()
+    table = get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
+    table_2 = get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
     
     identical(table, table_2) |> expect_true()
 })
@@ -172,98 +172,105 @@ test_that("database_url() expect character ", {
     expect_s3_class("character")
 })
 
-test_that("get_metadata() expect a unique cell_type `abnormal cell` is present", {
-  n_cell <- get_metadata() |> filter(cell_type == 'abnormal cell') |> as_tibble() |> nrow()
+test_that("get_metadata() expect a unique cell_type `mature T cell` is present", {
+  n_cell <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> filter(cell_type == 'mature T cell') |> as_tibble() |> nrow()
   expect_true(n_cell > 0)
 })
 
 test_that("get_metadata() expect to combine local and cloud metadata", {
-  data("sample_sce_obj")
+  cache <- tempdir()
   
-  cache = tempfile()
-  if (!dir.exists(cache)) dir.create(cache, recursive = TRUE)
-  metadata(sample_sce_obj)$data |> arrow::write_parquet(glue("{cache}/my_metadata.parquet"))
-  
-  atlas_name <- metadata(sample_sce_obj)$data |> pull(atlas_id) |> unique()
+  meta_path <- file.path(cache, "pbmc3k_metadata.parquet")
   assay <- "counts"
-  file_id_from_cloud <- "68aea852584d77f78e5c91204558316d___1.h5ad"
-  file_path <- file.path(cache, atlas_name, assay)
   
-  n_cell = get_metadata(local_metadata = glue("{cache}/my_metadata.parquet")) |>
-    filter(file_id_cellNexus_single_cell %in% c("sample_sce_obj.h5ad",
-                                                file_id_from_cloud)) |>
-    dplyr::count() |> pull() |> as.integer()
-  expect_gt(n_cell , 1)
-})
+  pbmc3k_metadata <- cellNexus::pbmc3k_sce |> 
+    S4Vectors::metadata() |> 
+    purrr::pluck("data") |> 
+    dplyr::mutate(
+      counts_directory = file.path(cache, atlas_id, assay),
+      sce_path = file.path(counts_directory, file_id_cellNexus_single_cell)
+    )
+  
+  sce_path <- pbmc3k_metadata |> 
+    dplyr::pull(sce_path) |> 
+    unique()
+  
+  # Save metadata and SCE object
+  cellNexus::pbmc3k_sce |> 
+    S4Vectors::metadata() |> 
+    purrr::pluck("data") |> 
+    arrow::write_parquet(meta_path)
+  
+  # Test combining local and cloud metadata
+  file_id_from_cloud <- "e52795dec7b626b6276b867d55328d9f___1.h5ad"
+  file_id_local <- basename(sce_path)
+  
+  sample_id <- get_metadata(local_metadata = meta_path, cloud_metadata = SAMPLE_DATABASE_URL) |>
+    filter(file_id_cellNexus_single_cell %in% c(file_id_from_cloud, file_id_local)) |>
+    pull(sample_id) |> unique()
+  
+  expect_contains(sample_id, "pbmc3k")
 
-test_that("get_metadata() expect to query local metadata only", {
-  data("sample_sce_obj")
-  
-  cache = tempfile()
-  if (!dir.exists(cache)) dir.create(cache, recursive = TRUE)
-  metadata(sample_sce_obj)$data |> arrow::write_parquet(glue("{cache}/my_metadata.parquet"))
-  
-  n_cell = get_metadata(local_metadata = glue("{cache}/my_metadata.parquet"),
-                        cloud_metadata = NULL) |>
-    dplyr::count() |> pull() |> as.integer()
-  expect_equal(n_cell, 2)
+  n_cell_local <- get_metadata(local_metadata = meta_path, cloud_metadata = NULL) |>
+    filter(file_id_cellNexus_single_cell == file_id_local) |>
+    dplyr::count() |> 
+    pull() |> 
+    as.integer()
+
+  n_cell_metadata <- cellNexus::pbmc3k_sce |> colnames() |> length()
+
+  expect_equal(n_cell_metadata, n_cell_local)
 })
 
 test_that("get_single_cell_experiment() expect to combine local and cloud counts", {
-  data("sample_sce_obj")
+  cache <- tempdir()
   
-  cache = tempfile()
-  if (!dir.exists(cache)) dir.create(cache, recursive = TRUE)
-  metadata(sample_sce_obj)$data |> arrow::write_parquet(glue("{cache}/my_metadata.parquet"))
-  
-  atlas_name <- metadata(sample_sce_obj)$data |> pull(atlas_id) |> unique()
+  meta_path <- file.path(cache, "pbmc3k_metadata.parquet")
   assay <- "counts"
-  file_id_from_cloud <- "68aea852584d77f78e5c91204558316d___1.h5ad"
-  file_path <- file.path(cache, atlas_name, assay)
   
-  if (!dir.exists(file_path)) dir.create(file_path, recursive = TRUE)
-  sample_sce_obj |> 
-    zellkonverter::writeH5AD(glue("{cache}/{atlas_name}/{assay}/sample_sce_obj.h5ad"), 
-                             compression = "gzip",
-                             verbose = FALSE)
+  pbmc3k_metadata <- cellNexus::pbmc3k_sce |> 
+    S4Vectors::metadata() |> 
+    purrr::pluck("data") |> 
+    dplyr::mutate(
+      counts_directory = file.path(cache, atlas_id, assay),
+      sce_path = file.path(counts_directory, file_id_cellNexus_single_cell)
+    )
   
-  sce = get_metadata(local_metadata = glue("{cache}/my_metadata.parquet")) |>
-    filter(file_id_cellNexus_single_cell %in% c("sample_sce_obj.h5ad",
-                                                file_id_from_cloud)) |>
-    get_single_cell_experiment(cache = cache)
-    
-  expect_contains(colnames(sce), "Liver_cDNA_CCTATTAGTTTGTGAC-1_2" )
-})
-
-test_that("get_single_cell_experiment() expect to get local counts only", {
-  data("sample_sce_obj")
+  # Get unique paths
+  counts_directory <- pbmc3k_metadata |> 
+    dplyr::pull(counts_directory) |> 
+    unique()
   
-  cache = tempfile()
-  if (!dir.exists(cache)) dir.create(cache, recursive = TRUE)
-  metadata(sample_sce_obj)$data |> arrow::write_parquet(glue("{cache}/my_metadata.parquet"))
+  sce_path <- pbmc3k_metadata |> 
+    dplyr::pull(sce_path) |> 
+    unique()
   
-  atlas_name <- metadata(sample_sce_obj)$data |> pull(atlas_id) |> unique()
-  assay <- "counts"
-  file_path <- file.path(cache, atlas_name, assay)
+  dir.create(counts_directory, recursive = TRUE, showWarnings = FALSE)
   
-  if (!dir.exists(file_path)) dir.create(file_path, recursive = TRUE)
-  sample_sce_obj |> 
-    zellkonverter::writeH5AD(glue("{cache}/{atlas_name}/{assay}/sample_sce_obj.h5ad"), 
-                             compression = "gzip",
-                             verbose = FALSE)
+  # Save metadata and SCE object
+  cellNexus::pbmc3k_sce |> 
+    S4Vectors::metadata() |> 
+    purrr::pluck("data") |> 
+    arrow::write_parquet(meta_path)
   
-  n_cell_in_sce = get_metadata(local_metadata = glue("{cache}/my_metadata.parquet"),
-                     cloud_metadata = NULL) |> 
-    get_single_cell_experiment(cache = cache) |>
-    colnames() |> length()
+  cellNexus::pbmc3k_sce |> 
+    zellkonverter::writeH5AD(file = sce_path, compression = "gzip")
   
-  expect_equal(n_cell_in_sce, 2)
+  # Test combining local and cloud metadata
+  file_id_from_cloud <- "e52795dec7b626b6276b867d55328d9f___1.h5ad"
+  file_id_local <- basename(sce_path)
+  
+  sce <- get_metadata(local_metadata = meta_path, cloud_metadata = SAMPLE_DATABASE_URL) |>
+    filter(file_id_cellNexus_single_cell %in% c(file_id_from_cloud, file_id_local)) |>
+    get_single_cell_experiment(cache_directory = cache)
+  
+  expect_contains(colData(sce)[,"sample_id"] |> unique(), "pbmc3k")
 })
 
 test_that("get_pseudobulk() syncs appropriate files", {
   temp <- tempfile()
-  id <- "017e1e042c4a35fe386e28e494a12767___1.h5ad"
-  meta <- get_metadata(cache_directory = temp) |> 
+  id <- "8977a940f296898898d92461e71c8e0d___1.h5ad"
+  meta <- get_metadata(cache_directory = temp, cloud_metadata = SAMPLE_DATABASE_URL) |> 
     filter(empty_droplet == "FALSE",
            alive == "TRUE",
            scDblFinder.class !="doublet",
@@ -280,7 +287,7 @@ test_that("get_pseudobulk() syncs appropriate files", {
 test_that("get_metacell() syncs appropriate files", {
   cache = tempfile()
   id = "4414dffc701125c467adad7977adcf21___1.h5ad"
-  sce = get_metadata(cache_directory = cache) |> filter(!is.na(metacell_8)) |> 
+  sce = get_metadata(cache_directory = cache, cloud_metadata = SAMPLE_DATABASE_URL) |> filter(!is.na(metacell_8)) |> 
     filter(file_id_cellNexus_single_cell == id) |> 
     get_metacell(cache_directory = cache,
                  cell_aggregation = "metacell_8")

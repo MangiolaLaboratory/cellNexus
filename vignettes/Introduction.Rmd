@@ -24,7 +24,7 @@ knit: >
             output_dir = proj_root,
             knit_root_dir = proj_root,
             params = list(
-                demo_metadata = FALSE
+                demo_metadata = TRUE
             )
         )
     })
@@ -109,13 +109,13 @@ suppressPackageStartupMessages({
 ### Load the metadata
 
 ```{r, eval=FALSE}
-metadata <- get_metadata()
+metadata <- get_metadata(cloud_metadata = METADATA_URL)
 metadata
 ```
 
 ```{r, echo=FALSE}
 # Note: a custom cache is used here ONLY for R CHECK compliance purposes. Users will NOT need to specify a custom cache
-metadata <- get_metadata(cache_directory = tempdir())
+metadata <- get_metadata(cloud_metadata = METADATA_URL, cache_directory = tempdir())
 metadata
 ```
 
@@ -129,7 +129,7 @@ metadata |>
     dplyr::distinct(tissue, cell_type_unified_ensemble) 
 ```
 
-## Quality Control
+## Quality control
 cellNexus metadata applies standardised quality control to filter out empty droplets, dead or damaged cells, doublets, and samples with low gene counts.
 
 ```{r}
@@ -396,46 +396,62 @@ find_figure("FCN1_tissue_plot.png") |> knitr::include_graphics()
 ```
 
 
-## Integrate Cloud Metadata with Local Metadata
-CellNexus not only enables users to query our metadata but also allows integration with your local metadata. Additionally, users can integrate with your metadata stored in the cloud. 
+## Integrate cloud and local metadata
+`cellNexus` not only enables users to query our metadata but also allows integration with your local metadata. Additionally, users can integrate with your metadata stored in the cloud. 
 
-To enable this feature, users must include `file_id_cellNexus_single_cell` (e.g sample_sce_obj.h5ad) 
-and `atlas_id` (e.g cellxgene/dd-mm-yy) columns in the metadata.
+To enable this feature, users must include `file_id_cellNexus_single_cell`
+and `atlas_id` (e.g cellxgene/dd-mm-yy) columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
 
 ``` {r}
-# Define local cache and metadata path
+# Set up local cache and paths
 local_cache <- tempdir()
-meta_path <- paste0(local_cache,"/my_metadata.parquet")
+layer <- "counts"
+meta_path <- file.path(local_cache, "pbmc3k_metadata.parquet")
 
-# Extract the date from example sce metadata 
-date <- cellNexus::sample_sce_obj |> S4Vectors::metadata() |> 
-  purrr::pluck("data") |> dplyr::pull(atlas_id) |> unique()
+# Extract and prepare metadata
+pbmc3k_metadata <- cellNexus::pbmc3k_sce |> 
+  S4Vectors::metadata() |> 
+  purrr::pluck("data") |> 
+  dplyr::mutate(
+    counts_directory = file.path(tempdir(), atlas_id, layer),
+    sce_path = file.path(counts_directory, file_id_cellNexus_single_cell)
+  )
 
-# Create a directory for storing counts
-counts_path = file.path(local_cache, date, "counts")
-dir.create(counts_path, recursive = TRUE, showWarnings = FALSE)
+# Get unique paths
+counts_directory <- pbmc3k_metadata |> 
+  dplyr::pull(counts_directory) |> 
+  unique()
 
-# Define the SCE file path for saving
-sce_path = file.path(counts_path, "sample_sce_obj.h5ad")
+sce_path <- pbmc3k_metadata |> 
+  dplyr::pull(sce_path) |> 
+  unique()
 
-# Save metadata to disk 
-cellNexus::sample_sce_obj |> S4Vectors::metadata() |> purrr::pluck("data") |>
+# Create directory structure
+dir.create(counts_directory, recursive = TRUE, showWarnings = FALSE)
+
+# Save data to disk
+cellNexus::pbmc3k_sce |> 
+  S4Vectors::metadata() |> 
+  purrr::pluck("data") |> 
   arrow::write_parquet(meta_path)
 
-# Save SCE to disk
-cellNexus::sample_sce_obj |> zellkonverter::writeH5AD(file = sce_path,
-                                                      compression = "gzip")
+# Save SCE object
+cellNexus::pbmc3k_sce |> 
+  zellkonverter::writeH5AD(file = sce_path, compression = "gzip")
 ```
 
 ``` {r}
-# A file from cloud 
-file_id_from_cloud <- "68aea852584d77f78e5c91204558316d___1.h5ad"
+# A cellNexus file
+file_id_from_cloud <- "e52795dec7b626b6276b867d55328d9f___1.h5ad"
+file_id_local <- basename(sce_path)
 
-get_metadata(local_metadata = meta_path,
+get_metadata(cloud_metadata = METADATA_URL,
+             local_metadata = meta_path,
              cache_directory = local_cache) |>
   
   # For illustration purpose, only filter a selected cloud metadata and the saved metadata 
-  dplyr::filter(file_id_cellNexus_single_cell %in% c("sample_sce_obj.h5ad", file_id_from_cloud)) |>
+  dplyr::filter(file_id_cellNexus_single_cell %in% c(file_id_from_cloud, file_id_local)) |>
+  dplyr::select(cell_id, sample_id, dataset_id, cell_type_unified_ensemble, atlas_id, file_id_cellNexus_single_cell ) |>
   get_single_cell_experiment(cache_directory = local_cache)
     
 ```

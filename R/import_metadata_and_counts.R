@@ -101,10 +101,10 @@ assert_pseudobulk_metadata <- function(sce_obj,
 #' @importFrom S4Vectors metadata metadata<-
 #' @importFrom SummarizedExperiment assay assay<-
 #' @examples
-#' data(sample_sce_obj)
-#' import_one_sce(sample_sce_obj,
-#'                atlas_name = "sample_atlas",
-#'                import_date = "9999-99-99",
+#' data(pbmc3k_sce)
+#' import_one_sce(pbmc3k_sce,
+#'                atlas_name = "pbmc3k_sce_atlas",
+#'                import_date = format(Sys.Date(), "%d-%m-%Y"),
 #'                cell_aggregation = "single_cell",
 #'                cache_dir = get_default_cache_dir(),
 #'                pseudobulk = FALSE)
@@ -197,6 +197,13 @@ import_one_sce <- function(
 #' @param cache_dir Optional character vector of length 1. A file path on
 #'   your local system to a directory (not a file) that will be used to store pseudobulk counts
 #' @return Pseudobulk counts in `Anndata` format stored in the cache directory
+#' @examples
+#' data(pbmc3k_sce)
+#' calculate_pseudobulk(pbmc3k_sce,
+#'                    atlas_name = "pbmc3k_sce_atlas",
+#'                    import_date = format(Sys.Date(), "%d-%m-%Y"),
+#'                    cell_aggregation = "pseudobulk",
+#'                    cache_dir = get_default_cache_dir())
 #' @export
 #' @importFrom S4Vectors metadata
 #' @importFrom dplyr select distinct pull
@@ -228,12 +235,16 @@ calculate_pseudobulk <- function(sce_data,
       as_tibble(rownames = ".cell") |> 
       mutate(aggregated_cells = paste(sample_id, cell_type_unified_ensemble, sep = "___")) |> 
       pull(aggregated_cells), 
-    BPPARAM = BiocParallel::MulticoreParam(workers = 10)
-  ) |> 
-    # Handle column type cast correctly: https://github.com/scverse/anndata/issues/311
-    mutate(across(everything(), as.character))
+    BPPARAM = BiocParallel::MulticoreParam(workers = 2)
+  )
   
-  colData(pseudobulk) <- NULL
+  # Handle column type cast correctly: https://github.com/scverse/anndata/issues/311
+  colData(pseudobulk) <- as_tibble(colData(pseudobulk), rownames = "cell") |>
+    mutate(across(everything(), as.character)) |>
+    {\(x) DataFrame(x, row.names = x$cell)}()
+  
+  # Remove columns with compleletly NA
+  colData(pseudobulk) <- colData(pseudobulk)[ , colSums(!is.na(colData(pseudobulk))) > 0, drop = FALSE ]
   
   assay_name <- pseudobulk |> assays() |> names()
   normalised_counts_best_distribution <- assay(pseudobulk, assay_name) |>
@@ -242,12 +253,12 @@ calculate_pseudobulk <- function(sce_data,
   normalised_pseudobulk <- pseudobulk |> tidybulk::quantile_normalise_abundance(
     method="preprocesscore_normalize_quantiles_use_target",
     target_distribution = normalised_counts_best_distribution
-  ) |> 
-    mutate(across(everything(), as.character))
+  )
   
   # Keep quantile_normalised counts
   assay(normalised_pseudobulk, assay_name) <- NULL
   names(assays(normalised_pseudobulk)) <- "quantile_normalised"
+  metadata(normalised_pseudobulk)$tidybulk <- NULL
 
   counts_file_path <- file.path(original_dir, basename(file_id_cellNexus_single_cell)) |> paste0(extension)
   qnorm_file_path <- file.path(quantile_normalised_dir, basename(file_id_cellNexus_single_cell)) |> paste0(extension)

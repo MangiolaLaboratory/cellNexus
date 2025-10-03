@@ -24,6 +24,7 @@ COUNTS_URL <- single_line_str(
 #' @inherit get_single_cell_experiment
 #' @inheritDotParams get_single_cell_experiment
 #' @importFrom cli cli_alert_warning
+#' @return A `SingleCellExperiment` object.
 #' @export
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
@@ -63,6 +64,7 @@ get_SingleCellExperiment <- function(...){
 #'   an HTTP URL pointing to the location where the single cell data is stored.
 #' @param features An optional character vector of features (ie genes) to return
 #'   the counts for. By default counts for all features will be returned.
+#' @return A `SingleCellExperiment` object.
 #' @importFrom dplyr pull filter as_tibble inner_join collect transmute
 #' @importFrom tibble column_to_rownames
 #' @importFrom purrr reduce map map_int imap pmap
@@ -202,6 +204,7 @@ get_single_cell_experiment <- function(data,
 #'   an HTTP URL pointing to the location where the single cell data is stored.
 #' @param features An optional character vector of features (ie genes) to return
 #'   the counts for. By default counts for all features will be returned.
+#' @return A `SummarizedExperiment` object.
 #' @importFrom dplyr pull filter as_tibble inner_join collect transmute
 #' @importFrom tibble column_to_rownames
 #' @importFrom purrr reduce map map_int imap 
@@ -213,10 +216,8 @@ get_single_cell_experiment <- function(data,
 #' @importFrom rlang .data
 #' @importFrom S4Vectors DataFrame
 #' @examples
-#' \dontrun{
-#' meta <- get_metadata() |> filter(tissue_harmonised == "lung")
+#' meta <- get_metadata() |> head(2)
 #' pseudobulk <- meta |> get_pseudobulk()
-#' }
 #' @export
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
@@ -337,6 +338,7 @@ get_pseudobulk <- function(data,
 #'   an HTTP URL pointing to the location where the single cell data is stored.
 #' @param features An optional character vector of features (ie genes) to return
 #'   the counts for. By default counts for all features will be returned.
+#' @return A `SingleCellExperiment` object.
 #' @importFrom dplyr pull filter as_tibble inner_join collect transmute
 #' @importFrom tibble column_to_rownames
 #' @importFrom purrr reduce map map_int imap 
@@ -348,10 +350,8 @@ get_pseudobulk <- function(data,
 #' @importFrom rlang .data
 #' @importFrom S4Vectors DataFrame
 #' @examples
-#' \dontrun{
-#' meta <- get_metadata() |> filter(tissue_harmonised == "lung")
-#' metacell <- meta |> filter(!is.na(metacell_2)) |> get_metacell(cell_aggregation = "metacell_2")
-#' }
+#' meta <- get_metadata() |> head(2)
+#' metacell <- meta |> get_metacell(cell_aggregation = "metacell_2")
 #' @export
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
@@ -482,6 +482,8 @@ get_metacell <- function(data,
 #'   an HTTP URL pointing to the location where the single cell data is stored.
 #' @param features An optional character vector of features (ie genes) to return
 #'   the counts for. By default counts for all features will be returned.
+#' @return A list containing validated parameters including data, repository, assays,
+#'   cache_directory, features, cell_aggregation, and atlas_name.
 #' @importFrom dplyr pull filter as_tibble inner_join collect
 #' @importFrom tibble column_to_rownames
 #' @importFrom purrr reduce map map_int imap 

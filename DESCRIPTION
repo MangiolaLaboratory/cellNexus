@@ -1,7 +1,7 @@
 Type: Package
 Package: cellNexus
 Title: Queries the Human Cell Atlas
-Version: 1.6.14
+Version: 0.99.0
 Authors@R: c(
     person(
         "Stefano",
@@ -11,10 +11,17 @@ Authors@R: c(
         comment = c(ORCID = "0000-0001-7474-836X")
     ),
     person(
+        "Mengyuan",
+        "Shen",
+        email = "shen.m@wehi.edu.au",
+        role = c("aut", "rev", "ctb"),
+        comment = c(ORCID = "0009-0008-0057-8239")
+    ),
+    person(
         "Michael",
         "Milton",
         email = "milton.m@wehi.edu.au",
-        role = c("aut", "rev"),
+        role = c("aut", "rev", "ctb"),
         comment = c(ORCID = "0000-0002-8965-2595")
     ),
     person(

@@ -34,6 +34,7 @@ save_data <- function(data, file_name) {
   
   
   zellkonverter::writeH5AD(data, file = filename, compression = "gzip" )
+  return(filename)
 }
 
 
@@ -110,6 +111,8 @@ subset_samples <- function(dataset_id, observation_joinid, sample_id) {
 #   data
 # }
 
+
+
 # computing_resources =  crew.cluster::crew_controller_slurm(
 #   name = "elastic",
 #   workers = 300,
@@ -164,12 +167,11 @@ list(
   ),
   tar_target(
     sliced_sce,
-    subset_samples(grouped_observation_joinid_per_sample$dataset_id,
+      subset_samples(grouped_observation_joinid_per_sample$dataset_id,
                    grouped_observation_joinid_per_sample$observation_joinid,
                    grouped_observation_joinid_per_sample$sample_2)  |>
       save_data(file_name = grouped_observation_joinid_per_sample$sample_2),
-    pattern = map(grouped_observation_joinid_per_sample),
-    format = "file"
+    pattern = map(grouped_observation_joinid_per_sample)
   )
 )
 

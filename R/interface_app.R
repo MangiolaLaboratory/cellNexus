@@ -140,6 +140,14 @@ organize_inputs <- function(
 #' @importFrom shinyWidgets pickerInput pickerOptions
 #' @importFrom dplyr filter distinct
 #'
+#' @examples
+#' \dontrun{
+#' # Create the interface app with metadata
+#' metadata <- get_metadata()
+#' app <- create_interface_app(metadata)
+#' # Run the app
+#' shiny::runApp(app)
+#' }
 #' @export
 #' @author Jared Andrews
 create_interface_app <- function(metadata) {

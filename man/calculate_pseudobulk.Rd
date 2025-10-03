@@ -34,3 +34,11 @@ Pseudobulk counts in \code{Anndata} format stored in the cache directory
 \description{
 Generate pseudobulk counts and quantile_normalised counts
 }
+\examples{
+data(pbmc3k_sce)
+calculate_pseudobulk(pbmc3k_sce,
+                   atlas_name = "pbmc3k_sce_atlas",
+                   import_date = format(Sys.Date(), "\%d-\%m-\%Y"),
+                   cell_aggregation = "pseudobulk",
+                   cache_dir = get_default_cache_dir())
+}

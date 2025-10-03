@@ -253,7 +253,7 @@ hdf5_to_anndata <- function(input_directory, output_directory){
 # }
 
 #' Makes a "downsampled" metadata file that only contains the minimal data
-#' needed to run the vignette.
+#' needed to run the vignette and unit tests
 #' @noRd
 #' @param output Character scalar. Path to the output file.
 #' @return NULL
@@ -263,40 +263,51 @@ downsample_metadata <- function(output = "sample_meta.parquet"){
     
     # Make a table of rows per dataset
     dataset_sizes <- metadata |>
-        dplyr::group_by(.data$file_id_db) |>
+        dplyr::group_by(.data$file_id_cellNexus_single_cell) |>
         summarise(n = dplyr::n()) |> 
         dplyr::collect()
     
     # Find a minimal set of file_id_dbs we need
     minimal_file_ids <- rlang::exprs(
         # Used by the vignette
-        .data$ethnicity == "African" &
+        .data$self_reported_ethnicity == "African" &
             stringr::str_like(.data$assay, "%10x%") &
             .data$tissue == "lung parenchyma" &
             stringr::str_like(.data$cell_type, "%CD4%"),
-        .data$cell_type_harmonised == "nk",
-        .data$cell_type_harmonised == "cd14 mono",
+        .data$cell_type_unified_ensemble == "nk",
+        .data$cell_type_unified_ensemble == "cd14 mono",
         .data$tissue == "kidney blood vessel",
+        .data$file_id_cellNexus_single_cell == "e52795dec7b626b6276b867d55328d9f___1.h5ad",
         # Used by tests
-        .data$file_id_db == "3214d8f8986c1e33a85be5322f2db4a9",
-        .data$cell_id == "868417_1"
+        .data$file_id_cellNexus_single_cell == "4164d0eb972ad5e12719b6858c9559ea___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "7ddd6775d704d6826539abaee8d22f65___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "6f0d7a93cff864a1cf029a28e92057e6___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "51250a91a93bfe3c6ba22c9f7d8e04ee___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "490bfce7a70edde5d4fc6352374ead0c___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "25807d1aa8bb7fc63d587a64361fd2db___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "0ad7715d6d9052559d660aaa61bd69d2___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "d2ab9251c9670f0de3657130aa79d7e6___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "88a378f0cd39ed31bd4b83ee4d2fba5a___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "5257022969fc37563e82b608d3908565___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "1d90787ac66a5ed18222e2a9851eabbc___1.h5ad",
+        .data$file_id_cellNexus_single_cell == "4414dffc701125c467adad7977adcf21___1.h5ad",
     ) |>
         purrr::map(function(filter){
             all_ids <- metadata |> 
                 dplyr::filter(!!filter) |>
-                dplyr::group_by(.data$file_id_db) |>
-                dplyr::pull(.data$file_id_db) |> unique()
-                
+                dplyr::group_by(.data$file_id_cellNexus_single_cell) |>
+                dplyr::pull(.data$file_id_cellNexus_single_cell) |> unique()
+
             dataset_sizes |>
-                dplyr::filter(.data$file_id_db %in% all_ids) |>
+                dplyr::filter(.data$file_id_cellNexus_single_cell %in% all_ids) |> 
                 dplyr::slice_min(n=50, order_by = .data$n) |>
-                dplyr::pull(.data$file_id_db)
+                dplyr::pull(.data$file_id_cellNexus_single_cell)
         }) |>
         purrr::reduce(union)
     
     metadata |>    
-        dplyr::filter(.data$file_id_db %in% minimal_file_ids) |>
-        dplyr::arrange(.data$file_id_db, .data$sample_id) |>
+        dplyr::filter(.data$file_id_cellNexus_single_cell %in% minimal_file_ids) |>
+        dplyr::arrange(.data$file_id_cellNexus_single_cell, .data$sample_id) |>
         dplyr::collect() |>
         arrow::write_parquet(output)
     

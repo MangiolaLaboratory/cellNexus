@@ -41,8 +41,8 @@ get_metadata_url <- function(databases = c("metadata.1.2.13.parquet")) {
 #' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 SAMPLE_DATABASE_URL <- single_line_str(
   "https://object-store.rc.nectar.org.au/v1/
-    AUTH_06d6e008e3e642da99d806ba3ea629c5/metadata/
-    sample_metadata.0.2.3.parquet"
+    AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/
+    sample_metadata.1.2.13.parquet"
 )
 
 #' Gets the CellNexus metadata as a data frame.

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
       </span>
     </div>
 
@@ -54,7 +54,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a Shiny app that allows users to generate filtering &amp; retreival code for cellNexus</h1>
-    <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/fix-56/R/interface_app.R" class="external-link"><code>R/interface_app.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/interface_app.R" class="external-link"><code>R/interface_app.R</code></a></small>
     <div class="hidden name"><code>create_interface_app.Rd</code></div>
     </div>
 
@@ -84,6 +84,17 @@ in the selected format.</p>
     <p>Jared Andrews</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Create the interface app with metadata</span></span></span>
+<span class="r-in"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">app</span> <span class="op">&lt;-</span> <span class="fu">create_interface_app</span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Run the app</span></span></span>
+<span class="r-in"><span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/runApp.html" class="external-link">runApp</a></span><span class="op">(</span><span class="va">app</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -92,7 +103,7 @@ in the selected format.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Stefano Mangiola, Michael Milton, Silicon Valley Foundation CZF2019-002443, NIH NHGRI 5U24HG004059-18, Victoria Cancer Agency ECRF21036, NHMRC 1116955.</p>
+  <p></p><p>Developed by Stefano Mangiola, Mengyuan Shen, Michael Milton, Silicon Valley Foundation CZF2019-002443, NIH NHGRI 5U24HG004059-18, Victoria Cancer Agency ECRF21036, NHMRC 1116955.</p>
 </div>
 
 <div class="pkgdown">

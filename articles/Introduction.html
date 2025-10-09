@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.1</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <h1 data-toc-skip>cellNexus</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/vignettes/Introduction.Rmd" class="external-link"><code>vignettes/Introduction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/fix-56/vignettes/Introduction.Rmd" class="external-link"><code>vignettes/Introduction.Rmd</code></a></small>
       <div class="hidden name"><code>Introduction.Rmd</code></div>
 
     </div>
@@ -129,7 +129,7 @@ so a network connection is required for most functionality.</p>
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">METADATA_URL</span><span class="op">)</span></span>
 <span><span class="va">metadata</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.2.13.parquet to /tmp/Rtmp2S4Ntf/sample_metadata.1.2.13.parquet</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.2.13.parquet to /tmp/RtmpQFUcWD/sample_metadata.1.2.13.parquet</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 94]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.5.1/:memory:]</span></span></span>
 <span><span class="co">#&gt;    cell_id                     dataset_id observation_joinid sample_id cell_type</span></span>
@@ -164,18 +164,18 @@ queries.</p>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">tissue</span>, <span class="va">cell_type_unified_ensemble</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 2]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.5.1/:memory:]</span></span></span>
-<span><span class="co">#&gt;    tissue              cell_type_unified_ensemble</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> kidney              epithelial                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> kidney blood vessel epithelial                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> lung parenchyma     cd4 th2 em                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> lung                cd4 fh em                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> lung parenchyma     treg                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> forebrain           nk                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> kidney              nk                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> lung                cd4 tcm                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> body of stomach     nk                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> respiratory airway  cd4 th1/th17 em           </span></span>
+<span><span class="co">#&gt;    tissue             cell_type_unified_ensemble</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> thymus             cd14 mono                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> breast             nk                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> renal pelvis       epithelial                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> respiratory airway cd4 th2 em                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> lung               cd4 th1 em                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> nose               cd4 fh em                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> respiratory airway granulocyte               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> blood              cd14 mono                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> nose               cd4 tcm                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> colonic epithelium nk                        </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ more rows</span></span></span></code></pre></div>
 </div>
 </div>
@@ -187,10 +187,8 @@ empty droplets, dead or damaged cells, doublets, and samples with low
 gene counts.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">=</span> <span class="va">metadata</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">empty_droplet</span> <span class="op">==</span> <span class="cn">FALSE</span>,</span>
-<span>         <span class="va">alive</span> <span class="op">==</span> <span class="cn">TRUE</span>,</span>
-<span>         <span class="va">scDblFinder.class</span> <span class="op">!=</span> <span class="st">"doublet"</span>,</span>
-<span>         <span class="va">feature_count</span> <span class="op">&gt;=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">feature_count</span> <span class="op">&gt;=</span> <span class="fl">5000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/keep_quality_cells.html">keep_quality_cells</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="download-single-cell-rna-sequencing-counts">Download single-cell RNA sequencing counts<a class="anchor" aria-label="anchor" href="#download-single-cell-rna-sequencing-counts"></a>
@@ -642,7 +640,7 @@ in cellNexus::pbmc3k_sce</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0.02 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/21-08-2025/counts/e52795dec7b626b6276b867d55328d9f___1.h5ad to /tmp/Rtmp2S4Ntf/cellxgene/21-08-2025//counts/e52795dec7b626b6276b867d55328d9f___1.h5ad</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/21-08-2025/counts/e52795dec7b626b6276b867d55328d9f___1.h5ad to /tmp/RtmpQFUcWD/cellxgene/21-08-2025//counts/e52795dec7b626b6276b867d55328d9f___1.h5ad</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> cellNexus says: Not all genes completely overlap across the provided objects.Counts are generated by genes intersection.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Compiling Experiment.</span></span>
@@ -783,7 +781,7 @@ groups.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_4.0.0    cellNexus_0.99.0</span></span>
+<span><span class="co">#&gt; [1] ggplot2_4.0.0    cellNexus_0.99.1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;   [1] RcppAnnoy_0.0.22            splines_4.5.1              </span></span>

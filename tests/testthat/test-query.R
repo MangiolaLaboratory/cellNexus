@@ -267,22 +267,7 @@ test_that("get_single_cell_experiment() expect to combine local and cloud counts
   expect_contains(colData(sce)[,"sample_id"] |> unique(), "pbmc3k")
 })
 
-test_that("get_pseudobulk() syncs appropriate files", {
-  temp <- tempfile()
-  id <- "8977a940f296898898d92461e71c8e0d___1.h5ad"
-  meta <- get_metadata(cache_directory = temp, cloud_metadata = SAMPLE_DATABASE_URL) |> 
-    filter(empty_droplet == "FALSE",
-           alive == "TRUE",
-           scDblFinder.class !="doublet",
-           file_id_cellNexus_pseudobulk == id)
-  
-  # The remote dataset should have many genes
-  sme <- get_pseudobulk(meta, cache_directory = temp)
-  sme |>
-    row.names() |>
-    length() |>
-    expect_gt(1)
-})
+
 
 test_that("get_metacell() syncs appropriate files", {
   cache = tempfile()

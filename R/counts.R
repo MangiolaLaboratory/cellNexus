@@ -243,7 +243,7 @@ get_single_cell_experiment <- function(data,
 #'   of requested features at the cost of potentially fewer samples.
 #'   A warning is emitted when samples are dropped.
 #' @return A `SummarizedExperiment` object.
-#' @importFrom dplyr pull filter as_tibble inner_join collect transmute
+#' @importFrom dplyr pull filter as_tibble inner_join collect transmute select any_of
 #' @importFrom tibble column_to_rownames
 #' @importFrom purrr reduce map map_int imap 
 #' @importFrom BiocGenerics cbind
@@ -269,20 +269,31 @@ get_pseudobulk <- function(data,
                            cache_directory = get_default_cache_dir(),
                            repository = COUNTS_URL,
                            features = NULL) {
-  raw_data <- collect(data)
+  # Validate required columns exist before collecting
+  assert_that(inherits(data, "tbl"))
+  required_cols <- c("cell_id", "file_id_cellNexus_pseudobulk", "sample_id", "cell_type_unified_ensemble", "atlas_id")
+  data_cols <- colnames(data)
+  missing_cols <- setdiff(required_cols, data_cols)
   assert_that(
-    inherits(raw_data, "tbl"),
-    has_name(raw_data, c("cell_id", "file_id_cellNexus_pseudobulk", "sample_id", "cell_type_unified_ensemble",
-                         "atlas_id"))
+    length(missing_cols) == 0,
+    msg = paste0("data does not have all of these name(s): ", paste(missing_cols, collapse = ", "))
   )
-  atlas_name <- raw_data |> distinct(atlas_id) |> pull()
+  
+  grouping_column <- "file_id_cellNexus_pseudobulk"
+  
+  # Get atlas_name without collecting all data
+  atlas_name <- data |> 
+    select(atlas_id) |> 
+    distinct() |> 
+    collect() |> 
+    pull(atlas_id)
+  
   parameter_validation_list <- 
     validate_data(data, assays, cell_aggregation, cache_directory, 
                   repository, features)
   
   versioned_cache_directory <- parameter_validation_list$cache_directory
   atlas_name <- parameter_validation_list$atlas_name
-  grouping_column <- "file_id_cellNexus_pseudobulk"
   
   subdirs <- assay_map[assays]
   
@@ -294,13 +305,17 @@ get_pseudobulk <- function(data,
       `%in%`(c("http", "https")) |>
       assert_that()
     
+    # Use lazy evaluation - no need to collect before transmute
     files_to_read <-
-      raw_data |> 
+      data |> 
+      select(.data[[grouping_column]], atlas_id) |>
       transmute(
         files = .data[[grouping_column]], 
         atlas_name = atlas_id, 
         cache_dir = cache_directory
-      ) |> distinct() |>
+      ) |> 
+      distinct() |>
+      collect() |>
       pmap(function(files, atlas_name, cache_dir) {
         sync_assay_files(
           files = files,
@@ -321,9 +336,39 @@ get_pseudobulk <- function(data,
         versioned_cache_directory,
         current_subdir
       )
-      experiment_list <- raw_data |>
+      # Select only needed columns before collecting to reduce memory usage
+      # Select columns that are unique per sample_id (sample-level metadata) plus
+      # the required grouping column and cell_type_unified_ensemble
+      # These columns were identified by checking which columns have the same value
+      # for all cells within a sample_id
+      sample_level_cols <- c(
+        "dataset_id", "sample_", "assay", "assay_ontology_term_id", "cell_count",
+        "citation", "collection_id", "dataset_version_id", "development_stage", 
+        "development_stage_ontology_term_id", "disease",
+        "disease_ontology_term_id", "donor_id", "experiment___", "explorer_url",
+        "feature_count", "filesize", "filetype", "is_primary_data",
+        "mean_genes_per_cell", "organism", "organism_ontology_term_id",
+        "primary_cell_count", "published_at", "raw_data_location", "revised_at",
+        "run_from_cell_id", "sample_heuristic", "schema_version",
+        "self_reported_ethnicity", "self_reported_ethnicity_ontology_term_id",
+        "sex", "sex_ontology_term_id", "suspension_type", "tissue",
+        "tissue_ontology_term_id", "tissue_type", "title", "tombstone", "url",
+        "x_approximate_distribution", "age_days",
+        "tissue_groups", "atlas_id", "sample_chunk",
+        "cell_chunk", "sample_pseudobulk_chunk",
+        "low_confidence_ethnicity", "imputed_ethnicity"
+      )
+      
+      experiment_list <- data |>
+        select(
+          .data[[grouping_column]],
+          sample_id,
+          cell_type_unified_ensemble,
+          dplyr::any_of(sample_level_cols)
+        ) |>
+        distinct() |>
         mutate(dir_prefix = dir_prefix) |>
-        dplyr::group_by(.data[[grouping_column]], dir_prefix) |>
+        collect() |>
         dplyr::summarise(experiments = list(
           group_to_data_container(
             dplyr::cur_group_id(),
@@ -332,7 +377,7 @@ get_pseudobulk <- function(data,
             features,
             grouping_column
           )
-        )) |>
+        ), .by = c(.data[[grouping_column]], dir_prefix)) |>
         dplyr::pull(experiments)
       
 

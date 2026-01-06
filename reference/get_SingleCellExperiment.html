@@ -30,9 +30,6 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/MangiolaLaboratory/cellNexus/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
@@ -102,7 +99,27 @@ an HTTP URL pointing to the location where the single cell data is stored.</p></
 
     <dt><code>features</code></dt>
 <dd><p>An optional character vector of features (ie genes) to return
-the counts for. By default counts for all features will be returned.</p></dd>
+the counts for. By default counts for all features will be returned.
+When provided, the returned object will contain exactly the requested
+features (row order preserved), and any experiments/samples that do not
+contain all requested features are dropped. This preserves the full set
+of requested features at the cost of potentially fewer samples.
+A warning is emitted when samples are dropped.
+When provided, the returned object will contain exactly the requested
+features (row order preserved), and any experiments/samples that do not
+contain all requested features are dropped. This preserves the full set
+of requested features at the cost of potentially fewer samples.
+A warning is emitted when samples are dropped.
+When provided, the returned object will contain exactly the requested
+features (row order preserved), and any experiments/samples that do not
+contain all requested features are dropped. This preserves the full set
+of requested features at the cost of potentially fewer samples.
+A warning is emitted when samples are dropped.
+When provided, the returned object will contain exactly the requested
+features (row order preserved), and any experiments/samples that do not
+contain all requested features are dropped. This preserves the full set
+of requested features at the cost of potentially fewer samples.
+A warning is emitted when samples are dropped.</p></dd>
 
 
 </dl></dd>

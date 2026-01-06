@@ -111,13 +111,16 @@ get_single_cell_experiment <- function(data,
                                        cache_directory = get_default_cache_dir(),
                                        repository = COUNTS_URL,
                                        features = NULL){
-  raw_data <- collect(data)
+  # Validate required columns exist before collecting
+  assert_that(inherits(data, "tbl"))
+  required_cols <- c("cell_id", "file_id_cellNexus_single_cell", "atlas_id")
+  data_cols <- colnames(data)
+  missing_cols <- setdiff(required_cols, data_cols)
   assert_that(
-    inherits(raw_data, "tbl"),
-    has_name(raw_data, c("cell_id", "file_id_cellNexus_single_cell", "atlas_id"))
+    length(missing_cols) == 0,
+    msg = paste0("data does not have all of these name(s): ", paste(missing_cols, collapse = ", "))
   )
   
-  atlas_name <- raw_data |> distinct(atlas_id) |> pull()
   parameter_validation_list <- 
     validate_data(data, assays, cell_aggregation, cache_directory, 
                   repository, features)
@@ -127,6 +130,9 @@ get_single_cell_experiment <- function(data,
   grouping_column <- "file_id_cellNexus_single_cell"
   
   subdirs <- assay_map[assays]
+  
+  # Collect data once - needed for both file syncing and experiment processing
+  raw_data <- data |> collect()
   
   # The repository is optional. If not provided we load only from the cache
   if (!is.null(repository)) {
@@ -142,7 +148,8 @@ get_single_cell_experiment <- function(data,
         files = .data[[grouping_column]], 
         atlas_name = atlas_id, 
         cache_dir = cache_directory
-      ) |>  distinct() |> 
+      ) |>  
+      distinct() |>
       pmap(function(files, atlas_name, cache_dir) {
         sync_assay_files(
           files = files,
@@ -281,13 +288,6 @@ get_pseudobulk <- function(data,
   
   grouping_column <- "file_id_cellNexus_pseudobulk"
   
-  # Get atlas_name without collecting all data
-  atlas_name <- data |> 
-    select(atlas_id) |> 
-    distinct() |> 
-    collect() |> 
-    pull(atlas_id)
-  
   parameter_validation_list <- 
     validate_data(data, assays, cell_aggregation, cache_directory, 
                   repository, features)
@@ -297,6 +297,38 @@ get_pseudobulk <- function(data,
   
   subdirs <- assay_map[assays]
   
+  # Select only needed columns before collecting to reduce memory usage
+  # Select columns that are unique per sample_id (sample-level metadata) plus
+  # the required grouping column and cell_type_unified_ensemble
+  sample_level_cols <- c(
+    "dataset_id", "sample_", "assay", "assay_ontology_term_id", "cell_count",
+    "citation", "collection_id", "dataset_version_id", "development_stage", 
+    "development_stage_ontology_term_id", "disease",
+    "disease_ontology_term_id", "donor_id", "experiment___", "explorer_url",
+    "feature_count", "filesize", "filetype", "is_primary_data",
+    "mean_genes_per_cell", "organism", "organism_ontology_term_id",
+    "primary_cell_count", "published_at", "raw_data_location", "revised_at",
+    "run_from_cell_id", "sample_heuristic", "schema_version",
+    "self_reported_ethnicity", "self_reported_ethnicity_ontology_term_id",
+    "sex", "sex_ontology_term_id", "suspension_type", "tissue",
+    "tissue_ontology_term_id", "tissue_type", "title", "tombstone", "url",
+    "x_approximate_distribution", "age_days",
+    "tissue_groups", "atlas_id", "sample_chunk",
+    "cell_chunk", "sample_pseudobulk_chunk",
+    "low_confidence_ethnicity", "imputed_ethnicity"
+  )
+  
+  # Collect data once - select only needed columns to reduce memory usage
+  raw_data <- data |>
+    select(
+      .data[[grouping_column]],
+      sample_id,
+      cell_type_unified_ensemble,
+      dplyr::any_of(sample_level_cols)
+    ) |>
+    distinct() |>
+    collect()
+  
   # The repository is optional. If not provided we load only from the cache
   if (!is.null(repository)) {
     cli_alert_info("Synchronising files")
@@ -305,17 +337,14 @@ get_pseudobulk <- function(data,
       `%in%`(c("http", "https")) |>
       assert_that()
     
-    # Use lazy evaluation - no need to collect before transmute
     files_to_read <-
-      data |> 
-      select(.data[[grouping_column]], atlas_id) |>
+      raw_data |> 
       transmute(
         files = .data[[grouping_column]], 
         atlas_name = atlas_id, 
         cache_dir = cache_directory
       ) |> 
       distinct() |>
-      collect() |>
       pmap(function(files, atlas_name, cache_dir) {
         sync_assay_files(
           files = files,
@@ -336,39 +365,9 @@ get_pseudobulk <- function(data,
         versioned_cache_directory,
         current_subdir
       )
-      # Select only needed columns before collecting to reduce memory usage
-      # Select columns that are unique per sample_id (sample-level metadata) plus
-      # the required grouping column and cell_type_unified_ensemble
-      # These columns were identified by checking which columns have the same value
-      # for all cells within a sample_id
-      sample_level_cols <- c(
-        "dataset_id", "sample_", "assay", "assay_ontology_term_id", "cell_count",
-        "citation", "collection_id", "dataset_version_id", "development_stage", 
-        "development_stage_ontology_term_id", "disease",
-        "disease_ontology_term_id", "donor_id", "experiment___", "explorer_url",
-        "feature_count", "filesize", "filetype", "is_primary_data",
-        "mean_genes_per_cell", "organism", "organism_ontology_term_id",
-        "primary_cell_count", "published_at", "raw_data_location", "revised_at",
-        "run_from_cell_id", "sample_heuristic", "schema_version",
-        "self_reported_ethnicity", "self_reported_ethnicity_ontology_term_id",
-        "sex", "sex_ontology_term_id", "suspension_type", "tissue",
-        "tissue_ontology_term_id", "tissue_type", "title", "tombstone", "url",
-        "x_approximate_distribution", "age_days",
-        "tissue_groups", "atlas_id", "sample_chunk",
-        "cell_chunk", "sample_pseudobulk_chunk",
-        "low_confidence_ethnicity", "imputed_ethnicity"
-      )
       
-      experiment_list <- data |>
-        select(
-          .data[[grouping_column]],
-          sample_id,
-          cell_type_unified_ensemble,
-          dplyr::any_of(sample_level_cols)
-        ) |>
-        distinct() |>
+      experiment_list <- raw_data |>
         mutate(dir_prefix = dir_prefix) |>
-        collect() |>
         dplyr::summarise(experiments = list(
           group_to_data_container(
             dplyr::cur_group_id(),
@@ -480,18 +479,25 @@ get_metacell <- function(data,
                          repository = COUNTS_URL,
                          features = NULL
                          ) {
-  raw_data <- collect(data)
+  # Validate required columns exist before collecting
+  assert_that(inherits(data, "tbl"))
+  required_cols <- c("sample_id", "file_id_cellNexus_single_cell", "atlas_id")
+  data_cols <- colnames(data)
+  missing_cols <- setdiff(required_cols, data_cols)
   assert_that(
-    inherits(raw_data, "tbl"),
-    has_name(raw_data, c("sample_id", "file_id_cellNexus_single_cell", "atlas_id")),
-    any(grepl("^metacell", names(raw_data)))
+    length(missing_cols) == 0,
+    msg = paste0("data does not have all of these name(s): ", paste(missing_cols, collapse = ", "))
   )
-  raw_data = raw_data |> 
+  assert_that(
+    any(grepl("^metacell", data_cols)),
+    msg = "data must contain at least one column starting with 'metacell'"
+  )
+  
+  data = data |> 
     # This is to separate metacell and single_cell in group_to_data_container, also 
     #    not to produce repetitive column in the metadata
     mutate(file_id_cellNexus_metacell = file_id_cellNexus_single_cell)
   
-  atlas_name <- raw_data |> distinct(atlas_id) |> pull()
   parameter_validation_list <- 
     validate_data(data, assays, cell_aggregation, cache_directory, 
                   repository, features)
@@ -501,6 +507,9 @@ get_metacell <- function(data,
   grouping_column <- "file_id_cellNexus_metacell"
   
   subdirs <- assay_map[assays]
+  
+  # Collect data once - needed for both file syncing and experiment processing
+  raw_data <- data |> collect()
   
   # The repository is optional. If not provided we load only from the cache
   if (!is.null(repository)) {
@@ -655,8 +664,7 @@ validate_data <- function(
   ## We have to convert to an in-memory table here, or some of the dplyr
   ## operations will fail when passed a database connection
   cli_alert_info("Realising metadata.")
-  raw_data <- collect(data)
-  atlas_name <- raw_data |> distinct(atlas_id) |> pull()
+  atlas_name <- data |> distinct(atlas_id) |> pull()
   versioned_cache_directory <- file.path(cache_directory, atlas_name, cell_aggregation)
   
   versioned_cache_directory |> map(function(directory_path) {

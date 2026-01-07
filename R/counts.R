@@ -661,6 +661,7 @@ validate_data <- function(
   # Data parameter validation (last, because it's slower)
   ## Evaluate the promise now so that we get a sensible error message
   force(data)
+  ## NOT SURE IF THE BELOW IS TRUE ANYMORE, PROBABLY NOT. LEAVING COMMENT FOR RECORDS.
   ## We have to convert to an in-memory table here, or some of the dplyr
   ## operations will fail when passed a database connection
   cli_alert_info("Realising metadata.")

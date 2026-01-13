@@ -19,7 +19,7 @@ utility that allows easy fetching of this data if necessary."><meta property="og
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.5</span>
       </span>
     </div>
 
@@ -122,7 +122,8 @@ doi:10.1101/2023.06.08.542671.</p>
 <span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">file_id_cellNexus_single_cell</span> <span class="op">==</span> <span class="va">dataset</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">unharmonised_meta</span> <span class="op">&lt;-</span> <span class="fu">get_unharmonised_dataset</span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">unharmonised_tbl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="va">unharmonised_meta</span><span class="op">[[</span><span class="va">dataset</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">harmonised_meta</span>, <span class="va">unharmonised_tbl</span>, by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"file_id_cellNexus_single_cell"</span>, <span class="st">"cell_id"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">harmonised_meta</span>, <span class="va">unharmonised_tbl</span>, </span></span>
+<span class="r-in"><span>    by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"file_id_cellNexus_single_cell"</span>, <span class="st">"cell_id"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

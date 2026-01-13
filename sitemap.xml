@@ -24,10 +24,14 @@
 <url><loc>/reference/hdf5_to_anndata.html</loc></url>
 <url><loc>/reference/import_one_sce.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/metacell_counts.html</loc></url>
 <url><loc>/reference/organize_inputs.html</loc></url>
 <url><loc>/reference/pbmc3k_sce.html</loc></url>
+<url><loc>/reference/pseudobulk_counts.html</loc></url>
 <url><loc>/reference/read_parquet.html</loc></url>
 <url><loc>/reference/report_file_sizes.html</loc></url>
+<url><loc>/reference/single_cell_counts.html</loc></url>
+<url><loc>/reference/single_cell_cpm.html</loc></url>
 <url><loc>/reference/single_line_str.html</loc></url>
 <url><loc>/reference/sync_metadata_assay_files.html</loc></url>
 <url><loc>/reference/sync_remote_file.html</loc></url>

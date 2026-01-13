@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.5</span>
       </span>
     </div>
 
@@ -78,7 +78,8 @@ in the selected format.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># Create the interface app with metadata</span></span></span>
-<span class="r-in"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># For fast build purpose only, you do not need to specify anything in cloud_metadata.</span></span></span>
+<span class="r-in"><span><span class="va">metadata</span> <span class="op">&lt;-</span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">app</span> <span class="op">&lt;-</span> <span class="fu">create_interface_app</span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Run the app</span></span></span>
 <span class="r-in"><span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/runApp.html" class="external-link">runApp</a></span><span class="op">(</span><span class="va">app</span><span class="op">)</span></span></span>

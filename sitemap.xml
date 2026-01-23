@@ -6,10 +6,12 @@
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
 <url><loc>/reference/SAMPLE_DATABASE_URL.html</loc></url>
+<url><loc>/reference/add_index_parquet.html</loc></url>
 <url><loc>/reference/calculate_pseudobulk.html</loc></url>
 <url><loc>/reference/cellNexus-package.html</loc></url>
 <url><loc>/reference/clear_old_metadata.html</loc></url>
 <url><loc>/reference/create_interface_app.html</loc></url>
+<url><loc>/reference/create_joined_metadata_table.html</loc></url>
 <url><loc>/reference/delete_counts.html</loc></url>
 <url><loc>/reference/get_SingleCellExperiment.html</loc></url>
 <url><loc>/reference/get_default_cache_dir.html</loc></url>
@@ -24,10 +26,14 @@
 <url><loc>/reference/hdf5_to_anndata.html</loc></url>
 <url><loc>/reference/import_one_sce.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/join_census_table.html</loc></url>
+<url><loc>/reference/join_metacell_table.html</loc></url>
+<url><loc>/reference/keep_quality_cells.html</loc></url>
 <url><loc>/reference/metacell_counts.html</loc></url>
 <url><loc>/reference/organize_inputs.html</loc></url>
 <url><loc>/reference/pbmc3k_sce.html</loc></url>
 <url><loc>/reference/pseudobulk_counts.html</loc></url>
+<url><loc>/reference/read_and_join_parquets.html</loc></url>
 <url><loc>/reference/read_parquet.html</loc></url>
 <url><loc>/reference/report_file_sizes.html</loc></url>
 <url><loc>/reference/single_cell_counts.html</loc></url>

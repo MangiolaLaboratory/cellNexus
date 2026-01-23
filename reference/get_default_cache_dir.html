@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.7</span>
       </span>
     </div>
 
@@ -44,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Returns the default cache directory with a version number</h1>
-    <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/fix-56/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
     <div class="hidden name"><code>get_default_cache_dir.Rd</code></div>
     </div>
 
@@ -74,21 +74,21 @@ doi:10.1101/2023.06.08.542671.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cache_directory <span class="op">=</span> <span class="fu">get_default_cache_dir</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span>, cache_directory <span class="op">=</span> <span class="fu">get_default_cache_dir</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   SQL [?? x 97]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.4.3 [unknown@Linux 6.11.0-1018-azure:R 4.6.0/:memory:]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    cell_id                     dataset_id observation_joinid sample_id cell_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 10X389_2:AATCGTGTCTGGGAGA_… 00476f9f-… 6Q`5Q?s8MG         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 10X389_2:ACCAAACGTCTCAGGC_… 00476f9f-… =rzn8n*;Bt         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 10X389_2:TCCGGGACACAGCGCT_… 00476f9f-… {UrC34cLRz         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 10X389_1:GTGACGCGTATCCCAA_… 00476f9f-… aX=h+H$b%3         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 10X389_2:ACTGCAACAAGAGATT_… 00476f9f-… yujwks&lt;ZXP         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 10X389_2:AGGAGGTAGTTCCGTA_… 00476f9f-… `I`7=IHlhJ         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 10X389_2:GAAGGACGTATGACAA_… 00476f9f-… 9UR&amp;U96Up(         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 10X389_2:GCCAGGTTCCCGAGAC_… 00476f9f-… GknSduSP`2         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 10X389_1:TTGGATGCAAGCGCAA_… 00476f9f-… U}{&gt;K6!kF$         9303a73f… neuron   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 10X389_1:ACACGCGGTCCTGAAT_… 00476f9f-… A;nR~xd6D5         9303a73f… neuron   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FCAImmP7528294-ACATACGAGTA… cda2c8cd-… p5e=WoIq0d         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> FCAImmP7528294-CATGACAGTCC… cda2c8cd-… lx`7Bo-&amp;7n         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> FCAImmP7528294-AAGACCTAGCT… cda2c8cd-… *NUPW@J{c2         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> FCAImmP7528294-AATCGGTTCAA… cda2c8cd-… KIV&gt;qGFIS?         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> FCAImmP7528294-TTTGGTTGTGG… cda2c8cd-… *_#lQ&lt;oUnT         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FCAImmP7528294-TCAGGTACAAT… cda2c8cd-… zHCZWNmUHu         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> FCAImmP7528294-GACGCGTAGGC… cda2c8cd-… -NL-OH3!IA         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> FCAImmP7528294-CTTGGCTGTTC… cda2c8cd-… 6mRCZW}rOM         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FCAImmP7528294-CACTCCACACC… cda2c8cd-… I6&gt;u{Gb-J_         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FCAImmP7579218-TGTGGTAGTCT… cda2c8cd-… IdHwp1GBZm         03ddfd57… monocyte </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 92 more variables: cell_type_ontology_term_id &lt;chr&gt;, sample_ &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   assay &lt;chr&gt;, assay_ontology_term_id &lt;chr&gt;, cell_count &lt;int&gt;,</span></span>

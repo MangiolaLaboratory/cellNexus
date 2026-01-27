@@ -18,7 +18,7 @@ the samples in that data frame"><meta property="og:image" content="/logo.png"><!
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.5</span>
       </span>
     </div>
 
@@ -45,7 +45,7 @@ the samples in that data frame"><meta property="og:image" content="/logo.png"><!
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Given a data frame of HCA metadata, returns a Seurat object corresponding to the samples in that data frame</h1>
-    <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/fix-56/R/seurat.R" class="external-link"><code>R/seurat.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/devel/R/seurat.R" class="external-link"><code>R/seurat.R</code></a></small>
     <div class="hidden name"><code>get_seurat.Rd</code></div>
     </div>
 
@@ -97,7 +97,27 @@ an HTTP URL pointing to the location where the single cell data is stored.</p></
 
     <dt><code>features</code></dt>
 <dd><p>An optional character vector of features (ie genes) to return
-the counts for. By default counts for all features will be returned.</p></dd>
+the counts for. By default counts for all features will be returned.
+When provided, the returned object will contain exactly the requested
+features (row order preserved), and any experiments/samples that do not
+contain all requested features are dropped. This preserves the full set
+of requested features at the cost of potentially fewer samples.
+A warning is emitted when samples are dropped.
+When provided, the returned object will contain exactly the requested
+features (row order preserved), and any experiments/samples that do not
+contain all requested features are dropped. This preserves the full set
+of requested features at the cost of potentially fewer samples.
+A warning is emitted when samples are dropped.
+When provided, the returned object will contain exactly the requested
+features (row order preserved), and any experiments/samples that do not
+contain all requested features are dropped. This preserves the full set
+of requested features at the cost of potentially fewer samples.
+A warning is emitted when samples are dropped.
+When provided, the returned object will contain exactly the requested
+features (row order preserved), and any experiments/samples that do not
+contain all requested features are dropped. This preserves the full set
+of requested features at the cost of potentially fewer samples.
+A warning is emitted when samples are dropped.</p></dd>
 
 
 </dl></dd>

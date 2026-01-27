@@ -10,6 +10,7 @@
 <url><loc>/reference/cellNexus-package.html</loc></url>
 <url><loc>/reference/clear_old_metadata.html</loc></url>
 <url><loc>/reference/create_interface_app.html</loc></url>
+<url><loc>/reference/delete_counts.html</loc></url>
 <url><loc>/reference/get_SingleCellExperiment.html</loc></url>
 <url><loc>/reference/get_default_cache_dir.html</loc></url>
 <url><loc>/reference/get_metacell.html</loc></url>
@@ -23,9 +24,6 @@
 <url><loc>/reference/hdf5_to_anndata.html</loc></url>
 <url><loc>/reference/import_one_sce.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/join_census_table.html</loc></url>
-<url><loc>/reference/join_metacell_table.html</loc></url>
-<url><loc>/reference/keep_quality_cells.html</loc></url>
 <url><loc>/reference/metacell_counts.html</loc></url>
 <url><loc>/reference/organize_inputs.html</loc></url>
 <url><loc>/reference/pbmc3k_sce.html</loc></url>

@@ -18,7 +18,7 @@ This function creates indexed tables for efficient joining and returns a data fr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.8</span>
       </span>
     </div>
 
@@ -83,7 +83,10 @@ Defaults to <code>c("sample_id", "dataset_id", "observation_joinid")</code>.</p>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to <code><a href="read_parquet.html">read_parquet()</a></code>.</p></dd>
+<dd><p>Additional arguments passed to <code><a href="read_parquet.html">read_parquet()</a></code>.
+library(dplyr)
+get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |&gt; head(2) |&gt;
+join_census_table(cache_directory = tempdir())</p></dd>
 
 </dl></div>
     <div id="value">

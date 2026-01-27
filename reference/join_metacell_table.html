@@ -18,7 +18,7 @@ This function creates indexed tables for efficient joining and returns a data fr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cellNexus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.8</span>
       </span>
     </div>
 
@@ -91,6 +91,28 @@ Defaults to <code>c("sample_id", "dataset_id", "cell_id")</code>.</p></dd>
     <p>A lazy SQL table with metacell metadata joined to the cellNexus metadata.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
+<span class="r-in"><span>  <span class="fu">join_metacell_table</span><span class="op">(</span>cache_directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0.57 GB</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metacell_metadata.1.3.0.parquet to /tmp/Rtmpuo57kd/metacell_metadata.1.3.0.parquet</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   SQL [?? x 113]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.4.3 [unknown@Linux 6.11.0-1018-azure:R 4.6.0/:memory:]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cell_id                      dataset_id observation_joinid sample_id cell_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> FCAImmP7528294-CATGACAGTCCC… cda2c8cd-… lx`7Bo-&amp;7n         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> FCAImmP7528294-ACATACGAGTAG… cda2c8cd-… p5e=WoIq0d         034f0fb1… monocyte </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 108 more variables: cell_type_ontology_term_id &lt;chr&gt;, sample_ &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   assay &lt;chr&gt;, assay_ontology_term_id &lt;chr&gt;, cell_count &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   citation &lt;chr&gt;, collection_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   default_embedding &lt;chr&gt;, development_stage &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   development_stage_ontology_term_id &lt;chr&gt;, disease &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   disease_ontology_term_id &lt;chr&gt;, donor_id &lt;chr&gt;, experiment___ &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   explorer_url &lt;chr&gt;, feature_count &lt;int&gt;, filesize &lt;dbl&gt;, filetype &lt;chr&gt;, …</span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

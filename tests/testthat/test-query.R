@@ -281,6 +281,66 @@ test_that("get_metacell() syncs appropriate files", {
   
 })
 
+test_that("get_metadata handles use_split_files correctly", {
+  cache = tempfile()
+  meta_single <- get_metadata(use_split_files = FALSE, cloud_metadata = SAMPLE_DATABASE_URL)
+  expect_s3_class(meta_single, "tbl_dbi") 
+  expect_gt(ncol(meta_single), 0)
+  
+  meta_split <- get_metadata(use_cache = FALSE, 
+                             use_split_files = TRUE)
+  expect_s3_class(meta_split, "tbl_dbi")
+  expect_gt(ncol(meta_split), 0)
+  
+  expect_gt(ncol(meta_single), ncol(meta_split))
+})
+
+test_that("join_census_table() returns an unique column",{
+  cache = tempfile()
+  col <- "cell_type"
+  meta <- get_metadata(use_split_files = T, cloud_metadata = SAMPLE_DATABASE_URL) |> head() |> 
+    join_census_table()
+  expect_true(col %in% colnames(meta))
+})
+
+test_that("join_metacell_table() returns an unique column",{
+  cache = tempfile()
+  meta <- get_metadata(use_split_files = T, cloud_metadata = SAMPLE_DATABASE_URL) |> head() |> 
+    join_metacell_table()
+  cols <- colnames(meta)
+  
+  # Detect metacell-related columns
+  metacell_cols <- cols[grepl("metacell", cols, ignore.case = TRUE)] 
+  
+  # Expect that metacell columns exist
+  expect_true(length(metacell_cols) > 0)
+})
+
+test_that("keep_quality_cells() return high quality cells", {
+  cache = tempfile()
+  
+  empty_droplet_col = "empty_droplet"
+  alive_col = "alive"
+  doublet_col = "scDblFinder.class"
+  
+  meta_unfiltered <- get_metadata(use_split_files = T)
+  meta_filtered <- get_metadata(use_split_files = T) |> keep_quality_cells()
+  
+  # Filtered should have fewer rows
+  n_unfiltered <- meta_unfiltered |> dplyr::count() |> collect() |> pull(n)
+  n_filtered   <- meta_filtered   |> dplyr::count() |> collect() |> pull(n)
+  expect_gt(n_unfiltered, n_filtered)
+  
+  # No empty droplets remain
+  expect_true(meta_filtered |> distinct(.data[[empty_droplet_col]]) |> collect() |> pull() |> identical(FALSE))
+  
+  # All cells are alive
+  expect_true(meta_filtered |> distinct(.data[[alive_col]]) |> collect() |> pull() |> identical(TRUE))
+  
+  # No doublets present
+  expect_false("doublet" %in% (meta_filtered |> distinct(.data[[doublet_col]]) |> collect() |> pull()))
+})
+
 # unharmonised_data is not implemented yet
 # test_that("get_unharmonised_dataset works with one ID", {
 #     dataset_id = "838ea006-2369-4e2c-b426-b2a744a2b02b"

@@ -64,35 +64,15 @@ get_SingleCellExperiment <- function(...){
 #'   an HTTP URL pointing to the location where the single cell data is stored.
 #' @param features An optional character vector of features (ie genes) to return
 #'   the counts for. By default counts for all features will be returned.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
+#' @importFrom dplyr pull filter as_tibble inner_join collect transmute group_split
 #' @return A `SingleCellExperiment` object.
-#' @importFrom dplyr pull filter as_tibble inner_join collect transmute
 #' @importFrom tibble column_to_rownames
 #' @importFrom purrr reduce map map_int imap pmap
 #' @importFrom BiocGenerics cbind
 #' @importFrom glue glue
 #' @importFrom SummarizedExperiment colData assayNames<-
 #' @importFrom assertthat assert_that has_name
-#' @importFrom cli cli_alert_success cli_alert_info
+#' @importFrom cli cli_alert_success cli_alert_info cli_progress_bar cli_progress_update cli_progress_done
 #' @importFrom rlang .data
 #' @importFrom S4Vectors DataFrame
 #' @examples
@@ -156,58 +136,52 @@ get_single_cell_experiment <- function(data,
   }
   
   cli_alert_info("Reading files.")
-  experiments <- subdirs |>
-    imap(function(current_subdir, current_assay) {
-      # Build up an experiment for each assay
-      dir_prefix <- file.path(
-        versioned_cache_directory,
-        current_subdir
-      )
-      
-      experiment_list <- raw_data |> 
-        mutate(dir_prefix = file.path(cache_directory, atlas_id, current_subdir)) |>
-        dplyr::group_by(.data[[grouping_column]], dir_prefix) |>
-        dplyr::summarise(experiments = list(
-          group_to_data_container(
-            dplyr::cur_group_id(),
-            dplyr::cur_data_all(),
-            unique(dir_prefix),
-            features,
-            grouping_column
-          )
-        )) |>
-        dplyr::pull(experiments)
-      
-      # If features provided, drop experiments missing any requested features
-      # and align rows to the requested features; otherwise intersect genes.
-      if (!is.null(features)) {
-        keep_idx <- purrr::map_lgl(experiment_list, function(exp) all(features %in% rownames(exp)))
-        dropped_count <- sum(!keep_idx)
-        if (all(!keep_idx)) {
-          cli_alert_warning("cellNexus says: None of the experiments contain all requested features. Please select different features.")
-        } else if (dropped_count > 0) {
-          cli_alert_warning("cellNexus says: {dropped_count} experiment(s) were dropped because they did not contain all requested features.")
-        }
-        experiment_list <- experiment_list[keep_idx]
-        experiment_list <- purrr::map(experiment_list, function(exp) exp[features, ])
-      } else {
-        commonGenes <- experiment_list |> check_gene_overlap()
-        experiment_list <- map(experiment_list, function(exp) exp[commonGenes,])
-      }
-      experiment_list |> do.call(cbind, args = _)
-    })
+  
+  # Group by file only, not by dir_prefix
+  groups <- raw_data |>
+    group_split(.data[[grouping_column]])
+  
+  # Calculate total progress: number of files * number of assays
+  total_progress <- length(groups) * length(assays)
+  pb <- cli_progress_bar("Reading files", total = total_progress)
+  
+  experiment_list <- map(seq_along(groups), function(i) {
+    gr <- groups[[i]]
+    res <- group_to_data_container(
+      i, gr,
+      dir_prefix = file.path(cache_directory, unique(gr$atlas_id)),
+      features = features,
+      grouping_column = grouping_column,
+      assays = assays,
+      subdirs = subdirs
+    )
+    # Update bar after finishing one file (which may contain multiple assays)
+    cli_progress_update(id = pb, inc = length(assays))
+    res
+  })
+  cli_progress_done(id = pb)
+  
+  # If features provided, drop experiments missing any requested features
+  # and align rows to the requested features; otherwise intersect genes.
+  if (!is.null(features)) {
+    keep_idx <- purrr::map_lgl(experiment_list, function(exp) all(features %in% rownames(exp)))
+    dropped_count <- sum(!keep_idx)
+    if (all(!keep_idx)) {
+      cli_alert_warning("cellNexus says: None of the experiments contain all requested features. Please select different features.")
+    } else if (dropped_count > 0) {
+      cli_alert_warning("cellNexus says: {dropped_count} experiment(s) were dropped because they did not contain all requested features.")
+    }
+    experiment_list <- experiment_list[keep_idx]
+    experiment_list <- purrr::map(experiment_list, function(exp) exp[features, ])
+  } else {
+    commonGenes <- experiment_list |> check_gene_overlap()
+    experiment_list <- map(experiment_list, function(exp) exp[commonGenes,])
+  }
   
   cli_alert_info("Compiling Experiment.")
   
-  # Combine all the assays
-  # Get a donor SCE
-  experiment <- experiments[[1]]
-  
-  SummarizedExperiment::assays(experiment) <- map(experiments, function(exp) {
-    SummarizedExperiment::assays(exp)[[1]]
-  })
-  
-  experiment
+  experiment_list |> 
+    do.call(cbind, args = _)
 }
 
 #' Gets a Pseudobulk from curated metadata
@@ -237,20 +211,15 @@ get_single_cell_experiment <- function(data,
 #'   an HTTP URL pointing to the location where the single cell data is stored.
 #' @param features An optional character vector of features (ie genes) to return
 #'   the counts for. By default counts for all features will be returned.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
+#' @importFrom dplyr pull filter as_tibble inner_join collect transmute group_split
 #' @return A `SummarizedExperiment` object.
-#' @importFrom dplyr pull filter as_tibble inner_join collect transmute
 #' @importFrom tibble column_to_rownames
-#' @importFrom purrr reduce map map_int imap 
+#' @importFrom purrr reduce map map_int imap pmap
 #' @importFrom BiocGenerics cbind
 #' @importFrom glue glue
 #' @importFrom SummarizedExperiment colData assayNames<-
-#' @importFrom assertthat assert_that
-#' @importFrom cli cli_alert_success cli_alert_info
+#' @importFrom assertthat assert_that has_name
+#' @importFrom cli cli_alert_success cli_alert_info cli_progress_bar cli_progress_update cli_progress_done
 #' @importFrom rlang .data
 #' @importFrom S4Vectors DataFrame
 #' @examples
@@ -314,70 +283,61 @@ get_pseudobulk <- function(data,
   }
   
   cli_alert_info("Reading files.")
-  experiments <- subdirs |>
-    imap(function(current_subdir, current_assay) {
-      # Build up an experiment for each assay
-      dir_prefix <- file.path(
-        versioned_cache_directory,
-        current_subdir
-      )
-      experiment_list <- raw_data |>
-        mutate(dir_prefix = dir_prefix) |>
-        dplyr::group_by(.data[[grouping_column]], dir_prefix) |>
-        dplyr::summarise(experiments = list(
-          group_to_data_container(
-            dplyr::cur_group_id(),
-            dplyr::cur_data_all(),
-            unique(dir_prefix),
-            features,
-            grouping_column
-          )
-        )) |>
-        dplyr::pull(experiments)
-      
-
-      # If features is defined, drop all experiments which do not contain all the features
-      # The logic is that if the user requests a subset of features, 
-      # they prefer to preserve all requested features rather than all experiments
-      if (!is.null(features)) {
-
-        # Check if all experiments contain all the features
-        keep_idx <- purrr::map_lgl(experiment_list, function(exp) all(features %in% rownames(exp)))
-        dropped_count <- sum(!keep_idx)
-        if (all(!keep_idx)) {
-          cli_alert_warning("cellNexus says: None of the experiments contain all requested features. Please select different features.")
-        }
-        else if (dropped_count > 0) {
-          cli_alert_warning("cellNexus says: {dropped_count} experiment(s) were dropped because they did not contain all requested features.")
-        }
-        experiment_list <- experiment_list[keep_idx]
-        # Ensure identical row order across experiments for cbind
-        experiment_list <- purrr::map(experiment_list, function(exp) {
-          exp[features, ]
-        })
-      } else {
-
-        commonGenes <- experiment_list |> check_gene_overlap()
-        experiment_list <- experiment_list |> map(function(exp) {
-          exp[commonGenes,]
-        })
-      }
-
-      experiment_list |>
-          do.call(cbind, args = _)
+  
+  # Group by file only, not by dir_prefix
+  groups <- raw_data |>
+    group_split(.data[[grouping_column]])
+  
+  # Add progress bar for reading files 
+  pb <- cli_progress_bar("Reading files", total = length(groups))
+  
+  experiment_list <- map(seq_along(groups), function(i) {
+    gr <- groups[[i]]
+    res <- group_to_data_container(
+      i, gr,
+      dir_prefix = file.path(versioned_cache_directory),
+      features = features,
+      grouping_column = grouping_column,
+      assays = assays,
+      subdirs = subdirs
+    )
+    # Update bar after finishing one file
+    cli_progress_update(id = pb)
+    res
+  })
+  cli_progress_done(id = pb)
+  
+  # If features is defined, drop all experiments which do not contain all the features
+  # The logic is that if the user requests a subset of features, 
+  # they prefer to preserve all requested features rather than all experiments
+  if (!is.null(features)) {
+    
+    # Check if all experiments contain all the features
+    keep_idx <- purrr::map_lgl(experiment_list, function(exp) all(features %in% rownames(exp)))
+    dropped_count <- sum(!keep_idx)
+    if (all(!keep_idx)) {
+      cli_alert_warning("cellNexus says: None of the experiments contain all requested features. Please select different features.")
+    }
+    else if (dropped_count > 0) {
+      cli_alert_warning("cellNexus says: {dropped_count} experiment(s) were dropped because they did not contain all requested features.")
+    }
+    experiment_list <- experiment_list[keep_idx]
+    # Ensure identical row order across experiments for cbind
+    experiment_list <- purrr::map(experiment_list, function(exp) {
+      exp[features, ]
     })
+  } else {
+    
+    commonGenes <- experiment_list |> check_gene_overlap()
+    experiment_list <- experiment_list |> map(function(exp) {
+      exp[commonGenes,]
+    })
+  }
   
   cli_alert_info("Compiling Experiment.")
   
-  # Combine all the assays
-  # Get a donor SCE
-  experiment <- experiments[[1]]
-  
-  SummarizedExperiment::assays(experiment) <- map(experiments, function(exp) {
-    SummarizedExperiment::assays(exp)[[1]]
-  })
-  
-  experiment
+  experiment_list |>
+    do.call(cbind, args = _)
 }
 
 #' Gets a Metacell from curated metadata
@@ -402,20 +362,15 @@ get_pseudobulk <- function(data,
 #'   an HTTP URL pointing to the location where the single cell data is stored.
 #' @param features An optional character vector of features (ie genes) to return
 #'   the counts for. By default counts for all features will be returned.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
+#' @importFrom dplyr pull filter as_tibble inner_join collect transmute group_split
 #' @return A `SingleCellExperiment` object.
-#' @importFrom dplyr pull filter as_tibble inner_join collect transmute
 #' @importFrom tibble column_to_rownames
-#' @importFrom purrr reduce map map_int imap 
+#' @importFrom purrr reduce map map_int imap pmap
 #' @importFrom BiocGenerics cbind
 #' @importFrom glue glue
 #' @importFrom SummarizedExperiment colData assayNames<-
-#' @importFrom assertthat assert_that
-#' @importFrom cli cli_alert_success cli_alert_info
+#' @importFrom assertthat assert_that has_name
+#' @importFrom cli cli_alert_success cli_alert_info cli_progress_bar cli_progress_update cli_progress_done
 #' @importFrom rlang .data
 #' @importFrom S4Vectors DataFrame
 #' @examples
@@ -485,60 +440,56 @@ get_metacell <- function(data,
   }
   
   cli_alert_info("Reading files.")
-  experiments <- subdirs |>
-    imap(function(current_subdir, current_assay) {
-      # Build up an experiment for each assay
-      dir_prefix <- file.path(
-        versioned_cache_directory,
-        current_subdir
-      )
-      experiment_list <- raw_data |>
-        mutate(dir_prefix = dir_prefix) |>
-        dplyr::group_by(.data[[grouping_column]], dir_prefix) |>
-        dplyr::summarise(experiments = list(
-          group_to_data_container(
-            dplyr::cur_group_id(),
-            dplyr::cur_data_all(),
-            unique(dir_prefix),
-            features,
-            grouping_column,
-            metacell_column = cell_aggregation
-          )
-        )) |>
-        dplyr::pull(experiments)
-      
-      # If features provided, drop experiments missing any requested features
-      # and align rows to the requested features; otherwise intersect genes.
-      if (!is.null(features)) {
-        keep_idx <- purrr::map_lgl(experiment_list, function(exp) all(features %in% rownames(exp)))
-        dropped_count <- sum(!keep_idx)
-        if (all(!keep_idx)) {
-          cli_alert_warning("cellNexus says: None of the experiments contain all requested features. Please select different features.")
-        } else if (dropped_count > 0) {
-          cli_alert_warning("cellNexus says: {dropped_count} experiment(s) were dropped because they did not contain all requested features.")
-        }
-        experiment_list <- experiment_list[keep_idx]
-        experiment_list <- purrr::map(experiment_list, function(exp) exp[features, ])
-      } else {
-        commonGenes <- experiment_list |> check_gene_overlap()
-        experiment_list <- map(experiment_list, function(exp) {
-          exp[commonGenes,]
-        })
-      }
-      experiment_list |> do.call(cbind, args = _)
+  
+  # Group by file only, not by dir_prefix
+  groups <- raw_data |>
+    group_split(.data[[grouping_column]])
+  
+  # Add progress bar for reading files 
+  pb <- cli_progress_bar("Reading files", total = length(groups))
+  
+  experiment_list <- map(seq_along(groups), function(i) {
+    gr <- groups[[i]]
+    res <- group_to_data_container(
+      i, gr,
+      dir_prefix = file.path(versioned_cache_directory),
+      features = features,
+      grouping_column = grouping_column,
+      metacell_column = cell_aggregation,
+      assays = assays,
+      subdirs = subdirs
+    )
+    # Update bar after finishing one file
+    cli_progress_update(id = pb)
+    res
+  })
+  cli_progress_done(id = pb)
+  
+  
+  # If features provided, drop experiments missing any requested features
+  # and align rows to the requested features; otherwise intersect genes.
+  if (!is.null(features)) {
+    keep_idx <- purrr::map_lgl(experiment_list, function(exp) all(features %in% rownames(exp)))
+    dropped_count <- sum(!keep_idx)
+    if (all(!keep_idx)) {
+      cli_alert_warning("cellNexus says: None of the experiments contain all requested features. Please select different features.")
+    } else if (dropped_count > 0) {
+      cli_alert_warning("cellNexus says: {dropped_count} experiment(s) were dropped because they did not contain all requested features.")
+    }
+    experiment_list <- experiment_list[keep_idx]
+    experiment_list <- purrr::map(experiment_list, function(exp) exp[features, ])
+  } else {
+    commonGenes <- experiment_list |> check_gene_overlap()
+    experiment_list <- map(experiment_list, function(exp) {
+      exp[commonGenes,]
     })
+  }
   
   cli_alert_info("Compiling Experiment.")
   
-  # Combine all the assays
-  # Get a donor SCE
-  experiment <- experiments[[1]]
-  
-  SummarizedExperiment::assays(experiment) <- map(experiments, function(exp) {
-    SummarizedExperiment::assays(exp)[[1]]
-  })
-  
-  experiment
+  experiment_list |> 
+    do.call(cbind, args = _)
+
 }
 
 #' Validate data parameters
@@ -656,28 +607,44 @@ validate_data <- function(
 #' @importFrom glue glue
 #' @noRd
 group_to_data_container <- function(i, df, dir_prefix, features, grouping_column,
-                                    metacell_column = NULL) {
-  # Set file name based on type
-  experiment_path <- df[[grouping_column]] |>
-    head(1) |>
-    file.path(
-      dir_prefix,
-      suffix=_
-    )
-  
-  # Check if file exists
-  experiment_path |> map(function(path) {
-    file_exists = file.exists(path)
-    file_exists |> assert_that(
-      msg = "Your cache does not contain the file {experiment_path} you
-           attempted to query. Please provide the repository
-           parameter so that files can be synchronised from the
-           internet" |> glue()
-    )
+                                    metacell_column = NULL, assays = NULL, subdirs = NULL) {
+  # Handle multiple assays
+  if (!is.null(assays) && length(assays) > 1) {
+    assay_data <- map(assays, function(assay) {
+      assay_path <- file.path(dir_prefix, assay_map[assay], df[[grouping_column]][1])
+      
+      if (!file.exists(assay_path)) {
+        cli_abort("Your cache does not contain the file {assay_path} you attempted to query. Please provide the repository parameter so that files can be synchronised from the internet")
+      }
+      
+      # Load experiment
+      zellkonverter::readH5AD(assay_path, reader = "R", use_hdf5 = TRUE) |> suppressMessages()
     })
-  
-  # Load experiment
-  experiment <- zellkonverter::readH5AD(experiment_path, reader = "R", use_hdf5 = TRUE) |> suppressMessages()
+    
+    # Use the first assay as the base experiment and add other assays
+    experiment <- assay_data[[1]]
+    purrr::iwalk(assays[-1], function(a, j) {
+      assay(experiment, a) <<- assay_data[[j + 1]]
+    })
+    
+  } else {
+    # Original single assay
+    experiment_path <- df[[grouping_column]] |>
+      head(1) |>
+      file.path(
+        dir_prefix,
+        subdirs[1],  # Use first subdir for single assay
+        suffix=_
+      )
+    
+    # Check if file exists
+    if (!file.exists(experiment_path)) {
+      cli_abort("Your cache does not contain the file {experiment_path} you attempted to query. Please provide the repository parameter so that files can be synchronised from the internet")
+    }
+    
+    # Load experiment
+    experiment <- zellkonverter::readH5AD(experiment_path, reader = "R", use_hdf5 = TRUE) |> suppressMessages()
+  }
   
   # Fix for https://github.com/tidyverse/dplyr/issues/6746
   force(i)
@@ -721,7 +688,7 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
     # remove cell-level annotations
     cell_level_anno <- c("cell_id", "cell_type", "file_id_cellNexus_single_cell",
                          "cell_type_ontology_term_id",
-                         "observation_joinid", "ensemble_joinid",
+                         "observation_joinid", "ensemble_joinid", "scaled_nCount_RNA",
                          "nFeature_expressed_in_sample", "nCount_RNA", "data_driven_ensemble", "cell_type_unified",
                          "empty_droplet", "observation_originalid", "alive", "scDblFinder.class", "is_immune")
     
@@ -752,7 +719,7 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
    
   }
   else if (grouping_column == "file_id_cellNexus_metacell") {
-    # Select relevant annotations to remove single-cell level annotations
+    # Select metacell level annotations
     annotations <- metacell_column |> 
       c( "dataset_id", "sample_id", "assay", "assay_ontology_term_id", 
          "development_stage", "development_stage_ontology_term_id", "disease", "disease_ontology_term_id", 
@@ -765,7 +732,7 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
          "file_id_cellNexus_metacell", "dir_prefix") 
     
     new_coldata <- df |>
-      select(annotations) |>
+      select(any_of(annotations)) |>
       distinct() |>
       mutate(
         metacell_identifier = glue("{sample_id}___{.data[[metacell_column]]}"),
@@ -785,6 +752,8 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
       `colnames<-`(new_coldata$metacell_identifier) |>
       `colData<-`(value = DataFrame(new_coldata))
   }
+  
+  experiment
 }
 
 #' Synchronises one or more remote assays with a local copy

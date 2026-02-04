@@ -49,7 +49,7 @@ single_line_str <- function(text){
 #' @importFrom tools R_user_dir
 #' @importFrom utils packageName
 #' @examples
-#' get_metadata(cache_directory = get_default_cache_dir())
+#' get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
 #'   immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.
@@ -77,7 +77,7 @@ clear_cache <- function() {
 #' @return `NULL`, invisibly
 #' @keywords internal
 #' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
-clear_old_metadata <- function(updated_data) {
+clear_old_metadata <- function(metadata) {
   cache_directory <- get_default_cache_dir()
   files_in_cache <- list.files(cache_directory)
   pattern <- "\\.parquet$"
@@ -129,28 +129,6 @@ sync_remote_file <- function(full_url, output_file, ...) {
 read_parquet <- function(conn, path, filename_column=FALSE){
     from_clause <- glue_sql("FROM read_parquet([{`path`*}], union_by_name=true, filename={filename_column})", .con=conn) |> sql()
     tbl(conn, from_clause)
-}
-
-#' Deletes specific counts and metadata from cache
-#' @importFrom purrr map
-#' @importFrom dplyr filter distinct pull collect
-#' @return `NULL`, invisibly
-#' @keywords internal
-#' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
-delete_counts <- function(data, 
-                          assay = c("original","cpm"), 
-                          cache_directory = get_default_cache_dir()){
-  data <- collect(data)
-  ids <- data |> distinct(file_id_db) |> pull(file_id_db)
-  counts_path <- file.path(cache_directory, assay, ids)
-  # counts
-  map(counts_path, ~ .x |> unlink(recursive = TRUE))
-  
-  # metadata
-  filename <- get_metadata(cache_directory = cache_directory, filename_column = "meta_filename", use_cache = FALSE ) |> 
-    filter(file_id_db %in% ids) |> distinct(meta_filename) |> pull(meta_filename)
-  arrow::read_parquet(filename) |> filter(!file_id_db %in% ids) |>
-    arrow::write_parquet(filename)
 }
 
 #' Write table to Parquet file using DuckDB
@@ -304,5 +282,39 @@ sync_metadata_assay_files <- function(data,
         )
       })
   }
+}
+
+#' Keep high-quality cells based on QC columns
+#'
+#' @param data A data frame or tibble containing single-cell metadata.
+#' @param empty_droplet_col A string specifying the column name 
+#'   that indicates empty droplets (default: `"empty_droplet"`). 
+#'   Expected logical vector
+#' @param alive_col A string specifying the column name 
+#'   that indicates whether cells are alive (default: `"alive"`). 
+#'   Expected logical vector
+#' @param doublet_col A string specifying the column name 
+#'   that indicates doublets (default: `"scDblFinder.class"`). 
+#'   Expected character vector: `"doublet"` and/or `"singlet"` and/or `"unknown"`.
+#'
+#' @return A filtered data frame containing only cells that pass all QC checks.
+#' @examples
+#' get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) |> 
+#'   head(2) |>
+#'   keep_quality_cells()
+#' @export
+#' @importFrom rlang .data
+#' @importFrom dplyr filter
+#' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
+keep_quality_cells <- function(data,
+                               empty_droplet_col = "empty_droplet",
+                               alive_col = "alive",
+                               doublet_col = "scDblFinder.class") {
+  data |>
+    filter(
+      .data[[empty_droplet_col]] == FALSE,
+      .data[[alive_col]] == TRUE,
+      .data[[doublet_col]] != "doublet"
+    )
 }
 

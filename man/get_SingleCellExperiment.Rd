@@ -32,27 +32,7 @@ files should be copied.}
     \item{\code{repository}}{A character vector of length one. If provided, it should be
 an HTTP URL pointing to the location where the single cell data is stored.}
     \item{\code{features}}{An optional character vector of features (ie genes) to return
-the counts for. By default counts for all features will be returned.
-When provided, the returned object will contain exactly the requested
-features (row order preserved), and any experiments/samples that do not
-contain all requested features are dropped. This preserves the full set
-of requested features at the cost of potentially fewer samples.
-A warning is emitted when samples are dropped.
-When provided, the returned object will contain exactly the requested
-features (row order preserved), and any experiments/samples that do not
-contain all requested features are dropped. This preserves the full set
-of requested features at the cost of potentially fewer samples.
-A warning is emitted when samples are dropped.
-When provided, the returned object will contain exactly the requested
-features (row order preserved), and any experiments/samples that do not
-contain all requested features are dropped. This preserves the full set
-of requested features at the cost of potentially fewer samples.
-A warning is emitted when samples are dropped.
-When provided, the returned object will contain exactly the requested
-features (row order preserved), and any experiments/samples that do not
-contain all requested features are dropped. This preserves the full set
-of requested features at the cost of potentially fewer samples.
-A warning is emitted when samples are dropped.}
+the counts for. By default counts for all features will be returned.}
   }}
 }
 \value{

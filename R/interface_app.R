@@ -69,7 +69,6 @@
 #' # Example 4: Handling a case with more inputs than grid cells
 #' many.inputs <- tagList(replicate(10, textInput("input", "Input")))
 #' organize_inputs(many.inputs, columns = 3) # Creates more than one row
-#'
 organize_inputs <- function(
     tag.list,
     id = NULL,

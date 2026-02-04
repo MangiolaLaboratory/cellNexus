@@ -7,8 +7,10 @@ library(tidybulk)
 library(tidySingleCellExperiment)
 library(stringr)
 library(arrow)
-anndata_path_based_on_dataset_id_to_read <- "/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/h5ad/"
-anndata_path_based_on_sample_id_to_save <- "/vast/scratch/users/shen.m/Census_final_run/split_h5ad_based_on_sample_id/"
+
+version <- "2024-07-01"
+anndata_path_based_on_dataset_id_to_read <- file.path("/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/h5ad/", version)
+anndata_path_based_on_sample_id_to_save <- file.path("/vast/scratch/users/shen.m/Census/split_h5ad_based_on_sample_id/", version)
 dir.create(anndata_path_based_on_sample_id_to_save, recursive = TRUE)
 
 files <- list.files(anndata_path_based_on_dataset_id_to_read, pattern = "*h5ad", 

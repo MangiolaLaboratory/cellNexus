@@ -101,6 +101,7 @@ assert_pseudobulk_metadata <- function(sce_obj,
 #' @importFrom S4Vectors metadata metadata<-
 #' @importFrom SummarizedExperiment assay assay<-
 #' @examples
+#' \dontrun{
 #' data(pbmc3k_sce)
 #' import_one_sce(pbmc3k_sce,
 #'                atlas_name = "pbmc3k_sce_atlas",
@@ -108,6 +109,7 @@ assert_pseudobulk_metadata <- function(sce_obj,
 #'                cell_aggregation = "single_cell",
 #'                cache_dir = get_default_cache_dir(),
 #'                pseudobulk = FALSE)
+#' }
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
 #'   immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.

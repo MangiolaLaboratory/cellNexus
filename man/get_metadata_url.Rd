@@ -7,12 +7,26 @@
 \href{https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3}{Mangiola et al.,2023}
 }
 \usage{
-get_metadata_url(databases = c("metadata.1.3.0.parquet"))
+get_metadata_url(
+  databases = "metadata.1.3.0.parquet",
+  use_split_files = FALSE,
+  use_census = FALSE,
+  use_metacell = FALSE
+)
 }
 \arguments{
 \item{databases}{A character vector specifying the names of the metadata files.
-Download the specific metadata by defining the metadata version. The default is
+Download the specific metadata by defining the metadata version. By default, it uses
 metadata.1.3.0.parquet}
+
+\item{use_split_files}{Logical, default \code{FALSE}. If \code{TRUE}, returns
+URLs for the split metadata files.}
+
+\item{use_census}{Logical, default \code{FALSE}. If \code{TRUE}, returns the URL
+for the census metadata file.}
+
+\item{use_metacell}{Logical, default \code{FALSE}. If \code{TRUE}, returns the URL
+for the metacell metadata file.}
 }
 \value{
 A character vector of URLs to parquet files to download

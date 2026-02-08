@@ -4,6 +4,9 @@
 \alias{cellNexus-package}
 \alias{cellNexus}
 \title{cellNexus: Query Interface for the Human Cell Atlas}
+\value{
+The cellNexus package (invisibly).
+}
 \description{
 \code{cellNexus} provides a query interface for programmatic exploration
 and retrieval of the harmonised, curated and reannotated CELLxGENE

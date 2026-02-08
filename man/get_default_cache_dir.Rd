@@ -16,7 +16,7 @@ A length one character vector.
 Returns the default cache directory with a version number
 }
 \examples{
-get_metadata(cache_directory = get_default_cache_dir())
+get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
 }
 \references{
 Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen,

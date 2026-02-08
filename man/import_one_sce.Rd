@@ -45,6 +45,7 @@ in the provided cache directory.
 Import and process metadata and counts for a SingleCellExperiment object
 }
 \examples{
+\dontrun{
 data(pbmc3k_sce)
 import_one_sce(pbmc3k_sce,
                atlas_name = "pbmc3k_sce_atlas",
@@ -52,6 +53,7 @@ import_one_sce(pbmc3k_sce,
                cell_aggregation = "single_cell",
                cache_dir = get_default_cache_dir(),
                pseudobulk = FALSE)
+}
 }
 \references{
 Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen,

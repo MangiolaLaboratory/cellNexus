@@ -12,27 +12,46 @@ library(dplyr)
 library(cellxgene.census)
 library(stringr)
 library(purrr)
+library(duckdb)
 result_directory = "/vast/projects/cellxgene_curated/metadata_cellxgenedp_Apr_2024"
 # # Sample metadata
 # sample_meta <- tar_read(metadata_dataset_id_common_sample_columns, store = glue("{result_directory}/_targets"))
-# saveRDS(sample_meta, "~/scratch/Census/cellxgene_to_census/sample_meta.rds")
-sample_meta <- readRDS("~/scratch/Census/cellxgene_to_census/sample_meta.rds")
+# sample_meta |> arrow::write_parquet("~/scratch/Census/sample_meta.parquet", compression = "zstd")
 
 # Sample to cell link
-sample_to_cell <- tar_read(metadata_dataset_id_cell_to_sample_mapping, store = glue("{result_directory}/_targets"))
-sample_to_cell_primary <- sample_to_cell |> filter(is_primary_data == TRUE)
-#saveRDS(sample_to_cell_primary, "~/scratch/Census/cellxgene_to_census/sample_to_cell_primary.rds")
-sample_to_cell_primary <-  readRDS("~/scratch/Census/cellxgene_to_census/sample_to_cell_primary.rds")
+# sample_to_cell <- tar_read(metadata_dataset_id_cell_to_sample_mapping, store = glue("{result_directory}/_targets"))
+# sample_to_cell_primary <- sample_to_cell |> filter(is_primary_data == TRUE)
+# sample_to_cell_primary |> arrow::write_parquet("~/scratch/Census/sample_to_cell_primary.parquet", compression = "zstd")
+
+sample_meta = 
+  tbl(
+    dbConnect(duckdb::duckdb(), dbdir = ":memory:"),
+    sql("SELECT * FROM read_parquet('~/scratch/Census/sample_meta.parquet')")
+  )
+
+sample_to_cell_primary = 
+  tbl(
+    dbConnect(duckdb::duckdb(), dbdir = ":memory:"),
+    sql("SELECT * FROM read_parquet('~/scratch/Census/sample_to_cell_primary.parquet')")
+  )
 
 sample_to_cell_primary_human <- sample_to_cell_primary |> 
-  left_join(sample_meta, by = c("sample_","dataset_id")) |> 
-  filter(organism == "Homo sapiens") |> 
-  select(observation_joinid, cell_, sample_, donor_id.x, dataset_id, is_primary_data.x, 
-         sample_heuristic.x, organism, tissue, development_stage, assay, collection_id,
+  left_join(sample_meta |> filter(organism == "Homo sapiens"), 
+            by = c("sample_","dataset_id", "donor_id", "is_primary_data", "sample_heuristic"),
+            copy = T) |> 
+  select(observation_joinid, cell_, sample_, 
+         dataset_id, donor_id, is_primary_data, sample_heuristic,
+         organism, tissue, development_stage, assay, collection_id,
          sex, self_reported_ethnicity, disease, cell_type)
 gc()
+
 # accepted_assays from census 
-accepted_assays <- read.csv("~/projects/CuratedAtlasQueryR/cellxgene-to-census/census_accepted_assays.csv", header=TRUE)
+# accepted_assays <- read.csv("~/git_control/cellNexus/dev/census_accepted_assays_2024-07-01.csv", header=TRUE) this file was used to publish cellNexus, then Census updated assay acceptance 
+# url <- "https://raw.githubusercontent.com/chanzuckerberg/cellxgene-census/d44bebd3e112ea41d00aa9b2509e2a606402c07d/docs/census_accepted_assays.csv"
+# download.file(url, destfile = "./dev/census_accepted_assays_2025-01-30.csv")
+accepted_assays  <- read.csv("~/git_control/cellNexus/dev/census_accepted_assays_2024-07-01.csv")
+colnames(accepted_assays) <- c("id", "assay")
+
 sample_to_cell_primary_human_accepted_assay <- sample_to_cell_primary_human |> filter(assay %in% accepted_assays$assay)
 
 large_samples <- sample_to_cell_primary_human_accepted_assay |> 
@@ -61,19 +80,22 @@ remove_nucleotides_and_separators <- function(x) {
 }
 
 # List of collection IDs
-collection_ids <- large_samples_collection_id$collection_id
+collection_ids <- large_samples_collection_id |> collect() |> pull(collection_id) 
 
 gc()
 process_collection <- function(id) {
   filtered_data <- sample_to_cell_primary_human_accepted_assay |>
+    collect() |>
     filter(collection_id == id) |>
     select(cell_, sample_)
   
-  filtered_data$cell_modified <- remove_nucleotides_and_separators(filtered_data$cell_)
+  #filtered_data <- filtered_data |> mutate(cell_modified = remove_nucleotides_and_separators(cell_))
+  filtered_data$cell_modified <- remove_nucleotides_and_separators(filtered_data |> pull(cell_))
   filtered_data
 }
 
-final_result <- map_df(collection_ids, process_collection)
+final_result <- map(collection_ids, process_collection, .progress = T)
+final_result <- reduce(final_result, union_all)
 
 # conditional generating sample_2 based on whether number of cells > 15K.
 sample_to_cell_primary_human_accepted_assay <- sample_to_cell_primary_human_accepted_assay |> 

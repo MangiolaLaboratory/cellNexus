@@ -58,6 +58,7 @@
 #' doi:10.1101/2023.06.08.542671.
 #'
 #' @name cellNexus-package
+#' @return The cellNexus package (invisibly).
 #' @aliases cellNexus-package cellNexus
 NULL
 

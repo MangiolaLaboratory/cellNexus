@@ -49,7 +49,7 @@ single_line_str <- function(text){
 #' @importFrom tools R_user_dir
 #' @importFrom utils packageName
 #' @examples
-#' get_metadata(cache_directory = get_default_cache_dir())
+#' get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
 #'   immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.

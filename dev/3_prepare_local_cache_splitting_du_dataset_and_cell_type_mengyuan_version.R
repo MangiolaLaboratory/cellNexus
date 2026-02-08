@@ -168,6 +168,7 @@ job::job({
   COPY (
      SELECT 
         cell_metadata.cell_ AS cell_id, -- Rename cell_ to cell_id
+        COALESCE(cell_metadata.alive, FALSE) AS alive, -- Set alive column NULL to FALSE
         cell_metadata.*,              -- Include all other columns from cell_metadata
         cell_annotation.*,            -- Include all columns from cell_annotation
         empty_droplet_df.*,           -- Include all columns from empty_droplet_df
@@ -187,8 +188,8 @@ job::job({
         AND file_id_cellNexus_single_cell.dataset_id = empty_droplet_df.dataset_id
         AND file_id_cellNexus_single_cell.cell_type_unified_ensemble = empty_droplet_df.cell_type_unified_ensemble
         
-      WHERE cell_metadata.dataset_id NOT IN ('99950e99-2758-41d2-b2c9-643edcdf6d82', '9fcb0b73-c734-40a5-be9c-ace7eea401c9')  -- (THESE TWO DATASETS DOESNT contain meaningful data - no observation_joinid etc), thus was excluded in the final metadata.
-        
+      WHERE cell_metadata.dataset_id NOT IN ('99950e99-2758-41d2-b2c9-643edcdf6d82', '9fcb0b73-c734-40a5-be9c-ace7eea401c9') -- (THESE TWO DATASETS DOESNT contain meaningful data - no observation_joinid etc), thus was excluded in the final metadata.
+         
   ) TO  '/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/cell_metadata_cell_type_consensus_v1_0_13_mengyuan.parquet'
   (FORMAT PARQUET, COMPRESSION 'gzip');
 "

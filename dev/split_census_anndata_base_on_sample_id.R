@@ -7,15 +7,17 @@ library(tidybulk)
 library(tidySingleCellExperiment)
 library(stringr)
 library(arrow)
-anndata_path_based_on_dataset_id_to_read <- "/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/h5ad/"
-anndata_path_based_on_sample_id_to_save <- "/vast/scratch/users/shen.m/Census_final_run/split_h5ad_based_on_sample_id/"
-dir.create(anndata_path_based_on_sample_id_to_save, recursive = TRUE)
 
-files <- list.files(anndata_path_based_on_dataset_id_to_read, pattern = "*h5ad", 
-             full.names = TRUE)
+version <- "2024-07-01"
+anndata_path_based_on_dataset_id_to_read <- file.path("/vast/projects/cellxgene_curated/metadata_cellxgene_mengyuan/h5ad/", version)
+anndata_path_based_on_sample_id_to_save <- file.path("/vast/scratch/users/shen.m/Census/split_h5ad_based_on_sample_id/", version)
+if (!dir.exists(anndata_path_based_on_sample_id_to_save)) dir.create(anndata_path_based_on_sample_id_to_save, recursive = TRUE)
+
+# files <- list.files(anndata_path_based_on_dataset_id_to_read, pattern = "*h5ad", 
+#              full.names = TRUE) |> head(2)
 
 save_data <- function(data, file_name) {
-  filename <- paste0(file.path(anndata_path_based_on_sample_id_to_save), file_name, ".h5ad")
+  filename <- paste0(file.path(anndata_path_based_on_sample_id_to_save), "/", file_name, ".h5ad")
   if(ncol(assay(data)) == 1) {
     
     # Duplicate the assay to prevent saving errors due to single-column matrices
@@ -46,7 +48,7 @@ subset_samples <- function(dataset_id, observation_joinid, sample_id) {
   
   
   # Construct the file path to the dataset
-  file_path <- paste0(anndata_path_based_on_dataset_id_to_read, dataset_id, ".h5ad")
+  file_path <- paste0(anndata_path_based_on_dataset_id_to_read, "/", dataset_id, ".h5ad")
   
   # Read the dataset from HDF5 file using zellkonverter package
   sce <- zellkonverter::readH5AD(file_path, use_hdf5 = TRUE, reader = "R")
@@ -175,7 +177,7 @@ list(
   )
 )
 
-# tar_make(store = "~/scratch/Census_final_run/split_h5ad_based_on_sample_id_target_store/",
+# tar_make(store = glue::glue("~/scratch/Census_final_run/{version}/split_h5ad_based_on_sample_id_target_store"),
 #          script = "~/git_control/cellNexus/dev/split_census_anndata_base_on_sample_id.R",
 #          reporter = "summary")
 

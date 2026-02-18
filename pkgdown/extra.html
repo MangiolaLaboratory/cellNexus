@@ -1,0 +1,125 @@
+<style>
+  :root {
+    --cnx-border: rgba(255, 255, 255, 0.16);
+    --cnx-panel: #141a22;
+  }
+
+  .navbar {
+    position: relative;
+    background: #000000 !important;
+    backdrop-filter: none;
+    border-bottom: 1px solid #111418;
+    overflow: visible;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.65);
+  }
+
+  .navbar.bg-primary {
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+
+  .navbar .nav-link,
+  .navbar .nav-text,
+  .navbar .navbar-brand {
+    color: #e7ecf3 !important;
+  }
+
+  .navbar .nav-link:hover,
+  .navbar .nav-link:focus,
+  .navbar .active > .nav-link,
+  .navbar .nav-link.active {
+    color: #ffffff !important;
+  }
+
+  .cnx-logo-chip {
+    position: absolute;
+    left: 1rem;
+    top: 100%;
+    transform: translateY(-34%);
+    width: 66px;
+    height: 66px;
+    border-radius: 16px;
+    border: 1px solid var(--cnx-border);
+    background: radial-gradient(circle at 35% 25%, #141a22, #0a0d11 75%);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1040;
+    pointer-events: none;
+  }
+
+  .cnx-logo-chip img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.35));
+  }
+
+  .navbar-brand {
+    margin-left: 4.9rem;
+    color: #f3f6fb !important;
+  }
+
+  .template-home .pkgdown-intro,
+  .template-article main,
+  .template-reference main {
+    background: linear-gradient(180deg, rgba(23, 30, 40, 0.95), rgba(14, 19, 27, 0.95));
+    border: 1px solid var(--cnx-border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+  }
+
+  a {
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+  }
+
+  .table {
+    --bs-table-bg: var(--cnx-panel);
+    --bs-table-striped-bg: #10151c;
+    --bs-table-border-color: #2e3d4f;
+  }
+
+  @media (max-width: 991.98px) {
+    .cnx-logo-chip {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      left: 0.85rem;
+      transform: translateY(-18%);
+    }
+
+    .cnx-logo-chip img {
+      width: 41px;
+      height: 41px;
+    }
+
+    .navbar-brand {
+      margin-left: 3.75rem;
+    }
+  }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var nav = document.querySelector(".navbar");
+    var brand = document.querySelector(".navbar-brand");
+
+    if (!nav || !brand || nav.querySelector(".cnx-logo-chip")) return;
+
+    var rootHref = brand.getAttribute("href") || "/";
+    var logoSrc = new URL("logo.png", rootHref).href;
+
+    var chip = document.createElement("span");
+    chip.className = "cnx-logo-chip";
+
+    var img = document.createElement("img");
+    img.src = logoSrc;
+    img.alt = "cellNexus logo";
+    chip.appendChild(img);
+
+    nav.appendChild(chip);
+  });
+</script>

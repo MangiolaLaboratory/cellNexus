@@ -34,9 +34,9 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /tmp/RtmpY8MaP6/sample_metadata.1.3.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /tmp/Rtmp79y9dP/sample_metadata.1.3.0.parquet
 #> # Source:   SQL [?? x 97]
-#> # Database: DuckDB 1.4.4 [unknown@Linux 6.14.0-1017-azure:R 4.5.2/:memory:]
+#> # Database: DuckDB 1.4.3 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]
 #>    cell_id                     dataset_id observation_joinid sample_id cell_type
 #>    <chr>                       <chr>      <chr>              <chr>     <chr>    
 #>  1 FCAImmP7528294-ACATACGAGTA… cda2c8cd-… p5e=WoIq0d         034f0fb1… monocyte 

@@ -43,7 +43,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Import and process metadata and counts for a SingleCellExperiment object</h1>
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/import_metadata_and_counts.R" class="external-link"><code>R/import_metadata_and_counts.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/website/R/import_metadata_and_counts.R" class="external-link"><code>R/import_metadata_and_counts.R</code></a></small>
       <div class="d-none name"><code>import_one_sce.Rd</code></div>
     </div>
 
@@ -126,7 +126,11 @@ doi:10.1101/2023.06.08.542671.</p>
 <span class="r-in"><span>               cache_dir <span class="op">=</span> <span class="fu"><a href="get_default_cache_dir.html">get_default_cache_dir</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>               pseudobulk <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Generating cpm from 18e65312747b3f1624c2f9240612579e. </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> cpm are generated in <span style="color: #0000BB;">/home/runner/.cache/R/cellNexus/pbmc3k_sce_atlas/19-02-2026/single_cell/cpm</span>. </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in generator$new(shape = rev(dim(sce)), ...):</span> File</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">/github/home/.cache/R/cellNexus/pbmc3k_sce_atlas/19-02-2026/single_cell/counts/18e65312747b3f1624c2f9240612579e.h5ad</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> already exists but mode is set to <span style="color: #0000BB;">"w-"</span>. If you want to overwrite the file, use</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> a different mode (e.g. 'w'). See `?read_h5ad()` or `?write_h5ad()` for more</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> information.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

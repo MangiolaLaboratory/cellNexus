@@ -47,7 +47,7 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Gets a Metacell from curated metadata</h1>
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/counts.R" class="external-link"><code>R/counts.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/website/R/counts.R" class="external-link"><code>R/counts.R</code></a></small>
       <div class="d-none name"><code>get_metacell.Rd</code></div>
     </div>
 
@@ -133,12 +133,10 @@ doi:10.1101/2023.06.08.542671.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Use the lightweight sample database URL (for fast checks during development only)</span></span></span>
 <span class="r-in"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="fu">cellNexus</span><span class="fu">::</span><span class="va"><a href="SAMPLE_DATABASE_URL.html">SAMPLE_DATABASE_URL</a></span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /home/runner/.cache/R/cellNexus/sample_metadata.1.3.0.parquet</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /github/home/.cache/R/cellNexus/sample_metadata.1.3.0.parquet</span>
 <span class="r-in"><span><span class="va">metacell</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op">|&gt;</span> <span class="fu">get_metacell</span><span class="op">(</span>cell_aggregation <span class="op">=</span> <span class="st">"metacell_2"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Synchronising files</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/21-08-2025/metacell_2/counts/03319e4f54220f534de2c4e42e607126___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene/21-08-2025/metacell_2/counts/03319e4f54220f534de2c4e42e607126___1.h5ad</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Reading files.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Compiling Experiment.</span>
 </code></pre></div>

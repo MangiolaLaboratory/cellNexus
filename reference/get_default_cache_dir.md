@@ -28,10 +28,8 @@ doi:10.1101/2023.06.08.542671.
 
 ``` r
 get_metadata(cache_directory = get_default_cache_dir())
-#> ℹ Downloading 1 file, totalling 1.78 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metadata.1.3.0.parquet to /home/runner/.cache/R/cellNexus/metadata.1.3.0.parquet
 #> # Source:   SQL [?? x 97]
-#> # Database: DuckDB 1.4.4 [unknown@Linux 6.14.0-1017-azure:R 4.5.2/:memory:]
+#> # Database: DuckDB 1.4.3 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]
 #>    cell_id                     dataset_id observation_joinid sample_id cell_type
 #>    <chr>                       <chr>      <chr>              <chr>     <chr>    
 #>  1 10X389_2:AATCGTGTCTGGGAGA_… 00476f9f-… 6Q`5Q?s8MG         9303a73f… neuron   

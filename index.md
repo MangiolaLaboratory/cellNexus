@@ -4,7 +4,7 @@
 retrieval of harmonised, curated, and reannotated CELLxGENE
 human-cell-atlas data.
 
-![cellNexus abstract overview](abstract.png)
+![cellNexus abstract overview](reference/figures/abstract.png)
 
 This standalone documentation website provides:
 

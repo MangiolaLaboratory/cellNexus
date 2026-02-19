@@ -86,7 +86,7 @@ doi:10.1101/2023.06.08.542671.
 # Use the lightweight sample database URL (for fast checks during development only)
 meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /Users/a1234450/Library/Caches/org.R-project.R/R/cellNexus/sample_metadata.1.3.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /github/home/.cache/R/cellNexus/sample_metadata.1.3.0.parquet
 metacell <- meta |> get_metacell(cell_aggregation = "metacell_2")
 #> ℹ Realising metadata.
 #> ℹ Synchronising files

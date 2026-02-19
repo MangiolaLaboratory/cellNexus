@@ -6,6 +6,7 @@ This page is a standalone metadata guide for `cellNexus` and documents
 the key fields used in downstream analysis.
 
 ``` r
+
 library(cellNexus)
 metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
 metadata
@@ -98,6 +99,7 @@ metadata
 ## Practical exploration
 
 ``` r
+
 # Which columns are available?
 colnames(metadata)
 

@@ -30,7 +30,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/HEAD/inst/CITATION)
+[`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/website/inst/CITATION)
 
 Mangiola, S., Milton, M., Ranathunga, N., Li-Wai-Suen, C., Odainic, A.,
 Yang, E., Hutchison, W., Garnham, A., Iskander, J., Pal, B., Yadav, V.,

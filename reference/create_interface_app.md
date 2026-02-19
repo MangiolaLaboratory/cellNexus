@@ -30,7 +30,8 @@ Jared Andrews
 ``` r
 if (FALSE) { # \dontrun{
 # Create the interface app with metadata
-metadata <- get_metadata()
+# For fast build purpose only, you do not need to specify anything in cloud_metadata.
+metadata <-get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
 app <- create_interface_app(metadata)
 # Run the app
 shiny::runApp(app)

@@ -57,5 +57,5 @@ calculate_pseudobulk(pbmc3k_sce,
                    cell_aggregation = "pseudobulk",
                    cache_dir = get_default_cache_dir())
 #> ℹ Generating pseudobulk from 67e196a3c4e145151fc9e06c200e2f7f.h5ad. 
-#> Error in loadNamespace(x): there is no package called ‘anndataR’
+#> ℹ pseudobulk are generated in /github/home/.cache/R/cellNexus/pbmc3k_sce_atlas/19-02-2026/pseudobulk. 
 ```

@@ -30,6 +30,11 @@ jobs:
       - name: Install package
         run: R CMD INSTALL .
 
+      - name: Set git config for deploy
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Build and deploy pkgdown site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

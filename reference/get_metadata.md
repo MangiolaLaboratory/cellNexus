@@ -167,6 +167,7 @@ doi:10.1101/2023.06.08.542671.
 
 ``` r
 library(dplyr)
+#> Warning: package ‘dplyr’ was built under R version 4.5.1
 #> 
 #> Attaching package: ‘dplyr’
 #> The following objects are masked from ‘package:stats’:
@@ -175,8 +176,7 @@ library(dplyr)
 #> The following objects are masked from ‘package:base’:
 #> 
 #>     intersect, setdiff, setequal, union
-# For fast build purpose only, you do not need to specify anything in cloud_metadata.
-filtered_metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> 
+filtered_metadata <- get_metadata() |>
     filter(
         self_reported_ethnicity == "African" &
             assay %LIKE% "%10x%" &

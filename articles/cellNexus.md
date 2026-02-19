@@ -35,21 +35,18 @@ data that align with the evolving CELLxGENE releases.
 ### Installation
 
 ``` r
-
 devtools::install_github("MangiolaLaboratory/cellNexus")
 ```
 
 ### Load the package
 
 ``` r
-
 library(cellNexus)
 ```
 
 ### Load additional packages
 
 ``` r
-
 suppressPackageStartupMessages({
     library(ggplot2)
 })
@@ -60,7 +57,6 @@ suppressPackageStartupMessages({
 #### Load the metadata
 
 ``` r
-
 metadata <- get_metadata(cloud_metadata = METADATA_URL)
 metadata
 ```
@@ -73,7 +69,6 @@ unless a custom path is provided via the cache_directory argument. The
 #### Explore the tissue
 
 ``` r
-
 metadata |>
     dplyr::distinct(tissue, cell_type_unified_ensemble) 
 ```
@@ -85,7 +80,6 @@ empty droplets, dead or damaged cells, doublets, and samples with low
 gene counts.
 
 ``` r
-
 metadata = metadata |> 
   dplyr::filter(empty_droplet == FALSE,
          alive == TRUE,
@@ -98,7 +92,6 @@ metadata = metadata |>
 #### Query raw counts
 
 ``` r
-
 single_cell_counts = 
     metadata |>
     dplyr::filter(
@@ -107,8 +100,7 @@ single_cell_counts =
         tissue == "lung parenchyma" &
         cell_type |> stringr::str_like("%CD4%")
     ) |>
-  head() |> 
-  get_single_cell_experiment()
+    get_single_cell_experiment()
 
 single_cell_counts
 ```
@@ -116,8 +108,7 @@ single_cell_counts
 #### Query counts scaled per million
 
 ``` r
-
-single_cell_cpm = 
+single_cell_counts = 
     metadata |>
     dplyr::filter(
         self_reported_ethnicity == "African" &
@@ -125,16 +116,14 @@ single_cell_cpm =
         tissue == "lung parenchyma" &
         cell_type |> stringr::str_like("%CD4%")
     ) |>
-  head() |> 
-  get_single_cell_experiment(assays = "cpm")
+    get_single_cell_experiment(assays = "cpm")
 
-single_cell_cpm
+single_cell_counts
 ```
 
 #### Query pseudobulk
 
 ``` r
-
 pseudobulk_counts = 
    metadata |>
     dplyr::filter(
@@ -143,8 +132,7 @@ pseudobulk_counts =
         tissue == "lung parenchyma" &
         cell_type |> stringr::str_like("%CD4%")
     ) |>
-  head() |> 
-  get_pseudobulk()
+    get_pseudobulk()
 
 pseudobulk_counts
 ```
@@ -156,7 +144,6 @@ with 2, 4, 8, and so on. For example, the value of metacell_2 represents
 a grouping of cells that can be split into two distinct metacells.
 
 ``` r
-
 metacell_counts = 
    metadata |>
     dplyr::filter(!is.na(metacell_2)) |>
@@ -166,8 +153,7 @@ metacell_counts =
         tissue == "lung parenchyma" &
         cell_type |> stringr::str_like("%CD4%")
     ) |>
-  head() |> 
-  get_metacell(cell_aggregation = "metacell_2")
+    get_metacell(cell_aggregation = "metacell_2")
 
 metacell_counts
 ```
@@ -179,8 +165,7 @@ This is helpful if just few genes are of interest (e.g ENSG00000134644
 gene ID(s).
 
 ``` r
-
-single_cell_cpm = 
+single_cell_counts = 
     metadata |>
     dplyr::filter(
         self_reported_ethnicity == "African" &
@@ -188,8 +173,7 @@ single_cell_cpm =
         tissue == "lung parenchyma" &
         cell_type |> stringr::str_like("%CD4%")
     ) |>
-  head() |>
-  get_single_cell_experiment(assays = "cpm", features = "ENSG00000134644")
+    get_single_cell_experiment(assays = "cpm", features = "ENSG00000134644")
 
 single_cell_counts
 ```
@@ -201,7 +185,6 @@ time and occupy a lot of memory depending on how many cells you are
 requesting.
 
 ``` r
-
 seurat_counts = 
     metadata |>
     dplyr::filter(
@@ -210,8 +193,7 @@ seurat_counts =
         tissue == "lung parenchyma" &
         cell_type |> stringr::str_like("%CD4%")
     ) |>
-  head() |>
-  get_seurat()
+    get_seurat()
 
 seurat_counts
 ```
@@ -224,14 +206,12 @@ directory to metadata and counts functions:
 ### Load metadata from the custom cache directory
 
 ``` r
-
 metadata <- get_metadata(cache_directory = "/MY/CUSTOM/PATH")
 ```
 
 ### Query raw counts from the custom cache directory
 
 ``` r
-
 single_cell_counts = 
     metadata |>
     dplyr::filter(
@@ -269,7 +249,6 @@ be slow. In addition, an `.rds` saved in this way is not portable: you
 will not be able to share it with other users.
 
 ``` r
-
 single_cell_counts |> saveRDS("single_cell_counts.rds")
 ```
 
@@ -286,7 +265,6 @@ corresponding `.rds` as it includes a copy of the count information, and
 the saving process is going to be slow for large objects.
 
 ``` r
-
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
@@ -310,7 +288,6 @@ However this `.h5ad` saving strategy has a bottleneck of handling
 columns with only NA values of a `SingleCellExperiment` metadata.
 
 ``` r
-
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
@@ -325,7 +302,6 @@ We can gather all CD14 monocytes cells and plot the distribution of
 ENSG00000085265 (FCN1) across all tissues
 
 ``` r
-
 
 # Plots with styling
 counts <- metadata |>
@@ -363,7 +339,6 @@ counts |>
 ```
 
 ``` r
-
 # Plot by tissue
 counts |> 
   dplyr::with_groups(tissue, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na=TRUE))) |> 
@@ -393,7 +368,6 @@ To enable this feature, users must include
 columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
 
 ``` r
-
 # Set up local cache and paths
 local_cache <- tempdir()
 layer <- "counts"
@@ -432,7 +406,6 @@ cellNexus::pbmc3k_sce |>
 ```
 
 ``` r
-
 # A cellNexus file
 file_id_from_cloud <- "e52795dec7b626b6276b867d55328d9f___1.h5ad"
 file_id_local <- basename(sce_path)
@@ -519,6 +492,5 @@ hierarchical partitions of cells into metacell groups.
 ## Session Info
 
 ``` r
-
 sessionInfo()
 ```

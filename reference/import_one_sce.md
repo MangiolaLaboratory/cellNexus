@@ -79,9 +79,5 @@ import_one_sce(pbmc3k_sce,
                cache_dir = get_default_cache_dir(),
                pseudobulk = FALSE)
 #> ℹ Generating cpm from 18e65312747b3f1624c2f9240612579e. 
-#> Error in generator$new(shape = rev(dim(sce)), ...): File
-#> /github/home/.cache/R/cellNexus/pbmc3k_sce_atlas/19-02-2026/single_cell/counts/18e65312747b3f1624c2f9240612579e.h5ad
-#> already exists but mode is set to "w-". If you want to overwrite the file, use
-#> a different mode (e.g. 'w'). See `?read_h5ad()` or `?write_h5ad()` for more
-#> information.
+#> Error in loadNamespace(x): there is no package called ‘anndataR’
 ```

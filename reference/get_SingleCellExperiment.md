@@ -104,9 +104,22 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 # Use the lightweight sample database URL (for fast checks during development only)
 meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
+#> ℹ Downloading 1 file, totalling 0 GB
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /Users/a1234450/Library/Caches/org.R-project.R/R/cellNexus/sample_metadata.1.3.0.parquet
 sce <- get_single_cell_experiment(meta)
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.
+#> Warning: There was 1 warning in `dplyr::summarise()`.
+#> ℹ In argument: `experiments = list(...)`.
+#> ℹ In group 1: `file_id_cellNexus_single_cell =
+#>   "03319e4f54220f534de2c4e42e607126___1.h5ad"`, `dir_prefix =
+#>   "/Users/a1234450/Library/Caches/org.R-project.R/R/cellNexus/cellxgene/21-08-2025/counts"`.
+#> Caused by warning:
+#> ! `cur_data_all()` was deprecated in dplyr 1.1.0.
+#> ℹ Please use `pick()` instead.
+#> ℹ The deprecated feature was likely used in the cellNexus package.
+#>   Please report the issue at
+#>   <https://github.com/MangiolaLaboratory/cellNexus/issues>.
 #> ℹ Compiling Experiment.
 ```

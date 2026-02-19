@@ -27,7 +27,7 @@ SingleCellExperiment::SingleCellExperiment"><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +49,7 @@ SingleCellExperiment::SingleCellExperiment"><meta property="og:image" content="h
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Gets the CellNexus metadata as a data frame.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/metadata.R" class="external-link"><code>R/metadata.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/HEAD/R/metadata.R" class="external-link"><code>R/metadata.R</code></a></small>
       <div class="d-none name"><code>get_metadata.Rd</code></div>
     </div>
 
@@ -187,6 +187,7 @@ doi:10.1101/2023.06.08.542671.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>package ‘dplyr’ was built under R version 4.5.1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
@@ -195,8 +196,7 @@ doi:10.1101/2023.06.08.542671.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
-<span class="r-in"><span><span class="co"># For fast build purpose only, you do not need to specify anything in cloud_metadata.</span></span></span>
-<span class="r-in"><span><span class="va">filtered_metadata</span> <span class="op">&lt;-</span> <span class="fu">get_metadata</span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
+<span class="r-in"><span><span class="va">filtered_metadata</span> <span class="op">&lt;-</span> <span class="fu">get_metadata</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>        <span class="va">self_reported_ethnicity</span> <span class="op">==</span> <span class="st">"African"</span> <span class="op">&amp;</span></span></span>
 <span class="r-in"><span>            <span class="va">assay</span> <span class="op">%LIKE%</span> <span class="st">"%10x%"</span> <span class="op">&amp;</span></span></span>

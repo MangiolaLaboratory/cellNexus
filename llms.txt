@@ -45,7 +45,6 @@ in the top navigation.
 ### R client (`cellNexus`)
 
 ``` r
-
 library(cellNexus)
 library(dplyr)
 library(stringr)
@@ -101,6 +100,9 @@ conn.close()
 
 ## All functions
 
+- [`.string_to_vector()`](https://mangiolalaboratory.github.io/cellNexus/reference/INTERNAL_string_to_vector.md)
+  : Parse a string delimited by commas, whitespace, or new lines to a
+  vector.
 - [`SAMPLE_DATABASE_URL`](https://mangiolalaboratory.github.io/cellNexus/reference/SAMPLE_DATABASE_URL.md)
   : URL pointing to the sample metadata file, which is smaller and for
   test, demonstration, and vignette purposes only
@@ -132,18 +134,10 @@ conn.close()
 - [`import_one_sce()`](https://mangiolalaboratory.github.io/cellNexus/reference/import_one_sce.md)
   : Import and process metadata and counts for a SingleCellExperiment
   object
-- [`metacell_counts`](https://mangiolalaboratory.github.io/cellNexus/reference/metacell_counts.md)
-  : Sample Metacell SingleCellExperiment Object
 - [`organize_inputs()`](https://mangiolalaboratory.github.io/cellNexus/reference/organize_inputs.md)
   : Organize arbitrary Shiny inputs into a grid layout
 - [`pbmc3k_sce`](https://mangiolalaboratory.github.io/cellNexus/reference/pbmc3k_sce.md)
   : Sample SingleCellExperiment Object
-- [`pseudobulk_counts`](https://mangiolalaboratory.github.io/cellNexus/reference/pseudobulk_counts.md)
-  : Sample Pseudobulk SingleCellExperiment Object
-- [`single_cell_counts`](https://mangiolalaboratory.github.io/cellNexus/reference/single_cell_counts.md)
-  : Sample SingleCellExperiment Object with Counts Assay
-- [`single_cell_cpm`](https://mangiolalaboratory.github.io/cellNexus/reference/single_cell_cpm.md)
-  : Sample SingleCellExperiment Object with CPM Assay
 - [`sync_metadata_assay_files()`](https://mangiolalaboratory.github.io/cellNexus/reference/sync_metadata_assay_files.md)
   : Synchronize metadata assay files with remote repository
 - [`validate_data()`](https://mangiolalaboratory.github.io/cellNexus/reference/validate_data.md)

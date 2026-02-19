@@ -3,7 +3,7 @@
 `cellNexus` is a query interface for programmatic exploration and retrieval of harmonised, curated, and reannotated CELLxGENE human-cell-atlas data.
 
 <p align="center">
-  <img src="abstract.png" alt="cellNexus abstract overview" style="max-width: 100%; width: 980px; border-radius: 12px; border: 1px solid rgba(159, 122, 234, 0.35);" />
+  <img src="reference/figures/abstract.png" alt="cellNexus abstract overview" style="max-width: 100%; width: 980px; border-radius: 12px; border: 1px solid rgba(159, 122, 234, 0.35);" />
 </p>
 
 This standalone documentation website provides:

@@ -27,6 +27,9 @@ jobs:
             any::knitr
           needs: website
 
+      - name: Install package
+        run: R CMD INSTALL .
+
       - name: Build and deploy pkgdown site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

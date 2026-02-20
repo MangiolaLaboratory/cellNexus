@@ -34,7 +34,7 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /tmp/RtmpZ3GlB7/sample_metadata.1.3.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /tmp/RtmpKEADyf/sample_metadata.1.3.0.parquet
 #> # Source:   SQL [?? x 97]
 #> # Database: DuckDB 1.4.3 [unknown@Linux 6.11.0-1018-azure:R 4.6.0/:memory:]
 #>    cell_id                     dataset_id observation_joinid sample_id cell_type

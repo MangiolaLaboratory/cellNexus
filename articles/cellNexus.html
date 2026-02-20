@@ -116,7 +116,7 @@ releases.</p>
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="load-the-package">Load the package<a class="anchor" aria-label="anchor" href="#load-the-package"></a>
@@ -375,7 +375,7 @@ handling columns with only NA values of a
 <code class="sourceCode R"><span><span class="co"># ! IMPORTANT if you save 200K+ cells</span></span>
 <span><span class="fu">HDF5Array</span><span class="fu">::</span><span class="fu">setAutoBlockSize</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1e+09</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="va">single_cell_counts</span> <span class="op">|&gt;</span> <span class="fu">anndataR</span><span class="fu">::</span><span class="fu"><a href="https://anndataR.data-intuitive.com/reference/write_h5ad.html" class="external-link">write_h5ad</a></span><span class="op">(</span><span class="st">"single_cell_counts.h5ad"</span>, </span>
+<span><span class="va">single_cell_counts</span> <span class="op">|&gt;</span> <span class="fu">anndataR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/anndataR/man/write_h5ad.html" class="external-link">write_h5ad</a></span><span class="op">(</span><span class="st">"single_cell_counts.h5ad"</span>, </span>
 <span>                                               compression <span class="op">=</span> <span class="st">"gzip"</span>,</span>
 <span>                                               verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -483,7 +483,7 @@ in cellNexus::pbmc3k_sce</p>
 <span></span>
 <span><span class="co"># Save SCE object</span></span>
 <span><span class="fu">cellNexus</span><span class="fu">::</span><span class="va"><a href="../reference/pbmc3k_sce.html">pbmc3k_sce</a></span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">anndataR</span><span class="fu">::</span><span class="fu"><a href="https://anndataR.data-intuitive.com/reference/write_h5ad.html" class="external-link">write_h5ad</a></span><span class="op">(</span><span class="va">sce_path</span>, compression <span class="op">=</span> <span class="st">"gzip"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">anndataR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/anndataR/man/write_h5ad.html" class="external-link">write_h5ad</a></span><span class="op">(</span><span class="va">sce_path</span>, compression <span class="op">=</span> <span class="st">"gzip"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># A cellNexus file</span></span>
 <span><span class="va">file_id_from_cloud</span> <span class="op">&lt;-</span> <span class="st">"e52795dec7b626b6276b867d55328d9f___1.h5ad"</span></span>

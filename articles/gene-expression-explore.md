@@ -6,7 +6,6 @@ This page focuses on expression-layer retrieval workflows after metadata
 filtering.
 
 ``` r
-
 library(cellNexus)
 library(dplyr)
 
@@ -16,7 +15,6 @@ metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
 ## Choose cells through metadata filters
 
 ``` r
-
 query_metadata <- metadata |>
   dplyr::filter(
     self_reported_ethnicity == "African",
@@ -31,7 +29,6 @@ query_metadata <- metadata |>
 ### Single-cell counts
 
 ``` r
-
 sce_counts <- query_metadata |>
   get_single_cell_experiment()
 ```
@@ -39,7 +36,6 @@ sce_counts <- query_metadata |>
 ### Counts per million
 
 ``` r
-
 sce_cpm <- query_metadata |>
   get_single_cell_experiment(assays = "cpm")
 ```
@@ -47,7 +43,6 @@ sce_cpm <- query_metadata |>
 ### Pseudobulk
 
 ``` r
-
 pb_counts <- query_metadata |>
   get_pseudobulk()
 ```
@@ -55,7 +50,6 @@ pb_counts <- query_metadata |>
 ### Metacell
 
 ``` r
-
 mc_counts <- metadata |>
   dplyr::filter(!is.na(metacell_2)) |>
   dplyr::filter(
@@ -70,7 +64,6 @@ mc_counts <- metadata |>
 ## Targeted gene queries
 
 ``` r
-
 # ENSEMBL IDs are expected
 sce_gene <- query_metadata |>
   get_single_cell_experiment(
@@ -82,7 +75,6 @@ sce_gene <- query_metadata |>
 ## Output options
 
 ``` r
-
 # Seurat conversion
 seurat_obj <- query_metadata |>
   get_seurat()

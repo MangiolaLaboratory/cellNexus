@@ -12,11 +12,13 @@ SummarizedExperiment objects.
 To get started with `cellNexus`, first load the package and retrieve the
 metadata:
 
+
     library(cellNexus)
     metadata <- get_metadata()
 
 Then filter the metadata to find cells of interest and download the
 data:
+
 
     filtered_metadata <- metadata |>
         dplyr::filter(

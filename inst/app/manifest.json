@@ -1,0 +1,424 @@
+{
+  "version": 1,
+  "locale": "en_US",
+  "platform": "4.6.0",
+  "metadata": {
+    "appmode": "static",
+    "primary_rmd": null,
+    "primary_html": "pkgdown/extra.html",
+    "content_category": null,
+    "has_parameters": false
+  },
+  "packages": null,
+  "files": {
+    ".github/ISSUE_TEMPLATE/bug_report.md": {
+      "checksum": "fb98b080c8150d717c3583f163ad5144"
+    },
+    ".github/workflows/pkgdown.yml": {
+      "checksum": "ed88c1303ff8742f3b65a89f1e92fd33"
+    },
+    ".github/workflows/rworkflows.yml": {
+      "checksum": "61206189bf56db98bd55850d6a22c491"
+    },
+    ".Rbuildignore": {
+      "checksum": "f00624be2165b97d94e1d61ffa156323"
+    },
+    ".vscode/settings.json": {
+      "checksum": "72a7f7b4edf1283aaf11ebab20a8b647"
+    },
+    "_pkgdown.yml": {
+      "checksum": "f94c84e23fa5b204e5c772d2d36b4f10"
+    },
+    "data/metacell_counts.rda": {
+      "checksum": "c52e9628e85185a44105f004f383e826"
+    },
+    "data/pbmc3k_sce.rda": {
+      "checksum": "a48a04aec1826d149dc9acdcf3469c8c"
+    },
+    "data/pseudobulk_counts.rda": {
+      "checksum": "62ceec81b5c448997f93fbf635922f64"
+    },
+    "data/single_cell_counts.rda": {
+      "checksum": "1c30c714ec5f28f7d96430fccf735392"
+    },
+    "data/single_cell_cpm.rda": {
+      "checksum": "72b83b2ae7a8fba2461b0745e24aa388"
+    },
+    "DESCRIPTION": {
+      "checksum": "141c74d886ee55b7c2003e4b4566e90d"
+    },
+    "dev/2_execute_hpcell_on_census_and_defining_data_tranformation_mengyuan_version.R": {
+      "checksum": "8f57b106424defa84adc1fe544eb2a17"
+    },
+    "dev/3_prepare_local_cache_splitting_du_dataset_and_cell_type_mengyuan_version.R": {
+      "checksum": "99b8e574380a5d2056423462fe7c6e40"
+    },
+    "dev/4_prepare_pseudobulk_local_cache.R": {
+      "checksum": "aa351de6f54095f28162c1f67b317a50"
+    },
+    "dev/5_unify_and_update_sce_metadata.R": {
+      "checksum": "10b92e45e640df5b3f2a3ba9663a0aae"
+    },
+    "dev/annotate_files.R": {
+      "checksum": "9eb3f2a3b5cc752a091d7e54e17ac324"
+    },
+    "dev/annotation_confirm.csv": {
+      "checksum": "c34bf80805eff16b216c552cc83550f0"
+    },
+    "dev/annotation_confirm_manually_curated.csv": {
+      "checksum": "e51f296276646aaa8ca469658c82f15c"
+    },
+    "dev/annotation_harmonise.R": {
+      "checksum": "53106c1f43f57bc96273412fab02a9c9"
+    },
+    "dev/build_makefile_annotate_files.R": {
+      "checksum": "ff7b79cbb31c0987ba18a2f31386cb38"
+    },
+    "dev/cellxgene_to_metadata.R": {
+      "checksum": "e1d90c22460ef7fff0440dda962b14e5"
+    },
+    "dev/census_accepted_assays.csv": {
+      "checksum": "f7c5f6e6a4c21bf26acf53e84d99f876"
+    },
+    "dev/census_test_local_cache.R": {
+      "checksum": "6a73178ad8572ed5fd4058e2b658d1e8"
+    },
+    "dev/composition.R": {
+      "checksum": "7463df5fb02579e624c30fcabbb3b356"
+    },
+    "dev/create_pbmc3k_sce.R": {
+      "checksum": "9037422511f4686b7b32f1c457648b76"
+    },
+    "dev/create_pipeline_makefile.R": {
+      "checksum": "921a5f03bd1058d7e8f5ff9242d22b10"
+    },
+    "dev/data_optimisation_script.R": {
+      "checksum": "f0a0d25eae193b0f08efc3dc75dc0670"
+    },
+    "dev/DB_files.R": {
+      "checksum": "644bc3aca8328f2da1128cf6f125b7f8"
+    },
+    "dev/DB2_files.R": {
+      "checksum": "48e81624b88fb2feddacf30d70b07b12"
+    },
+    "dev/execute_hpcell_on_census_and_defining_data_tranformation.R": {
+      "checksum": "2ffafd7b750ffaa289d8b6fb1a17e223"
+    },
+    "dev/get_file_cell_types.R": {
+      "checksum": "7e7232bbe92c676cd9f9bdc59137ed1c"
+    },
+    "dev/get_gene_names.R": {
+      "checksum": "ea3c5bda84213f0e1a1708d09d77ea58"
+    },
+    "dev/get_metadata_OLD.R": {
+      "checksum": "437727fbc6e5b580ec0b57a078127e9d"
+    },
+    "dev/HCA_cell_type_consensus.R": {
+      "checksum": "94cc578f29972bb408f51ba5a9fb2453"
+    },
+    "dev/liga.R": {
+      "checksum": "0905c119be0472af0a7344954b1fd79e"
+    },
+    "dev/light_files.R": {
+      "checksum": "56a7a1352c629e9d8a7ef5617fda4e2e"
+    },
+    "dev/make_pseudobulk.R": {
+      "checksum": "2fcf140539da5d2ba48d90b64c57b0e1"
+    },
+    "dev/merge_metadata.R": {
+      "checksum": "2a1af98c31b4de430901e38fb85c61db"
+    },
+    "dev/metadata_cell_type.csv": {
+      "checksum": "d60fd42d771851a19fc0ec94b315995e"
+    },
+    "dev/metadata_database.R": {
+      "checksum": "4cfa0df4dad15e32987f04005b4d0269"
+    },
+    "dev/prepare_local_cache_splitting_du_dataset_and_cell_type.R": {
+      "checksum": "7feb5440dfc8df73a8334a181bd3e0b0"
+    },
+    "dev/pseudobulk.R": {
+      "checksum": "718b5a8da8869d44fd6a8bc2f42da378"
+    },
+    "dev/scale_files.R": {
+      "checksum": "7cd2d095700b12f30cbdb63558746894"
+    },
+    "dev/split-large_samples.R": {
+      "checksum": "da3a6a542ee37356ee927d9acf7a0972"
+    },
+    "dev/split_census_anndata_base_on_sample_id.R": {
+      "checksum": "23f11489d291f75f073c47cb9423ccdd"
+    },
+    "dev/split_files.R": {
+      "checksum": "e16d7526f937f304e7f795d63e327994"
+    },
+    "dev/test_download.R": {
+      "checksum": "3f1df0dbfb52961eef38084b53f9bbbb"
+    },
+    "dev/tissue_label_curated.csv": {
+      "checksum": "ebae9e779a74890a8a7e0207bc884357"
+    },
+    "dev/utility.R": {
+      "checksum": "b5f3506877c5ae5364aabe150073cdba"
+    },
+    "index.md": {
+      "checksum": "f70f55d0069e7cc7dfa231f589fdb976"
+    },
+    "inst/app/app.r": {
+      "checksum": "dfcded081f6e968977b6ca99fe3792d8"
+    },
+    "inst/app/generate_ui_choices.R": {
+      "checksum": "79d527e25c13d30c4bcacb3a4c6808b8"
+    },
+    "inst/app/ui_choices.rds": {
+      "checksum": "e3295ca2195f3481a5f427188645b043"
+    },
+    "inst/CITATION": {
+      "checksum": "c8e3cf649f9569e22fb56092228a7cdc"
+    },
+    "inst/NEWS.rd": {
+      "checksum": "3aa71b548d1268304f0fd5437362c3f3"
+    },
+    "inst/WORDLIST": {
+      "checksum": "9492c85241487304d84f0e9fdaa4c5b0"
+    },
+    "LICENSE.md": {
+      "checksum": "ac4d8402045e75b2a608a2c0b6bfe2ac"
+    },
+    "man/calculate_pseudobulk.Rd": {
+      "checksum": "457d9209ceaee3a6a0f53f0985e68b2a"
+    },
+    "man/cellNexus-package.Rd": {
+      "checksum": "2eeafcbe990f8ccb9150ef95c853dce0"
+    },
+    "man/clear_old_metadata.Rd": {
+      "checksum": "22f0e61f34ecc995432f0efe04bac518"
+    },
+    "man/create_interface_app.Rd": {
+      "checksum": "b34351b7721d6260c7401b41814db14d"
+    },
+    "man/figures/abstract.png": {
+      "checksum": "25fcecc233e988cf0a1cbf480f5d0472"
+    },
+    "man/figures/bioconductor_logo.jpg": {
+      "checksum": "1c96e8414d9899521b5d70efd097c707"
+    },
+    "man/figures/czi_logo.png": {
+      "checksum": "2925f1b0f24b23d08698d0c19388ba63"
+    },
+    "man/figures/downloads.png": {
+      "checksum": "ddfff0adc165138e8ab3018ef10dcc05"
+    },
+    "man/figures/FCN1_disease_plot.png": {
+      "checksum": "244919179f2b217aa9124b24a97be4eb"
+    },
+    "man/figures/FCN1_tissue_plot.png": {
+      "checksum": "35b86b23e8b9f358f6feeb29e8341a2b"
+    },
+    "man/figures/logo.png": {
+      "checksum": "1daa39baf43e0333a4e4d744a2b54b53"
+    },
+    "man/figures/NCAM1_figure.png": {
+      "checksum": "d4f265d8885d0222d1ea3b10cdf3bc0f"
+    },
+    "man/figures/nectar_logo.png": {
+      "checksum": "87457af20923494953c0001f1a769d17"
+    },
+    "man/figures/svcf_logo.jpeg": {
+      "checksum": "d9820a620493f2d583f4992634e3e05b"
+    },
+    "man/figures/vca_logo.png": {
+      "checksum": "d799b4b763bc01d77532e52b97ea5c5a"
+    },
+    "man/get_default_cache_dir.Rd": {
+      "checksum": "161bf098e47c902c378e1db9879178b5"
+    },
+    "man/get_metacell.Rd": {
+      "checksum": "f563a61fa2313302b79084cea5405042"
+    },
+    "man/get_metadata.Rd": {
+      "checksum": "9e516e978eb0ccf55a24ace7ac58179c"
+    },
+    "man/get_metadata_url.Rd": {
+      "checksum": "0615d30c107b4d7d80231670911fa85f"
+    },
+    "man/get_pseudobulk.Rd": {
+      "checksum": "896a8b856f515b316f3d374c612a3bf7"
+    },
+    "man/get_seurat.Rd": {
+      "checksum": "cd2f8e443311775454f651ef09088260"
+    },
+    "man/get_single_cell_experiment.Rd": {
+      "checksum": "89a1fa610d688dc43a6a9cfc9dce7da8"
+    },
+    "man/get_SingleCellExperiment.Rd": {
+      "checksum": "2a0a21659e9f35434e24522fa59aaa75"
+    },
+    "man/get_unharmonised_dataset.Rd": {
+      "checksum": "ff37c38b41d137acab045f5b0d727da0"
+    },
+    "man/get_unharmonised_metadata.Rd": {
+      "checksum": "f280a45a1c673defcdfa917ad314b7c6"
+    },
+    "man/hdf5_to_anndata.Rd": {
+      "checksum": "693025fedf79544e8260cabcb0560aa3"
+    },
+    "man/import_one_sce.Rd": {
+      "checksum": "51fa2218dce46835b1ab58decc0126f8"
+    },
+    "man/INTERNAL_string_to_vector.Rd": {
+      "checksum": "ea4a91b857c5e1ca9157ccd3de4fd220"
+    },
+    "man/join_census_table.Rd": {
+      "checksum": "d35ed0a657b8dc2e6bcda3b87474264e"
+    },
+    "man/join_metacell_table.Rd": {
+      "checksum": "97382f870815401b5704edb57cf9c2e5"
+    },
+    "man/keep_quality_cells.Rd": {
+      "checksum": "6418f71bb8ce2a2fdd4a121e1ffc34b9"
+    },
+    "man/metacell_counts.Rd": {
+      "checksum": "61e09fae7289777c71e4034d8ca4c9f3"
+    },
+    "man/organize_inputs.Rd": {
+      "checksum": "3241a41af70ab9da1ab488291dde96de"
+    },
+    "man/pbmc3k_sce.Rd": {
+      "checksum": "a9a0e899cde5263b688a238000d439e1"
+    },
+    "man/pseudobulk_counts.Rd": {
+      "checksum": "2b627cf49863235d6786567699ad256a"
+    },
+    "man/read_parquet.Rd": {
+      "checksum": "6221df1c2a5ce2b28b6b1a0d79f161ad"
+    },
+    "man/report_file_sizes.Rd": {
+      "checksum": "a98634fd3d846d5f82f9009da304411b"
+    },
+    "man/SAMPLE_DATABASE_URL.Rd": {
+      "checksum": "18b94545e9c90475a03d46121ab333a7"
+    },
+    "man/single_cell_counts.Rd": {
+      "checksum": "ca0f3aae40061d3d76aff7cfa43a618c"
+    },
+    "man/single_cell_cpm.Rd": {
+      "checksum": "c6d785dab075a7358339f7e7734dfc0b"
+    },
+    "man/single_line_str.Rd": {
+      "checksum": "c2c143cd49c7203411e207b744c61f46"
+    },
+    "man/sync_metadata_assay_files.Rd": {
+      "checksum": "8ed8b1c3556b49c92c953c47e8180bda"
+    },
+    "man/sync_remote_file.Rd": {
+      "checksum": "aaf25b21c859c9ea6b7c7854a2625a13"
+    },
+    "man/sync_remote_files.Rd": {
+      "checksum": "fbf1557003bc6cfb8c386f97e18a1d84"
+    },
+    "man/update_database.Rd": {
+      "checksum": "38563bc75d40388f1d722f7542049743"
+    },
+    "man/update_unharmonised.Rd": {
+      "checksum": "7583ddced73263b8218792e6d3e7d7e5"
+    },
+    "man/upload_swift.Rd": {
+      "checksum": "e9bc70e1931ba055958c4e72814631fc"
+    },
+    "man/url_file_size.Rd": {
+      "checksum": "87e8e29a3dd35785f1ae348fbf7b6ef6"
+    },
+    "man/validate_data.Rd": {
+      "checksum": "4a8b66e906ba551f10b501c19cf9a5eb"
+    },
+    "NAMESPACE": {
+      "checksum": "70823f1b83354141c4be28a9c9e4a272"
+    },
+    "pkgdown/extra.html": {
+      "checksum": "e70cd403449d012b7cf3e503519584b9"
+    },
+    "pkgdown/favicon/apple-touch-icon.png": {
+      "checksum": "d241a22f11442bd2d2c7af3139943d1b"
+    },
+    "pkgdown/favicon/favicon-96x96.png": {
+      "checksum": "daf7847cb41813024c508335f7453c6e"
+    },
+    "pkgdown/favicon/favicon.ico": {
+      "checksum": "61ca46658585096c712c0406fd76f929"
+    },
+    "pkgdown/favicon/favicon.svg": {
+      "checksum": "e7fb088c5ceea81bc3dc4bd857a7bd5b"
+    },
+    "pkgdown/favicon/site.webmanifest": {
+      "checksum": "29ee643484df4510ef7a0b7a30803407"
+    },
+    "pkgdown/favicon/web-app-manifest-192x192.png": {
+      "checksum": "8957fa59a568e6fb17e572630f532d2b"
+    },
+    "pkgdown/favicon/web-app-manifest-512x512.png": {
+      "checksum": "701faf74db6f89af88420ae1ce6a3e94"
+    },
+    "R/counts.R": {
+      "checksum": "ce6e9d9e52f08be6ff3f5585580b6443"
+    },
+    "R/counts_per_million.R": {
+      "checksum": "6738d75644f3ebb582c30f8639e0db69"
+    },
+    "R/data.R": {
+      "checksum": "9d8a1cb1cb611edf0d7fa7fdef040b1b"
+    },
+    "R/dev.R": {
+      "checksum": "bda378956dc3b087c405f7c14d5cd6f2"
+    },
+    "R/import_metadata_and_counts.R": {
+      "checksum": "36b09f996e22620d1b8615e26003b3bf"
+    },
+    "R/interface_app.R": {
+      "checksum": "116bddffb5cb53f32f7a6cbfa1211149"
+    },
+    "R/metadata.R": {
+      "checksum": "48cb8b7238f17b1ca20266bcd97b39b9"
+    },
+    "R/seurat.R": {
+      "checksum": "4bdcde3e52d4234e9dc837072ba61111"
+    },
+    "R/unharmonised.R": {
+      "checksum": "2126c05a8cfb7a9187bdabde9a88220d"
+    },
+    "R/utils.R": {
+      "checksum": "4d37036d5952f02c3cd60c2efc354bde"
+    },
+    "R/zzz.R": {
+      "checksum": "65ed97d0539379cb420948161bd69467"
+    },
+    "README.md": {
+      "checksum": "165a047c2e416d9847bf31568ded460c"
+    },
+    "tests/spelling.R": {
+      "checksum": "e1b238f100722243398ca3836708094b"
+    },
+    "tests/testthat.R": {
+      "checksum": "457a86addfc312f79547173519acccc6"
+    },
+    "tests/testthat/test-pseudobulk-only.R": {
+      "checksum": "4f3734db95c12f6fe85aa526d40fdc43"
+    },
+    "tests/testthat/test-query.R": {
+      "checksum": "cb116d92e282b9c3d0542ca7dfa04e65"
+    },
+    "tests/testthat/test-utils.R": {
+      "checksum": "bee6c34ac67f604b5a5b1f204bed8259"
+    },
+    "vignettes/cellNexus.Rmd": {
+      "checksum": "778daed61cc1f90de6b5fa2ddbef07a7"
+    },
+    "vignettes/gene-expression-explore.Rmd": {
+      "checksum": "a823be95abf44c916c57663e874b5fd3"
+    },
+    "vignettes/metadata-explore.Rmd": {
+      "checksum": "d549d2e894a7fd3c53da350c4c3deed7"
+    }
+  },
+  "users": null
+}

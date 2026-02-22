@@ -4,10 +4,7 @@
 \alias{create_interface_app}
 \title{Create a Shiny app that allows users to generate filtering & retreival code for cellNexus}
 \usage{
-create_interface_app(metadata)
-}
-\arguments{
-\item{metadata}{cellNexus metadata as returned by \code{get_metadata()}.}
+create_interface_app()
 }
 \value{
 A Shiny app that allows users to filter cellNexus metadata and generate code for retrieval
@@ -18,11 +15,8 @@ Create a Shiny app that allows users to generate filtering & retreival code for 
 }
 \examples{
 \dontrun{
-# Create the interface app with metadata
-# For fast build purpose only, you do not need to specify anything in cloud_metadata.
-metadata <-get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
-app <- create_interface_app(metadata)
-# Run the app
+# Create the interface app
+app <- create_interface_app()
 shiny::runApp(app)
 }
 }

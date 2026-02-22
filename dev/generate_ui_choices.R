@@ -2,20 +2,18 @@
 #
 # This script queries the full metadata to extract unique values for each
 # filterable column used in the Shiny interface. The choices are saved to an
-# RDS file that can be loaded quickly by the app, avoiding the slow initial
-# metadata query.
+# RDA file in the data/ directory for proper package data loading.
 #
 # Usage:
 #   From the package root directory, run:
 #   Rscript inst/app/generate_ui_choices.R
 #
 # Output:
-#   inst/app/ui_choices.rds - A list containing unique values for each column
+#   data/ui_choices.rda - A list containing unique values for each column
 
 library(dplyr)
 library(rlang)
-
-devtools::load_all()
+library(cellNexus)
 metadata <- get_metadata()
 
 cell_cols <- c(
@@ -39,7 +37,7 @@ sample_cols <- c(
 all_cols <- c(cell_cols, sample_cols)
 
 # Extract unique values for each column
-choices <- list()
+ui_choices <- list()
 
 for (col in all_cols) {
     message(sprintf("  Processing %s...", col))
@@ -57,18 +55,18 @@ for (col in all_cols) {
             unique_vals <- c(TRUE, FALSE)
         }
         
-        choices[[col]] <- unique_vals
+        ui_choices[[col]] <- unique_vals
         message(sprintf("    Found %d unique values", length(unique_vals)))
     }, error = function(e) {
         warning(sprintf("Failed to get choices for %s: %s", col, e$message))
-        choices[[col]] <- character(0)
+        ui_choices[[col]] <- character(0)
     })
 }
 
-# Save the choices to an RDS file
-output_path <- file.path("inst", "app", "ui_choices.rds")
-saveRDS(choices, output_path)
+# Save as package data using usethis
+usethis::use_data(ui_choices, overwrite = TRUE, compress = "xz")
 
-for (col in names(choices)) {
-    message(sprintf("  %s: %d unique values", col, length(choices[[col]])))
+for (col in names(ui_choices)) {
+    message(sprintf("  %s: %d unique values", col, length(ui_choices[[col]])))
 }
+

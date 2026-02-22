@@ -93,6 +93,7 @@ Imports:
     DBI,
     tools,
     httr,
+    curl,
     cli,
     assertthat,
     SeuratObject,

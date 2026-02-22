@@ -116,15 +116,15 @@ get_single_cell_experiment <- function(data,
       `%in%`(c("http", "https")) |>
       assert_that()
     
-    files_to_read <-
-      raw_data |> 
+    # Build complete file list first, then download all in parallel
+    file_lists <- raw_data |> 
       transmute(
         files = .data[[grouping_column]], 
         atlas_name = atlas_id, 
         cache_dir = cache_directory
-      ) |>  distinct() |> 
+      ) |> distinct() |> 
       pmap(function(files, atlas_name, cache_dir) {
-        sync_assay_files(
+        build_assay_file_list(
           files = files,
           atlas_name = atlas_name,
           cache_dir = cache_dir,
@@ -133,6 +133,10 @@ get_single_cell_experiment <- function(data,
           subdirs = subdirs
         )
       })
+    
+    # Combine all file lists and download in one parallel batch
+    all_files <- do.call(rbind, file_lists)
+    sync_all_assay_files(all_files)
   }
   
   cli_alert_info("Reading files.")
@@ -269,15 +273,15 @@ get_pseudobulk <- function(data,
       `%in%`(c("http", "https")) |>
       assert_that()
     
-    files_to_read <-
-      raw_data |> 
+    # Build complete file list first, then download all in parallel
+    file_lists <- raw_data |> 
       transmute(
         files = .data[[grouping_column]], 
         atlas_name = atlas_id, 
         cache_dir = cache_directory
       ) |> distinct() |>
       pmap(function(files, atlas_name, cache_dir) {
-        sync_assay_files(
+        build_assay_file_list(
           files = files,
           atlas_name = atlas_name,
           cache_dir = cache_dir,
@@ -286,6 +290,10 @@ get_pseudobulk <- function(data,
           subdirs = subdirs
         )
       })
+    
+    # Combine all file lists and download in one parallel batch
+    all_files <- do.call(rbind, file_lists)
+    sync_all_assay_files(all_files)
   }
   
   cli_alert_info("Reading files.")
@@ -435,15 +443,15 @@ get_metacell <- function(data,
       `%in%`(c("http", "https")) |>
       assert_that()
     
-    files_to_read <-
-      raw_data |> 
+    # Build complete file list first, then download all in parallel
+    file_lists <- raw_data |> 
       transmute(
         files = .data[[grouping_column]], 
         atlas_name = atlas_id, 
         cache_dir = cache_directory
       ) |> distinct() |>
       pmap(function(files, atlas_name, cache_dir) {
-        sync_assay_files(
+        build_assay_file_list(
           files = files,
           atlas_name = atlas_name,
           cache_dir = cache_dir,
@@ -452,6 +460,10 @@ get_metacell <- function(data,
           subdirs = subdirs
         )
       })
+    
+    # Combine all file lists and download in one parallel batch
+    all_files <- do.call(rbind, file_lists)
+    sync_all_assay_files(all_files)
   }
   
   cli_alert_info("Reading files.")
@@ -781,9 +793,31 @@ sync_assay_files <- function(
     subdirs,
     files
 ) {
+  # Build file list and return it without downloading
+  # Downloads are handled by sync_all_assay_files for parallelism
+  build_assay_file_list(
+    url = url,
+    atlas_name = atlas_name,
+    cell_aggregation = cell_aggregation,
+    cache_dir = cache_dir,
+    subdirs = subdirs,
+    files = files
+  )
+}
+
+#' Build a list of files to download without downloading them
+#' @noRd
+build_assay_file_list <- function(
+    url,
+    atlas_name,
+    cell_aggregation,
+    cache_dir,
+    subdirs,
+    files
+) {
   # Find every combination of file name, sample id, and assay, since each
   # will be a separate file we need to download
-  files <- expand.grid(
+  expand.grid(
     atlas_name = atlas_name,
     cell_aggregation = cell_aggregation,
     sample_id = files,
@@ -816,21 +850,31 @@ sync_assay_files <- function(
         .data$subdir,
         .data$sample_id
       )
-    ) |>
-    filter(
-      # Don't bother downloading files that don't exist TODO: use some
-      # kind of hashing to check if the remote file has changed, and
-      # proceed with the download if it has. However this is low
-      # importance as the repository is not likely to change often
-      !file.exists(.data$output_file)
     )
+}
+
+#' Download all assay files in parallel
+#' 
+#' Collects all file URLs and downloads them in a single parallel batch.
+#' @param file_list A data frame with full_url and output_file columns
+#' @importFrom cli cli_alert_info
+#' @noRd
+sync_all_assay_files <- function(file_list) {
+  if (nrow(file_list) == 0) return(invisible(character(0)))
   
-  if (nrow(files) > 0) report_file_sizes(files$full_url)
+  # Filter to only files that don't already exist
+  to_download <- !file.exists(file_list$output_file)
   
-  pmap_chr(files, function(full_url, output_dir, output_file) {
-    sync_remote_file(full_url, output_file)
-    output_file
-    }, .progress = list(name = "Downloading files"))
+  if (sum(to_download) > 0) {
+    report_file_sizes(file_list$full_url[to_download])
+    sync_remote_files(
+      file_list$full_url[to_download], 
+      file_list$output_file[to_download], 
+      progress = TRUE
+    )
+  }
+  
+  invisible(file_list$output_file)
 }
 
 #' Checks whether genes in a list of SummarizedExperiment objects overlap

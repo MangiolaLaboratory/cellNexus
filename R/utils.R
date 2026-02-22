@@ -4,16 +4,39 @@
 #' @param urls A character vector containing URLs
 #' @return The file size of each of the files pointed to by the provided URL,
 #' in gigabytes, as double vector
+#' @importFrom curl multi_run new_pool curl_fetch_memory parse_headers_list
 #' @importFrom purrr map_dbl
-#' @importFrom httr HEAD
 #' @keywords internal
 #' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
-url_file_size <- function(urls){
-    map_dbl(urls, function(url){
-        as.numeric(
-            HEAD(url)$headers$`content-length` 
-        ) / 10^9
-    })
+url_file_size <- function(urls) {
+    if (length(urls) == 0) return(numeric(0))
+    
+    # Use curl for parallel HEAD requests
+    sizes <- rep(NA_real_, length(urls))
+    pool <- new_pool()
+    
+    for (i in seq_along(urls)) {
+        curl::curl_fetch_multi(
+            urls[i],
+            done = function(res) {
+                idx <- which(urls == res$url)
+                if (length(idx) > 0) {
+                    headers <- parse_headers_list(res$headers)
+                    content_length <- headers[["content-length"]]
+                    if (!is.null(content_length)) {
+                        sizes[idx[1]] <<- as.numeric(content_length) / 10^9
+                    }
+                }
+            },
+            fail = function(msg) { },
+            pool = pool,
+            handle = curl::new_handle(nobody = TRUE)
+        )
+    }
+    
+    multi_run(pool = pool)
+    sizes[is.na(sizes)] <- 0
+    sizes
 }
 
 #' Prints a message indicating the size of a download
@@ -111,6 +134,77 @@ sync_remote_file <- function(full_url, output_file, ...) {
         )
     }
     invisible(NULL)
+}
+
+#' Synchronises multiple remote files with local paths in parallel
+#' 
+#' Uses curl::multi_download for concurrent async I/O downloads.
+#' Falls back to sequential downloads if parallel downloads are disabled.
+#' 
+#' @param urls A character vector of URLs to download
+#' @param output_files A character vector of local file paths (same length as urls)
+#' @param progress Whether to show a progress bar (default TRUE)
+#' @importFrom curl multi_download
+#' @importFrom cli cli_alert_info cli_alert_warning cli_abort
+#' @return The output_files vector, invisibly
+#' @keywords internal
+sync_remote_files <- function(urls, output_files, progress = TRUE) {
+    if (length(urls) == 0) return(invisible(character(0)))
+    if (length(urls) != length(output_files)) {
+        cli_abort("urls and output_files must have the same length")
+    }
+    
+    # Filter to only files that don't exist
+    to_download <- !file.exists(output_files)
+    urls_to_download <- urls[to_download]
+    files_to_download <- output_files[to_download]
+    
+    if (length(urls_to_download) == 0) {
+        return(invisible(output_files))
+    }
+    
+    # Create directories for all output files
+    unique_dirs <- unique(dirname(files_to_download))
+    for (dir in unique_dirs) {
+        dir.create(dir, recursive = TRUE, showWarnings = FALSE)
+    }
+    
+    use_parallel <- getOption("cellNexus.parallel_downloads", TRUE)
+    
+    if (use_parallel && length(urls_to_download) > 1) {
+        cli_alert_info("Downloading {length(urls_to_download)} file{?s} in parallel...")
+        
+        # Use curl::multi_download for parallel async I/O
+        # Note: multiplex=TRUE enables HTTP/2 multiplexing for concurrent streams
+        results <- multi_download(
+            urls = urls_to_download,
+            destfiles = files_to_download,
+            progress = progress,
+            multiplex = TRUE
+        )
+        
+        # Check for failures
+        failed <- results$success == FALSE | results$status_code >= 400
+        if (any(failed, na.rm = TRUE)) {
+            failed_urls <- urls_to_download[failed]
+            failed_files <- files_to_download[failed]
+            # Clean up failed downloads
+            for (f in failed_files) {
+                if (file.exists(f)) file.remove(f)
+            }
+            cli_alert_warning("{sum(failed)} file{?s} failed to download")
+            if (sum(failed) == length(urls_to_download)) {
+                cli_abort("All downloads failed. Check your network connection.")
+            }
+        }
+    } else {
+        # Sequential fallback
+        for (i in seq_along(urls_to_download)) {
+            sync_remote_file(urls_to_download[i], files_to_download[i])
+        }
+    }
+    
+    invisible(output_files)
 }
 
 #' Returns a tibble from a parquet file path

@@ -93,6 +93,7 @@ Imports:
     DBI,
     tools,
     httr,
+    curl,
     cli,
     assertthat,
     SeuratObject,
@@ -145,7 +146,7 @@ biocViews:
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 LazyDataCompression: xz
-URL: https://github.com/MangiolaLaboratory/cellNexus
+URL: https://github.com/MangiolaLaboratory/cellNexus, https://mangiolalaboratory.github.io/cellNexus/
 BugReports: https://github.com/MangiolaLaboratory/cellNexus/issues
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

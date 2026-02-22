@@ -4,7 +4,10 @@
 \alias{create_interface_app}
 \title{Create a Shiny app that allows users to generate filtering & retreival code for cellNexus}
 \usage{
-create_interface_app()
+create_interface_app(ui_choices)
+}
+\arguments{
+\item{ui_choices}{A list of pre-computed unique values for each filterable column in the metadata.}
 }
 \value{
 A Shiny app that allows users to filter cellNexus metadata and generate code for retrieval
@@ -15,8 +18,8 @@ Create a Shiny app that allows users to generate filtering & retreival code for 
 }
 \examples{
 \dontrun{
-# Create the interface app
-app <- create_interface_app()
+library(cellNexus)
+app <- create_interface_app(ui_choices)
 shiny::runApp(app)
 }
 }

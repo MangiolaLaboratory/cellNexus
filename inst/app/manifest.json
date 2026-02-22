@@ -1527,16 +1527,16 @@
         "RemoteRepo": "cellNexus",
         "RemoteUsername": "j-andrews7",
         "RemoteRef": "app_updates",
-        "RemoteSha": "9e7cfe3f38c4845b89fb8e13a89720ef202602ad",
+        "RemoteSha": "17b7182b5de950242d61dc97c2b9ec2c1e9bf991",
         "GithubRepo": "cellNexus",
         "GithubUsername": "j-andrews7",
         "GithubRef": "app_updates",
-        "GithubSHA1": "9e7cfe3f38c4845b89fb8e13a89720ef202602ad",
+        "GithubSHA1": "17b7182b5de950242d61dc97c2b9ec2c1e9bf991",
         "NeedsCompilation": "no",
-        "Packaged": "2026-02-22 18:41:01 UTC; jared",
+        "Packaged": "2026-02-22 20:07:21 UTC; jared",
         "Author": "Stefano Mangiola [aut, rev, ctb] (ORCID:\n    <https://orcid.org/0000-0001-7474-836X>),\n  Mengyuan Shen [aut, cre, rev] (ORCID:\n    <https://orcid.org/0009-0008-0057-8239>),\n  Michael Milton [aut, rev, ctb] (ORCID:\n    <https://orcid.org/0000-0002-8965-2595>),\n  Martin Morgan [ctb, rev],\n  Vincent Carey [ctb, rev],\n  Julie Iskander [rev],\n  Tony Papenfuss [rev],\n  Silicon Valley Foundation CZF2019-002443 [fnd],\n  NIH NHGRI 5U24HG004059-18 [fnd],\n  Victoria Cancer Agency ECRF21036 [fnd],\n  NHMRC 1116955 [fnd]",
         "Maintainer": "Mengyuan Shen <shen.m@wehi.edu.au>",
-        "Built": "R 4.5.0; ; 2026-02-22 18:41:02 UTC; windows"
+        "Built": "R 4.5.0; ; 2026-02-22 20:07:22 UTC; windows"
       }
     },
     "checkmate": {
@@ -5052,8 +5052,14 @@
     }
   },
   "files": {
+    ".posit/publish/cellNexus Query Builder-3LLE.toml": {
+      "checksum": "75b2eb7801e74933857d5565fc5f83d8"
+    },
+    ".posit/publish/deployments/deployment-3G39.toml": {
+      "checksum": "37b00a92f98db5fb5ce6a08dd6ebf985"
+    },
     "app.r": {
-      "checksum": "dfcded081f6e968977b6ca99fe3792d8"
+      "checksum": "450eb3fbeee28d6a39a4e98e4df34d89"
     }
   },
   "users": null

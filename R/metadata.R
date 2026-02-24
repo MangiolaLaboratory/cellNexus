@@ -207,17 +207,18 @@ get_metadata <- function(cloud_metadata = get_metadata_url(),
     cloud_metadata <- get_metadata_url(use_split_files = TRUE)
   }
   
-  # Synchronize remote files
-  walk(cloud_metadata, function(url) {
-    # Calculate the file path from the URL
-    path <- file.path(cache_directory, url |> basename())
-    if (!file.exists(path)) {
-      report_file_sizes(url)
-      sync_remote_file(url,
-                       path,
-                       progress(type = "down", con = stderr()))
+  # Synchronize remote files using parallel downloads
+  if (!is.null(cloud_metadata) && length(cloud_metadata) > 0) {
+    output_paths <- file.path(cache_directory, basename(cloud_metadata))
+    # Filter to only files that need downloading
+    to_download <- !file.exists(output_paths)
+    if (any(to_download)) {
+      report_file_sizes(cloud_metadata[to_download])
+      sync_remote_files(cloud_metadata[to_download], 
+                        output_paths[to_download], 
+                        progress = TRUE)
     }
-  })
+  }
   
   if (is.null(cloud_metadata)) all_parquet <- c(local_metadata)
   if (!is.null(cloud_metadata)) all_parquet <- c(file.path(cache_directory, 

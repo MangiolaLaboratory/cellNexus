@@ -10,7 +10,9 @@ split_files.makeflow
 .DS_Store
 inst/doc
 /doc/
+/docs/
 /Meta/
 README.html
 # Internal docs
 INTERNAL_*
+^\.vscode$

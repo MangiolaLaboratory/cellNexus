@@ -1,0 +1,30 @@
+url: https://mangiolalaboratory.github.io/cellNexus/
+
+template:
+  bootstrap: 5
+  bootswatch: darkly
+  bslib:
+    primary: "#000000"
+    secondary: "#8b9cb3"
+    success: "#38b2ac"
+    info: "#63b3ed"
+    warning: "#f6ad55"
+    danger: "#fc8181"
+    code-bg: "#1f2630"
+  includes:
+    in_header: pkgdown/extra.html
+
+navbar:
+  left:
+    - text: "home"
+      href: index.html
+    - text: "Query builder"
+      href: https://j-andrews7-cellnexus.share.connect.posit.cloud/
+    - text: "gene expression explore"
+      href: articles/gene-expression-explore.html
+
+articles:
+  - title: "Documentation"
+    contents:
+      - metadata-explore
+      - gene-expression-explore

@@ -7,3 +7,6 @@
 ^doc$
 ^Meta$
 makeflow*
+pkgdown
+_pkgdown.yml
+index.md

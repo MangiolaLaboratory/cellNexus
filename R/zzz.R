@@ -62,6 +62,18 @@
 #' @aliases cellNexus-package cellNexus
 NULL
 
+.onLoad <- function(libname, pkgname) {
+    # Set default package options for parallel downloads
+    op <- options()
+    op.cellNexus <- list(
+        cellNexus.parallel_downloads = TRUE,
+        cellNexus.download_connections = 6L
+    )
+    toset <- !(names(op.cellNexus) %in% names(op))
+    if (any(toset)) options(op.cellNexus[toset])
+    invisible()
+}
+
 #' @importFrom purrr walk
 #' @importFrom dbplyr remote_con
 #' @importFrom DBI dbDisconnect

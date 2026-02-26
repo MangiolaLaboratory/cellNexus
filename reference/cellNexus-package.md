@@ -7,18 +7,20 @@ and download single-cell RNA sequencing data in various formats
 including SingleCellExperiment, Seurat, and pseudobulk
 SummarizedExperiment objects.
 
+## Value
+
+The cellNexus package (invisibly).
+
 ## Getting Started
 
 To get started with `cellNexus`, first load the package and retrieve the
 metadata:
-
 
     library(cellNexus)
     metadata <- get_metadata()
 
 Then filter the metadata to find cells of interest and download the
 data:
-
 
     filtered_metadata <- metadata |>
         dplyr::filter(

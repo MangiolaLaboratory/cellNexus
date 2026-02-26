@@ -15,6 +15,9 @@
   retreival code for cellNexus
 - [`get_SingleCellExperiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_SingleCellExperiment.md)
   : Gets a SingleCellExperiment from curated metadata
+- [`get_cell_communication_strength()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_cell_communication_strength.md)
+  : Retrieve cellNexus cell communication ligand–receptor strength as a
+  data frame.
 - [`get_default_cache_dir()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_default_cache_dir.md)
   : Returns the default cache directory with a version number
 - [`get_metacell()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metacell.md)

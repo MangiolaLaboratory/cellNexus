@@ -205,7 +205,7 @@ write_h5ad <- function(sce,
   
   if (ncol(SummarizedExperiment::assay(sce)) == 1) sce = sce |> duplicate_single_column_assay()
   
-  sce |> anndataR::write_h5ad(path, compression = "gzip", verbose = FALSE)
+  sce |> anndataR::write_h5ad(path, compression = "gzip")
 }
 
 #' Duplicate Single-Column Assay in SingleCellExperiment Object

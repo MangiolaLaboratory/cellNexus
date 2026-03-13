@@ -11,7 +11,8 @@ NULL
 assay_map <- c(
   counts = "counts",
   cpm = "cpm",
-  rank = "rank"
+  rank = "rank",
+  sct = "sct"
 )
 
 #' Base URL pointing to the count data at the current version
@@ -49,8 +50,7 @@ get_SingleCellExperiment <- function(...){
 #'   and atlas name in format (e.g cellxgene/06-02-2025) for internal use.
 #'   They can be obtained from the [get_metadata()] function.
 #' @param assays A character vector specifying the desired assay(s) to be requested. 
-#'   Valid elements include "counts", "cpm", and "rank" for single-cell analyses, or 
-#'   "counts" for pseudobulk analyses. 
+#'   Valid elements include "counts", "cpm", "rank", and "sct" for single-cell analyses
 #'   The default setting retrieves only the counts assay.
 #'   If your analysis involves a smaller set of genes, consider using the "cpm" assay. 
 #'   The "rank" assay is suited for signature calculations across millions of cells.
@@ -64,21 +64,6 @@ get_SingleCellExperiment <- function(...){
 #'   an HTTP URL pointing to the location where the single cell data is stored.
 #' @param features An optional character vector of features (ie genes) to return
 #'   the counts for. By default counts for all features will be returned.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
-#'   When provided, the returned object will contain exactly the requested
-#'   features (row order preserved), and any experiments/samples that do not
-#'   contain all requested features are dropped. This preserves the full set
-#'   of requested features at the cost of potentially fewer samples.
-#'   A warning is emitted when samples are dropped.
 #'   When provided, the returned object will contain exactly the requested
 #'   features (row order preserved), and any experiments/samples that do not
 #'   contain all requested features are dropped. This preserves the full set
@@ -222,11 +207,7 @@ get_single_cell_experiment <- function(data,
 #'   and atlas name in format (e.g cellxgene/06-02-2025) for internal use.
 #'   They can be obtained from the [get_metadata()] function.
 #' @param assays A character vector specifying the desired assay(s) to be requested. 
-#'   Valid elements include "counts", "cpm", and "rank" for single-cell analyses, or 
-#'   "counts" for pseudobulk analyses. 
 #'   The default setting retrieves only the counts assay.
-#'   If your analysis involves a smaller set of genes, consider using the "cpm" assay. 
-#'   The "rank" assay is suited for signature calculations across millions of cells.
 #' @param cell_aggregation A character vector that specifies which cell aggregation 
 #'   strategy should be applied. This will create a corresponding subdirectory 
 #'   in the cache directory. 
@@ -595,7 +576,7 @@ validate_data <- function(
     all() |>
     assert_that(
       msg = 'assays must be a character vector containing counts and/or
-            "cpm" and/or "rank"'
+            "cpm" and/or "rank" and/or "sct"'
     )
   assert_that(
     !anyDuplicated(assays),
@@ -700,7 +681,7 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
     }
     
     new_coldata <- df |>
-      mutate(original_cell_ = .data$cell_id, cell_id = glue("{cell_id}_{i}")) |>
+      mutate(original_cell_ = as.character(.data$cell_id), cell_id = glue("{cell_id}_{i}")) |>
       column_to_rownames("cell_id") |>
       as("DataFrame")
     
@@ -764,25 +745,32 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
          "tissue_groups", "atlas_id", "sample_chunk", "file_id_cellNexus_single_cell", 
          "file_id_cellNexus_metacell", "dir_prefix") 
     
+    mapping_tbl <- as.data.frame(SummarizedExperiment::colData(experiment)) |>
+      dplyr::select(sample_id, !!rlang::sym(metacell_column), metacell_id)
+    
     new_coldata <- df |>
-      select(annotations) |>
+      left_join(
+        mapping_tbl,
+        by = c("sample_id", metacell_column)
+      ) |>
+      select(all_of(annotations), metacell_id) |>
       distinct() |>
       mutate(
-        metacell_identifier = glue("{sample_id}___{.data[[metacell_column]]}"),
-        original_metacell_id = .data$metacell_identifier
+        original_metacell_id = .data$metacell_id,
+        metacell_identifier = glue("{metacell_id}_{i}")
       ) |>
-      column_to_rownames("original_metacell_id")
+      column_to_rownames("metacell_identifier")
     
     experiment <- `if`(
       is.null(features),
-      experiment[, new_coldata$metacell_identifier],
+      experiment[, new_coldata$original_metacell_id],
       {
         # Optionally subset the genes
         genes <- rownames(experiment) |> intersect(features)
-        experiment[genes, new_coldata$metacell_identifier]
+        experiment[genes, new_coldata$original_metacell_id]
       }
     ) |>
-      `colnames<-`(new_coldata$metacell_identifier) |>
+      `colnames<-`(new_coldata$original_metacell_id) |>
       `colData<-`(value = DataFrame(new_coldata))
   }
 }

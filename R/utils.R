@@ -183,29 +183,46 @@ duckdb_write_parquet <- function(.tbl_sql,
 #' @noRd
 #' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 clean_and_report_NA_columns <- function(df) {
-  na_column_names <- df |> select(where(~all(is.na(.)))) |> names()
-  
-  "Dropping {na_column_names} as they all contain only NA values" |>
-    cli_alert_info()
-  df |> select(-all_of(na_column_names))
+  na_column_names <- df |>
+    dplyr::select(dplyr::where(~ all(is.na(.)))) |>
+    names()
+  if (length(na_column_names) > 0) {
+    cli::cli_alert_info(
+      "Dropping {.field {na_column_names}} because they contain only NA values."
+    )
+    df <- df |>
+      dplyr::select(-dplyr::all_of(na_column_names))
+  }
+  df
 }
 
-#' Save anndata
-#' @return `NULL`, invisible
-#' @noRd
-#' @keywords internal
+#' Save a SingleCellExperiment as an AnnData file
+#'
+#' Reports and removes `colData` columns that are entirely `NA` before writing to `.h5ad`.
+#' If the object contains only one column, the assay is duplicated to avoid
+#' single-column export issues.
+#'
+#' @param sce A `SingleCellExperiment` object.
+#' @param path Output file path for the `.h5ad` file.
+#' @param ... Additional arguments passed to [anndataR::write_h5ad()].
+#'
+#' @return Called for its side effect of writing an `.h5ad` file.
+#' @inheritDotParams anndataR::write_h5ad
+#' @examples
+#' data("pbmc3k_sce")
+#' save_sce_as_h5ad(pbmc3k_sce, tempfile(fileext=".h5ad"))
 #' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
-write_h5ad <- function(sce,
-                       path) {
-  selected_columns <- sce |> SummarizedExperiment::colData() |> 
-    as.data.frame() |> clean_and_report_NA_columns() |> names()
-  
-  colData_subset = colData(sce)[, selected_columns]
-  colData(sce) <- colData_subset
-  
-  if (ncol(SummarizedExperiment::assay(sce)) == 1) sce = sce |> duplicate_single_column_assay()
-  
-  sce |> anndataR::write_h5ad(path, compression = "gzip", verbose = FALSE)
+save_sce_as_h5ad <- function(sce, path, ...) {
+  # Remove columns in colData that are all NA and warn the user
+  cleaned_coldata <- SummarizedExperiment::colData(sce) |>
+    as.data.frame() |>
+    clean_and_report_NA_columns()
+  SummarizedExperiment::colData(sce) <- S4Vectors::DataFrame(cleaned_coldata)
+
+  if (ncol(SummarizedExperiment::assay(sce)) == 1) {
+    sce <- sce |> duplicate_single_column_assay()
+  }
+  sce |> anndataR::write_h5ad(path, compression = "gzip", ...)
 }
 
 #' Duplicate Single-Column Assay in SingleCellExperiment Object

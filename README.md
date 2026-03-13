@@ -70,7 +70,7 @@ metadata
 ```
 
     #> ℹ Downloading 1 file, totalling 0 GB
-    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /tmp/RtmpVDjbPV/sample_metadata.1.3.0.parquet
+    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.4.0.parquet to /tmp/RtmpVDjbPV/sample_metadata.1.4.0.parquet
     #> # Source:   SQL [?? x 97]
     #> # Database: DuckDB 1.4.3 [unknown@Linux 5.14.0-362.24.1.el9_3.x86_64:R 4.5.2/:memory:]
     #>    cell_id               dataset_id observation_joinid sample_id cell_type cell_type_ontology_t…¹ sample_ assay

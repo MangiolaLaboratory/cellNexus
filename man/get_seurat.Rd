@@ -19,8 +19,7 @@ and \code{atlas_id} columns, which correspond to a single cell ID, file subdivis
 and atlas name in format (e.g cellxgene/06-02-2025) for internal use.
 They can be obtained from the \code{\link[=get_metadata]{get_metadata()}} function.}
     \item{\code{assays}}{A character vector specifying the desired assay(s) to be requested.
-Valid elements include "counts", "cpm", and "rank" for single-cell analyses, or
-"counts" for pseudobulk analyses.
+Valid elements include "counts", "cpm", "rank", and "sct" for single-cell analyses
 The default setting retrieves only the counts assay.
 If your analysis involves a smaller set of genes, consider using the "cpm" assay.
 The "rank" assay is suited for signature calculations across millions of cells.}
@@ -34,21 +33,6 @@ files should be copied.}
 an HTTP URL pointing to the location where the single cell data is stored.}
     \item{\code{features}}{An optional character vector of features (ie genes) to return
 the counts for. By default counts for all features will be returned.
-When provided, the returned object will contain exactly the requested
-features (row order preserved), and any experiments/samples that do not
-contain all requested features are dropped. This preserves the full set
-of requested features at the cost of potentially fewer samples.
-A warning is emitted when samples are dropped.
-When provided, the returned object will contain exactly the requested
-features (row order preserved), and any experiments/samples that do not
-contain all requested features are dropped. This preserves the full set
-of requested features at the cost of potentially fewer samples.
-A warning is emitted when samples are dropped.
-When provided, the returned object will contain exactly the requested
-features (row order preserved), and any experiments/samples that do not
-contain all requested features are dropped. This preserves the full set
-of requested features at the cost of potentially fewer samples.
-A warning is emitted when samples are dropped.
 When provided, the returned object will contain exactly the requested
 features (row order preserved), and any experiments/samples that do not
 contain all requested features are dropped. This preserves the full set

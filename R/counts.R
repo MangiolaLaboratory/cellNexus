@@ -213,7 +213,7 @@ get_single_cell_experiment <- function(data,
 #' Gets a Pseudobulk from curated metadata
 #' 
 #' Given a data frame of Curated Atlas metadata obtained from [get_metadata()],
-#' returns a [`SummarizedExperiment::SummarizedExperiment-class`] object
+#' returns a [`SingleCellExperiment::SingleCellExperiment-class`] object
 #' corresponding to the samples in that data frame
 #' 
 #' @param data A data frame containing, at minimum, `cell_id`, `file_id_cellNexus_pseudobulk`, 
@@ -242,7 +242,12 @@ get_single_cell_experiment <- function(data,
 #'   contain all requested features are dropped. This preserves the full set
 #'   of requested features at the cost of potentially fewer samples.
 #'   A warning is emitted when samples are dropped.
-#' @return A `SummarizedExperiment` object.
+#' @param as_SummarizedExperiment If `TRUE`, return a `SummarizedExperiment`
+#'   instead of `SingleCellExperiment`. Use this when downstream code expects
+#'   plain `SummarizedExperiment` objects. Note that `as(x, "SummarizedExperiment")`
+#'   drops feature rownames; this function uses a rowname-preserving conversion.
+#' @return A `SingleCellExperiment` object, or a `SummarizedExperiment` object
+#'   when `as_SummarizedExperiment` is `TRUE`.
 #' @importFrom dplyr pull filter as_tibble inner_join collect transmute
 #' @importFrom tibble column_to_rownames
 #' @importFrom purrr reduce map map_int imap 
@@ -268,7 +273,8 @@ get_pseudobulk <- function(data,
                            cell_aggregation = "pseudobulk",
                            cache_directory = get_default_cache_dir(),
                            repository = COUNTS_URL,
-                           features = NULL) {
+                           features = NULL,
+                           as_SummarizedExperiment = FALSE) {
   raw_data <- collect(data)
   assert_that(
     inherits(raw_data, "tbl"),
@@ -376,6 +382,13 @@ get_pseudobulk <- function(data,
   SummarizedExperiment::assays(experiment) <- map(experiments, function(exp) {
     SummarizedExperiment::assays(exp)[[1]]
   })
+  
+  if (as_SummarizedExperiment) {
+    # as(experiment, "SummarizedExperiment") drops feature rownames; reset them
+    rn <- rownames(experiment)
+    experiment <- experiment |> as("SummarizedExperiment")
+    rownames(experiment) <- rn
+  }
   
   experiment
 }

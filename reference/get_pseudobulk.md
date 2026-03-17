@@ -15,7 +15,8 @@ get_pseudobulk(
   cell_aggregation = "pseudobulk",
   cache_directory = get_default_cache_dir(),
   repository = COUNTS_URL,
-  features = NULL
+  features = NULL,
+  as_SummarizedExperiment = FALSE
 )
 ```
 
@@ -69,9 +70,16 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
   full set of requested features at the cost of potentially fewer
   samples. A warning is emitted when samples are dropped.
 
+- as_SummarizedExperiment:
+
+  If `TRUE`, coerce the result to a `SummarizedExperiment`. Note that
+  `as(x, "SummarizedExperiment")` drops feature rownames;
+  `get_pseudobulk()` restores them after coercion.
+
 ## Value
 
-A `SummarizedExperiment` object.
+A `SingleCellExperiment` object, or a `SummarizedExperiment` object when
+`as_SummarizedExperiment` is `TRUE`.
 
 ## References
 
@@ -86,12 +94,10 @@ doi:10.1101/2023.06.08.542671.
 # Use the lightweight sample database URL (for fast checks during development only)
 meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /home/runner/.cache/R/cellNexus/sample_metadata.2.0.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /github/home/.cache/R/cellNexus/sample_metadata.2.0.0.parquet
 pseudobulk <- meta |> get_pseudobulk()
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
-#> ℹ Downloading 1 file, totalling 0.1 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/pseudobulk/counts/f0946b9064dead3a6b2228fb70af8de1___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene/01-07-2024/pseudobulk/counts/f0946b9064dead3a6b2228fb70af8de1___1.h5ad
 #> ℹ Reading files.
 #> ℹ Compiling Experiment.
 ```

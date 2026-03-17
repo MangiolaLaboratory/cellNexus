@@ -1,14 +1,9 @@
 # Functions that relate to unharmonised metadata
 
-#' @include utils.R
-NULL
-
 #' Base URL for all the unharmonised data
+#' @keywords internal
 #' @noRd
-UNHARMONISED_URL <- single_line_str(
-    "https://object-store.rc.nectar.org.au/v1/
-    AUTH_06d6e008e3e642da99d806ba3ea629c5/unharmonised_metadata"
-)
+UNHARMONISED_URL <- "https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/unharmonised_metadata"
 
 #' Returns unharmonised metadata for selected datasets.
 #'
@@ -35,6 +30,7 @@ UNHARMONISED_URL <- single_line_str(
 #' @importFrom dplyr tbl filter
 #' @importFrom rlang .data
 #' @keywords internal
+#' @noRd
 #' @return A named list, where each name is a dataset file ID, and each value is
 #'   a "lazy data frame", ie a `tbl`.
 #' @examples
@@ -71,7 +67,7 @@ get_unharmonised_dataset <- function(
             progress(type = "down", con = stderr())
         )
     
-    read_parquet(conn, local_path) |>
+    duckdb_read_parquet(conn, local_path) |>
         filter(.data$cell_id %in% cells)
 }
 
@@ -89,6 +85,7 @@ get_unharmonised_dataset <- function(
 #' @importFrom rlang .data
 #' @importFrom dbplyr remote_con
 #' @keywords internal
+#' @noRd
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
 #'   immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.
@@ -101,12 +98,12 @@ get_unharmonised_metadata <- function(metadata, ...){
         group_by(.data$file_id_cellNexus_single_cell) |>
         summarise(
             unharmonised = list(
-              dataset_id=.data$file_id_cellNexus_single_cell[[1]],
-              cells=.data$cell_id,
-              conn=remote_con(metadata)
+              dataset_id = .data$file_id_cellNexus_single_cell[[1L]],
+              cells = .data$cell_id,
+              conn = remote_con(metadata)
             ) |>
-                c(args) |> 
-                do.call(get_unharmonised_dataset, args=_) |> 
+                c(args) |>
+                do.call(get_unharmonised_dataset, args = _) |>
                 list()
         )
 }

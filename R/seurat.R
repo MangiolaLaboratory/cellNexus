@@ -1,6 +1,5 @@
 # Functions that relate to the Seurat conversion
 
-#' @importFrom assertthat assert_that
 #' @importFrom methods as
 #' @importFrom SeuratObject as.sparse
 #' @exportS3Method as.sparse DelayedMatrix

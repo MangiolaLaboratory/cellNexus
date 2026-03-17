@@ -1,17 +1,17 @@
 #' Generating counts per million from a SingleCellExperiment object
 #'
 #' @param sce A SingleCellExperiment object
-#' @param input_file A character vector of counts Anndata file path
 #' @param output_file A character vector of CPM Anndata file path
 #' @return A directory stores counts per million Anndata
 #' @importFrom SingleCellExperiment SingleCellExperiment
 #' @importFrom SummarizedExperiment assay assays assays<-
 #' @importFrom purrr map
-#' @noRd
-get_counts_per_million <- function(sce, input_file, output_file) {
-
-  # Save SCE to the cache directory counts folder
-  sce |> anndataR::write_h5ad(input_file, compression = "gzip")
+#' @importFrom anndataR write_h5ad
+#' @examples
+#' data(pbmc3k_sce)
+#' get_counts_per_million(pbmc3k_sce, tempfile(fileext = ".h5ad"))
+#' @export
+get_counts_per_million <- function(sce, output_file) {
   
   # Avoid completely empty cells
   col_sums <- colSums(as.matrix(assay(sce)))
@@ -34,6 +34,6 @@ get_counts_per_million <- function(sce, input_file, output_file) {
   # # Check if there is a memory issue 
   # assays(sce) <- assays(sce) |> map(DelayedArray::realize)
   
-  sce |> anndataR::write_h5ad(output_file, compression = "gzip")
+  sce |> write_h5ad(output_file, compression = "gzip")
 } 
 

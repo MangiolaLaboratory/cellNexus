@@ -10,6 +10,8 @@
 #'
 #' @author Jared Andrews
 #' @rdname INTERNAL_string_to_vector
+#' @keywords internal
+#' @noRd
 .string_to_vector <- function(x) {
     if (!is.null(x)) {
         if (x != "") {
@@ -69,6 +71,7 @@
 #' # Example 4: Handling a case with more inputs than grid cells
 #' many.inputs <- tagList(replicate(10, textInput("input", "Input")))
 #' organize_inputs(many.inputs, columns = 3) # Creates more than one row
+#' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 organize_inputs <- function(
     tag.list,
     id = NULL,
@@ -140,16 +143,16 @@ organize_inputs <- function(
 #' @importFrom dplyr filter distinct
 #'
 #' @examples
-#' \dontrun{
+#' get_default_cache_dir()
+#' @examplesIf interactive()
 #' # Create the interface app with metadata
-#' # For fast build purpose only, you do not need to specify anything in cloud_metadata.
-#' metadata <-get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
+#' metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
 #' app <- create_interface_app(metadata)
 #' # Run the app
 #' shiny::runApp(app)
-#' }
 #' @export
 #' @author Jared Andrews
+#' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 create_interface_app <- function(metadata) {
     # Generate dynamic pickerInputs for select columns in metadata
     cell_cols <- c(
@@ -300,7 +303,7 @@ create_interface_app <- function(metadata) {
                 retrieval_condition()
             )
 
-            cat(paste(code_lines, collapse = "\n"))
+            paste(code_lines, collapse = "\n")
         })
 
         # Collect inputs as data.frame with each row as input_id and filter
@@ -353,7 +356,7 @@ create_interface_app <- function(metadata) {
             }
         })
 
-        output$code_box <- renderPrint({
+        output$code_box <- renderText({
             full_code()
         })
     }

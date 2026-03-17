@@ -3,6 +3,9 @@
 \name{organize_inputs}
 \alias{organize_inputs}
 \title{Organize arbitrary Shiny inputs into a grid layout}
+\source{
+\href{https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3}{Mangiola et al.,2023}
+}
 \usage{
 organize_inputs(
   tag.list,

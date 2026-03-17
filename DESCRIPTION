@@ -25,27 +25,27 @@ Authors@R: c(
         comment = c(ORCID = "0000-0002-8965-2595")
     ),
     person(
-        "Martin",
-        "Morgan",
-        email = "Martin.Morgan@RoswellPark.org",
-        role = c("ctb", "rev")
+        "Jared",
+        "Andrews",
+        email = "jared.andrews07@gmail.com",
+        role = c("aut", "rev", "ctb")
     ),
     person(
-        "Vincent",
-        "Carey",
-        email = "stvjc@channing.harvard.edu",
-        role = c("ctb", "rev")
+        "Juan",
+        "Henao",
+        email = "juan.henao@helmholtz-muenchen.de",
+        role = c("aut", "ctb")
+    ),
+    person(
+        "Edward",
+        "Yang",
+        email = "edwardyang125@gmail.com",
+        role = c("aut", "ctb")
     ),
     person(
         "Julie",
         "Iskander",
         email = "iskander.j@wehi.edu.au",
-        role = c( "rev")
-    ),
-    person(
-        "Tony",
-        "Papenfuss",
-        email = "papenfuss@wehi.edu.au",
         role = c( "rev")
     ),
     person(
@@ -94,7 +94,6 @@ Imports:
     tools,
     httr,
     cli,
-    assertthat,
     SeuratObject,
     Seurat,
     methods,
@@ -106,10 +105,15 @@ Imports:
     duckdb,
     checkmate,
     shiny,
-    shinyWidgets
+    shinyWidgets,
+    zellkonverter,
+    anndataR,
+    stringr,
+    scuttle
 Suggests:
-    rmarkdown,
+    BiocStyle,
     knitr,
+    rmarkdown,
     testthat,
     basilisk,
     arrow,
@@ -119,15 +123,10 @@ Suggests:
     ggplot2,
     rprojroot,
     openssl,
-    scuttle,
     DelayedArray,
     tidybulk,
     BiocParallel,
-    magrittr,
-    preprocessCore,
-    zellkonverter,
-    anndataR,
-    stringr
+    preprocessCore
 Biarch: true
 biocViews: 
     AssayDomain,
@@ -144,7 +143,6 @@ biocViews:
     ShinyApps
 Encoding: UTF-8
 RoxygenNote: 7.3.3
-LazyDataCompression: xz
 URL: https://github.com/MangiolaLaboratory/cellNexus, https://mangiolalaboratory.github.io/cellNexus/
 BugReports: https://github.com/MangiolaLaboratory/cellNexus/issues
 VignetteBuilder: knitr
@@ -155,11 +153,10 @@ Collate:
     'counts_per_million.R'
     'data.R'
     'dev.R'
-    'import_metadata_and_counts.R'
     'interface_app.R'
     'metadata.R'
     'seurat.R'
     'unharmonised.R'
     'zzz.R'
 Language: en-US
-LazyData: true
+SystemRequirements: Python

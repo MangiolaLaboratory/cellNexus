@@ -26,9 +26,6 @@ An object of class \code{SingleCellExperiment} with:
 \source{
 Created from pbmc3k dataset (SeuratData package)
 }
-\usage{
-pbmc3k_sce
-}
 \description{
 A sample SingleCellExperiment object created from the pbmc3k dataset for testing and demonstration purposes.
 The dataset contains 500 cells with gene expression data mapped to Ensembl gene IDs and formatted
@@ -38,19 +35,10 @@ with cellNexus-compatible metadata structure.
 See \code{dev/create_pbmc3k_sce.R} for the complete creation script.
 }
 \examples{
-\dontrun{
-# Load the sample dataset
 data(pbmc3k_sce)
-
-# View basic information
 pbmc3k_sce
-
 # Access metadata
-metadata(pbmc3k_sce)$data
-
-# View cell types
-unique(metadata(pbmc3k_sce)$data$cell_type_unified_ensemble)
-}
+S4Vectors::metadata(pbmc3k_sce)$data
 }
 \references{
 Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen,

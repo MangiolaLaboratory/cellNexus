@@ -1,18 +1,23 @@
 ---
 title: "cellNexus"
-output: "html_vignette"
+author: "Mangiola et al."
+package: cellNexus
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_float: true
 params:
   demo_metadata: true
 vignette: >
   %\VignetteIndexEntry{cellNexus}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 knit: >
     (function(x, ...){
         proj_root <- rprojroot::find_package_root_file() |> normalizePath()
         rmarkdown::render(
             x,
-            output_format = "html_document",
+            output_format = BiocStyle::html_document(toc = TRUE, toc_float = TRUE),
             params = list(
                 demo_metadata = TRUE
             )
@@ -44,15 +49,16 @@ if (!is.null(root_dir)){
         output.dir = root_dir
     )
 }
-proj_root <- rprojroot::find_package_root_file() |> normalizePath() 
+proj_root <- rprojroot::find_package_root_file() |>
+  normalizePath()
 # Utility function for figures to force them to have the correct path
-find_figure <- function(names){
-    rprojroot::find_package_root_file() |>
-        file.path("man", "figures", names) 
+find_figure <- function(names) {
+  rprojroot::find_package_root_file() |>
+    file.path("man", "figures", names)
 }
-METADATA_URL = if (params$demo_metadata)
-       cellNexus::SAMPLE_DATABASE_URL else
-       cellNexus::get_metadata_url
+METADATA_URL <- if (params$demo_metadata)
+    cellNexus::SAMPLE_DATABASE_URL else
+    cellNexus::get_metadata_url
 
 ```
 
@@ -72,7 +78,8 @@ network connection is required for most functionality.
 `cellNexus` and CuratedAtlasQueryR both rely on pre-computed expression layers, but they differ in how these layers were generated. `cellNexus` applies a more standardised workflow with explicit empty droplet and dead cell removal followed by harmonised QC, normalisation, and multi-layer data generation. In doing so, it produces newly iterated data that align with the evolving CELLxGENE releases.
 
 ```{r, echo=FALSE, out.height = c("139px"), out.width = "120x" }
-find_figure("logo.png") |> knitr::include_graphics()
+find_figure("logo.png") |>
+  knitr::include_graphics()
 ```
 
 ```{r, echo=FALSE, out.height = c("58px"), out.width = c("155x", "129px", "202px", "219px", "180px")}
@@ -82,9 +89,9 @@ c(
   "bioconductor_logo.jpg",
   "vca_logo.png",
   "nectar_logo.png"
-) |> 
-    find_figure() |>
-    knitr::include_graphics()
+) |>
+  find_figure() |>
+  knitr::include_graphics()
 ```
 
 # Query interface
@@ -139,7 +146,7 @@ metadata |>
 cellNexus metadata applies standardised quality control to filter out empty droplets, dead or damaged cells, doublets, and samples with low gene counts.
 
 ```{r}
-metadata = metadata |> 
+metadata <- metadata |>
   dplyr::filter(empty_droplet == FALSE,
          alive == TRUE,
          scDblFinder.class != "doublet",
@@ -152,15 +159,15 @@ metadata = metadata |>
 ### Query raw counts
 
 ```{r, eval=FALSE}
-single_cell_counts = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-  head() |> 
+single_cell_counts <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  head() |>
   get_single_cell_experiment()
 
 single_cell_counts
@@ -168,21 +175,22 @@ single_cell_counts
 
 ```{r, echo=FALSE}
 # Pre-made example for demonstration (avoids download during build)
+data(single_cell_counts)
 single_cell_counts
 ```
 
 ### Query counts scaled per million
 
 ```{r, eval=FALSE}
-single_cell_cpm = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-  head() |> 
+single_cell_cpm <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  head() |>
   get_single_cell_experiment(assays = "cpm")
 
 single_cell_cpm
@@ -190,21 +198,22 @@ single_cell_cpm
 
 ```{r, echo=FALSE}
 # Pre-made example for demonstration (avoids download during build)
+data(single_cell_cpm)
 single_cell_cpm
 ```
 
 ### Query pseudobulk
 
 ```{r, eval=FALSE}
-pseudobulk_counts = 
-   metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-  head() |> 
+pseudobulk_counts <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  head() |>
   get_pseudobulk()
 
 pseudobulk_counts
@@ -212,6 +221,7 @@ pseudobulk_counts
 
 ```{r, echo=FALSE}
 # Pre-made example for demonstration (avoids download during build)
+data(pseudobulk_counts)
 pseudobulk_counts
 ```
 
@@ -220,16 +230,16 @@ pseudobulk_counts
 The metadata includes a series of metacell aggregation levels, beginning with 2, 4, 8, and so on. For example, the value of metacell_2 represents a grouping of cells that can be split into two distinct metacells. 
 
 ```{r, eval=FALSE}
-metacell_counts = 
-   metadata |>
-    dplyr::filter(!is.na(metacell_2)) |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-  head() |> 
+metacell_counts <-
+  metadata |>
+  dplyr::filter(!is.na(metacell_2)) |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  head() |>
   get_metacell(cell_aggregation = "metacell_2")
 
 metacell_counts
@@ -237,6 +247,7 @@ metacell_counts
 
 ```{r, echo=FALSE}
 # Pre-made example for demonstration (avoids download during build)
+data(metacell_counts)
 metacell_counts
 ```
 
@@ -245,14 +256,14 @@ metacell_counts
 This is helpful if just few genes are of interest (e.g ENSG00000134644 (PUM1)), as they can be compared across samples. cellNexus uses ENSEMBL gene ID(s).
 
 ```{r, eval=FALSE}
-single_cell_cpm = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
+single_cell_cpm <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
   head() |>
   get_single_cell_experiment(assays = "cpm", features = "ENSG00000134644")
 
@@ -269,14 +280,14 @@ single_cell_cpm
 This convert the H5 SingleCellExperiment to Seurat so it might take long time and occupy a lot of memory depending on how many cells you are requesting.
 
 ```{r, eval=FALSE}
-seurat_counts = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
+seurat_counts <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
   head() |>
   get_seurat()
 
@@ -300,16 +311,16 @@ metadata <- get_metadata(cache_directory = "/MY/CUSTOM/PATH")
 
 ## Query raw counts from the custom cache directory
 
-``` {r eval=FALSE}
-single_cell_counts = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-    get_single_cell_experiment(cache_directory = "/MY/CUSTOM/PATH")
+```{r eval=FALSE}
+single_cell_counts <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  get_single_cell_experiment(cache_directory = "/MY/CUSTOM/PATH")
 
 single_cell_counts
 ```
@@ -344,7 +355,7 @@ However this `.hdf5` has the disadvantage of being larger than the corresponding
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
-single_cell_counts |> 
+single_cell_counts |>
   HDF5Array::saveHDF5SummarizedExperiment(
     "single_cell_counts", 
     replace = TRUE, 
@@ -364,9 +375,11 @@ However this `.h5ad` saving strategy has a bottleneck of handling columns with o
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
-single_cell_counts |> anndataR::write_h5ad("single_cell_counts.h5ad", 
-                                               compression = "gzip",
-                                               verbose = TRUE)
+single_cell_counts |>
+  anndataR::write_h5ad("single_cell_counts.h5ad",
+    compression = "gzip",
+    verbose = TRUE
+  )
 ```
 
 ## Visualise gene transcription
@@ -381,12 +394,12 @@ counts <- metadata |>
   dplyr::filter(cell_type_unified_ensemble == "cd14 mono") |>
   
   # Get counts per million for FCN1 gene
-  get_single_cell_experiment(assays = "cpm", features = "ENSG00000085265") |> 
+  get_single_cell_experiment(assays = "cpm", features = "ENSG00000085265") |>
   suppressMessages() |>
-  
+
   # Add feature to table
-  tidySingleCellExperiment::join_features("ENSG00000085265", shape = "wide") |> 
-  
+  tidySingleCellExperiment::join_features("ENSG00000085265", shape = "wide") |>
+
   # Rank x axis
   tibble::as_tibble() |>
   
@@ -395,8 +408,8 @@ counts <- metadata |>
 
 # Plot by disease
 counts |>
-  dplyr::with_groups(disease, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na=TRUE))) |> 
-  
+  dplyr::with_groups(disease, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na = TRUE))) |>
+
   # Plot
   ggplot(aes(forcats::fct_reorder(disease, median_count,.desc = TRUE), `FCN1`,color = dataset_id)) +
   geom_jitter(shape=".") +
@@ -411,14 +424,15 @@ counts |>
 ```
 
 ```{r echo=FALSE}
-find_figure("FCN1_disease_plot.png") |> knitr::include_graphics()
+find_figure("FCN1_disease_plot.png") |>
+  knitr::include_graphics()
 ```
 
 ```{r, eval=FALSE, results='hide'}
 # Plot by tissue
-counts |> 
-  dplyr::with_groups(tissue, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na=TRUE))) |> 
-  
+counts |>
+  dplyr::with_groups(tissue, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na = TRUE))) |>
+
   # Plot
   ggplot(aes(forcats::fct_reorder(tissue, median_count,.desc = TRUE), `FCN1`,color = dataset_id)) +
   geom_jitter(shape=".") +
@@ -449,9 +463,10 @@ and `atlas_id` (e.g cellxgene/dd-mm-yy) columns in the metadata. See metadata st
 local_cache <- tempdir()
 layer <- "counts"
 meta_path <- file.path(local_cache, "pbmc3k_metadata.parquet")
+data(pbmc3k_sce)
 
 # Extract and prepare metadata
-pbmc3k_metadata <- cellNexus::pbmc3k_sce |> 
+pbmc3k_metadata <- pbmc3k_sce |> 
   S4Vectors::metadata() |> 
   purrr::pluck("data") |> 
   dplyr::mutate(
@@ -472,14 +487,14 @@ sce_path <- pbmc3k_metadata |>
 dir.create(counts_directory, recursive = TRUE, showWarnings = FALSE)
 
 # Save data to disk
-cellNexus::pbmc3k_sce |> 
+pbmc3k_sce |> 
   S4Vectors::metadata() |> 
   purrr::pluck("data") |> 
   arrow::write_parquet(meta_path)
 
 # Save SCE object
-cellNexus::pbmc3k_sce |> 
-  anndataR::write_h5ad(sce_path, compression = "gzip")
+pbmc3k_sce |> 
+  anndataR::write_h5ad(sce_path, compression = "gzip", mode = "w")
 ```
 
 ``` {r}

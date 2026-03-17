@@ -1,5 +1,5 @@
-\\name{NEWS}
-\\title{News for Package \\pkg{cellNexus}}
+\name{NEWS}
+\title{News for Package \pkg{cellNexus}}
 
 \\section{News in version 0.99.9}{
 \\itemize{
@@ -13,8 +13,7 @@
     \\item Qualified functional calls (e.g., \\code{purrr::map_lgl}) to avoid missing import issues.
 }}
 
-\\section{News in version 0.1.0}{
-\\itemize{
-    \\item Added a NEWS file to track changes to the package.
+\section{News in version 0.1.0}{
+\itemize{
+    \item Added a NEWS file to track changes to the package.
 }}
-

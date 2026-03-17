@@ -14,14 +14,15 @@ An object of class \code{SingleCellExperiment} with:
 \source{
 Created from cellNexus datasets
 }
-\usage{
-single_cell_cpm
-}
 \description{
 A pre-made SingleCellExperiment object with counts-per-million (CPM) assay for vignette demonstration.
 This object is used in the vignette to avoid downloading data during package build.
 }
 \details{
 See \code{dev/create_vignette_data.R} for the creation script.
+}
+\examples{
+data(single_cell_cpm)
+single_cell_cpm
 }
 \keyword{datasets}

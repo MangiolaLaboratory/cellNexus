@@ -34,8 +34,10 @@ reference to the table will be returned. If \code{FALSE}, a new connection will
 be created no matter what.}
 
 \item{...}{
-  Arguments passed on to \code{\link[=read_parquet]{read_parquet}}
+  Arguments passed on to \code{\link[=duckdb_read_parquet]{duckdb_read_parquet}}
   \describe{
+    \item{\code{conn}}{A DuckDB connection.}
+    \item{\code{path}}{Path(s) to parquet file(s).}
     \item{\code{filename_column}}{A column name to the metadata that indicates which row came from which file.
 By default it does not add the column.}
   }}

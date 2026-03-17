@@ -14,14 +14,15 @@ An object of class \code{SingleCellExperiment} with:
 \source{
 Created from cellNexus datasets
 }
-\usage{
-metacell_counts
-}
 \description{
 A pre-made SingleCellExperiment object with metacell aggregated data for vignette demonstration.
 This object is used in the vignette to avoid downloading data during package build.
 }
 \details{
 See \code{dev/create_vignette_data.R} for the creation script.
+}
+\examples{
+data(metacell_counts)
+metacell_counts
 }
 \keyword{datasets}

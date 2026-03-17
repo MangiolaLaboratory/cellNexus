@@ -7,12 +7,12 @@
 \href{https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3}{Mangiola et al.,2023}
 }
 \usage{
-get_metadata_url(databases = c("metadata.1.3.0.parquet"))
+get_metadata_url(databases = c("metadata.2.0.0.parquet"))
 }
 \arguments{
 \item{databases}{A character vector specifying the names of the metadata files.
 Download the specific metadata by defining the metadata version. The default is
-metadata.1.3.0.parquet}
+metadata.2.0.0.parquet}
 }
 \value{
 A character vector of URLs to parquet files to download
@@ -21,7 +21,7 @@ A character vector of URLs to parquet files to download
 Returns the URLs for all metadata files
 }
 \examples{
-get_metadata_url("metadata.1.3.0.parquet")
+get_metadata_url("metadata.2.0.0.parquet")
 }
 \references{
 Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen,

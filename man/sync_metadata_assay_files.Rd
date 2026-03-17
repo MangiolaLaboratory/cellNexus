@@ -35,3 +35,4 @@ sync_metadata_assay_files(
 \description{
 Downloads and caches assay files from a remote repository based on metadata specifications.
 }
+\keyword{internal}

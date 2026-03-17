@@ -1,5 +1,6 @@
 cellNexus
 ================
+Mangiola et al.
 
 <!-- badges: start -->
 
@@ -69,29 +70,27 @@ metadata <- get_metadata(cloud_metadata = METADATA_URL)
 metadata
 ```
 
-    #> ℹ Downloading 1 file, totalling 0 GB
-    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /tmp/RtmpVDjbPV/sample_metadata.1.3.0.parquet
     #> # Source:   SQL [?? x 97]
-    #> # Database: DuckDB 1.4.3 [unknown@Linux 5.14.0-362.24.1.el9_3.x86_64:R 4.5.2/:memory:]
-    #>    cell_id               dataset_id observation_joinid sample_id cell_type cell_type_ontology_t…¹ sample_ assay
-    #>    <chr>                 <chr>      <chr>              <chr>     <chr>     <chr>                  <chr>   <chr>
-    #>  1 FCAImmP7528294-ACATA… cda2c8cd-… p5e=WoIq0d         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #>  2 FCAImmP7528294-CATGA… cda2c8cd-… lx`7Bo-&7n         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #>  3 FCAImmP7528294-AAGAC… cda2c8cd-… *NUPW@J{c2         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #>  4 FCAImmP7528294-AATCG… cda2c8cd-… KIV>qGFIS?         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #>  5 FCAImmP7528294-TTTGG… cda2c8cd-… *_#lQ<oUnT         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #>  6 FCAImmP7528294-TCAGG… cda2c8cd-… zHCZWNmUHu         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #>  7 FCAImmP7528294-GACGC… cda2c8cd-… -NL-OH3!IA         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #>  8 FCAImmP7528294-CTTGG… cda2c8cd-… 6mRCZW}rOM         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #>  9 FCAImmP7528294-CACTC… cda2c8cd-… I6>u{Gb-J_         034f0fb1… monocyte  CL:0000576             034f0f… 10x …
-    #> 10 FCAImmP7579218-TGTGG… cda2c8cd-… IdHwp1GBZm         03ddfd57… monocyte  CL:0000576             03ddfd… 10x …
+    #> # Database: DuckDB v1.2.2 [shen.m@Darwin 23.3.0:R 4.5.0/:memory:]
+    #>    cell_id                     dataset_id observation_joinid sample_id cell_type
+    #>    <chr>                       <chr>      <chr>              <chr>     <chr>    
+    #>  1 FCAImmP7528294-ACATACGAGTA… cda2c8cd-… p5e=WoIq0d         034f0fb1… monocyte 
+    #>  2 FCAImmP7528294-CATGACAGTCC… cda2c8cd-… lx`7Bo-&7n         034f0fb1… monocyte 
+    #>  3 FCAImmP7528294-AAGACCTAGCT… cda2c8cd-… *NUPW@J{c2         034f0fb1… monocyte 
+    #>  4 FCAImmP7528294-AATCGGTTCAA… cda2c8cd-… KIV>qGFIS?         034f0fb1… monocyte 
+    #>  5 FCAImmP7528294-TTTGGTTGTGG… cda2c8cd-… *_#lQ<oUnT         034f0fb1… monocyte 
+    #>  6 FCAImmP7528294-TCAGGTACAAT… cda2c8cd-… zHCZWNmUHu         034f0fb1… monocyte 
+    #>  7 FCAImmP7528294-GACGCGTAGGC… cda2c8cd-… -NL-OH3!IA         034f0fb1… monocyte 
+    #>  8 FCAImmP7528294-CTTGGCTGTTC… cda2c8cd-… 6mRCZW}rOM         034f0fb1… monocyte 
+    #>  9 FCAImmP7528294-CACTCCACACC… cda2c8cd-… I6>u{Gb-J_         034f0fb1… monocyte 
+    #> 10 FCAImmP7579218-TGTGGTAGTCT… cda2c8cd-… IdHwp1GBZm         03ddfd57… monocyte 
     #> # ℹ more rows
-    #> # ℹ abbreviated name: ¹​cell_type_ontology_term_id
-    #> # ℹ 89 more variables: assay_ontology_term_id <chr>, cell_count <int>, citation <chr>, collection_id <chr>,
-    #> #   dataset_version_id <chr>, default_embedding <chr>, development_stage <chr>,
-    #> #   development_stage_ontology_term_id <chr>, disease <chr>, disease_ontology_term_id <chr>, donor_id <chr>,
-    #> #   experiment___ <chr>, explorer_url <chr>, feature_count <int>, filesize <dbl>, filetype <chr>,
-    #> #   is_primary_data <chr>, mean_genes_per_cell <dbl>, organism <chr>, organism_ontology_term_id <chr>, …
+    #> # ℹ 92 more variables: cell_type_ontology_term_id <chr>, sample_ <chr>,
+    #> #   assay <chr>, assay_ontology_term_id <chr>, cell_count <int>,
+    #> #   citation <chr>, collection_id <chr>, dataset_version_id <chr>,
+    #> #   default_embedding <chr>, development_stage <chr>,
+    #> #   development_stage_ontology_term_id <chr>, disease <chr>,
+    #> #   disease_ontology_term_id <chr>, donor_id <chr>, experiment___ <chr>, …
 
 Metadata is saved to `get_default_cache_dir()` unless a custom path is
 provided via the cache_directory argument. The `metadata` variable can
@@ -103,19 +102,19 @@ then be re-used for all subsequent queries.
 metadata |>
     dplyr::distinct(tissue, cell_type_unified_ensemble) 
 #> # Source:   SQL [?? x 2]
-#> # Database: DuckDB 1.4.3 [unknown@Linux 5.14.0-362.24.1.el9_3.x86_64:R 4.5.2/:memory:]
-#>    tissue              cell_type_unified_ensemble
-#>    <chr>               <chr>                     
-#>  1 thymus              cd14 mono                 
-#>  2 breast              nk                        
-#>  3 renal pelvis        epithelial                
-#>  4 kidney              epithelial                
-#>  5 kidney blood vessel epithelial                
-#>  6 lung parenchyma     cd4 th2 em                
-#>  7 respiratory airway  cd4 th2 em                
-#>  8 lung                cd4 th1 em                
-#>  9 lung                cd4 fh em                 
-#> 10 nose                cd4 fh em                 
+#> # Database: DuckDB v1.2.2 [shen.m@Darwin 23.3.0:R 4.5.0/:memory:]
+#>    tissue                   cell_type_unified_ensemble
+#>    <chr>                    <chr>                     
+#>  1 thymus                   cd14 mono                 
+#>  2 breast                   cd14 mono                 
+#>  3 kidney                   epithelial                
+#>  4 lung parenchyma          cd4 th2 em                
+#>  5 ascending colon          cd14 mono                 
+#>  6 descending colon         cd14 mono                 
+#>  7 sigmoid colon            nk                        
+#>  8 esophagogastric junction nk                        
+#>  9 caudate lobe of liver    cd14 mono                 
+#> 10 right colon              cd14 mono                 
 #> # ℹ more rows
 ```
 
@@ -156,13 +155,16 @@ single_cell_counts
     #> dim: 56239 6 
     #> metadata(0):
     #> assays(1): counts
-    #> rownames(56239): ENSG00000121410 ENSG00000268895 ... ENSG00000135605 ENSG00000109501
+    #> rownames(56239): ENSG00000121410 ENSG00000268895 ... ENSG00000135605
+    #>   ENSG00000109501
     #> rowData names(0):
-    #> colnames(6): LAP92_CATTCTAGTGCGGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
-    #>   LAP92_CTCATGCCACCTGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1 ...
-    #>   GCTCCTAAGGGTATCG_F02607___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #> colnames(6):
+    #>   LAP92_CATTCTAGTGCGGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #>   LAP92_CTCATGCCACCTGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #>   ... GCTCCTAAGGGTATCG_F02607___9f222629-9e39-47d0-b83f-e08d610c7479_1
     #>   AACACGTCACGCATCG_F01853___9f222629-9e39-47d0-b83f-e08d610c7479_2
-    #> colData names(98): dataset_id observation_joinid ... dir_prefix original_cell_
+    #> colData names(98): dataset_id observation_joinid ... dir_prefix
+    #>   original_cell_
     #> reducedDimNames(0):
     #> mainExpName: NULL
     #> altExpNames(0):
@@ -185,16 +187,18 @@ single_cell_cpm
 ```
 
     #> class: SingleCellExperiment 
-    #> dim: 56239 6 
+    #> dim: 1 6 
     #> metadata(0):
     #> assays(1): cpm
-    #> rownames(56239): ENSG00000121410 ENSG00000268895 ... ENSG00000135605 ENSG00000109501
+    #> rownames(1): ENSG00000134644
     #> rowData names(0):
-    #> colnames(6): LAP92_CATTCTAGTGCGGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
-    #>   LAP92_CTCATGCCACCTGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1 ...
-    #>   GCTCCTAAGGGTATCG_F02607___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #> colnames(6):
+    #>   LAP92_CATTCTAGTGCGGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #>   LAP92_CTCATGCCACCTGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #>   ... GCTCCTAAGGGTATCG_F02607___9f222629-9e39-47d0-b83f-e08d610c7479_1
     #>   AACACGTCACGCATCG_F01853___9f222629-9e39-47d0-b83f-e08d610c7479_2
-    #> colData names(98): dataset_id observation_joinid ... dir_prefix original_cell_
+    #> colData names(98): dataset_id observation_joinid ... dir_prefix
+    #>   original_cell_
     #> reducedDimNames(0):
     #> mainExpName: NULL
     #> altExpNames(0):
@@ -220,12 +224,14 @@ pseudobulk_counts
     #> dim: 56239 3 
     #> metadata(0):
     #> assays(1): counts
-    #> rownames(56239): ENSG00000000003 ENSG00000000005 ... ENSG00000290292 ENSG00000291237
+    #> rownames(56239): ENSG00000000003 ENSG00000000005 ... ENSG00000290292
+    #>   ENSG00000291237
     #> rowData names(0):
     #> colnames(3): a2459ad4272363e6eb775e8e99607c3e___cd4 th1 em
     #>   9c8fa5a8d2ae37179b579a0217670512___LAP92_1_duong___cd4 th2 em
     #>   e4d7f8162faf68a85f61bdbd81dae627___cd4 th2 em
-    #> colData names(59): dataset_id sample_id ... dir_prefix sample_identifier
+    #> colData names(59): dataset_id sample_id ... dir_prefix
+    #>   sample_identifier
     #> reducedDimNames(0):
     #> mainExpName: NULL
     #> altExpNames(0):
@@ -256,12 +262,15 @@ metacell_counts
     #> dim: 56239 4 
     #> metadata(0):
     #> assays(1): counts
-    #> rownames(56239): ENSG00000121410 ENSG00000268895 ... ENSG00000135605 ENSG00000109501
+    #> rownames(56239): ENSG00000121410 ENSG00000268895 ... ENSG00000135605
+    #>   ENSG00000109501
     #> rowData names(0):
     #> colnames(4): 9c8fa5a8d2ae37179b579a0217670512___LAP92_1_duong___1
-    #>   9c8fa5a8d2ae37179b579a0217670512___LAP92_1_duong___2 e4d7f8162faf68a85f61bdbd81dae627___1
+    #>   9c8fa5a8d2ae37179b579a0217670512___LAP92_1_duong___2
+    #>   e4d7f8162faf68a85f61bdbd81dae627___1
     #>   a2459ad4272363e6eb775e8e99607c3e___1
-    #> colData names(39): metacell_2 dataset_id ... dir_prefix metacell_identifier
+    #> colData names(39): metacell_2 dataset_id ... dir_prefix
+    #>   metacell_identifier
     #> reducedDimNames(0):
     #> mainExpName: NULL
     #> altExpNames(0):
@@ -293,11 +302,13 @@ single_cell_counts
     #> assays(1): cpm
     #> rownames(1): ENSG00000134644
     #> rowData names(0):
-    #> colnames(6): LAP92_CATTCTAGTGCGGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
-    #>   LAP92_CTCATGCCACCTGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1 ...
-    #>   GCTCCTAAGGGTATCG_F02607___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #> colnames(6):
+    #>   LAP92_CATTCTAGTGCGGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #>   LAP92_CTCATGCCACCTGATA-1_duong___9f222629-9e39-47d0-b83f-e08d610c7479_1
+    #>   ... GCTCCTAAGGGTATCG_F02607___9f222629-9e39-47d0-b83f-e08d610c7479_1
     #>   AACACGTCACGCATCG_F01853___9f222629-9e39-47d0-b83f-e08d610c7479_2
-    #> colData names(98): dataset_id observation_joinid ... dir_prefix original_cell_
+    #> colData names(98): dataset_id observation_joinid ... dir_prefix
+    #>   original_cell_
     #> reducedDimNames(0):
     #> mainExpName: NULL
     #> altExpNames(0):
@@ -503,9 +514,10 @@ columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
 local_cache <- tempdir()
 layer <- "counts"
 meta_path <- file.path(local_cache, "pbmc3k_metadata.parquet")
+data(pbmc3k_sce)
 
 # Extract and prepare metadata
-pbmc3k_metadata <- cellNexus::pbmc3k_sce |> 
+pbmc3k_metadata <- pbmc3k_sce |> 
   S4Vectors::metadata() |> 
   purrr::pluck("data") |> 
   dplyr::mutate(
@@ -526,14 +538,14 @@ sce_path <- pbmc3k_metadata |>
 dir.create(counts_directory, recursive = TRUE, showWarnings = FALSE)
 
 # Save data to disk
-cellNexus::pbmc3k_sce |> 
+pbmc3k_sce |> 
   S4Vectors::metadata() |> 
   purrr::pluck("data") |> 
   arrow::write_parquet(meta_path)
 
 # Save SCE object
-cellNexus::pbmc3k_sce |> 
-  anndataR::write_h5ad(sce_path, compression = "gzip")
+pbmc3k_sce |> 
+  anndataR::write_h5ad(sce_path, compression = "gzip", mode = "w")
 ```
 
 ``` r
@@ -551,16 +563,25 @@ get_metadata(cloud_metadata = METADATA_URL,
   get_single_cell_experiment(cache_directory = local_cache)
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
-#> ℹ Downloading 1 file, totalling 0.02 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/21-08-2025/counts/e52795dec7b626b6276b867d55328d9f___1.h5ad to /tmp/RtmpVDjbPV/cellxgene/21-08-2025//counts/e52795dec7b626b6276b867d55328d9f___1.h5ad
 #> ℹ Reading files.
+#> Warning: There were 4 warnings in `dplyr::summarise()`.
+#> The first warning was:
+#> ℹ In argument: `experiments = list(...)`.
+#> ℹ In group 1: `file_id_cellNexus_single_cell = "67e196a3c4e145151fc9e06c200e2f7f.h5ad"` `dir_prefix =
+#>   "/var/folders/ls/99n281zx4bbd73kllmc1rc0h0005lj/T//RtmpATCzGl/cellxgene/03-10-2025/counts"`.
+#> Caused by warning in `S4Vectors:::anyMissing()`:
+#> ! 'S4Vectors:::anyMissing()' is deprecated.
+#> Use 'anyNA()' instead.
+#> See help("Deprecated")
+#> ℹ Run `dplyr::last_dplyr_warnings()` to see the 3 remaining warnings.
 #> ! cellNexus says: Not all genes completely overlap across the provided objects.Counts are generated by genes intersection.
 #> ℹ Compiling Experiment.
 #> class: SingleCellExperiment 
 #> dim: 12795 3572 
 #> metadata(1): data
 #> assays(1): counts
-#> rownames(12795): ENSG00000228463 ENSG00000228327 ... ENSG00000273748 ENSG00000278384
+#> rownames(12795): ENSG00000228463 ENSG00000228327 ... ENSG00000273748
+#>   ENSG00000278384
 #> rowData names(0):
 #> colnames(3572): AAACATACAACCAC_1 AAACATTGAGCTAC_1 ...
 #>   TCACAAGAGTTGAGTA_5_liao___9f222629-9e39-47d0-b83f-e08d610c7479_2
@@ -643,85 +664,119 @@ hierarchical partitions of cells into metacell groups.
 
 ``` r
 sessionInfo()
-#> R version 4.5.2 (2025-10-31)
-#> Platform: x86_64-pc-linux-gnu
-#> Running under: Red Hat Enterprise Linux 9.3 (Plow)
+#> R version 4.5.0 (2025-04-11)
+#> Platform: aarch64-apple-darwin20
+#> Running under: macOS Sonoma 14.3
 #> 
 #> Matrix products: default
-#> BLAS:   /stornext/System/data/software/rhel/9/base/tools/R/4.5.2/lib64/R/lib/libRblas.so 
-#> LAPACK: /stornext/System/data/software/rhel/9/base/tools/R/4.5.2/lib64/R/lib/libRlapack.so;  LAPACK version 3.12.1
+#> BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+#> LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 #> 
 #> locale:
-#>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8       
-#>  [4] LC_COLLATE=en_US.UTF-8     LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-#>  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                  LC_ADDRESS=C              
-#> [10] LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+#> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 #> 
 #> time zone: Australia/Melbourne
-#> tzcode source: system (glibc)
+#> tzcode source: internal
 #> 
 #> attached base packages:
-#> [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
+#> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] ggplot2_4.0.1               cellNexus_0.99.5            stringr_1.6.0              
-#>  [4] dplyr_1.1.4                 SummarizedExperiment_1.40.0 Biobase_2.70.0             
-#>  [7] GenomicRanges_1.62.1        Seqinfo_1.0.0               IRanges_2.44.0             
-#> [10] S4Vectors_0.48.0            BiocGenerics_0.56.0         generics_0.1.4             
-#> [13] MatrixGenerics_1.22.0       matrixStats_1.5.0          
+#> [1] ggplot2_3.5.2    BiocStyle_2.36.0 cellNexus_0.99.8 dplyr_1.1.4     
 #> 
 #> loaded via a namespace (and not attached):
-#>   [1] RcppAnnoy_0.0.22            splines_4.5.2               later_1.4.4                
-#>   [4] filelock_1.0.3              tibble_3.3.0                polyclip_1.10-7            
-#>   [7] fastDummies_1.7.5           lifecycle_1.0.4             rprojroot_2.1.1            
-#>  [10] globals_0.18.0              lattice_0.22-7              MASS_7.3-65                
-#>  [13] backports_1.5.0             magrittr_2.0.4              plotly_4.11.0              
-#>  [16] sass_0.4.10                 rmarkdown_2.30              remotes_2.5.0              
-#>  [19] jquerylib_0.1.4             yaml_2.3.12                 httpuv_1.6.16              
-#>  [22] otel_0.2.0                  Seurat_5.4.0                sctransform_0.4.2          
-#>  [25] spam_2.11-1                 sessioninfo_1.2.3           pkgbuild_1.4.8             
-#>  [28] sp_2.2-0                    spatstat.sparse_3.1-0       reticulate_1.44.1          
-#>  [31] cowplot_1.2.0               pbapply_1.7-4               DBI_1.2.3                  
-#>  [34] RColorBrewer_1.1-3          pkgload_1.4.1               abind_1.4-8                
-#>  [37] Rtsne_0.17                  purrr_1.2.0                 ggrepel_0.9.6              
-#>  [40] irlba_2.3.5.1               listenv_0.10.0              spatstat.utils_3.2-0       
-#>  [43] testthat_3.3.1              goftest_1.2-3               RSpectra_0.16-2            
-#>  [46] spatstat.random_3.4-3       fitdistrplus_1.2-4          parallelly_1.46.0          
-#>  [49] commonmark_2.0.0            codetools_0.2-20            DelayedArray_0.36.0        
-#>  [52] xml2_1.5.1                  tidyselect_1.2.1            UCSC.utils_1.6.0           
-#>  [55] farver_2.1.2                shinyWidgets_0.9.0          spatstat.explore_3.6-0     
-#>  [58] duckdb_1.4.3                roxygen2_7.3.3              jsonlite_2.0.0             
-#>  [61] ellipsis_0.3.2              progressr_0.18.0            ggridges_0.5.7             
-#>  [64] survival_3.8-3              tools_4.5.2                 ica_1.0-3                  
-#>  [67] Rcpp_1.1.0                  glue_1.8.0                  gridExtra_2.3              
-#>  [70] SparseArray_1.10.6          xfun_0.54                   usethis_3.2.1              
-#>  [73] GenomeInfoDb_1.46.2         HDF5Array_1.38.0            withr_3.0.2                
-#>  [76] fastmap_1.2.0               basilisk_1.22.0             rhdf5filters_1.22.0        
-#>  [79] digest_0.6.39               R6_2.6.1                    mime_0.13                  
-#>  [82] scattermore_1.2             tensor_1.5.1                spatstat.data_3.1-9        
-#>  [85] h5mread_1.2.1               utf8_1.2.6                  tidyr_1.3.1                
-#>  [88] data.table_1.17.8           httr_1.4.7                  htmlwidgets_1.6.4          
-#>  [91] S4Arrays_1.10.1             uwot_0.2.4                  pkgconfig_2.0.3            
-#>  [94] gtable_0.3.6                blob_1.2.4                  lmtest_0.9-40              
-#>  [97] S7_0.2.1                    SingleCellExperiment_1.32.0 XVector_0.50.0             
-#> [100] brio_1.1.5                  htmltools_0.5.9             dotCall64_1.2              
-#> [103] SeuratObject_5.3.0          scales_1.4.0                png_0.1-8                  
-#> [106] spatstat.univar_3.1-5       knitr_1.50                  rstudioapi_0.17.1          
-#> [109] reshape2_1.4.5              checkmate_2.3.3             nlme_3.1-168               
-#> [112] curl_7.0.0                  anndataR_1.0.0              cachem_1.1.0               
-#> [115] zoo_1.8-14                  rhdf5_2.54.1                KernSmooth_2.23-26         
-#> [118] parallel_4.5.2              miniUI_0.1.2                arrow_22.0.0               
-#> [121] zellkonverter_1.20.0        desc_1.4.3                  pillar_1.11.1              
-#> [124] grid_4.5.2                  vctrs_0.6.5                 RANN_2.6.2                 
-#> [127] promises_1.5.0              dbplyr_2.5.1                xtable_1.8-4               
-#> [130] cluster_2.1.8.1             evaluate_1.0.5              cli_3.6.5                  
-#> [133] compiler_4.5.2              rlang_1.1.6                 future.apply_1.20.1        
-#> [136] plyr_1.8.9                  fs_1.6.6                    stringi_1.8.7              
-#> [139] viridisLite_0.4.2           deldir_2.0-4                assertthat_0.2.1           
-#> [142] lazyeval_0.2.2              devtools_2.4.6              spatstat.geom_3.6-1        
-#> [145] Matrix_1.7-4                dir.expiry_1.18.0           RcppHNSW_0.6.0             
-#> [148] patchwork_1.3.2             bit64_4.6.0-1               future_1.68.0              
-#> [151] Rhdf5lib_1.32.0             shiny_1.12.1                ROCR_1.0-11                
-#> [154] igraph_2.2.1                memoise_2.0.1               bslib_0.9.0                
-#> [157] bit_4.6.0
+#>   [1] fs_1.6.6                    matrixStats_1.5.0          
+#>   [3] spatstat.sparse_3.1-0       devtools_2.4.5             
+#>   [5] httr_1.4.7                  RColorBrewer_1.1-3         
+#>   [7] profvis_0.4.0               tools_4.5.0                
+#>   [9] sctransform_0.4.2           backports_1.5.0            
+#>  [11] utf8_1.2.6                  R6_2.6.1                   
+#>  [13] HDF5Array_1.36.0            lazyeval_0.2.2             
+#>  [15] uwot_0.2.3                  rhdf5filters_1.20.0        
+#>  [17] urlchecker_1.0.1            withr_3.0.2                
+#>  [19] sp_2.2-0                    gridExtra_2.3              
+#>  [21] progressr_0.15.1            cli_3.6.5                  
+#>  [23] Biobase_2.68.0              spatstat.explore_3.4-3     
+#>  [25] fastDummies_1.7.5           sass_0.4.10                
+#>  [27] Seurat_5.3.0                arrow_21.0.0.1             
+#>  [29] spatstat.data_3.1-6         ggridges_0.5.6             
+#>  [31] pbapply_1.7-2               askpass_1.2.1              
+#>  [33] commonmark_1.9.5            parallelly_1.45.0          
+#>  [35] sessioninfo_1.2.3           rstudioapi_0.17.1          
+#>  [37] generics_0.1.4              ica_1.0-3                  
+#>  [39] spatstat.random_3.4-1       Matrix_1.7-3               
+#>  [41] S4Vectors_0.48.0            abind_1.4-8                
+#>  [43] lifecycle_1.0.4             whisker_0.4.1              
+#>  [45] yaml_2.3.10                 SummarizedExperiment_1.38.1
+#>  [47] rhdf5_2.52.1                SparseArray_1.8.0          
+#>  [49] Rtsne_0.17                  grid_4.5.0                 
+#>  [51] blob_1.2.4                  promises_1.3.3             
+#>  [53] crayon_1.5.3                dir.expiry_1.16.0          
+#>  [55] miniUI_0.1.2                lattice_0.22-6             
+#>  [57] beachmat_2.24.0             cowplot_1.1.3              
+#>  [59] sys_3.4.3                   pillar_1.10.2              
+#>  [61] knitr_1.50                  GenomicRanges_1.60.0       
+#>  [63] pak_0.9.0                   future.apply_1.20.0        
+#>  [65] codetools_0.2-20            glue_1.8.0                 
+#>  [67] spatstat.univar_3.1-3       data.table_1.17.4          
+#>  [69] remotes_2.5.0               vctrs_0.6.5                
+#>  [71] png_0.1-8                   spam_2.11-1                
+#>  [73] testthat_3.2.3              gtable_0.3.6               
+#>  [75] assertthat_0.2.1            cachem_1.1.0               
+#>  [77] xfun_0.52                   S4Arrays_1.8.1             
+#>  [79] mime_0.13                   Seqinfo_1.0.0              
+#>  [81] survival_3.8-3              SingleCellExperiment_1.30.1
+#>  [83] ellipsis_0.3.2              fitdistrplus_1.2-2         
+#>  [85] ROCR_1.0-11                 nlme_3.1-168               
+#>  [87] usethis_3.1.0               bit64_4.6.0-1              
+#>  [89] filelock_1.0.3              RcppAnnoy_0.0.22           
+#>  [91] GenomeInfoDb_1.44.0         rprojroot_2.0.4            
+#>  [93] bslib_0.9.0                 irlba_2.3.5.1              
+#>  [95] KernSmooth_2.23-26          colorspace_2.1-1           
+#>  [97] BiocGenerics_0.54.0         DBI_1.2.3                  
+#>  [99] zellkonverter_1.18.0        duckdb_1.2.2               
+#> [101] tidyselect_1.2.1            processx_3.8.6             
+#> [103] bit_4.6.0                   compiler_4.5.0             
+#> [105] curl_7.0.0                  h5mread_1.0.1              
+#> [107] basilisk.utils_1.20.0       xml2_1.3.8                 
+#> [109] desc_1.4.3                  DelayedArray_0.34.1        
+#> [111] plotly_4.10.4               bookdown_0.44              
+#> [113] checkmate_2.3.2             scales_1.4.0               
+#> [115] lmtest_0.9-40               callr_3.7.6                
+#> [117] stringr_1.5.1               anndataR_1.0.1             
+#> [119] digest_0.6.37               goftest_1.2-3              
+#> [121] spatstat.utils_3.1-4        rmarkdown_2.29             
+#> [123] basilisk_1.20.0             XVector_0.48.0             
+#> [125] htmltools_0.5.8.1           pkgconfig_2.0.3            
+#> [127] MatrixGenerics_1.20.0       dbplyr_2.5.1               
+#> [129] fastmap_1.2.0               rlang_1.1.6                
+#> [131] htmlwidgets_1.6.4           UCSC.utils_1.4.0           
+#> [133] shiny_1.10.0                farver_2.1.2               
+#> [135] jquerylib_0.1.4             zoo_1.8-14                 
+#> [137] jsonlite_2.0.0              BiocParallel_1.42.1        
+#> [139] magrittr_2.0.3              scuttle_1.18.0             
+#> [141] GenomeInfoDbData_1.2.14     credentials_2.0.2          
+#> [143] dotCall64_1.2               patchwork_1.3.0            
+#> [145] Rhdf5lib_1.30.0             Rcpp_1.0.14                
+#> [147] reticulate_1.42.0           stringi_1.8.7              
+#> [149] brio_1.1.5                  MASS_7.3-65                
+#> [151] plyr_1.8.9                  pkgbuild_1.4.8             
+#> [153] parallel_4.5.0              listenv_0.9.1              
+#> [155] ggrepel_0.9.6               deldir_2.0-4               
+#> [157] splines_4.5.0               tensor_1.5                 
+#> [159] ps_1.9.1                    igraph_2.1.4               
+#> [161] spatstat.geom_3.4-1         RcppHNSW_0.6.0             
+#> [163] reshape2_1.4.4              stats4_4.5.0               
+#> [165] pkgload_1.4.0               evaluate_1.0.3             
+#> [167] SeuratObject_5.1.0          BiocManager_1.30.26        
+#> [169] httpuv_1.6.16               RANN_2.6.2                 
+#> [171] tidyr_1.3.1                 openssl_2.3.3              
+#> [173] purrr_1.0.4                 polyclip_1.10-7            
+#> [175] future_1.58.0               scattermore_1.2            
+#> [177] xtable_1.8-4                RSpectra_0.16-2            
+#> [179] roxygen2_7.3.2              later_1.4.2                
+#> [181] viridisLite_0.4.2           gert_2.1.5                 
+#> [183] tibble_3.3.0                memoise_2.0.1              
+#> [185] IRanges_2.42.0              cluster_2.1.8.1            
+#> [187] shinyWidgets_0.9.0          globals_0.18.0
 ```

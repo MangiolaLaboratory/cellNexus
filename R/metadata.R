@@ -4,6 +4,7 @@
 NULL
 
 #' Environment that we use to cache the DuckDB connections
+#' @keywords internal
 #' @noRd
 cache <- rlang::env(
   metadata_table = rlang::env()
@@ -12,17 +13,17 @@ cache <- rlang::env(
 #' Returns the URLs for all metadata files 
 #' @param databases A character vector specifying the names of the metadata files. 
 #'   Download the specific metadata by defining the metadata version. The default is 
-#'   metadata.1.3.0.parquet
+#'   metadata.2.0.0.parquet
 #' @export
 #' @return A character vector of URLs to parquet files to download
 #' @examples
-#' get_metadata_url("metadata.1.3.0.parquet")
+#' get_metadata_url("metadata.2.0.0.parquet")
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
 #'   immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.
 #'   doi:10.1101/2023.06.08.542671.
 #' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
-get_metadata_url <- function(databases = c("metadata.1.3.0.parquet")) {
+get_metadata_url <- function(databases = c("metadata.2.0.0.parquet")) {
   clear_old_metadata(updated_data = databases)
   glue::glue(
     "https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/{databases}")
@@ -39,11 +40,7 @@ get_metadata_url <- function(databases = c("metadata.1.3.0.parquet")) {
 #'   immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.
 #'   doi:10.1101/2023.06.08.542671.
 #' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
-SAMPLE_DATABASE_URL <- single_line_str(
-  "https://object-store.rc.nectar.org.au/v1/
-    AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/
-    sample_metadata.1.3.0.parquet"
-)
+SAMPLE_DATABASE_URL <- "https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet"
 
 #' Gets the CellNexus metadata as a data frame.
 #'
@@ -161,7 +158,7 @@ SAMPLE_DATABASE_URL <- single_line_str(
 #' get_metadata(cache_directory = path.expand('~'))
 #' ```
 #' 
-#' @inheritDotParams read_parquet
+#' @inheritDotParams duckdb_read_parquet
 #' 
 #' @references Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, 
 #'   A. Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human 
@@ -205,7 +202,7 @@ get_metadata <- function(
   else {
     table <- duckdb() |>
       dbConnect(drv = _, read_only = TRUE) |>
-      read_parquet(path = all_parquet, ...)
+      duckdb_read_parquet(path = all_parquet, ...)
     cache$metadata_table[[hash]] <- table
     table
   }

@@ -9,6 +9,11 @@ code for cellNexus
 create_interface_app(metadata)
 ```
 
+## Source
+
+[Mangiola et
+al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
+
 ## Arguments
 
 - metadata:
@@ -28,12 +33,13 @@ Jared Andrews
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+get_default_cache_dir()
+#> [1] "/github/home/.cache/R/cellNexus"
+if (FALSE) { # interactive()
 # Create the interface app with metadata
-# For fast build purpose only, you do not need to specify anything in cloud_metadata.
-metadata <-get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
+metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
 app <- create_interface_app(metadata)
 # Run the app
 shiny::runApp(app)
-} # }
+}
 ```

@@ -11,13 +11,13 @@
 - **Michael Milton**. Author, reviewer, contributor.
   [](https://orcid.org/0000-0002-8965-2595)
 
-- **Martin Morgan**. Contributor, reviewer.
+- **Jared Andrews**. Author, reviewer, contributor.
 
-- **Vincent Carey**. Contributor, reviewer.
+- **Juan Henao**. Author, contributor.
+
+- **Edward Yang**. Author, contributor.
 
 - **Julie Iskander**. Reviewer.
-
-- **Tony Papenfuss**. Reviewer.
 
 - **Silicon Valley Foundation CZF2019-002443**. Funder.
 
@@ -36,11 +36,11 @@ Mangiola, S., Milton, M., Ranathunga, N., Li-Wai-Suen, C., Odainic, A.,
 Yang, E., Hutchison, W., Garnham, A., Iskander, J., Pal, B., Yadav, V.,
 Rossello, J., Carey, V. J., Morgan, M., Bedoui, S., Kallies, A., &
 Papenfuss, A. T. A multi-organ map of the human immune system across
-age, sex and ethnicity bioRxiv \[Preprint\]. 2023.06.08.542671
+age, sex and ethnicity. bioRxiv \[Preprint\]. 2023.06.08.542671
 
     @Article{,
       title = {A multi-organ map of the human immune system across age, sex and ethnicity},
-      author = {Stefano Mangiola and Michael Milton and Nishika Ranathunga and Connie SN Li-Wai-Suen and Alexandru Odainic and Edward Young and William Hutchison and Alexandra Garnham and Julie Iskander and Bhupinder Pal and Vijay Kumar Yadav and Fernando Rossello and Vincent Carey and Martin Morgan and Sammy Bedoui and Axel Kallies and Anthony T. Papenfuss},
+      author = {Stefano Mangiola and Michael Milton and Nishika Ranathunga and Connie SN Li-Wai-Suen and Alexandru Odainic and Edward Yang and William Hutchison and Alexandra Garnham and Julie Iskander and Bhupinder Pal and Vijay Kumar Yadav and Fernando Rossello and Vincent Carey and Martin Morgan and Sammy Bedoui and Axel Kallies and Anthony T. Papenfuss},
       year = {2024},
       journal = {bioRxiv},
       doi = {10.1101/2023.06.08.542671},

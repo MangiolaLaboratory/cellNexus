@@ -34,12 +34,11 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
   `assays`
 
   :   A character vector specifying the desired assay(s) to be
-      requested. Valid elements include "counts", "cpm", and "rank" for
-      single-cell analyses, or "counts" for pseudobulk analyses. The
-      default setting retrieves only the counts assay. If your analysis
-      involves a smaller set of genes, consider using the "cpm" assay.
-      The "rank" assay is suited for signature calculations across
-      millions of cells.
+      requested. Valid elements include "counts", "cpm", "rank", and
+      "sct" for single-cell analyses The default setting retrieves only
+      the counts assay. If your analysis involves a smaller set of
+      genes, consider using the "cpm" assay. The "rank" assay is suited
+      for signature calculations across millions of cells.
 
   `cell_aggregation`
 
@@ -68,21 +67,6 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
       experiments/samples that do not contain all requested features are
       dropped. This preserves the full set of requested features at the
       cost of potentially fewer samples. A warning is emitted when
-      samples are dropped. When provided, the returned object will
-      contain exactly the requested features (row order preserved), and
-      any experiments/samples that do not contain all requested features
-      are dropped. This preserves the full set of requested features at
-      the cost of potentially fewer samples. A warning is emitted when
-      samples are dropped. When provided, the returned object will
-      contain exactly the requested features (row order preserved), and
-      any experiments/samples that do not contain all requested features
-      are dropped. This preserves the full set of requested features at
-      the cost of potentially fewer samples. A warning is emitted when
-      samples are dropped. When provided, the returned object will
-      contain exactly the requested features (row order preserved), and
-      any experiments/samples that do not contain all requested features
-      are dropped. This preserves the full set of requested features at
-      the cost of potentially fewer samples. A warning is emitted when
       samples are dropped.
 
 ## Value

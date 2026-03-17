@@ -86,7 +86,7 @@ gene counts.
 
 ``` r
 
-metadata = metadata |> 
+metadata <- metadata |>
   dplyr::filter(empty_droplet == FALSE,
          alive == TRUE,
          scDblFinder.class != "doublet",
@@ -99,15 +99,15 @@ metadata = metadata |>
 
 ``` r
 
-single_cell_counts = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-  head() |> 
+single_cell_counts <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  head() |>
   get_single_cell_experiment()
 
 single_cell_counts
@@ -117,15 +117,15 @@ single_cell_counts
 
 ``` r
 
-single_cell_cpm = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-  head() |> 
+single_cell_cpm <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  head() |>
   get_single_cell_experiment(assays = "cpm")
 
 single_cell_cpm
@@ -135,15 +135,15 @@ single_cell_cpm
 
 ``` r
 
-pseudobulk_counts = 
-   metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-  head() |> 
+pseudobulk_counts <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  head() |>
   get_pseudobulk()
 
 pseudobulk_counts
@@ -157,16 +157,16 @@ a grouping of cells that can be split into two distinct metacells.
 
 ``` r
 
-metacell_counts = 
-   metadata |>
-    dplyr::filter(!is.na(metacell_2)) |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-  head() |> 
+metacell_counts <-
+  metadata |>
+  dplyr::filter(!is.na(metacell_2)) |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  head() |>
   get_metacell(cell_aggregation = "metacell_2")
 
 metacell_counts
@@ -180,14 +180,14 @@ gene ID(s).
 
 ``` r
 
-single_cell_cpm = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
+single_cell_cpm <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
   head() |>
   get_single_cell_experiment(assays = "cpm", features = "ENSG00000134644")
 
@@ -202,14 +202,14 @@ requesting.
 
 ``` r
 
-seurat_counts = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
+seurat_counts <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
   head() |>
   get_seurat()
 
@@ -232,15 +232,15 @@ metadata <- get_metadata(cache_directory = "/MY/CUSTOM/PATH")
 
 ``` r
 
-single_cell_counts = 
-    metadata |>
-    dplyr::filter(
-        self_reported_ethnicity == "African" &
-        assay |> stringr::str_like("%10x%") &
-        tissue == "lung parenchyma" &
-        cell_type |> stringr::str_like("%CD4%")
-    ) |>
-    get_single_cell_experiment(cache_directory = "/MY/CUSTOM/PATH")
+single_cell_counts <-
+  metadata |>
+  dplyr::filter(
+    self_reported_ethnicity == "African" &
+    assay |> stringr::str_like("%10x%") &
+    tissue == "lung parenchyma" &
+    cell_type |> stringr::str_like("%CD4%")
+  ) |>
+  get_single_cell_experiment(cache_directory = "/MY/CUSTOM/PATH")
 
 single_cell_counts
 ```
@@ -290,7 +290,7 @@ the saving process is going to be slow for large objects.
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
-single_cell_counts |> 
+single_cell_counts |>
   HDF5Array::saveHDF5SummarizedExperiment(
     "single_cell_counts", 
     replace = TRUE, 
@@ -314,9 +314,11 @@ columns with only NA values of a `SingleCellExperiment` metadata.
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
-single_cell_counts |> anndataR::write_h5ad("single_cell_counts.h5ad", 
-                                               compression = "gzip",
-                                               verbose = TRUE)
+single_cell_counts |>
+  anndataR::write_h5ad("single_cell_counts.h5ad",
+    compression = "gzip",
+    verbose = TRUE
+  )
 ```
 
 ### Visualise gene transcription
@@ -333,12 +335,12 @@ counts <- metadata |>
   dplyr::filter(cell_type_unified_ensemble == "cd14 mono") |>
   
   # Get counts per million for FCN1 gene
-  get_single_cell_experiment(assays = "cpm", features = "ENSG00000085265") |> 
+  get_single_cell_experiment(assays = "cpm", features = "ENSG00000085265") |>
   suppressMessages() |>
-  
+
   # Add feature to table
-  tidySingleCellExperiment::join_features("ENSG00000085265", shape = "wide") |> 
-  
+  tidySingleCellExperiment::join_features("ENSG00000085265", shape = "wide") |>
+
   # Rank x axis
   tibble::as_tibble() |>
   
@@ -347,8 +349,8 @@ counts <- metadata |>
 
 # Plot by disease
 counts |>
-  dplyr::with_groups(disease, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na=TRUE))) |> 
-  
+  dplyr::with_groups(disease, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na = TRUE))) |>
+
   # Plot
   ggplot(aes(forcats::fct_reorder(disease, median_count,.desc = TRUE), `FCN1`,color = dataset_id)) +
   geom_jitter(shape=".") +
@@ -365,9 +367,9 @@ counts |>
 ``` r
 
 # Plot by tissue
-counts |> 
-  dplyr::with_groups(tissue, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na=TRUE))) |> 
-  
+counts |>
+  dplyr::with_groups(tissue, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na = TRUE))) |>
+
   # Plot
   ggplot(aes(forcats::fct_reorder(tissue, median_count,.desc = TRUE), `FCN1`,color = dataset_id)) +
   geom_jitter(shape=".") +
@@ -398,9 +400,10 @@ columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
 local_cache <- tempdir()
 layer <- "counts"
 meta_path <- file.path(local_cache, "pbmc3k_metadata.parquet")
+data(pbmc3k_sce)
 
 # Extract and prepare metadata
-pbmc3k_metadata <- cellNexus::pbmc3k_sce |> 
+pbmc3k_metadata <- pbmc3k_sce |> 
   S4Vectors::metadata() |> 
   purrr::pluck("data") |> 
   dplyr::mutate(
@@ -421,14 +424,14 @@ sce_path <- pbmc3k_metadata |>
 dir.create(counts_directory, recursive = TRUE, showWarnings = FALSE)
 
 # Save data to disk
-cellNexus::pbmc3k_sce |> 
+pbmc3k_sce |> 
   S4Vectors::metadata() |> 
   purrr::pluck("data") |> 
   arrow::write_parquet(meta_path)
 
 # Save SCE object
-cellNexus::pbmc3k_sce |> 
-  anndataR::write_h5ad(sce_path, compression = "gzip")
+pbmc3k_sce |> 
+  anndataR::write_h5ad(sce_path, compression = "gzip", mode = "w")
 ```
 
 ``` r

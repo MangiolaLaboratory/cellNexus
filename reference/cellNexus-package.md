@@ -7,6 +7,11 @@ and download single-cell RNA sequencing data in various formats
 including SingleCellExperiment, Seurat, and pseudobulk
 SummarizedExperiment objects.
 
+## Source
+
+[Mangiola et
+al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
+
 ## Value
 
 The cellNexus package (invisibly).

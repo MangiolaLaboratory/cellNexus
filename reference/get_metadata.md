@@ -54,7 +54,15 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 - ...:
 
   Arguments passed on to
-  [`read_parquet`](https://mangiolalaboratory.github.io/cellNexus/reference/read_parquet.md)
+  [`duckdb_read_parquet`](https://mangiolalaboratory.github.io/cellNexus/reference/duckdb_read_parquet.md)
+
+  `conn`
+
+  :   A DuckDB connection.
+
+  `path`
+
+  :   Path(s) to parquet file(s).
 
   `filename_column`
 

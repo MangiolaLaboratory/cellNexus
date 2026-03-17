@@ -104,8 +104,6 @@ conn.close()
 - [`SAMPLE_DATABASE_URL`](https://mangiolalaboratory.github.io/cellNexus/reference/SAMPLE_DATABASE_URL.md)
   : URL pointing to the sample metadata file, which is smaller and for
   test, demonstration, and vignette purposes only
-- [`calculate_pseudobulk()`](https://mangiolalaboratory.github.io/cellNexus/reference/calculate_pseudobulk.md)
-  : Generate pseudobulk counts and quantile_normalised counts
 - [`cellNexus-package`](https://mangiolalaboratory.github.io/cellNexus/reference/cellNexus-package.md)
   [`cellNexus`](https://mangiolalaboratory.github.io/cellNexus/reference/cellNexus-package.md)
   : cellNexus: Query Interface for the Human Cell Atlas
@@ -117,6 +115,8 @@ conn.close()
 - [`get_cell_communication_strength()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_cell_communication_strength.md)
   : Retrieve cellNexus cell communication ligand–receptor strength as a
   data frame.
+- [`get_counts_per_million()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_counts_per_million.md)
+  : Generating counts per million from a SingleCellExperiment object
 - [`get_default_cache_dir()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_default_cache_dir.md)
   : Returns the default cache directory with a version number
 - [`get_metacell()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metacell.md)
@@ -132,9 +132,6 @@ conn.close()
   corresponding to the samples in that data frame
 - [`get_single_cell_experiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md)
   : Gets a SingleCellExperiment from curated metadata
-- [`import_one_sce()`](https://mangiolalaboratory.github.io/cellNexus/reference/import_one_sce.md)
-  : Import and process metadata and counts for a SingleCellExperiment
-  object
 - [`metacell_counts`](https://mangiolalaboratory.github.io/cellNexus/reference/metacell_counts.md)
   : Sample Metacell SingleCellExperiment Object
 - [`organize_inputs()`](https://mangiolalaboratory.github.io/cellNexus/reference/organize_inputs.md)
@@ -147,10 +144,6 @@ conn.close()
   : Sample SingleCellExperiment Object with Counts Assay
 - [`single_cell_cpm`](https://mangiolalaboratory.github.io/cellNexus/reference/single_cell_cpm.md)
   : Sample SingleCellExperiment Object with CPM Assay
-- [`sync_metadata_assay_files()`](https://mangiolalaboratory.github.io/cellNexus/reference/sync_metadata_assay_files.md)
-  : Synchronize metadata assay files with remote repository
-- [`validate_data()`](https://mangiolalaboratory.github.io/cellNexus/reference/validate_data.md)
-  : Validate data parameters
 
 # Articles
 

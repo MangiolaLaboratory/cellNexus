@@ -5,7 +5,7 @@ Returns the URLs for all metadata files
 ## Usage
 
 ``` r
-get_metadata_url(databases = c("metadata.1.3.0.parquet"))
+get_metadata_url(databases = c("metadata.2.0.0.parquet"))
 ```
 
 ## Source
@@ -19,7 +19,7 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 
   A character vector specifying the names of the metadata files.
   Download the specific metadata by defining the metadata version. The
-  default is metadata.1.3.0.parquet
+  default is metadata.2.0.0.parquet
 
 ## Value
 
@@ -35,6 +35,6 @@ doi:10.1101/2023.06.08.542671.
 ## Examples
 
 ``` r
-get_metadata_url("metadata.1.3.0.parquet")
-#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metadata.1.3.0.parquet
+get_metadata_url("metadata.2.0.0.parquet")
+#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metadata.2.0.0.parquet
 ```

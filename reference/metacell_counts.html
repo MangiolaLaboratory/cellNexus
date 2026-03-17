@@ -23,7 +23,7 @@ This object is used in the vignette to avoid downloading data during package bui
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,10 +54,6 @@ This object is used in the vignette to avoid downloading data during package bui
 This object is used in the vignette to avoid downloading data during package build.</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">metacell_counts</span></span></code></pre></div>
-    </div>
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
@@ -78,12 +74,34 @@ This object is used in the vignette to avoid downloading data during package bui
     <p>See <code>dev/create_vignette_data.R</code> for the creation script.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">metacell_counts</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">metacell_counts</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class: SingleCellExperiment </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dim: 56239 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> assays(1): counts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rownames(56239): ENSG00000121410 ENSG00000268895 ... ENSG00000135605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ENSG00000109501</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rowData names(0):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> colnames(4): 9c8fa5a8d2ae37179b579a0217670512___LAP92_1_duong___1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   9c8fa5a8d2ae37179b579a0217670512___LAP92_1_duong___2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   e4d7f8162faf68a85f61bdbd81dae627___1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   a2459ad4272363e6eb775e8e99607c3e___1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> colData names(39): metacell_2 dataset_id ... dir_prefix</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   metacell_identifier</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reducedDimNames(0):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mainExpName: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> altExpNames(0):</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Stefano Mangiola, Mengyuan Shen, Michael Milton, Silicon Valley Foundation CZF2019-002443, NIH NHGRI 5U24HG004059-18, Victoria Cancer Agency ECRF21036, NHMRC 1116955.</p>
+  <p>Developed by Stefano Mangiola, Mengyuan Shen, Michael Milton, Jared Andrews, Juan Henao, Edward Yang, Silicon Valley Foundation CZF2019-002443, NIH NHGRI 5U24HG004059-18, Victoria Cancer Agency ECRF21036, NHMRC 1116955.</p>
 </div>
 
 <div class="pkgdown-footer-right">

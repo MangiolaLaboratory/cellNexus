@@ -40,11 +40,7 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 - assays:
 
   A character vector specifying the desired assay(s) to be requested.
-  Valid elements include "counts", "cpm", and "rank" for single-cell
-  analyses, or "counts" for pseudobulk analyses. The default setting
-  retrieves only the counts assay. If your analysis involves a smaller
-  set of genes, consider using the "cpm" assay. The "rank" assay is
-  suited for signature calculations across millions of cells.
+  The default setting retrieves only the counts assay.
 
 - cell_aggregation:
 
@@ -90,7 +86,7 @@ doi:10.1101/2023.06.08.542671.
 # Use the lightweight sample database URL (for fast checks during development only)
 meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet to /github/home/.cache/R/cellNexus/sample_metadata.1.3.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /github/home/.cache/R/cellNexus/sample_metadata.2.0.0.parquet
 pseudobulk <- meta |> get_pseudobulk()
 #> ℹ Realising metadata.
 #> ℹ Synchronising files

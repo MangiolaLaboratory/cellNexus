@@ -13,7 +13,8 @@ get_pseudobulk(
   cell_aggregation = "pseudobulk",
   cache_directory = get_default_cache_dir(),
   repository = COUNTS_URL,
-  features = NULL
+  features = NULL,
+  as_SummarizedExperiment = FALSE
 )
 }
 \arguments{
@@ -48,13 +49,19 @@ features (row order preserved), and any experiments/samples that do not
 contain all requested features are dropped. This preserves the full set
 of requested features at the cost of potentially fewer samples.
 A warning is emitted when samples are dropped.}
+
+\item{as_SummarizedExperiment}{If \code{TRUE}, return a \code{SummarizedExperiment}
+instead of \code{SingleCellExperiment}. Use this when downstream code expects
+plain \code{SummarizedExperiment} objects. Note that \code{as(x, "SummarizedExperiment")}
+drops feature rownames; this function uses a rowname-preserving conversion.}
 }
 \value{
-A \code{SummarizedExperiment} object.
+A \code{SingleCellExperiment} object, or a \code{SummarizedExperiment} object
+when \code{as_SummarizedExperiment} is \code{TRUE}.
 }
 \description{
 Given a data frame of Curated Atlas metadata obtained from \code{\link[=get_metadata]{get_metadata()}},
-returns a \code{\link[SummarizedExperiment:SummarizedExperiment-class]{SummarizedExperiment::SummarizedExperiment}} object
+returns a \code{\link[SingleCellExperiment:SingleCellExperiment]{SingleCellExperiment::SingleCellExperiment}} object
 corresponding to the samples in that data frame
 }
 \examples{

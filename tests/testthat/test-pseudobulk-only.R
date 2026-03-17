@@ -40,4 +40,21 @@ test_that("get_pseudobulk() subsets to requested gene ENSG00000065485", {
   expect_equal(nrow(sme_sub), 1)
 })
 
-
+test_that("get_pseudobulk() as_SummarizedExperiment preserves rownames", {
+  temp <- tempfile()
+  id <- "8977a940f296898898d92461e71c8e0d___1.h5ad"
+  meta <- get_metadata(cache_directory = temp, cloud_metadata = SAMPLE_DATABASE_URL) |>
+    filter(
+      empty_droplet == "FALSE",
+      alive == "TRUE",
+      scDblFinder.class != "doublet",
+      file_id_cellNexus_pseudobulk == id
+    )
+  
+  sme_sce <- get_pseudobulk(meta, cache_directory = temp)
+  sme_se  <- get_pseudobulk(meta, cache_directory = temp, as_SummarizedExperiment = TRUE)
+  
+  expect_s4_class(sme_sce, "SingleCellExperiment")
+  expect_s4_class(sme_se, "SummarizedExperiment")
+  expect_identical(rownames(sme_sce), rownames(sme_se))
+})

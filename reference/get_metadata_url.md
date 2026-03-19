@@ -5,7 +5,12 @@ Returns the URLs for all metadata files
 ## Usage
 
 ``` r
-get_metadata_url(databases = c("metadata.2.0.0.parquet"))
+get_metadata_url(
+  databases = "metadata.2.0.0.parquet",
+  use_split_files = FALSE,
+  use_census = FALSE,
+  use_metacell = FALSE
+)
 ```
 
 ## Source
@@ -18,8 +23,22 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 - databases:
 
   A character vector specifying the names of the metadata files.
-  Download the specific metadata by defining the metadata version. The
-  default is metadata.2.0.0.parquet
+  Download the specific metadata by defining the metadata version.
+
+- use_split_files:
+
+  Logical, default `FALSE`. If `TRUE`, returns URLs for the split
+  metadata files.
+
+- use_census:
+
+  Logical, default `FALSE`. If `TRUE`, returns the URL for the census
+  metadata file.
+
+- use_metacell:
+
+  Logical, default `FALSE`. If `TRUE`, returns the URL for the metacell
+  metadata file.
 
 ## Value
 

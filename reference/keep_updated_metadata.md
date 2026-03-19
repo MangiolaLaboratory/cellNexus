@@ -5,7 +5,7 @@ Clear the outdated metadata in the default cache directory.
 ## Usage
 
 ``` r
-clear_old_metadata(updated_data)
+keep_updated_metadata(updated_data)
 ```
 
 ## Source
@@ -17,7 +17,7 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 
 - updated_data:
 
-  A character vector of outdated metadata name
+  A character vector of new metadata file name
 
 ## Value
 

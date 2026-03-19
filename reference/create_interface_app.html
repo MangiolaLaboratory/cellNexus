@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Create a Shiny app that allows users to generate filtering &amp; retreival code for cellNexus</h1>
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/pseudobulk-SE/R/interface_app.R" class="external-link"><code>R/interface_app.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/interface_app.R" class="external-link"><code>R/interface_app.R</code></a></small>
       <div class="d-none name"><code>create_interface_app.Rd</code></div>
     </div>
 
@@ -53,7 +53,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_interface_app</span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_interface_app</span><span class="op">(</span><span class="va">ui_choices</span>, return_as_list <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -64,8 +64,12 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-metadata">metadata<a class="anchor" aria-label="anchor" href="#arg-metadata"></a></dt>
-<dd><p>cellNexus metadata as returned by <code><a href="get_metadata.html">get_metadata()</a></code>.</p></dd>
+<dl><dt id="arg-ui-choices">ui_choices<a class="anchor" aria-label="anchor" href="#arg-ui-choices"></a></dt>
+<dd><p>A list of pre-computed unique values for each filterable column in the metadata.</p></dd>
+
+
+<dt id="arg-return-as-list">return_as_list<a class="anchor" aria-label="anchor" href="#arg-return-as-list"></a></dt>
+<dd><p>If TRUE, returns a list with 'ui' and 'server' components instead of a Shiny app object.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -81,7 +85,7 @@ in the selected format.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="get_default_cache_dir.html">get_default_cache_dir</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/cellNexus"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/.cache/R/cellNexus"</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
 <span class="r-in"><span><span class="co"># Create the interface app with metadata</span></span></span>
 <span class="r-in"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span><span class="op">)</span></span></span>

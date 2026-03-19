@@ -65,12 +65,7 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 - features:
 
   An optional character vector of features (ie genes) to return the
-  counts for. By default counts for all features will be returned. When
-  provided, the returned object will contain exactly the requested
-  features (row order preserved), and any experiments/samples that do
-  not contain all requested features are dropped. This preserves the
-  full set of requested features at the cost of potentially fewer
-  samples. A warning is emitted when samples are dropped.
+  counts for. By default counts for all features will be returned.
 
 ## Value
 

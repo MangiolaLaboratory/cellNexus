@@ -23,33 +23,31 @@ Data are hosted on the ARDC Nectar Research Cloud, and most `cellNexus`
 functions interact with Nectar via web requests, so a network connection
 is required for most functionality.
 
-`cellNexus` and CuratedAtlasQueryR both rely on pre-computed expression
-layers, but they differ in how these layers were generated. `cellNexus`
-applies a more standardised workflow with explicit empty droplet and
-dead cell removal followed by harmonised QC, normalisation, and
-multi-layer data generation. In doing so, it produces newly iterated
-data that align with the evolving CELLxGENE releases.
+`cellNexus` builds on top of package CuratedAtlasQueryR. While both rely
+on pre-computed expression layers, they differ in how these layers are
+generated. cellNexus implements a more standardised workflow, including
+explicit removal of empty droplets and dead cells, followed by
+harmonised quality control, normalisation, and multi-layer data
+generation. Through this process, it produces updated datasets that
+remain aligned with the evolving CELLxGENE releases.
 
 ## Query interface
 
 ### Installation
 
 ``` r
-
 devtools::install_github("MangiolaLaboratory/cellNexus")
 ```
 
 ### Load the package
 
 ``` r
-
 library(cellNexus)
 ```
 
 ### Load additional packages
 
 ``` r
-
 suppressPackageStartupMessages({
     library(ggplot2)
 })
@@ -60,7 +58,6 @@ suppressPackageStartupMessages({
 #### Load the metadata
 
 ``` r
-
 metadata <- get_metadata(cloud_metadata = METADATA_URL)
 metadata
 ```
@@ -73,7 +70,6 @@ unless a custom path is provided via the cache_directory argument. The
 #### Explore the tissue
 
 ``` r
-
 metadata |>
     dplyr::distinct(tissue, cell_type_unified_ensemble) 
 ```
@@ -85,12 +81,9 @@ empty droplets, dead or damaged cells, doublets, and samples with low
 gene counts.
 
 ``` r
-
-metadata <- metadata |>
-  dplyr::filter(empty_droplet == FALSE,
-         alive == TRUE,
-         scDblFinder.class != "doublet",
-         feature_count >= 5000)
+metadata = metadata |> 
+  dplyr::filter(feature_count >= 5000) |> 
+  keep_quality_cells()
 ```
 
 ### Download single-cell RNA sequencing counts
@@ -98,7 +91,6 @@ metadata <- metadata |>
 #### Query raw counts
 
 ``` r
-
 single_cell_counts <-
   metadata |>
   dplyr::filter(
@@ -116,7 +108,6 @@ single_cell_counts
 #### Query counts scaled per million
 
 ``` r
-
 single_cell_cpm <-
   metadata |>
   dplyr::filter(
@@ -134,7 +125,6 @@ single_cell_cpm
 #### Query pseudobulk
 
 ``` r
-
 pseudobulk_counts <-
   metadata |>
   dplyr::filter(
@@ -156,7 +146,6 @@ with 2, 4, 8, and so on. For example, the value of metacell_2 represents
 a grouping of cells that can be split into two distinct metacells.
 
 ``` r
-
 metacell_counts <-
   metadata |>
   dplyr::filter(!is.na(metacell_2)) |>
@@ -179,7 +168,6 @@ This is helpful if just few genes are of interest (e.g ENSG00000134644
 gene ID(s).
 
 ``` r
-
 single_cell_cpm <-
   metadata |>
   dplyr::filter(
@@ -201,7 +189,6 @@ time and occupy a lot of memory depending on how many cells you are
 requesting.
 
 ``` r
-
 seurat_counts <-
   metadata |>
   dplyr::filter(
@@ -224,14 +211,12 @@ directory to metadata and counts functions:
 ### Load metadata from the custom cache directory
 
 ``` r
-
 metadata <- get_metadata(cache_directory = "/MY/CUSTOM/PATH")
 ```
 
 ### Query raw counts from the custom cache directory
 
 ``` r
-
 single_cell_counts <-
   metadata |>
   dplyr::filter(
@@ -269,7 +254,6 @@ be slow. In addition, an `.rds` saved in this way is not portable: you
 will not be able to share it with other users.
 
 ``` r
-
 single_cell_counts |> saveRDS("single_cell_counts.rds")
 ```
 
@@ -286,7 +270,6 @@ corresponding `.rds` as it includes a copy of the count information, and
 the saving process is going to be slow for large objects.
 
 ``` r
-
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
@@ -310,7 +293,6 @@ However this `.h5ad` saving strategy has a bottleneck of handling
 columns with only NA values of a `SingleCellExperiment` metadata.
 
 ``` r
-
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
@@ -327,7 +309,6 @@ We can gather all CD14 monocytes cells and plot the distribution of
 ENSG00000085265 (FCN1) across all tissues
 
 ``` r
-
 
 # Plots with styling
 counts <- metadata |>
@@ -365,7 +346,6 @@ counts |>
 ```
 
 ``` r
-
 # Plot by tissue
 counts |>
   dplyr::with_groups(tissue, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na = TRUE))) |>
@@ -395,7 +375,6 @@ To enable this feature, users must include
 columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
 
 ``` r
-
 # Set up local cache and paths
 local_cache <- tempdir()
 layer <- "counts"
@@ -435,7 +414,6 @@ pbmc3k_sce |>
 ```
 
 ``` r
-
 # A cellNexus file
 file_id_from_cloud <- "e52795dec7b626b6276b867d55328d9f___1.h5ad"
 file_id_local <- basename(sce_path)
@@ -522,6 +500,5 @@ hierarchical partitions of cells into metacell groups.
 ## Session Info
 
 ``` r
-
 sessionInfo()
 ```

@@ -6,7 +6,7 @@ code for cellNexus
 ## Usage
 
 ``` r
-create_interface_app(metadata)
+create_interface_app(ui_choices, return_as_list = FALSE)
 ```
 
 ## Source
@@ -16,10 +16,15 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 
 ## Arguments
 
-- metadata:
+- ui_choices:
 
-  cellNexus metadata as returned by
-  [`get_metadata()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metadata.md).
+  A list of pre-computed unique values for each filterable column in the
+  metadata.
+
+- return_as_list:
+
+  If TRUE, returns a list with 'ui' and 'server' components instead of a
+  Shiny app object.
 
 ## Value
 
@@ -34,7 +39,7 @@ Jared Andrews
 
 ``` r
 get_default_cache_dir()
-#> [1] "/github/home/.cache/R/cellNexus"
+#> [1] "/home/runner/.cache/R/cellNexus"
 if (FALSE) { # interactive()
 # Create the interface app with metadata
 metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)

@@ -33,6 +33,12 @@
   corresponding to the samples in that data frame
 - [`get_single_cell_experiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md)
   : Gets a SingleCellExperiment from curated metadata
+- [`join_census_table()`](https://mangiolalaboratory.github.io/cellNexus/reference/join_census_table.md)
+  : Join Census metadata to an existing data frame
+- [`join_metacell_table()`](https://mangiolalaboratory.github.io/cellNexus/reference/join_metacell_table.md)
+  : Join metacell metadata to an existing data frame
+- [`keep_quality_cells()`](https://mangiolalaboratory.github.io/cellNexus/reference/keep_quality_cells.md)
+  : Keep high-quality cells based on QC columns
 - [`metacell_counts`](https://mangiolalaboratory.github.io/cellNexus/reference/metacell_counts.md)
   : Sample Metacell SingleCellExperiment Object
 - [`organize_inputs()`](https://mangiolalaboratory.github.io/cellNexus/reference/organize_inputs.md)
@@ -45,3 +51,5 @@
   : Sample SingleCellExperiment Object with Counts Assay
 - [`single_cell_cpm`](https://mangiolalaboratory.github.io/cellNexus/reference/single_cell_cpm.md)
   : Sample SingleCellExperiment Object with CPM Assay
+- [`ui_choices`](https://mangiolalaboratory.github.io/cellNexus/reference/ui_choices.md)
+  : Pre-computed UI Choices for Interface App

@@ -12,7 +12,6 @@
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/SAMPLE_DATABASE_URL.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/cellNexus-package.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/clear_cache.html</loc></url>
-<url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/clear_old_metadata.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/create_interface_app.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/delete_counts.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/duckdb_read_parquet.html</loc></url>
@@ -27,6 +26,10 @@
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/get_seurat.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/index.html</loc></url>
+<url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/join_census_table.html</loc></url>
+<url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/join_metacell_table.html</loc></url>
+<url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/keep_quality_cells.html</loc></url>
+<url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/keep_updated_metadata.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/metacell_counts.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/organize_inputs.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/pbmc3k_sce.html</loc></url>
@@ -36,6 +39,8 @@
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/single_cell_cpm.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/sync_metadata_assay_files.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/sync_remote_file.html</loc></url>
+<url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/sync_remote_files.html</loc></url>
+<url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/ui_choices.html</loc></url>
 <url><loc>https://mangiolalaboratory.github.io/cellNexus/reference/url_file_size.html</loc></url>
 </urlset>
 

@@ -39,7 +39,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
 al.</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/pseudobulk-SE/vignettes/cellNexus.Rmd" class="external-link"><code>vignettes/cellNexus.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/vignettes/cellNexus.Rmd" class="external-link"><code>vignettes/cellNexus.Rmd</code></a></small>
       <div class="d-none name"><code>cellNexus.Rmd</code></div>
     </div>
 
@@ -103,13 +103,13 @@ integration.</p>
 <p>Data are hosted on the ARDC Nectar Research Cloud, and most
 <code>cellNexus</code> functions interact with Nectar via web requests,
 so a network connection is required for most functionality.</p>
-<p><code>cellNexus</code> and CuratedAtlasQueryR both rely on
-pre-computed expression layers, but they differ in how these layers were
-generated. <code>cellNexus</code> applies a more standardised workflow
-with explicit empty droplet and dead cell removal followed by harmonised
-QC, normalisation, and multi-layer data generation. In doing so, it
-produces newly iterated data that align with the evolving CELLxGENE
-releases.</p>
+<p><code>cellNexus</code> builds on top of package CuratedAtlasQueryR.
+While both rely on pre-computed expression layers, they differ in how
+these layers are generated. cellNexus implements a more standardised
+workflow, including explicit removal of empty droplets and dead cells,
+followed by harmonised quality control, normalisation, and multi-layer
+data generation. Through this process, it produces updated datasets that
+remain aligned with the evolving CELLxGENE releases.</p>
 </div>
 <div class="section level2">
 <h2 id="query-interface">Query interface<a class="anchor" aria-label="anchor" href="#query-interface"></a>
@@ -118,7 +118,7 @@ releases.</p>
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install-deprecated.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="load-the-package">Load the package<a class="anchor" aria-label="anchor" href="#load-the-package"></a>
@@ -163,11 +163,9 @@ queries.</p>
 empty droplets, dead or damaged cells, doublets, and samples with low
 gene counts.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">empty_droplet</span> <span class="op">==</span> <span class="cn">FALSE</span>,</span>
-<span>         <span class="va">alive</span> <span class="op">==</span> <span class="cn">TRUE</span>,</span>
-<span>         <span class="va">scDblFinder.class</span> <span class="op">!=</span> <span class="st">"doublet"</span>,</span>
-<span>         <span class="va">feature_count</span> <span class="op">&gt;=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">=</span> <span class="va">metadata</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">feature_count</span> <span class="op">&gt;=</span> <span class="fl">5000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/keep_quality_cells.html">keep_quality_cells</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="download-single-cell-rna-sequencing-counts">Download single-cell RNA sequencing counts<a class="anchor" aria-label="anchor" href="#download-single-cell-rna-sequencing-counts"></a>

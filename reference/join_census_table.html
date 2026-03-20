@@ -23,7 +23,7 @@ This function creates indexed tables for efficient joining and returns a data fr
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.13</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.14</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@ This function creates indexed tables for efficient joining and returns a data fr
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Join Census metadata to an existing data frame</h1>
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/remove-cur-data-all-deprecation/R/metadata.R" class="external-link"><code>R/metadata.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/metadata.R" class="external-link"><code>R/metadata.R</code></a></small>
       <div class="d-none name"><code>join_census_table.Rd</code></div>
     </div>
 
@@ -58,9 +58,9 @@ This function creates indexed tables for efficient joining and returns a data fr
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">join_census_table</span><span class="op">(</span></span>
 <span>  <span class="va">tbl</span>,</span>
+<span>  cloud_metadata <span class="op">=</span> <span class="fu"><a href="get_metadata_url.html">get_metadata_url</a></span><span class="op">(</span><span class="st">"census_cell_metadata.2.0.0.parquet"</span><span class="op">)</span>,</span>
 <span>  cache_directory <span class="op">=</span> <span class="fu"><a href="get_default_cache_dir.html">get_default_cache_dir</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  join_keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"dataset_id"</span>, <span class="st">"observation_joinid"</span><span class="op">)</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  join_keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"dataset_id"</span>, <span class="st">"observation_joinid"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -70,6 +70,10 @@ This function creates indexed tables for efficient joining and returns a data fr
 
 <dl><dt id="arg-tbl">tbl<a class="anchor" aria-label="anchor" href="#arg-tbl"></a></dt>
 <dd><p>A <code>tbl_sql</code> object (from get_metadata) or a database connection.</p></dd>
+
+
+<dt id="arg-cloud-metadata">cloud_metadata<a class="anchor" aria-label="anchor" href="#arg-cloud-metadata"></a></dt>
+<dd><p>HTTP URL/URLs pointing to the census parquet database name and location.</p></dd>
 
 
 <dt id="arg-cache-directory">cache_directory<a class="anchor" aria-label="anchor" href="#arg-cache-directory"></a></dt>
@@ -82,19 +86,34 @@ directory where remote parquet files will be stored. Defaults to
 <dd><p>A character vector of column names used for the join.
 Defaults to <code>c("sample_id", "dataset_id", "observation_joinid")</code>.</p></dd>
 
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to <code><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html" class="external-link">arrow::read_parquet()</a></code>.
-library(dplyr)
-get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |&gt; head(2) |&gt;
-join_census_table(cache_directory = tempdir())</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A lazy SQL table with Census metadata joined to the cellNexus metadata.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="co"># You do not need to specify anything in cloud_metadata</span></span></span>
+<span class="r-in"><span>  <span class="fu">join_census_table</span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span>, </span></span>
+<span class="r-in"><span>                    cache_directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   SQL [?? x 175]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.5.3/:memory:]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cell_id.x dataset_id                  observation_joinid sample_id cell_type.x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>        81 cda2c8cd-be1c-42e5-b2cd-16… *NUPW@J{c2         034f0fb1… monocyte   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>        82 cda2c8cd-be1c-42e5-b2cd-16… KIV&gt;qGFIS?         034f0fb1… monocyte   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 170 more variables: cell_type_ontology_term_id.x &lt;chr&gt;, sample_.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   assay.x &lt;chr&gt;, assay_ontology_term_id.x &lt;chr&gt;, cell_count.x &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   citation.x &lt;chr&gt;, collection_id.x &lt;chr&gt;, dataset_version_id.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   default_embedding.x &lt;chr&gt;, development_stage.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   development_stage_ontology_term_id.x &lt;chr&gt;, disease.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   disease_ontology_term_id.x &lt;chr&gt;, donor_id.x &lt;chr&gt;, experiment___.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   explorer_url.x &lt;chr&gt;, feature_count.x &lt;int&gt;, filesize.x &lt;dbl&gt;, …</span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

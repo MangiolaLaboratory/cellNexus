@@ -6,10 +6,7 @@ Returns the URLs for all metadata files
 
 ``` r
 get_metadata_url(
-  databases = "metadata.2.0.0.parquet",
-  use_split_files = FALSE,
-  use_census = FALSE,
-  use_metacell = FALSE
+  databases = c("cellnexus_metadata.2.0.0.parquet", "census_cell_metadata.2.0.0.parquet")
 )
 ```
 
@@ -25,21 +22,6 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
   A character vector specifying the names of the metadata files.
   Download the specific metadata by defining the metadata version.
 
-- use_split_files:
-
-  Logical, default `FALSE`. If `TRUE`, returns URLs for the split
-  metadata files.
-
-- use_census:
-
-  Logical, default `FALSE`. If `TRUE`, returns the URL for the census
-  metadata file.
-
-- use_metacell:
-
-  Logical, default `FALSE`. If `TRUE`, returns the URL for the metacell
-  metadata file.
-
 ## Value
 
 A character vector of URLs to parquet files to download
@@ -54,6 +36,6 @@ doi:10.1101/2023.06.08.542671.
 ## Examples
 
 ``` r
-get_metadata_url("metadata.2.0.0.parquet")
-#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metadata.2.0.0.parquet
+get_metadata_url("cellnexus_metadata.2.0.0.parquet")
+#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_metadata.2.0.0.parquet
 ```

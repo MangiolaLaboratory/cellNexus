@@ -20,8 +20,6 @@
   : Generating counts per million from a SingleCellExperiment object
 - [`get_default_cache_dir()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_default_cache_dir.md)
   : Returns the default cache directory with a version number
-- [`get_metacell()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metacell.md)
-  : Gets a Metacell from curated metadata
 - [`get_metadata()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metadata.md)
   : Gets the CellNexus metadata as a data frame.
 - [`get_metadata_url()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metadata_url.md)
@@ -35,12 +33,8 @@
   : Gets a SingleCellExperiment from curated metadata
 - [`join_census_table()`](https://mangiolalaboratory.github.io/cellNexus/reference/join_census_table.md)
   : Join Census metadata to an existing data frame
-- [`join_metacell_table()`](https://mangiolalaboratory.github.io/cellNexus/reference/join_metacell_table.md)
-  : Join metacell metadata to an existing data frame
 - [`keep_quality_cells()`](https://mangiolalaboratory.github.io/cellNexus/reference/keep_quality_cells.md)
   : Keep high-quality cells based on QC columns
-- [`metacell_counts`](https://mangiolalaboratory.github.io/cellNexus/reference/metacell_counts.md)
-  : Sample Metacell SingleCellExperiment Object
 - [`organize_inputs()`](https://mangiolalaboratory.github.io/cellNexus/reference/organize_inputs.md)
   : Organize arbitrary Shiny inputs into a grid layout
 - [`pbmc3k_sce`](https://mangiolalaboratory.github.io/cellNexus/reference/pbmc3k_sce.md)

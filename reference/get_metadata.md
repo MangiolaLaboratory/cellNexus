@@ -14,9 +14,7 @@ get_metadata(
   cloud_metadata = get_metadata_url(),
   local_metadata = NULL,
   cache_directory = get_default_cache_dir(),
-  use_cache = TRUE,
-  use_split_files = FALSE,
-  ...
+  use_cache = TRUE
 )
 ```
 
@@ -51,29 +49,6 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
   has been called before with the same parameters, then a cached
   reference to the table will be returned. If `FALSE`, a new connection
   will be created no matter what.
-
-- use_split_files:
-
-  Optional logical scalar. If `TRUE`, uses split metadata files instead
-  of the single combined metadata file.
-
-- ...:
-
-  Arguments passed on to
-  [`duckdb_read_parquet`](https://mangiolalaboratory.github.io/cellNexus/reference/duckdb_read_parquet.md)
-
-  `conn`
-
-  :   A DuckDB connection.
-
-  `path`
-
-  :   Path(s) to parquet file(s).
-
-  `filename_column`
-
-  :   A column name to the metadata that indicates which row came from
-      which file. By default it does not add the column.
 
 ## Value
 
@@ -189,9 +164,4 @@ filtered_metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |>
             tissue == "lung parenchyma" &
             cell_type %LIKE% "%CD4%"
     )
-
-# Use split files for reduced download size (when available)
-metadata_split <- get_metadata(use_split_files = TRUE)
-#> ℹ Downloading 1 file, totalling 0.94 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_metadata.2.0.0.parquet to /github/home/.cache/R/cellNexus/cellnexus_metadata.2.0.0.parquet
 ```

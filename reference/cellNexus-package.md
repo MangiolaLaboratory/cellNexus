@@ -21,13 +21,11 @@ The cellNexus package (invisibly).
 To get started with `cellNexus`, first load the package and retrieve the
 metadata:
 
-
     library(cellNexus)
     metadata <- get_metadata()
 
 Then filter the metadata to find cells of interest and download the
 data:
-
 
     filtered_metadata <- metadata |>
         dplyr::filter(
@@ -54,10 +52,6 @@ data:
 - [`get_pseudobulk`](https://mangiolalaboratory.github.io/cellNexus/reference/get_pseudobulk.md):
 
   Download aggregated pseudobulk data
-
-- [`get_metacell`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metacell.md):
-
-  Download metacell aggregated data
 
 ## Data Licensing
 

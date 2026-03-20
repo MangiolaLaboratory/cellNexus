@@ -29,7 +29,7 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
 #> # Source:   SQL [?? x 89]
-#> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]
+#> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.5.3/:memory:]
 #>    cell_id dataset_id                     observation_joinid sample_id cell_type
 #>      <dbl> <chr>                          <chr>              <chr>     <chr>    
 #>  1      81 cda2c8cd-be1c-42e5-b2cd-162ca… *NUPW@J{c2         034f0fb1… monocyte 

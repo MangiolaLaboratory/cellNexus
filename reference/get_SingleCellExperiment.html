@@ -25,7 +25,7 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.13</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../index.html">home</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://j-andrews7-cellnexus.share.connect.posit.cloud/">Query builder</a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://mangiolalaboratory-cellnexus.share.connect.posit.cloud/">Query builder</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/gene-expression-explore.html">gene expression explore</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -47,7 +47,7 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Gets a SingleCellExperiment from curated metadata</h1>
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/remove-cur-data-all-deprecation/R/counts.R" class="external-link"><code>R/counts.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/counts.R" class="external-link"><code>R/counts.R</code></a></small>
       <div class="d-none name"><code>get_SingleCellExperiment.Rd</code></div>
     </div>
 
@@ -123,10 +123,12 @@ doi:10.1101/2023.06.08.542671.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Use the lightweight sample database URL (for fast checks during development only)</span></span></span>
 <span class="r-in"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="fu">cellNexus</span><span class="fu">::</span><span class="va"><a href="SAMPLE_DATABASE_URL.html">SAMPLE_DATABASE_URL</a></span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /github/home/.cache/R/cellNexus/sample_metadata.2.0.0.parquet</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /home/runner/.cache/R/cellNexus/sample_metadata.2.0.0.parquet</span>
 <span class="r-in"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_single_cell_experiment.html">get_single_cell_experiment</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Synchronising files</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/counts/03319e4f54220f534de2c4e42e607126___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene/01-07-2024//counts/03319e4f54220f534de2c4e42e607126___1.h5ad</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Reading files.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Compiling Experiment.</span>
 </code></pre></div>

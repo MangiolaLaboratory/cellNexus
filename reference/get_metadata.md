@@ -193,5 +193,5 @@ filtered_metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |>
 # Use split files for reduced download size (when available)
 metadata_split <- get_metadata(use_split_files = TRUE)
 #> ℹ Downloading 1 file, totalling 0.95 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_metadata.2.0.0.parquet to /github/home/.cache/R/cellNexus/cellnexus_metadata.2.0.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_metadata.2.0.0.parquet to /home/runner/.cache/R/cellNexus/cellnexus_metadata.2.0.0.parquet
 ```

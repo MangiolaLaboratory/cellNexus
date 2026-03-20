@@ -96,6 +96,8 @@ meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
 pseudobulk <- meta |> get_pseudobulk()
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
+#> ℹ Downloading 1 file, totalling 0.1 GB
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/pseudobulk/counts/f0946b9064dead3a6b2228fb70af8de1___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene/01-07-2024/pseudobulk/counts/f0946b9064dead3a6b2228fb70af8de1___1.h5ad
 #> ℹ Reading files.
 #> ℹ Compiling Experiment.
 ```

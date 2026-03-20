@@ -49,7 +49,7 @@ library(dplyr)
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2) |> 
   join_metacell_table(cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0.44 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metacell_metadata.2.0.0.parquet to /tmp/Rtmpm1TSCa/metacell_metadata.2.0.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/metacell_metadata.2.0.0.parquet to /tmp/Rtmp2GRuQl/metacell_metadata.2.0.0.parquet
 #> # Source:   SQL [?? x 105]
 #> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]
 #>   cell_id dataset_id                      observation_joinid sample_id cell_type

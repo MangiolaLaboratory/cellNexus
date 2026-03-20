@@ -51,7 +51,7 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) 
   head(2) |>
   keep_quality_cells()
 #> # Source:   SQL [?? x 89]
-#> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.5.3/:memory:]
+#> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]
 #>   cell_id dataset_id                      observation_joinid sample_id cell_type
 #>     <dbl> <chr>                           <chr>              <chr>     <chr>    
 #> 1      81 cda2c8cd-be1c-42e5-b2cd-162caa… *NUPW@J{c2         034f0fb1… monocyte 

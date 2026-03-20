@@ -40,18 +40,21 @@ remain aligned with the evolving CELLxGENE releases.
 ### Installation
 
 ``` r
+
 devtools::install_github("MangiolaLaboratory/cellNexus")
 ```
 
 ### Load the package
 
 ``` r
+
 library(cellNexus)
 ```
 
 ### Load additional packages
 
 ``` r
+
 suppressPackageStartupMessages({
     library(ggplot2)
 })
@@ -62,14 +65,15 @@ suppressPackageStartupMessages({
 #### Load the metadata
 
 ``` r
+
 metadata <- get_metadata(cloud_metadata = METADATA_URL)
 metadata
 ```
 
     #> ℹ Downloading 1 file, totalling 0 GB
-    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /tmp/RtmpZJWLm1/sample_metadata.2.0.0.parquet
+    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /tmp/RtmppMnvsI/sample_metadata.2.0.0.parquet
     #> # Source:   SQL [?? x 89]
-    #> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.5.3/:memory:]
+    #> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]
     #>    cell_id dataset_id                     observation_joinid sample_id cell_type
     #>      <dbl> <chr>                          <chr>              <chr>     <chr>    
     #>  1      81 cda2c8cd-be1c-42e5-b2cd-162ca… *NUPW@J{c2         034f0fb1… monocyte 
@@ -98,22 +102,23 @@ unless a custom path is provided via the cache_directory argument. The
 #### Explore the tissue
 
 ``` r
+
 metadata |>
     dplyr::distinct(tissue, cell_type_unified_ensemble) 
 #> # Source:   SQL [?? x 2]
-#> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.5.3/:memory:]
-#>    tissue              cell_type_unified_ensemble
-#>    <chr>               <chr>                     
-#>  1 kidney              epithelial                
-#>  2 kidney blood vessel epithelial                
-#>  3 lung parenchyma     cd4 th2 em                
-#>  4 lung                cd4 fh em                 
-#>  5 lung parenchyma     treg                      
-#>  6 forebrain           nk                        
-#>  7 kidney              nk                        
-#>  8 lung                cd4 tcm                   
-#>  9 body of stomach     nk                        
-#> 10 respiratory airway  cd4 th1/th17 em           
+#> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]
+#>    tissue             cell_type_unified_ensemble
+#>    <chr>              <chr>                     
+#>  1 thymus             cd14 mono                 
+#>  2 breast             nk                        
+#>  3 renal pelvis       epithelial                
+#>  4 respiratory airway cd4 th2 em                
+#>  5 lung               cd4 th1 em                
+#>  6 nose               cd4 fh em                 
+#>  7 respiratory airway granulocyte               
+#>  8 blood              cd14 mono                 
+#>  9 nose               cd4 tcm                   
+#> 10 colonic epithelium nk                        
 #> # ℹ more rows
 ```
 
@@ -124,6 +129,7 @@ empty droplets, dead or damaged cells, doublets, and samples with low
 gene counts.
 
 ``` r
+
 metadata = metadata |> 
   dplyr::filter(feature_count >= 5000) |> 
   keep_quality_cells()
@@ -134,6 +140,7 @@ metadata = metadata |>
 #### Query raw counts
 
 ``` r
+
 single_cell_counts <-
   metadata |>
   dplyr::filter(
@@ -169,6 +176,7 @@ single_cell_counts
 #### Query counts scaled per million
 
 ``` r
+
 single_cell_cpm <-
   metadata |>
   dplyr::filter(
@@ -204,6 +212,7 @@ single_cell_cpm
 #### Query pseudobulk
 
 ``` r
+
 pseudobulk_counts <-
   metadata |>
   dplyr::filter(
@@ -241,6 +250,7 @@ with 2, 4, 8, and so on. For example, the value of metacell_2 represents
 a grouping of cells that can be split into two distinct metacells.
 
 ``` r
+
 metacell_counts <-
   metadata |>
   dplyr::filter(!is.na(metacell_2)) |>
@@ -280,6 +290,7 @@ This is helpful if just few genes are of interest (e.g ENSG00000134644
 gene ID(s).
 
 ``` r
+
 single_cell_cpm <-
   metadata |>
   dplyr::filter(
@@ -318,6 +329,7 @@ time and occupy a lot of memory depending on how many cells you are
 requesting.
 
 ``` r
+
 seurat_counts <-
   metadata |>
   dplyr::filter(
@@ -345,12 +357,14 @@ directory to metadata and counts functions:
 ### Load metadata from the custom cache directory
 
 ``` r
+
 metadata <- get_metadata(cache_directory = "/MY/CUSTOM/PATH")
 ```
 
 ### Query raw counts from the custom cache directory
 
 ``` r
+
 single_cell_counts <-
   metadata |>
   dplyr::filter(
@@ -388,6 +402,7 @@ be slow. In addition, an `.rds` saved in this way is not portable: you
 will not be able to share it with other users.
 
 ``` r
+
 single_cell_counts |> saveRDS("single_cell_counts.rds")
 ```
 
@@ -404,6 +419,7 @@ corresponding `.rds` as it includes a copy of the count information, and
 the saving process is going to be slow for large objects.
 
 ``` r
+
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
@@ -427,6 +443,7 @@ However this `.h5ad` saving strategy has a bottleneck of handling
 columns with only NA values of a `SingleCellExperiment` metadata.
 
 ``` r
+
 # ! IMPORTANT if you save 200K+ cells
 HDF5Array::setAutoBlockSize(size = 1e+09) 
 
@@ -443,6 +460,7 @@ We can gather all CD14 monocytes cells and plot the distribution of
 ENSG00000085265 (FCN1) across all tissues
 
 ``` r
+
 
 # Plots with styling
 counts <- metadata |>
@@ -482,6 +500,7 @@ counts |>
 ![](../reference/figures/FCN1_disease_plot.png)
 
 ``` r
+
 # Plot by tissue
 counts |>
   dplyr::with_groups(tissue, ~ .x |> dplyr::mutate(median_count = median(`FCN1`, rm.na = TRUE))) |>
@@ -513,6 +532,7 @@ To enable this feature, users must include
 columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
 
 ``` r
+
 # Set up local cache and paths
 local_cache <- tempdir()
 layer <- "counts"
@@ -545,6 +565,9 @@ pbmc3k_sce |>
   S4Vectors::metadata() |> 
   purrr::pluck("data") |> 
   arrow::write_parquet(meta_path)
+#> Registered S3 method overwritten by 'bit64':
+#>   method          from 
+#>   print.bitstring tools
 
 # Save SCE object
 pbmc3k_sce |> 
@@ -552,6 +575,7 @@ pbmc3k_sce |>
 ```
 
 ``` r
+
 # A cellNexus file
 file_id_from_cloud <- "e52795dec7b626b6276b867d55328d9f___1.h5ad"
 file_id_local <- basename(sce_path)
@@ -567,7 +591,7 @@ get_metadata(cloud_metadata = METADATA_URL,
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Downloading 1 file, totalling 0.01 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/counts/e52795dec7b626b6276b867d55328d9f___1.h5ad to /tmp/RtmpZJWLm1/cellxgene/01-07-2024//counts/e52795dec7b626b6276b867d55328d9f___1.h5ad
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/counts/e52795dec7b626b6276b867d55328d9f___1.h5ad to /tmp/RtmppMnvsI/cellxgene/01-07-2024//counts/e52795dec7b626b6276b867d55328d9f___1.h5ad
 #> ℹ Reading files.
 #> ! The number of cells in the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?
 #> ! cellNexus says: Not all genes completely overlap across the provided objects. Counts are generated by genes intersection.
@@ -659,20 +683,23 @@ hierarchical partitions of cells into metacell groups.
 ## Session Info
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.3 (2026-03-11)
+#> R Under development (unstable) (2026-03-15 r89629)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.3 LTS
+#> Running under: Ubuntu 24.04.4 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
 #> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
 #> 
 #> locale:
-#>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
-#>  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
-#>  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
-#> [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+#>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+#>  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+#>  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+#>  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+#>  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+#> [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 #> 
 #> time zone: UTC
 #> tzcode source: system (glibc)
@@ -681,10 +708,10 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_4.0.2     dplyr_1.2.0       cellNexus_0.99.13 BiocStyle_2.38.0 
+#> [1] ggplot2_4.0.2     dplyr_1.2.0       cellNexus_0.99.13 BiocStyle_2.39.0 
 #> 
 #> loaded via a namespace (and not attached):
-#>   [1] RcppAnnoy_0.0.23            splines_4.5.3              
+#>   [1] RcppAnnoy_0.0.23            splines_4.6.0              
 #>   [3] later_1.4.8                 filelock_1.0.3             
 #>   [5] tibble_3.3.1                polyclip_1.10-7            
 #>   [7] fastDummies_1.7.5           lifecycle_1.0.5            
@@ -700,68 +727,68 @@ sessionInfo()
 #>  [27] reticulate_1.45.0           cowplot_1.2.0              
 #>  [29] pbapply_1.7-4               DBI_1.3.0                  
 #>  [31] RColorBrewer_1.1-3          abind_1.4-8                
-#>  [33] Rtsne_0.17                  GenomicRanges_1.62.1       
-#>  [35] purrr_1.2.1                 BiocGenerics_0.56.0        
-#>  [37] IRanges_2.44.0              S4Vectors_0.48.0           
+#>  [33] Rtsne_0.17                  GenomicRanges_1.63.1       
+#>  [35] purrr_1.2.1                 BiocGenerics_0.57.0        
+#>  [37] IRanges_2.45.0              S4Vectors_0.49.0           
 #>  [39] ggrepel_0.9.8               irlba_2.3.7                
 #>  [41] listenv_0.10.1              spatstat.utils_3.2-2       
 #>  [43] goftest_1.2-3               RSpectra_0.16-2            
 #>  [45] spatstat.random_3.4-4       fitdistrplus_1.2-6         
 #>  [47] parallelly_1.46.1           pkgdown_2.2.0              
-#>  [49] codetools_0.2-20            DelayedArray_0.36.0        
+#>  [49] codetools_0.2-20            DelayedArray_0.37.0        
 #>  [51] tidyselect_1.2.1            rclipboard_0.2.1           
 #>  [53] farver_2.1.2                shinyWidgets_0.9.1         
-#>  [55] matrixStats_1.5.0           stats4_4.5.3               
-#>  [57] spatstat.explore_3.7-0      Seqinfo_1.0.0              
+#>  [55] matrixStats_1.5.0           stats4_4.6.0               
+#>  [57] spatstat.explore_3.7-0      Seqinfo_1.1.0              
 #>  [59] duckdb_1.5.0                jsonlite_2.0.0             
 #>  [61] progressr_0.18.0            ggridges_0.5.7             
 #>  [63] survival_3.8-6              systemfonts_1.3.2          
-#>  [65] tools_4.5.3                 ragg_1.5.1                 
+#>  [65] tools_4.6.0                 ragg_1.5.1                 
 #>  [67] ica_1.0-3                   Rcpp_1.1.1                 
 #>  [69] glue_1.8.0                  gridExtra_2.3              
-#>  [71] SparseArray_1.10.9          xfun_0.56                  
-#>  [73] MatrixGenerics_1.22.0       HDF5Array_1.38.0           
+#>  [71] SparseArray_1.11.11         xfun_0.56                  
+#>  [73] MatrixGenerics_1.23.0       HDF5Array_1.39.0           
 #>  [75] withr_3.0.2                 BiocManager_1.30.27        
-#>  [77] fastmap_1.2.0               basilisk_1.22.0            
-#>  [79] rhdf5filters_1.22.0         digest_0.6.39              
+#>  [77] fastmap_1.2.0               basilisk_1.23.0            
+#>  [79] rhdf5filters_1.23.3         digest_0.6.39              
 #>  [81] R6_2.6.1                    mime_0.13                  
 #>  [83] textshaping_1.0.5           scattermore_1.2            
 #>  [85] tensor_1.5.1                spatstat.data_3.1-9        
-#>  [87] h5mread_1.2.1               utf8_1.2.6                 
+#>  [87] h5mread_1.3.2               utf8_1.2.6                 
 #>  [89] tidyr_1.3.2                 generics_0.1.4             
 #>  [91] data.table_1.18.2.1         httr_1.4.8                 
-#>  [93] htmlwidgets_1.6.4           S4Arrays_1.10.1            
+#>  [93] htmlwidgets_1.6.4           S4Arrays_1.11.1            
 #>  [95] uwot_0.2.4                  pkgconfig_2.0.3            
 #>  [97] gtable_0.3.6                blob_1.3.0                 
 #>  [99] lmtest_0.9-40               S7_0.2.1                   
-#> [101] SingleCellExperiment_1.32.0 XVector_0.50.0             
+#> [101] SingleCellExperiment_1.33.1 XVector_0.51.0             
 #> [103] htmltools_0.5.9             dotCall64_1.2              
 #> [105] bookdown_0.46               SeuratObject_5.3.0         
-#> [107] scales_1.4.0                Biobase_2.70.0             
+#> [107] scales_1.4.0                Biobase_2.71.0             
 #> [109] png_0.1-9                   spatstat.univar_3.1-7      
 #> [111] knitr_1.51                  reshape2_1.4.5             
 #> [113] checkmate_2.3.4             nlme_3.1-168               
-#> [115] curl_7.0.0                  anndataR_1.0.2             
-#> [117] rhdf5_2.54.1                cachem_1.1.0               
+#> [115] curl_7.0.0                  anndataR_1.1.2             
+#> [117] rhdf5_2.55.16               cachem_1.1.0               
 #> [119] zoo_1.8-15                  stringr_1.6.0              
-#> [121] KernSmooth_2.23-26          parallel_4.5.3             
-#> [123] miniUI_0.1.2                zellkonverter_1.20.1       
+#> [121] KernSmooth_2.23-26          parallel_4.6.0             
+#> [123] miniUI_0.1.2                zellkonverter_1.21.1       
 #> [125] arrow_23.0.1.1              desc_1.4.3                 
-#> [127] pillar_1.11.1               grid_4.5.3                 
+#> [127] pillar_1.11.1               grid_4.6.0                 
 #> [129] vctrs_0.7.1                 RANN_2.6.2                 
 #> [131] promises_1.5.0              dbplyr_2.5.2               
 #> [133] xtable_1.8-8                cluster_2.1.8.2            
 #> [135] evaluate_1.0.5              cli_3.6.5                  
-#> [137] compiler_4.5.3              rlang_1.1.7                
+#> [137] compiler_4.6.0              rlang_1.1.7                
 #> [139] future.apply_1.20.2         plyr_1.8.9                 
 #> [141] fs_1.6.7                    stringi_1.8.7              
 #> [143] viridisLite_0.4.3           deldir_2.0-4               
 #> [145] assertthat_0.2.1            lazyeval_0.2.2             
 #> [147] spatstat.geom_3.7-0         Matrix_1.7-4               
-#> [149] dir.expiry_1.18.0           RcppHNSW_0.6.0             
+#> [149] dir.expiry_1.19.0           RcppHNSW_0.6.0             
 #> [151] patchwork_1.3.2             bit64_4.6.0-1              
-#> [153] future_1.70.0               Rhdf5lib_1.32.0            
-#> [155] shiny_1.13.0                SummarizedExperiment_1.40.0
+#> [153] future_1.70.0               Rhdf5lib_1.33.6            
+#> [155] shiny_1.13.0                SummarizedExperiment_1.41.1
 #> [157] ROCR_1.0-12                 igraph_2.2.2               
 #> [159] bslib_0.10.0                bit_4.6.0
 ```

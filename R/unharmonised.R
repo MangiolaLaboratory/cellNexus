@@ -81,7 +81,8 @@ get_unharmonised_dataset <- function(
 #'    [get_metadata()]
 #'  * `unharmonised`: a nested tibble, with one row per cell in the input
 #'    `metadata`, containing unharmonised metadata
-#' @importFrom dplyr group_by summarise filter collect
+#' @importFrom dplyr group_split filter collect as_tibble
+#' @importFrom purrr map
 #' @importFrom rlang .data
 #' @importFrom dbplyr remote_con
 #' @keywords internal
@@ -93,17 +94,25 @@ get_unharmonised_dataset <- function(
 #' @source [Mangiola et al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
 get_unharmonised_metadata <- function(metadata, ...){
     args <- list(...)
-    metadata |>
+    conn <- remote_con(metadata)
+    groups <- metadata |>
         collect() |>
-        group_by(.data$file_id_cellNexus_single_cell) |>
-        summarise(
-            unharmonised = list(
-              dataset_id = .data$file_id_cellNexus_single_cell[[1L]],
-              cells = .data$cell_id,
-              conn = remote_con(metadata)
-            ) |>
-                c(args) |>
-                do.call(get_unharmonised_dataset, args = _) |>
-                list()
-        )
+        dplyr::group_split(.data$file_id_cellNexus_single_cell)
+    dplyr::as_tibble(list(
+        file_id_cellNexus_single_cell = vapply(
+            groups,
+            function(grp) grp$file_id_cellNexus_single_cell[[1L]],
+            character(1)
+        ),
+        unharmonised = purrr::map(groups, function(grp) {
+            c(
+                list(
+                    dataset_id = grp$file_id_cellNexus_single_cell[[1L]],
+                    cells = grp$cell_id,
+                    conn = conn
+                ),
+                args
+            ) |> do.call(get_unharmonised_dataset, args = _)
+        })
+    ))
 }

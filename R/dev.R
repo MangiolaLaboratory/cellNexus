@@ -272,7 +272,7 @@ downsample_metadata <- function(output = "sample_metadata.2.0.0.parquet"){
     # Make a table of rows per dataset
     dataset_sizes <- metadata |>
         dplyr::group_by(.data$file_id_cellNexus_single_cell) |>
-        summarise(n = dplyr::n()) |> 
+        dplyr::summarise(n = dplyr::n()) |>
         dplyr::collect()
     
     # Find a minimal set of file_id_dbs we need

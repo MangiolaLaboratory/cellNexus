@@ -81,8 +81,7 @@ get_unharmonised_dataset <- function(
 #'    [get_metadata()]
 #'  * `unharmonised`: a nested tibble, with one row per cell in the input
 #'    `metadata`, containing unharmonised metadata
-#' @importFrom dplyr group_split filter collect as_tibble
-#' @importFrom purrr map
+#' @importFrom dplyr summarise filter collect
 #' @importFrom rlang .data
 #' @importFrom dbplyr remote_con
 #' @keywords internal
@@ -95,24 +94,19 @@ get_unharmonised_dataset <- function(
 get_unharmonised_metadata <- function(metadata, ...){
     args <- list(...)
     conn <- remote_con(metadata)
-    groups <- metadata |>
+    metadata |>
         collect() |>
-        dplyr::group_split(.data$file_id_cellNexus_single_cell)
-    dplyr::as_tibble(list(
-        file_id_cellNexus_single_cell = vapply(
-            groups,
-            function(grp) grp$file_id_cellNexus_single_cell[[1L]],
-            character(1)
-        ),
-        unharmonised = purrr::map(groups, function(grp) {
-            c(
+        summarise(
+            unharmonised = c(
                 list(
-                    dataset_id = grp$file_id_cellNexus_single_cell[[1L]],
-                    cells = grp$cell_id,
+                    dataset_id = file_id_cellNexus_single_cell[[1L]],
+                    cells = cell_id,
                     conn = conn
                 ),
                 args
-            ) |> do.call(get_unharmonised_dataset, args = _)
-        })
-    ))
+            ) |>
+                do.call(get_unharmonised_dataset, args = _) |>
+                list(),
+            .by = file_id_cellNexus_single_cell
+        )
 }

@@ -83,8 +83,6 @@ meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
 metacell <- meta |> get_metacell(cell_aggregation = "metacell_2")
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
-#> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/metacell_2/counts/03319e4f54220f534de2c4e42e607126___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene/01-07-2024/metacell_2/counts/03319e4f54220f534de2c4e42e607126___1.h5ad
 #> ℹ Reading files.
 #> ℹ Compiling Experiment.
 ```

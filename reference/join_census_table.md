@@ -47,10 +47,12 @@ A lazy SQL table with Census metadata joined to the cellNexus metadata.
 library(dplyr)
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2) |>
   # You do not need to specify anything in cloud_metadata
-  join_census_table(cloud_metadata = SAMPLE_DATABASE_URL, 
-                    cache_directory = tempdir())
+  join_census_table(
+    cloud_metadata = SAMPLE_DATABASE_URL,
+    cache_directory = tempdir()
+  )
 #> # Source:   SQL [?? x 175]
-#> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]
+#> # Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.5.3/:memory:]
 #>   cell_id.x dataset_id                  observation_joinid sample_id cell_type.x
 #>       <dbl> <chr>                       <chr>              <chr>     <chr>      
 #> 1        81 cda2c8cd-be1c-42e5-b2cd-16… *NUPW@J{c2         034f0fb1… monocyte   

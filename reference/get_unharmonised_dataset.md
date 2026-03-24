@@ -68,11 +68,13 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 if (FALSE) { # \dontrun{
 dataset <- "838ea006-2369-4e2c-b426-b2a744a2b02b"
-harmonised_meta <- get_metadata() |> 
-    dplyr::filter(file_id_cellNexus_single_cell == dataset) |> dplyr::collect()
+harmonised_meta <- get_metadata() |>
+  dplyr::filter(file_id_cellNexus_single_cell == dataset) |>
+  dplyr::collect()
 unharmonised_meta <- get_unharmonised_dataset(dataset)
 unharmonised_tbl <- dplyr::collect(unharmonised_meta[[dataset]])
-dplyr::left_join(harmonised_meta, unharmonised_tbl, 
-    by=c("file_id_cellNexus_single_cell", "cell_id"))
+dplyr::left_join(harmonised_meta, unharmonised_tbl,
+  by = c("file_id_cellNexus_single_cell", "cell_id")
+)
 } # }
 ```

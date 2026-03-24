@@ -80,7 +80,7 @@ get_unharmonised_dataset <- function(
 #'    [get_metadata()]
 #'  * `unharmonised`: a nested tibble, with one row per cell in the input
 #'    `metadata`, containing unharmonised metadata
-#' @importFrom dplyr group_by summarise filter collect
+#' @importFrom dplyr summarise filter collect
 #' @importFrom rlang .data
 #' @importFrom dbplyr remote_con
 #' @keywords internal
@@ -91,17 +91,20 @@ get_unharmonised_dataset <- function(
 #'   doi:10.1101/2023.06.08.542671.
 get_unharmonised_metadata <- function(metadata, ...){
     args <- list(...)
+    conn <- remote_con(metadata)
     metadata |>
         collect() |>
-        group_by(.data$file_id_cellNexus_single_cell) |>
         summarise(
-            unharmonised = list(
-              dataset_id = .data$file_id_cellNexus_single_cell[[1L]],
-              cells = .data$cell_id,
-              conn = remote_con(metadata)
+            unharmonised = c(
+                list(
+                    dataset_id = file_id_cellNexus_single_cell[[1L]],
+                    cells = cell_id,
+                    conn = conn
+                ),
+                args
             ) |>
-                c(args) |>
                 do.call(get_unharmonised_dataset, args = _) |>
-                list()
+                list(),
+            .by = file_id_cellNexus_single_cell
         )
 }

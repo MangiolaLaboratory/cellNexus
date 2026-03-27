@@ -23,7 +23,7 @@ This function creates indexed tables for efficient joining and returns a data fr
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.16</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@ This function creates indexed tables for efficient joining and returns a data fr
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">join_census_table</span><span class="op">(</span></span>
 <span>  <span class="va">tbl</span>,</span>
-<span>  cloud_metadata <span class="op">=</span> <span class="fu"><a href="get_metadata_url.html">get_metadata_url</a></span><span class="op">(</span><span class="st">"census_cell_metadata.2.0.0.parquet"</span><span class="op">)</span>,</span>
+<span>  cloud_metadata <span class="op">=</span> <span class="fu"><a href="get_metadata_url.html">get_metadata_url</a></span><span class="op">(</span><span class="st">"census_cell_metadata.2.1.0.parquet"</span><span class="op">)</span>,</span>
 <span>  cache_directory <span class="op">=</span> <span class="fu"><a href="get_default_cache_dir.html">get_default_cache_dir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  join_keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"dataset_id"</span>, <span class="st">"observation_joinid"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -101,19 +101,19 @@ Defaults to <code>c("sample_id", "dataset_id", "observation_joinid")</code>.</p>
 <span class="r-in"><span>    cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span>,</span></span>
 <span class="r-in"><span>    cache_directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   SQL [?? x 175]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.0 [unknown@Linux 6.14.0-1017-azure:R 4.6.0/:memory:]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   cell_id.x dataset_id                  observation_joinid sample_id cell_type.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>        81 cda2c8cd-be1c-42e5-b2cd-16… *NUPW@J{c2         034f0fb1… monocyte   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>        82 cda2c8cd-be1c-42e5-b2cd-16… KIV&gt;qGFIS?         034f0fb1… monocyte   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 170 more variables: cell_type_ontology_term_id.x &lt;chr&gt;, sample_.x &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   assay.x &lt;chr&gt;, assay_ontology_term_id.x &lt;chr&gt;, cell_count.x &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   citation.x &lt;chr&gt;, collection_id.x &lt;chr&gt;, dataset_version_id.x &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   default_embedding.x &lt;chr&gt;, development_stage.x &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   development_stage_ontology_term_id.x &lt;chr&gt;, disease.x &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   disease_ontology_term_id.x &lt;chr&gt;, donor_id.x &lt;chr&gt;, experiment___.x &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   explorer_url.x &lt;chr&gt;, feature_count.x &lt;int&gt;, filesize.x &lt;dbl&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   SQL [?? x 143]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1008-azure:R 4.6.0/:memory:]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cell_id.x dataset_id       observation_joinid sample_id sample_.x cell_count.x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>        81 cda2c8cd-be1c-4… *NUPW@J{c2         034f0fb1… 034f0fb1…       <span style="text-decoration: underline;">255</span>901</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>        82 cda2c8cd-be1c-4… KIV&gt;qGFIS?         034f0fb1… 034f0fb1…       <span style="text-decoration: underline;">255</span>901</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 137 more variables: citation.x &lt;chr&gt;, collection_id.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dataset_version_id.x &lt;chr&gt;, default_embedding.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   experiment___.x &lt;chr&gt;, explorer_url.x &lt;chr&gt;, feature_count.x &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   filesize.x &lt;dbl&gt;, filetype.x &lt;chr&gt;, mean_genes_per_cell.x &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   primary_cell_count.x &lt;chr&gt;, published_at.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   raw_data_location.x &lt;chr&gt;, revised_at.x &lt;chr&gt;, run_from_cell_id.x &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sample_heuristic.x &lt;chr&gt;, schema_version.x &lt;chr&gt;, …</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

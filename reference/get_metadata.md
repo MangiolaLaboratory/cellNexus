@@ -11,7 +11,7 @@ to obtain a
 
 ``` r
 get_metadata(
-  cloud_metadata = get_metadata_url("cellnexus_metadata.2.0.0.parquet"),
+  cloud_metadata = get_metadata_url("cellnexus_metadata.2.1.0.parquet"),
   local_metadata = NULL,
   cache_directory = get_default_cache_dir(),
   use_cache = TRUE

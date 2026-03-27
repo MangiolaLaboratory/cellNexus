@@ -23,7 +23,7 @@ the samples in that data frame"><meta property="og:image" content="https://mangi
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.16</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,8 +71,9 @@ the samples in that data frame</p>
 <dd><p>Arguments passed on to <code><a href="get_single_cell_experiment.html">get_single_cell_experiment</a></code></p><dl><dt><code>data</code></dt>
 <dd><p>A data frame containing, at minimum, <code>cell_id</code>, <code>file_id_cellNexus_single_cell</code>
 and <code>atlas_id</code> columns, which correspond to a single cell ID, file subdivision for internal use,
-and atlas name in format (e.g cellxgene/06-02-2025) for internal use.
-They can be obtained from the <code><a href="get_metadata.html">get_metadata()</a></code> function.</p></dd>
+and atlas name in format (e.g cellxgene_2024/0.1.0) for internal use.
+They can be obtained from the <code><a href="get_metadata.html">get_metadata()</a></code> function.
+Use <code><a href="get_atlas_versions.html">get_atlas_versions()</a></code> to download atlas versions data frame.</p></dd>
 
     <dt><code>assays</code></dt>
 <dd><p>A character vector specifying the desired assay(s) to be requested.

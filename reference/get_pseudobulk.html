@@ -25,7 +25,7 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.16</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,8 +82,9 @@ corresponding to the samples in that data frame</p>
 <dd><p>A data frame containing, at minimum, <code>cell_id</code>, <code>file_id_cellNexus_pseudobulk</code>,
 <code>sample_id</code>, <code>cell_type_unified_ensemble</code>, <code>atlas_id</code> columns, which correspond to a single cell ID,
 file subdivision for internal use, a singlel cell sample ID, harmonised cell type,
-and atlas name in format (e.g cellxgene/06-02-2025) for internal use.
-They can be obtained from the <code><a href="get_metadata.html">get_metadata()</a></code> function.</p></dd>
+and atlas name in format (e.g cellxgene_2024/0.1.0) for internal use.
+They can be obtained from the <code><a href="get_metadata.html">get_metadata()</a></code> function.
+Use <code><a href="get_atlas_versions.html">get_atlas_versions()</a></code> to download atlas versions data frame.</p></dd>
 
 
 <dt id="arg-assays">assays<a class="anchor" aria-label="anchor" href="#arg-assays"></a></dt>
@@ -141,8 +142,6 @@ doi:10.1101/2023.06.08.542671.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Use the lightweight sample database URL (for fast checks during development only)</span></span></span>
 <span class="r-in"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="fu">cellNexus</span><span class="fu">::</span><span class="va"><a href="SAMPLE_DATABASE_URL.html">SAMPLE_DATABASE_URL</a></span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /github/home/.cache/R/cellNexus/sample_metadata.2.0.0.parquet</span>
 <span class="r-in"><span><span class="va">pseudobulk</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op">|&gt;</span> <span class="fu">get_pseudobulk</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Synchronising files</span>

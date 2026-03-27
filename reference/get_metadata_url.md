@@ -6,7 +6,7 @@ Returns the URLs for all metadata files
 
 ``` r
 get_metadata_url(
-  databases = c("cellnexus_metadata.2.0.0.parquet", "census_cell_metadata.2.0.0.parquet")
+  databases = c("cellnexus_metadata.2.1.0.parquet", "census_cell_metadata.2.1.0.parquet")
 )
 ```
 
@@ -36,6 +36,6 @@ doi:10.1101/2023.06.08.542671.
 ## Examples
 
 ``` r
-get_metadata_url("cellnexus_metadata.2.0.0.parquet")
-#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_metadata.2.0.0.parquet
+get_metadata_url("cellnexus_metadata.2.1.0.parquet")
+#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_metadata.2.1.0.parquet
 ```

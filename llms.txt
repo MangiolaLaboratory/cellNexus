@@ -112,6 +112,8 @@ conn.close()
   retreival code for cellNexus
 - [`get_SingleCellExperiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_SingleCellExperiment.md)
   : Gets a SingleCellExperiment from curated metadata
+- [`get_atlas_versions()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_atlas_versions.md)
+  : Returns the atlas version changelog as a tibble
 - [`get_cell_communication_strength()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_cell_communication_strength.md)
   : Retrieve cellNexus cell communication ligand–receptor strength as a
   data frame.
@@ -138,12 +140,6 @@ conn.close()
   : Organize arbitrary Shiny inputs into a grid layout
 - [`pbmc3k_sce`](https://mangiolalaboratory.github.io/cellNexus/reference/pbmc3k_sce.md)
   : Sample SingleCellExperiment Object
-- [`pseudobulk_counts`](https://mangiolalaboratory.github.io/cellNexus/reference/pseudobulk_counts.md)
-  : Sample Pseudobulk SingleCellExperiment Object
-- [`single_cell_counts`](https://mangiolalaboratory.github.io/cellNexus/reference/single_cell_counts.md)
-  : Sample SingleCellExperiment Object with Counts Assay
-- [`single_cell_cpm`](https://mangiolalaboratory.github.io/cellNexus/reference/single_cell_cpm.md)
-  : Sample SingleCellExperiment Object with CPM Assay
 - [`ui_choices`](https://mangiolalaboratory.github.io/cellNexus/reference/ui_choices.md)
   : Pre-computed UI Choices for Interface App
 

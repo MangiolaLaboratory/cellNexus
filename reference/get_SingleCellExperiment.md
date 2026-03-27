@@ -29,10 +29,12 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
   :   A data frame containing, at minimum, `cell_id`,
       `file_id_cellNexus_single_cell` and `atlas_id` columns, which
       correspond to a single cell ID, file subdivision for internal use,
-      and atlas name in format (e.g cellxgene/06-02-2025) for internal
+      and atlas name in format (e.g cellxgene_2024/0.1.0) for internal
       use. They can be obtained from the
       [`get_metadata()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metadata.md)
-      function.
+      function. Use
+      [`get_atlas_versions()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_atlas_versions.md)
+      to download atlas versions data frame.
 
   `assays`
 
@@ -82,8 +84,6 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 # Use the lightweight sample database URL (for fast checks during development only)
 meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
-#> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.0.0.parquet to /github/home/.cache/R/cellNexus/sample_metadata.2.0.0.parquet
 sce <- get_single_cell_experiment(meta)
 #> ℹ Realising metadata.
 #> ℹ Synchronising files

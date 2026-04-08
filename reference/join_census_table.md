@@ -52,7 +52,7 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2) |>
     cache_directory = tempdir()
   )
 #> # Source:   SQL [?? x 143]
-#> # Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1008-azure:R 4.7.0/:memory:]
+#> # Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1008-azure:R 4.5.3/:memory:]
 #>   cell_id.x dataset_id       observation_joinid sample_id sample_.x cell_count.x
 #>       <dbl> <chr>            <chr>              <chr>     <chr>            <int>
 #> 1        81 cda2c8cd-be1c-4… *NUPW@J{c2         034f0fb1… 034f0fb1…       255901

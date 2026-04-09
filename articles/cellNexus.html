@@ -39,7 +39,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.17</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.18</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,9 +146,9 @@ remain aligned with the evolving CELLxGENE releases.</p>
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_metadata.html">get_metadata</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">metadata</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.1.0.parquet to /tmp/Rtmp2ZttUC/sample_metadata.2.1.0.parquet</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.1.0.parquet to /tmp/Rtmpsk1986/sample_metadata.2.1.0.parquet</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 73]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1008-azure:R 4.5.3/:memory:]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]</span></span></span>
 <span><span class="co">#&gt;    cell_id dataset_id   observation_joinid sample_id sample_ cell_count citation</span></span>
 <span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>      81 cda2c8cd-be… *NUPW@J{c2         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span></span>
@@ -180,7 +180,7 @@ queries.</p>
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">tissue</span>, <span class="va">cell_type_unified_ensemble</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1008-azure:R 4.5.3/:memory:]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]</span></span></span>
 <span><span class="co">#&gt;    tissue              cell_type_unified_ensemble</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> kidney              epithelial                </span></span>
@@ -324,29 +324,27 @@ gene counts.</p>
 <code class="sourceCode R"><span><span class="va">pseudobulk_counts</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">metadata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
-<span>    <span class="va">self_reported_ethnicity</span> <span class="op">==</span> <span class="st">"African"</span> <span class="op">&amp;</span></span>
-<span>      <span class="va">assay</span>  <span class="op">==</span> <span class="st">"10x 3' v3"</span> <span class="op">&amp;</span></span>
-<span>      <span class="va">tissue</span> <span class="op">==</span> <span class="st">"lung parenchyma"</span> <span class="op">&amp;</span></span>
-<span>      <span class="va">cell_type</span> <span class="op">==</span> <span class="st">"T cell"</span></span>
+<span>      <span class="va">assay</span>  <span class="op">==</span> <span class="st">"10x 5' v1"</span> <span class="op">&amp;</span></span>
+<span>      <span class="va">tissue</span> <span class="op">==</span> <span class="st">"lung"</span> <span class="op">&amp;</span></span>
+<span>      <span class="va">cell_type</span> <span class="op">==</span> <span class="st">"classical monocyte"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_pseudobulk.html">get_pseudobulk</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0.39 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/pseudobulk/counts/c25a6ea6b00d263d6cbb2d06a542a2c7___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene/01-07-2024/pseudobulk/counts/c25a6ea6b00d263d6cbb2d06a542a2c7___1.h5ad</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/pseudobulk/counts/11d9b242ad2fc637e43a23a6b7389fde___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene/01-07-2024/pseudobulk/counts/11d9b242ad2fc637e43a23a6b7389fde___1.h5ad</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Compiling Experiment.</span></span>
 <span></span>
 <span><span class="va">pseudobulk_counts</span></span>
 <span><span class="co">#&gt; class: SingleCellExperiment </span></span>
-<span><span class="co">#&gt; dim: 56239 2 </span></span>
+<span><span class="co">#&gt; dim: 19979 1 </span></span>
 <span><span class="co">#&gt; metadata(0):</span></span>
 <span><span class="co">#&gt; assays(1): counts</span></span>
-<span><span class="co">#&gt; rownames(56239): ENSG00000121410 ENSG00000268895 ... ENSG00000135605</span></span>
-<span><span class="co">#&gt;   ENSG00000109501</span></span>
+<span><span class="co">#&gt; rownames(19979): ENSG00000243485 ENSG00000238009 ... ENSG00000275063</span></span>
+<span><span class="co">#&gt;   ENSG00000271254</span></span>
 <span><span class="co">#&gt; rowData names(0):</span></span>
-<span><span class="co">#&gt; colnames(2): 4f067f7e5f960bc72b0710684a521e84____SC84___t</span></span>
-<span><span class="co">#&gt;   4f067f7e5f960bc72b0710684a521e84____SC84___treg</span></span>
+<span><span class="co">#&gt; colnames(1): 2e8c9911c9bfbffc07288adef93d3cf2___cd14 mono</span></span>
 <span><span class="co">#&gt; colData names(56): dataset_id sample_id ... tissue_ontology_term_id</span></span>
 <span><span class="co">#&gt;   sample_identifier</span></span>
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
@@ -641,7 +639,7 @@ in cellNexus::pbmc3k_sce</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0.01 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/counts/e52795dec7b626b6276b867d55328d9f___1.h5ad to /tmp/Rtmp2ZttUC/cellxgene/01-07-2024//counts/e52795dec7b626b6276b867d55328d9f___1.h5ad</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene/01-07-2024/counts/e52795dec7b626b6276b867d55328d9f___1.h5ad to /tmp/Rtmpsk1986/cellxgene/01-07-2024//counts/e52795dec7b626b6276b867d55328d9f___1.h5ad</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The number of cells in the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> cellNexus says: Not all genes completely overlap across the provided objects. Counts are generated by genes intersection.</span></span>
@@ -780,7 +778,7 @@ for sample and cell type combination.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_4.0.2     dplyr_1.2.1       cellNexus_0.99.17 BiocStyle_2.38.0 </span></span>
+<span><span class="co">#&gt; [1] ggplot2_4.0.2     dplyr_1.2.1       cellNexus_0.99.18 BiocStyle_2.38.0 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;   [1] RcppAnnoy_0.0.23            splines_4.5.3              </span></span>

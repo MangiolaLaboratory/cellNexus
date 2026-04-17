@@ -11,7 +11,7 @@ to obtain a
 
 ``` r
 get_metadata(
-  cloud_metadata = get_metadata_url("cellnexus_metadata.2.1.0.parquet"),
+  cloud_metadata = get_metadata_url("cellnexus_metadata.2.2.0.parquet"),
   local_metadata = NULL,
   cache_directory = get_default_cache_dir(),
   use_cache = TRUE
@@ -75,61 +75,54 @@ CELLxGENE portal.
 Our representation, harmonises the metadata at dataset, sample and cell
 levels, in a unique coherent database table.
 
-Dataset-specific columns (definitions available at
-cellxgene.cziscience.com): `cell_count`, `collection_id`,
-`created_at.x`, `created_at.y`, `dataset_deployments`, `dataset_id`,
-`file_id_cellNexus_single_cell`, `filename`, `filetype`,
-`is_primary_data.y`, `is_valid`, `linked_genesets`,
-`mean_genes_per_cell`, `name`, `published`, `published_at`,
-`revised_at`, `revision`, `s3_uri`, `schema_version`, `tombstone`,
-`updated_at.x`, `updated_at.y`, `user_submitted`, `x_normalization`
+Field definitions for the CELLxGENE schema follow the [CELLxGENE schema
+5.1.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/5.1.0/schema.md).
 
-Sample-specific columns (definitions available at
-cellxgene.cziscience.com): `sample_id`, `.sample_name`, `age_days`,
-`assay`, `assay_ontology_term_id`, `development_stage`,
-`development_stage_ontology_term_id`, `ethnicity`,
-`ethnicity_ontology_term_id`, `experiment___`, `organism`,
-`organism_ontology_term_id`, `sample_placeholder`, `sex`,
-`sex_ontology_term_id`, `tissue`, `tissue_harmonised`,
+Dataset-specific columns: `dataset_id`, `collection_id`, `citation`,
+`dataset_version_id`, `explorer_url`, `filesize`, `filetype`,
+`published_at`, `raw_data_location`, `revised_at`, `schema_version`,
+`suspension_type`, `title`, `url`, `donor_id`
+
+Sample-specific columns: `assay`, `assay_ontology_term_id`,
+`development_stage`, `development_stage_ontology_term_id`,
+`self_reported_ethnicity`, `self_reported_ethnicity_ontology_term_id`,
+`experiment___`, `organism`, `organism_ontology_term_id`, `sex`,
+`sex_ontology_term_id`, `tissue`, `tissue_type`,
 `tissue_ontology_term_id`, `disease`, `disease_ontology_term_id`,
-`is_primary_data.x`
+`is_primary_data`
 
-Cell-specific columns (definitions available at
-cellxgene.cziscience.com): `cell_id`, `cell_type`,
-`cell_type_ontology_term_idm`, `cell_type_harmonised`,
-`confidence_class`, `cell_annotation_azimuth_l2`,
-`cell_annotation_blueprint_singler`
+Cell-specific columns `cell_id`, `cell_type`,
+`cell_type_ontology_term_id`, `observation_joinid`
 
 Through harmonisation and curation we introduced custom columns not
 present in the original CELLxGENE metadata:
 
-- `tissue_harmonised`: a coarser tissue name for better filtering
+`cell_count`: Number of cells in a dataset. `feature_count`: Number of
+genes in a dataset. `age_days`: Donor age in days. `tissue_groups`:
+Coarse tissue grouping for analysis. `empty_droplet`: Whether a cell is
+called an empty droplet from expressed-gene count per sample (default
+threshold 200; targeted panels may differ). `alive`: Whether a cell
+passes viability / mitochondrial QC. `scDblFinder.class`: Doublet,
+singlet, or unknown (`scDblFinder` default parameters).
+`cell_type_unified_ensemble`: Consensus immune identity from Azimuth and
+SingleR (Blueprint, Monaco). `cell_annotation_azimuth_l2`: Azimuth cell
+annotation. `cell_annotation_blueprint_singler`: SingleR annotation
+(Blueprint). `cell_annotation_blueprint_monaco`: SingleR annotation
+(Monaco). `is_immune`: Whether a cell is an immune cell.
+`sample_heuristic`: Internal sample subdivision helper.
+`file_id_cellNexus_single_cell`: Internal file id for single-cell
+layers. `file_id_cellNexus_pseudobulk`: Internal file id for pseudobulk
+layers. `sample_id`: Harmonised sample identifier. `nCount_RNA`: Total
+RNA counts per cell (sample-aware). `nFeature_expressed_in_sample`:
+Number of expressed features per cell. `ethnicity_flagging_score`:
+Supporting score for ethnicity imputation. `low_confidence_ethnicity`:
+Supporting flag for low-confidence ethnicity calls. `.aggregated_cells`:
+Post-QC cells combined into each pseudobulk sample. `imputed_ethnicity`:
+Imputed ethnicity label. `atlas_id`: cellNexus atlas release identifier
+(internal use).
 
-- `age_days`: the number of days corresponding to the age
-
-- `cell_type_harmonised`: the consensus call identity (for immune cells)
-  using the original and three novel annotations using Seurat Azimuth
-  and SingleR
-
-- `confidence_class`: an ordinal class of how confident
-  `cell_type_harmonised` is. 1 is complete consensus, 2 is 3 out of four
-  and so on.
-
-- `cell_annotation_azimuth_l2`: Azimuth cell annotation
-
-- `cell_annotation_blueprint_singler`: SingleR cell annotation using
-  Blueprint reference
-
-- `cell_annotation_blueprint_monaco`: SingleR cell annotation using
-  Monaco reference
-
-- `sample_id_db`: Sample subdivision for internal use
-
-- `file_id_db`: File subdivision for internal use
-
-- `sample_id`: Sample ID
-
-- `.sample_name`: How samples were defined
+For all fields definitions, please refer to our [documentation
+site](https://cellnexus.org/)
 
 **Possible cache path issues**
 

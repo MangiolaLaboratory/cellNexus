@@ -51,11 +51,11 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) 
   head(2) |>
   keep_quality_cells()
 #> # Source:   SQL [?? x 73]
-#> # Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
-#>   cell_id dataset_id    observation_joinid sample_id sample_ cell_count citation
-#>     <dbl> <chr>         <chr>              <chr>     <chr>        <int> <chr>   
-#> 1      81 cda2c8cd-be1… *NUPW@J{c2         034f0fb1… 034f0f…     255901 Publica…
-#> 2      82 cda2c8cd-be1… KIV>qGFIS?         034f0fb1… 034f0f…     255901 Publica…
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]
+#>   cell_id observation_joinid dataset_id    sample_id sample_ cell_count citation
+#>     <dbl> <chr>              <chr>         <chr>     <chr>        <int> <chr>   
+#> 1      15 TjgA2vJ1;{         842c6f5d-4a9… 1119f482… 1119f4…     714331 Publica…
+#> 2      19 lNmuO5xs~3         842c6f5d-4a9… 1119f482… 1119f4…     714331 Publica…
 #> # ℹ 66 more variables: collection_id <chr>, dataset_version_id <chr>,
 #> #   default_embedding <chr>, experiment___ <chr>, explorer_url <chr>,
 #> #   feature_count <int>, filesize <dbl>, filetype <chr>,

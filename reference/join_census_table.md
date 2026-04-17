@@ -9,7 +9,7 @@ frame.
 ``` r
 join_census_table(
   tbl,
-  cloud_metadata = get_metadata_url("census_cell_metadata.2.1.0.parquet"),
+  cloud_metadata = get_metadata_url("census_cell_metadata.2.2.0.parquet"),
   cache_directory = get_default_cache_dir(),
   join_keys = c("sample_id", "dataset_id", "observation_joinid")
 )
@@ -51,12 +51,16 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2) |>
     cloud_metadata = SAMPLE_DATABASE_URL,
     cache_directory = tempdir()
   )
+#> ℹ Downloading 1 file, totalling 0 GB
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.0.parquet to /tmp/RtmpYKDEcW/census_sample_metadata.2.2.0.parquet
 #> # Source:   SQL [?? x 143]
-#> # Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
-#>   cell_id.x dataset_id       observation_joinid sample_id sample_.x cell_count.x
-#>       <dbl> <chr>            <chr>              <chr>     <chr>            <int>
-#> 1        81 cda2c8cd-be1c-4… *NUPW@J{c2         034f0fb1… 034f0fb1…       255901
-#> 2        82 cda2c8cd-be1c-4… KIV>qGFIS?         034f0fb1… 034f0fb1…       255901
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]
+#>   cell_id.x observation_joinid dataset_id       sample_id sample_.x cell_count.x
+#>       <dbl> <chr>              <chr>            <chr>     <chr>            <int>
+#> 1        15 TjgA2vJ1;{         842c6f5d-4a94-4… 1119f482… 1119f482…       714331
+#> 2        19 lNmuO5xs~3         842c6f5d-4a94-4… 1119f482… 1119f482…       714331
+#> 3        15 TjgA2vJ1;{         842c6f5d-4a94-4… 1119f482… 1119f482…       714331
+#> 4        19 lNmuO5xs~3         842c6f5d-4a94-4… 1119f482… 1119f482…       714331
 #> # ℹ 137 more variables: citation.x <chr>, collection_id.x <chr>,
 #> #   dataset_version_id.x <chr>, default_embedding.x <chr>,
 #> #   experiment___.x <chr>, explorer_url.x <chr>, feature_count.x <int>,

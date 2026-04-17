@@ -23,7 +23,7 @@ demonstration, and vignette purposes only"><meta property="og:image" content="ht
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.19</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@ demonstration, and vignette purposes only</p>
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An object of class <code>character</code> of length 1.</p>
+    <p>An object of class <code>character</code> of length 2.</p>
     </div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
@@ -69,7 +69,7 @@ demonstration, and vignette purposes only</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A character scalar consisting of the URL</p>
+    <p>Character scalar consisting of the URL/URLs</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -81,25 +81,25 @@ doi:10.1101/2023.06.08.542671.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span>, cache_directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span><span class="op">[</span><span class="st">"cellnexus"</span><span class="op">]</span>, cache_directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.2.1.0.parquet to /tmp/RtmpGMIEA0/sample_metadata.2.1.0.parquet</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   SQL [?? x 73]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    cell_id dataset_id   observation_joinid sample_id sample_ cell_count citation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>      81 cda2c8cd-be… *NUPW@J{c2         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>      82 cda2c8cd-be… KIV&gt;qGFIS?         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>      83 cda2c8cd-be… p5e=WoIq0d         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>      84 cda2c8cd-be… I6&gt;u{Gb-J_         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>      85 cda2c8cd-be… lx`7Bo-&amp;7n         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>      87 cda2c8cd-be… -NL-OH3!IA         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>      88 cda2c8cd-be… zHCZWNmUHu         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>      89 cda2c8cd-be… *_#lQ&lt;oUnT         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>      86 cda2c8cd-be… 6mRCZW}rOM         034f0fb1… 034f0f…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>      99 cda2c8cd-be… IdHwp1GBZm         03ddfd57… 03ddfd…     <span style="text-decoration: underline;">255</span>901 Publica…</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.0.parquet to /tmp/RtmpYKDEcW/cellnexus_sample_metadata.2.2.0.parquet</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   SQL [?? x 55]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    cell_id observation_joinid dataset_id   sample_id sample_ cell_count citation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>      15 TjgA2vJ1;{         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>      19 lNmuO5xs~3         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>      18 h22!#$}SJ*         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>      17 QRMCN*8*|#         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>      14 qxl7HJjL$L         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>      20 6Eu5c&amp;aEH;         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>      16 j}0&lt;Y&gt;a#X~         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       5 N&gt;_|{;6_6N         842c6f5d-4a… 1f755b9b… 1f755b…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       4 CVfj&gt;iWZ&amp;P         842c6f5d-4a… 1f755b9b… 1f755b…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>       3 5jp7Uu{#@#         842c6f5d-4a… 1f755b9b… 1f755b…     <span style="text-decoration: underline;">714</span>331 Publica…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 66 more variables: collection_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 48 more variables: collection_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   default_embedding &lt;chr&gt;, experiment___ &lt;chr&gt;, explorer_url &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   feature_count &lt;int&gt;, filesize &lt;dbl&gt;, filetype &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   mean_genes_per_cell &lt;dbl&gt;, primary_cell_count &lt;chr&gt;, published_at &lt;chr&gt;,</span></span>

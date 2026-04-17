@@ -23,7 +23,7 @@ This function creates indexed tables for efficient joining and returns a data fr
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.19</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@ This function creates indexed tables for efficient joining and returns a data fr
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">join_census_table</span><span class="op">(</span></span>
 <span>  <span class="va">tbl</span>,</span>
-<span>  cloud_metadata <span class="op">=</span> <span class="fu"><a href="get_metadata_url.html">get_metadata_url</a></span><span class="op">(</span><span class="st">"census_cell_metadata.2.1.0.parquet"</span><span class="op">)</span>,</span>
+<span>  cloud_metadata <span class="op">=</span> <span class="fu"><a href="get_metadata_url.html">get_metadata_url</a></span><span class="op">(</span><span class="st">"census_cell_metadata.2.2.0.parquet"</span><span class="op">)</span>,</span>
 <span>  cache_directory <span class="op">=</span> <span class="fu"><a href="get_default_cache_dir.html">get_default_cache_dir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  join_keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"dataset_id"</span>, <span class="st">"observation_joinid"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -101,12 +101,16 @@ Defaults to <code>c("sample_id", "dataset_id", "observation_joinid")</code>.</p>
 <span class="r-in"><span>    cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span>,</span></span>
 <span class="r-in"><span>    cache_directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.0.parquet to /tmp/RtmpYKDEcW/census_sample_metadata.2.2.0.parquet</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   SQL [?? x 143]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   cell_id.x dataset_id       observation_joinid sample_id sample_.x cell_count.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>        81 cda2c8cd-be1c-4… *NUPW@J{c2         034f0fb1… 034f0fb1…       <span style="text-decoration: underline;">255</span>901</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>        82 cda2c8cd-be1c-4… KIV&gt;qGFIS?         034f0fb1… 034f0fb1…       <span style="text-decoration: underline;">255</span>901</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cell_id.x observation_joinid dataset_id       sample_id sample_.x cell_count.x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>        15 TjgA2vJ1;{         842c6f5d-4a94-4… 1119f482… 1119f482…       <span style="text-decoration: underline;">714</span>331</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>        19 lNmuO5xs~3         842c6f5d-4a94-4… 1119f482… 1119f482…       <span style="text-decoration: underline;">714</span>331</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>        15 TjgA2vJ1;{         842c6f5d-4a94-4… 1119f482… 1119f482…       <span style="text-decoration: underline;">714</span>331</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>        19 lNmuO5xs~3         842c6f5d-4a94-4… 1119f482… 1119f482…       <span style="text-decoration: underline;">714</span>331</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 137 more variables: citation.x &lt;chr&gt;, collection_id.x &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dataset_version_id.x &lt;chr&gt;, default_embedding.x &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   experiment___.x &lt;chr&gt;, explorer_url.x &lt;chr&gt;, feature_count.x &lt;int&gt;,</span></span>

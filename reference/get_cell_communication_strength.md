@@ -7,7 +7,8 @@ local cache, and then opens it as a data frame. It can then be filtered.
 
 ``` r
 get_cell_communication_strength(
-  cloud_metadata = get_metadata_url("cellNexus_lr_signaling_pathway_strength.parquet"),
+  cloud_metadata =
+    get_metadata_url("cellNexus_lr_signaling_pathway_strength_DEMO.parquet"),
   local_metadata = NULL,
   cache_directory = get_default_cache_dir(),
   use_cache = TRUE
@@ -69,5 +70,11 @@ between cell populations.
 
 ``` r
 # For fast build purpose only, you do not need to specify anything in the function.
-communication_meta <- get_cell_communication_strength(cloud_metadata = SAMPLE_DATABASE_URL)
+communication_meta <- get_cell_communication_strength(
+  cloud_metadata = get_metadata_url(
+    "cellNexus_lr_signaling_pathway_strength_DEMO.parquet"
+  )
+)
+#> ℹ Downloading 1 file, totalling 0 GB
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellNexus_lr_signaling_pathway_strength_DEMO.parquet to /home/runner/.cache/R/cellNexus/cellNexus_lr_signaling_pathway_strength_DEMO.parquet
 ```

@@ -52,9 +52,9 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2) |>
     cache_directory = tempdir()
   )
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.0.parquet to /tmp/RtmpYKDEcW/census_sample_metadata.2.2.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.0.parquet to /tmp/RtmpQWE1lc/census_sample_metadata.2.2.0.parquet
 #> # Source:   SQL [?? x 143]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
 #>   cell_id.x observation_joinid dataset_id       sample_id sample_.x cell_count.x
 #>       <dbl> <chr>              <chr>            <chr>     <chr>            <int>
 #> 1        15 TjgA2vJ1;{         842c6f5d-4a94-4… 1119f482… 1119f482…       714331

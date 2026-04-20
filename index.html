@@ -158,68 +158,68 @@
 <h3 id="dataset-level-columns">Dataset-level columns<a class="anchor" aria-label="anchor" href="#dataset-level-columns"></a>
 </h3>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th>Column</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code>dataset_id</code></td>
 <td>Primary dataset identifier in the atlas.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>collection_id</code></td>
 <td>Parent collection grouping related datasets.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>citation</code></td>
 <td>Citation or reference for the dataset.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>dataset_version_id</code></td>
 <td>Versioned identifier for a dataset release.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>explorer_url</code></td>
 <td>URL to browse the dataset in CELLxGENE explorer.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>filesize</code></td>
 <td>Reported size of source data files.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>filetype</code></td>
 <td>Storage format of source expression files.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>published_at</code></td>
 <td>Publication timestamp for dataset release.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>raw_data_location</code></td>
 <td>Location of raw data upstream.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>revised_at</code></td>
 <td>Last revision timestamp for dataset metadata.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>schema_version</code></td>
 <td>CELLxGENE schema version for this record.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>suspension_type</code></td>
 <td>Suspension type (e.g. cell vs nucleus).</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>title</code></td>
 <td>Dataset publication title.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>url</code></td>
 <td>Dataset H5AD URL.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>donor_id</code></td>
 <td>Donor identifier.</td>
 </tr>
@@ -234,76 +234,76 @@
 <col width="38%">
 <col width="61%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Column</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code>assay</code></td>
 <td>Sequencing technology label.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>assay_ontology_term_id</code></td>
 <td>Ontology identifier for <code>assay</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>development_stage</code></td>
 <td>Developmental stage label.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>development_stage_ontology_term_id</code></td>
 <td>Ontology identifier for <code>development_stage</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>self_reported_ethnicity</code></td>
 <td>Self-reported ancestry or ethnicity label.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>self_reported_ethnicity_ontology_term_id</code></td>
 <td>Ontology identifier for self-reported ethnicity.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>experiment___</code></td>
 <td>Upstream experiment grouping variable.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>organism</code></td>
 <td>Organism name (e.g. human).</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>organism_ontology_term_id</code></td>
 <td>Ontology identifier for <code>organism</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>sex</code></td>
 <td>Recorded biological sex label.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>sex_ontology_term_id</code></td>
 <td>Ontology identifier for <code>sex</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tissue</code></td>
 <td>Tissue label.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tissue_type</code></td>
 <td>Tissue class (e.g. tissue vs organoid).</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tissue_ontology_term_id</code></td>
 <td>Ontology identifier for <code>tissue</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>disease</code></td>
 <td>Disease annotation.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>disease_ontology_term_id</code></td>
 <td>Ontology identifier for <code>disease</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>is_primary_data</code></td>
 <td>Whether observations are marked as primary (avoid duplicated cells).</td>
 </tr>
@@ -314,24 +314,24 @@
 <h3 id="cell-level-columns">Cell-level columns<a class="anchor" aria-label="anchor" href="#cell-level-columns"></a>
 </h3>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th>Column</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code>cell_id</code></td>
 <td>Cell identifier.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>cell_type</code></td>
 <td>Cell-type label from CELLxGENE Census API.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>cell_type_ontology_term_id</code></td>
 <td>Ontology identifier for <code>cell_type</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>observation_joinid</code></td>
 <td>Cell ID join key linking metadata.</td>
 </tr>
@@ -347,102 +347,102 @@
 <col width="38%">
 <col width="61%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Column</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code>cell_count</code></td>
 <td>Number of cells in a dataset.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>feature_count</code></td>
 <td>Number of genes in a dataset.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>age_days</code></td>
 <td>Donor age in days.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tissue_groups</code></td>
 <td>Coarse tissue grouping for analysis.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>empty_droplet</code></td>
 <td>Quality-control flag for empty droplets.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>alive</code></td>
 <td>Quality-control flag for viable cells (e.g. mitochondrial signal).</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>scDblFinder.class</code></td>
 <td>Quality-control flag for doublet classification from <code>scDblFinder</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>cell_type_unified_ensemble</code></td>
 <td>Consensus immune identity from Azimuth and <code>SingleR</code> (Blueprint, Monaco).</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>cell_annotation_azimuth_l2</code></td>
 <td>Azimuth cell annotation.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>cell_annotation_blueprint_singler</code></td>
 <td>
 <code>SingleR</code> annotation (Blueprint).</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>cell_annotation_blueprint_monaco</code></td>
 <td>
 <code>SingleR</code> annotation (Monaco).</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>sample_heuristic</code></td>
 <td>Internal sample subdivision helper.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>file_id_cellNexus_single_cell</code></td>
 <td>Internal file id for single-cell layers.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>file_id_cellNexus_pseudobulk</code></td>
 <td>Internal file id for pseudobulk layers.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>sample_id</code></td>
 <td>Harmonised sample identifier.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>nCount_RNA</code></td>
 <td>Total RNA counts per cell (sample-aware).</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>nFeature_expressed_in_sample</code></td>
 <td>Number of expressed features per cell.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>ethnicity_flagging_score</code></td>
 <td>Supporting score for ethnicity imputation.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>low_confidence_ethnicity</code></td>
 <td>Supporting flag for low-confidence ethnicity calls.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>.aggregated_cells</code></td>
 <td>Post-QC cells combined into each pseudobulk sample.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>imputed_ethnicity</code></td>
 <td>Imputed ethnicity label.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>atlas_id</code></td>
 <td>cellNexus atlas release identifier (internal use).</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>is_immune</code></td>
 <td>Curated flag for immune-cell context.</td>
 </tr>

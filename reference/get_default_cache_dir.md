@@ -29,7 +29,7 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
 #> # Source:   SQL [?? x 73]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
 #>    cell_id observation_joinid dataset_id   sample_id sample_ cell_count citation
 #>      <dbl> <chr>              <chr>        <chr>     <chr>        <int> <chr>   
 #>  1      15 TjgA2vJ1;{         842c6f5d-4a… 1119f482… 1119f4…     714331 Publica…

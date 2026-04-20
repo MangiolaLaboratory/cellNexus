@@ -116,25 +116,25 @@ schema](https://github.com/chanzuckerberg/cellxgene-census/blob/main/docs/cellxg
 
 ### Sample-level columns
 
-| Column                                     | Description                                                          |
-|--------------------------------------------|----------------------------------------------------------------------|
-| `assay`                                    | Sequencing technology label.                                         |
-| `assay_ontology_term_id`                   | Ontology identifier for `assay`.                                     |
-| `development_stage`                        | Developmental stage label.                                           |
-| `development_stage_ontology_term_id`       | Ontology identifier for `development_stage`.                         |
-| `self_reported_ethnicity`                  | Self-reported ancestry or ethnicity label.                           |
-| `self_reported_ethnicity_ontology_term_id` | Ontology identifier for self-reported ethnicity.                     |
-| `experiment___`                            | Upstream experiment grouping variable.                               |
-| `organism`                                 | Organism name (e.g. human).                                          |
-| `organism_ontology_term_id`                | Ontology identifier for `organism`.                                  |
-| `sex`                                      | Recorded biological sex label.                                       |
-| `sex_ontology_term_id`                     | Ontology identifier for `sex`.                                       |
-| `tissue`                                   | Tissue label.                                                        |
-| `tissue_type`                              | Tissue class (e.g. tissue vs organoid).                              |
-| `tissue_ontology_term_id`                  | Ontology identifier for `tissue`.                                    |
-| `disease`                                  | Disease annotation.                                                  |
-| `disease_ontology_term_id`                 | Ontology identifier for `disease`.                                   |
-| `is_primary_data`                          | Whether observations are marked as primary (avoid duplicated cells). |
+| Column | Description |
+|----|----|
+| `assay` | Sequencing technology label. |
+| `assay_ontology_term_id` | Ontology identifier for `assay`. |
+| `development_stage` | Developmental stage label. |
+| `development_stage_ontology_term_id` | Ontology identifier for `development_stage`. |
+| `self_reported_ethnicity` | Self-reported ancestry or ethnicity label. |
+| `self_reported_ethnicity_ontology_term_id` | Ontology identifier for self-reported ethnicity. |
+| `experiment___` | Upstream experiment grouping variable. |
+| `organism` | Organism name (e.g. human). |
+| `organism_ontology_term_id` | Ontology identifier for `organism`. |
+| `sex` | Recorded biological sex label. |
+| `sex_ontology_term_id` | Ontology identifier for `sex`. |
+| `tissue` | Tissue label. |
+| `tissue_type` | Tissue class (e.g. tissue vs organoid). |
+| `tissue_ontology_term_id` | Ontology identifier for `tissue`. |
+| `disease` | Disease annotation. |
+| `disease_ontology_term_id` | Ontology identifier for `disease`. |
+| `is_primary_data` | Whether observations are marked as primary (avoid duplicated cells). |
 
 ### Cell-level columns
 
@@ -150,37 +150,38 @@ schema](https://github.com/chanzuckerberg/cellxgene-census/blob/main/docs/cellxg
 Through harmonisation and curation, `cellNexus` adds columns that are
 not present in the original CELLxGENE metadata alone.
 
-| Column                              | Description                                                               |
-|-------------------------------------|---------------------------------------------------------------------------|
-| `cell_count`                        | Number of cells in a dataset.                                             |
-| `feature_count`                     | Number of genes in a dataset.                                             |
-| `age_days`                          | Donor age in days.                                                        |
-| `tissue_groups`                     | Coarse tissue grouping for analysis.                                      |
-| `empty_droplet`                     | Quality-control flag for empty droplets.                                  |
-| `alive`                             | Quality-control flag for viable cells (e.g. mitochondrial signal).        |
-| `scDblFinder.class`                 | Quality-control flag for doublet classification from `scDblFinder`.       |
-| `cell_type_unified_ensemble`        | Consensus immune identity from Azimuth and `SingleR` (Blueprint, Monaco). |
-| `cell_annotation_azimuth_l2`        | Azimuth cell annotation.                                                  |
-| `cell_annotation_blueprint_singler` | `SingleR` annotation (Blueprint).                                         |
-| `cell_annotation_blueprint_monaco`  | `SingleR` annotation (Monaco).                                            |
-| `sample_heuristic`                  | Internal sample subdivision helper.                                       |
-| `file_id_cellNexus_single_cell`     | Internal file id for single-cell layers.                                  |
-| `file_id_cellNexus_pseudobulk`      | Internal file id for pseudobulk layers.                                   |
-| `sample_id`                         | Harmonised sample identifier.                                             |
-| `nCount_RNA`                        | Total RNA counts per cell (sample-aware).                                 |
-| `nFeature_expressed_in_sample`      | Number of expressed features per cell.                                    |
-| `ethnicity_flagging_score`          | Supporting score for ethnicity imputation.                                |
-| `low_confidence_ethnicity`          | Supporting flag for low-confidence ethnicity calls.                       |
-| `.aggregated_cells`                 | Post-QC cells combined into each pseudobulk sample.                       |
-| `imputed_ethnicity`                 | Imputed ethnicity label.                                                  |
-| `atlas_id`                          | cellNexus atlas release identifier (internal use).                        |
-| `is_immune`                         | Curated flag for immune-cell context.                                     |
+| Column | Description |
+|----|----|
+| `cell_count` | Number of cells in a dataset. |
+| `feature_count` | Number of genes in a dataset. |
+| `age_days` | Donor age in days. |
+| `tissue_groups` | Coarse tissue grouping for analysis. |
+| `empty_droplet` | Quality-control flag for empty droplets. |
+| `alive` | Quality-control flag for viable cells (e.g. mitochondrial signal). |
+| `scDblFinder.class` | Quality-control flag for doublet classification from `scDblFinder`. |
+| `cell_type_unified_ensemble` | Consensus immune identity from Azimuth and `SingleR` (Blueprint, Monaco). |
+| `cell_annotation_azimuth_l2` | Azimuth cell annotation. |
+| `cell_annotation_blueprint_singler` | `SingleR` annotation (Blueprint). |
+| `cell_annotation_blueprint_monaco` | `SingleR` annotation (Monaco). |
+| `sample_heuristic` | Internal sample subdivision helper. |
+| `file_id_cellNexus_single_cell` | Internal file id for single-cell layers. |
+| `file_id_cellNexus_pseudobulk` | Internal file id for pseudobulk layers. |
+| `sample_id` | Harmonised sample identifier. |
+| `nCount_RNA` | Total RNA counts per cell (sample-aware). |
+| `nFeature_expressed_in_sample` | Number of expressed features per cell. |
+| `ethnicity_flagging_score` | Supporting score for ethnicity imputation. |
+| `low_confidence_ethnicity` | Supporting flag for low-confidence ethnicity calls. |
+| `.aggregated_cells` | Post-QC cells combined into each pseudobulk sample. |
+| `imputed_ethnicity` | Imputed ethnicity label. |
+| `atlas_id` | cellNexus atlas release identifier (internal use). |
+| `is_immune` | Curated flag for immune-cell context. |
 
 ## Client Usage Examples
 
 ### R client (`cellNexus`)
 
 ``` r
+
 library(cellNexus)
 library(dplyr)
 library(stringr)

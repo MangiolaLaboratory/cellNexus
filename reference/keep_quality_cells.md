@@ -50,17 +50,17 @@ A filtered data frame containing only cells that pass all QC checks.
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) |>
   head(2) |>
   keep_quality_cells()
-#> # Source:   SQL [?? x 73]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
-#>   cell_id observation_joinid dataset_id    sample_id sample_ cell_count citation
-#>     <dbl> <chr>              <chr>         <chr>     <chr>        <int> <chr>   
-#> 1      15 TjgA2vJ1;{         842c6f5d-4a9… 1119f482… 1119f4…     714331 Publica…
-#> 2      19 lNmuO5xs~3         842c6f5d-4a9… 1119f482… 1119f4…     714331 Publica…
-#> # ℹ 66 more variables: collection_id <chr>, dataset_version_id <chr>,
-#> #   default_embedding <chr>, experiment___ <chr>, explorer_url <chr>,
-#> #   feature_count <int>, filesize <dbl>, filetype <chr>,
-#> #   mean_genes_per_cell <dbl>, primary_cell_count <chr>, published_at <chr>,
-#> #   raw_data_location <chr>, revised_at <chr>, run_from_cell_id <chr>,
-#> #   sample_heuristic <chr>, schema_version <chr>, suspension_type <chr>,
-#> #   tissue_type <chr>, title <chr>, tombstone <lgl>, url <chr>, …
+#> # Source:   SQL [?? x 76]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]
+#>   cell_id observation_joinid dataset_id          sample_id sample_ experiment___
+#>     <dbl> <chr>              <chr>               <chr>     <chr>   <chr>        
+#> 1      14 qxl7HJjL$L         842c6f5d-4a94-4eef… 1119f482… 1119f4… ""           
+#> 2      15 TjgA2vJ1;{         842c6f5d-4a94-4eef… 1119f482… 1119f4… ""           
+#> # ℹ 70 more variables: run_from_cell_id <chr>, sample_heuristic <chr>,
+#> #   age_days <int>, tissue_groups <chr>, nFeature_expressed_in_sample <int>,
+#> #   nCount_RNA <dbl>, empty_droplet <lgl>, cell_type_unified_ensemble <chr>,
+#> #   is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
+#> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>,
+#> #   sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>,
+#> #   file_id_cellNexus_single_cell <chr>, file_id_cellNexus_pseudobulk <chr>, …
 ```

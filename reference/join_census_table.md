@@ -9,7 +9,7 @@ frame.
 ``` r
 join_census_table(
   tbl,
-  cloud_metadata = get_metadata_url("census_cell_metadata.2.2.0.parquet"),
+  cloud_metadata = get_metadata_url("census_cell_metadata.2.2.1.parquet"),
   cache_directory = get_default_cache_dir(),
   join_keys = c("sample_id", "dataset_id", "observation_joinid")
 )
@@ -52,20 +52,20 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |> head(2) |>
     cache_directory = tempdir()
   )
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.0.parquet to /tmp/RtmpQWE1lc/census_sample_metadata.2.2.0.parquet
-#> # Source:   SQL [?? x 143]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
-#>   cell_id.x observation_joinid dataset_id       sample_id sample_.x cell_count.x
-#>       <dbl> <chr>              <chr>            <chr>     <chr>            <int>
-#> 1        15 TjgA2vJ1;{         842c6f5d-4a94-4… 1119f482… 1119f482…       714331
-#> 2        19 lNmuO5xs~3         842c6f5d-4a94-4… 1119f482… 1119f482…       714331
-#> 3        15 TjgA2vJ1;{         842c6f5d-4a94-4… 1119f482… 1119f482…       714331
-#> 4        19 lNmuO5xs~3         842c6f5d-4a94-4… 1119f482… 1119f482…       714331
-#> # ℹ 137 more variables: citation.x <chr>, collection_id.x <chr>,
-#> #   dataset_version_id.x <chr>, default_embedding.x <chr>,
-#> #   experiment___.x <chr>, explorer_url.x <chr>, feature_count.x <int>,
-#> #   filesize.x <dbl>, filetype.x <chr>, mean_genes_per_cell.x <dbl>,
-#> #   primary_cell_count.x <chr>, published_at.x <chr>,
-#> #   raw_data_location.x <chr>, revised_at.x <chr>, run_from_cell_id.x <chr>,
-#> #   sample_heuristic.x <chr>, schema_version.x <chr>, …
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.1.parquet to /tmp/Rtmp6m4tz9/census_sample_metadata.2.2.1.parquet
+#> # Source:   SQL [?? x 149]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]
+#>   cell_id.x observation_joinid dataset_id    sample_id sample_.x experiment___.x
+#>       <dbl> <chr>              <chr>         <chr>     <chr>     <chr>          
+#> 1        14 qxl7HJjL$L         842c6f5d-4a9… 1119f482… 1119f482… ""             
+#> 2        15 TjgA2vJ1;{         842c6f5d-4a9… 1119f482… 1119f482… ""             
+#> 3        14 qxl7HJjL$L         842c6f5d-4a9… 1119f482… 1119f482… ""             
+#> 4        15 TjgA2vJ1;{         842c6f5d-4a9… 1119f482… 1119f482… ""             
+#> # ℹ 143 more variables: run_from_cell_id.x <chr>, sample_heuristic.x <chr>,
+#> #   age_days.x <int>, tissue_groups.x <chr>,
+#> #   nFeature_expressed_in_sample.x <int>, nCount_RNA.x <dbl>,
+#> #   empty_droplet.x <lgl>, cell_type_unified_ensemble.x <chr>,
+#> #   is_immune.x <lgl>, subsets_Mito_percent.x <int>,
+#> #   subsets_Ribo_percent.x <int>, high_mitochondrion.x <lgl>,
+#> #   high_ribosome.x <lgl>, scDblFinder.class.x <chr>, sample_chunk.x <int>, …
 ```

@@ -39,7 +39,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.20</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.21</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,31 +85,30 @@ al.</h4>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p><code>cellNexus</code> builds upon and extends the functionality of
-the previously released <code>CuratedAtlasQueryR</code>, providing a
-unified query and access interface to the harmonised, curated, and
-reannotated CELLxGENE human cell atlas. It enables reproducible and
-programmatic exploration of large-scale single-cell data resources,
-supporting retrieval at the cell, sample, and dataset levels through
-flexible filtering by tissue, cell type, experimental condition, or
-other metadata features. The retrieved data are returned for downstream
+<p><code>cellNexus</code> extends the functionality of
+<code>CuratedAtlasQueryR</code> by providing a unified interface for
+querying and accessing the harmonised, curated, and reannotated
+CELLxGENE human cell atlas. It enables reproducible, programmatic
+exploration of large-scale single-cell datasets, supporting data
+retrieval at the cell, sample, and dataset levels with flexible
+filtering based on tissue, cell type, experimental condition, and other
+metadata. Retrieved data are returned in formats ready for downstream
 analysis.</p>
-<p><code>cellNexus</code> integrates over 40 million human cells
-processed with standardised quality control, consistent normalisation,
-and unified abundance representations—including single-cell,
-counts-per-million, normalised expression, and pseudobulk layers. This
-harmonised design facilitates efficient cross-dataset analyses and
-downstream integration.</p>
-<p>Data are hosted on the ARDC Nectar Research Cloud, and most
-<code>cellNexus</code> functions interact with Nectar via web requests,
-so a network connection is required for most functionality.</p>
-<p><code>cellNexus</code> builds on top of package CuratedAtlasQueryR.
-While both rely on pre-computed expression layers, they differ in how
-these layers are generated. cellNexus implements a more standardised
-workflow, including explicit removal of empty droplets and dead cells,
-followed by harmonised quality control, normalisation, and multi-layer
-data generation. Through this process, it produces updated datasets that
-remain aligned with the evolving CELLxGENE releases.</p>
+<p>The package integrates over 44 million human cells processed through
+a standardised pipeline, including consistent quality control,
+normalisation, and unified abundance representations (e.g., single-cell,
+counts-per-million, normalised expression, and pseudobulk). This
+harmonisation facilitates efficient cross-dataset comparison and
+integration.</p>
+<p>Data are hosted on the ARDC Nectar Research Cloud, and most functions
+access them via web requests; therefore, an active network connection is
+required for typical use.</p>
+<p>While both cellNexus and CuratedAtlasQueryR rely on precomputed
+expression layers, cellNexus adopts a more standardised and transparent
+processing workflow. This includes explicit removal of empty droplets
+and dead cells, followed by harmonised quality control, normalisation,
+and multi-layer data generation, ensuring alignment with evolving
+CELLxGENE releases.</p>
 <p><img src="../reference/figures/logo.png" class="r-plt" alt="" width="120x" height="139px"></p>
 <p><img src="../reference/figures/svcf_logo.jpeg" class="r-plt" alt="" width="155x" height="58px"><img src="../reference/figures/czi_logo.png" class="r-plt" alt="" width="129px" height="58px"><img src="../reference/figures/bioconductor_logo.jpg" class="r-plt" alt="" width="202px" height="58px"><img src="../reference/figures/vca_logo.png" class="r-plt" alt="" width="219px" height="58px"><img src="../reference/figures/nectar_logo.png" class="r-plt" alt="" width="180px" height="58px"></p>
 </div>
@@ -120,7 +119,7 @@ remain aligned with the evolving CELLxGENE releases.</p>
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install-deprecated.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="load-the-package">Load the package<a class="anchor" aria-label="anchor" href="#load-the-package"></a>
@@ -150,28 +149,28 @@ Users can retrieve original Census annotations by the function
 <span>  <span class="fu"><a href="../reference/join_census_table.html">join_census_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">metadata</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.0.parquet to /tmp/RtmpZNbogD/cellnexus_sample_metadata.2.2.0.parquet</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 73]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]</span></span></span>
-<span><span class="co">#&gt;    cell_id observation_joinid dataset_id   sample_id sample_ cell_count citation</span></span>
-<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>      15 TjgA2vJ1;{         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>      19 lNmuO5xs~3         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>      18 h22!#$}SJ*         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>      17 QRMCN*8*|#         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>      14 qxl7HJjL$L         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>      20 6Eu5c&amp;aEH;         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>      16 j}0&lt;Y&gt;a#X~         842c6f5d-4a… 1119f482… 1119f4…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>       5 N&gt;_|{;6_6N         842c6f5d-4a… 1f755b9b… 1f755b…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>       4 CVfj&gt;iWZ&amp;P         842c6f5d-4a… 1f755b9b… 1f755b…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>       3 5jp7Uu{#@#         842c6f5d-4a… 1f755b9b… 1f755b…     <span style="text-decoration: underline;">714</span>331 Publica…</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.1.parquet to /tmp/RtmpJPerbu/cellnexus_sample_metadata.2.2.1.parquet</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 76]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]</span></span></span>
+<span><span class="co">#&gt;    cell_id observation_joinid dataset_id         sample_id sample_ experiment___</span></span>
+<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>      14 qxl7HJjL$L         842c6f5d-4a94-4ee… 1119f482… 1119f4… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>      15 TjgA2vJ1;{         842c6f5d-4a94-4ee… 1119f482… 1119f4… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>      16 j}0&lt;Y&gt;a#X~         842c6f5d-4a94-4ee… 1119f482… 1119f4… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>      17 QRMCN*8*|#         842c6f5d-4a94-4ee… 1119f482… 1119f4… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>      18 h22!#$}SJ*         842c6f5d-4a94-4ee… 1119f482… 1119f4… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>      19 lNmuO5xs~3         842c6f5d-4a94-4ee… 1119f482… 1119f4… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>      20 6Eu5c&amp;aEH;         842c6f5d-4a94-4ee… 1119f482… 1119f4… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>       5 N&gt;_|{;6_6N         842c6f5d-4a94-4ee… 1f755b9b… 1f755b… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>       2 $jvBt8wHSK         842c6f5d-4a94-4ee… 1f755b9b… 1f755b… <span style="color: #949494;">""</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>       3 5jp7Uu{#@#         842c6f5d-4a94-4ee… 1f755b9b… 1f755b… <span style="color: #949494;">""</span>           </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 66 more variables: collection_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   default_embedding &lt;chr&gt;, experiment___ &lt;chr&gt;, explorer_url &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   feature_count &lt;int&gt;, filesize &lt;dbl&gt;, filetype &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   mean_genes_per_cell &lt;dbl&gt;, primary_cell_count &lt;chr&gt;, published_at &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   raw_data_location &lt;chr&gt;, revised_at &lt;chr&gt;, run_from_cell_id &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sample_heuristic &lt;chr&gt;, schema_version &lt;chr&gt;, suspension_type &lt;chr&gt;, …</span></span></span></code></pre>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 70 more variables: run_from_cell_id &lt;chr&gt;, sample_heuristic &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   age_days &lt;int&gt;, tissue_groups &lt;chr&gt;, nFeature_expressed_in_sample &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   nCount_RNA &lt;dbl&gt;, empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sample_chunk &lt;int&gt;, cell_chunk &lt;int&gt;, sample_pseudobulk_chunk &lt;int&gt;, …</span></span></span></code></pre>
 <p>Metadata is saved to <code><a href="../reference/get_default_cache_dir.html">get_default_cache_dir()</a></code> unless a
 custom path is provided via the cache_directory argument. The
 <code>metadata</code> variable can then be re-used for all subsequent
@@ -184,19 +183,19 @@ queries.</p>
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">tissue</span>, <span class="va">cell_type_unified_ensemble</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]</span></span></span>
-<span><span class="co">#&gt;    tissue           cell_type_unified_ensemble</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> cortex of kidney cd16 mono                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cortex of kidney cd14 mono                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> blood            granulocyte               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> blood            Unknown                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> forebrain        nk                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> blood            progenitor                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> decidua          other                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> placenta         cd14 mono                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> lung parenchyma  treg                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> lung parenchyma  cd4 th2 em                </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]</span></span></span>
+<span><span class="co">#&gt;    tissue            cell_type_unified_ensemble</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> bone marrow       nk                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> blood             cytotoxic                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> blood             cd4 tem                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> blood             cd14 mono                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> breast            monocytic                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> left frontal lobe nk                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> breast            nk                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> placenta          granulocyte               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> decidua basalis   other                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> lung parenchyma   cd4 th1/th17 em           </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ more rows</span></span></span></code></pre></div>
 </div>
 </div>
@@ -231,6 +230,8 @@ gene counts.</p>
 <span>  <span class="fu"><a href="../reference/get_single_cell_experiment.html">get_single_cell_experiment</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/counts/2aad1b31e2f3469b90409a420580a751___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene_2024/0.2.1//counts/2aad1b31e2f3469b90409a420580a751___1.h5ad</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
 <span><span class="co">#&gt; For native R and reading and writing of <span style="color: #00BB00;">H5AD</span> files, an R <span style="color: #0000BB;">&lt;AnnData&gt;</span> object, and</span></span>
 <span><span class="co">#&gt; conversion to <span style="color: #0000BB;">&lt;SingleCellExperiment&gt;</span> or <span style="color: #0000BB;">&lt;Seurat&gt;</span> objects, check out the</span></span>
@@ -250,7 +251,7 @@ gene counts.</p>
 <span><span class="co">#&gt;   ENSG00000268674</span></span>
 <span><span class="co">#&gt; rowData names(0):</span></span>
 <span><span class="co">#&gt; colnames(3): 1_1 2_1 3_1</span></span>
-<span><span class="co">#&gt; colData names(73): observation_joinid dataset_id ...</span></span>
+<span><span class="co">#&gt; colData names(76): observation_joinid dataset_id ...</span></span>
 <span><span class="co">#&gt;   tissue_ontology_term_id original_cell_</span></span>
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
@@ -271,6 +272,8 @@ gene counts.</p>
 <span>  <span class="fu"><a href="../reference/get_single_cell_experiment.html">get_single_cell_experiment</a></span><span class="op">(</span>assays <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/cpm/2aad1b31e2f3469b90409a420580a751___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene_2024/0.2.1//cpm/2aad1b31e2f3469b90409a420580a751___1.h5ad</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Compiling Experiment.</span></span>
 <span></span>
@@ -283,7 +286,7 @@ gene counts.</p>
 <span><span class="co">#&gt;   ENSG00000268674</span></span>
 <span><span class="co">#&gt; rowData names(0):</span></span>
 <span><span class="co">#&gt; colnames(3): 1_1 2_1 3_1</span></span>
-<span><span class="co">#&gt; colData names(73): observation_joinid dataset_id ...</span></span>
+<span><span class="co">#&gt; colData names(76): observation_joinid dataset_id ...</span></span>
 <span><span class="co">#&gt;   tissue_ontology_term_id original_cell_</span></span>
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
@@ -304,6 +307,8 @@ gene counts.</p>
 <span>  <span class="fu"><a href="../reference/get_single_cell_experiment.html">get_single_cell_experiment</a></span><span class="op">(</span>assays <span class="op">=</span> <span class="st">"sct"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/sct/2aad1b31e2f3469b90409a420580a751___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene_2024/0.2.1//sct/2aad1b31e2f3469b90409a420580a751___1.h5ad</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Compiling Experiment.</span></span>
 <span></span>
@@ -316,7 +321,7 @@ gene counts.</p>
 <span><span class="co">#&gt;   ENSG00000268674</span></span>
 <span><span class="co">#&gt; rowData names(0):</span></span>
 <span><span class="co">#&gt; colnames(3): 1_1 2_1 3_1</span></span>
-<span><span class="co">#&gt; colData names(73): observation_joinid dataset_id ...</span></span>
+<span><span class="co">#&gt; colData names(76): observation_joinid dataset_id ...</span></span>
 <span><span class="co">#&gt;   tissue_ontology_term_id original_cell_</span></span>
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
@@ -336,6 +341,8 @@ gene counts.</p>
 <span>  <span class="fu"><a href="../reference/get_pseudobulk.html">get_pseudobulk</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/pseudobulk/counts/11d9b242ad2fc637e43a23a6b7389fde___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene_2024/0.2.1/pseudobulk/counts/11d9b242ad2fc637e43a23a6b7389fde___1.h5ad</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Compiling Experiment.</span></span>
 <span></span>
@@ -348,7 +355,7 @@ gene counts.</p>
 <span><span class="co">#&gt;   ENSG00000271254</span></span>
 <span><span class="co">#&gt; rowData names(0):</span></span>
 <span><span class="co">#&gt; colnames(1): 2e8c9911c9bfbffc07288adef93d3cf2___cd14 mono</span></span>
-<span><span class="co">#&gt; colData names(56): dataset_id sample_id ... tissue_ontology_term_id</span></span>
+<span><span class="co">#&gt; colData names(59): dataset_id sample_id ... tissue_ontology_term_id</span></span>
 <span><span class="co">#&gt;   sample_identifier</span></span>
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
@@ -363,16 +370,18 @@ sample using <code>CellChat v2</code> method. It uses our harmonised
 cell type annotation (cell_type_unified_ensemble) to infer the
 communication. It captures inferred communication at both the
 ligand–receptor pair level and the signalling pathway level.</p>
-<p>interaction_count: The number of inferred interactions between each
-pair of cell groups.<br>
-interaction_weight: The aggregated communication strength between each
-pair of cell groups.</p>
+<ul>
+<li><p>interaction_count: The number of inferred interactions between
+each pair of cell groups.</p></li>
+<li><p>interaction_weight: The aggregated communication strength between
+each pair of cell groups.</p></li>
+</ul>
 <p>For definitions of additional annotations, please refer to the
 CellChat v2 documentation: <a href="https://github.com/jinworks/CellChat" class="external-link uri">https://github.com/jinworks/CellChat</a>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_cell_communication_strength.html">get_cell_communication_strength</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 16]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3/:memory:]</span></span></span>
 <span><span class="co">#&gt;   source    target ligand receptor   lr_prob lr_pval interaction_name   </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> b         b      TGFB1  TGFbR1_R2 0.000<span style="text-decoration: underline;">116</span>    1    TGFB1_TGFBR1_TGFBR2</span></span>
@@ -413,7 +422,7 @@ cellNexus uses ENSEMBL gene ID(s).</p>
 <span><span class="co">#&gt; rownames(1): ENSG00000134644</span></span>
 <span><span class="co">#&gt; rowData names(0):</span></span>
 <span><span class="co">#&gt; colnames(3): 1_1 2_1 3_1</span></span>
-<span><span class="co">#&gt; colData names(73): observation_joinid dataset_id ...</span></span>
+<span><span class="co">#&gt; colData names(76): observation_joinid dataset_id ...</span></span>
 <span><span class="co">#&gt;   tissue_ontology_term_id original_cell_</span></span>
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
@@ -650,9 +659,6 @@ in cellNexus::pbmc3k_sce</p>
 <span>  <span class="fu">S4Vectors</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html" class="external-link">metadata</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html" class="external-link">pluck</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/write_parquet.html" class="external-link">write_parquet</a></span><span class="op">(</span><span class="va">meta_path</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Registered S3 method overwritten by 'bit64':</span></span>
-<span><span class="co">#&gt;   method          from </span></span>
-<span><span class="co">#&gt;   print.bitstring tools</span></span>
 <span></span>
 <span><span class="co"># Save SCE object</span></span>
 <span><span class="va">pbmc3k_sce</span> <span class="op">|&gt;</span></span>
@@ -672,7 +678,7 @@ in cellNexus::pbmc3k_sce</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">cell_id</span>, <span class="va">sample_id</span>, <span class="va">dataset_id</span>, <span class="va">cell_type_unified_ensemble</span>, <span class="va">atlas_id</span>, <span class="va">file_id_cellNexus_single_cell</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_single_cell_experiment.html">get_single_cell_experiment</a></span><span class="op">(</span>cache_directory <span class="op">=</span> <span class="va">local_cache</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading 1 file, totalling 0 GB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.0.parquet to /tmp/RtmpZNbogD/census_sample_metadata.2.2.0.parquet</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.1.parquet to /tmp/RtmpJPerbu/census_sample_metadata.2.2.1.parquet</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Realising metadata.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Synchronising files</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading files.</span></span>
@@ -696,18 +702,18 @@ in cellNexus::pbmc3k_sce</p>
 <div class="section level2">
 <h2 id="cell-metadata">Cell metadata<a class="anchor" aria-label="anchor" href="#cell-metadata"></a>
 </h2>
-<p>The complete metadata dictionary (dataset-, sample-, and cell-level
-columns, plus cellNexus-specific harmonised fields) is available on the
-documentation site: <a href="https://cellnexus.org/" class="external-link">cellNexus
-documentation</a>.</p>
+<p>The complete metadata dictionary for the harmonised fields is
+available on the documentation site: <a href="https://cellnexus.org/" class="external-link">cellNexus documentation</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="rna-abundance">RNA abundance<a class="anchor" aria-label="anchor" href="#rna-abundance"></a>
 </h2>
-<p>The <code>counts</code> assay includes RNA abundance in the positive
-real scale (not transformed with non-linear functions, e.g. log sqrt).
-Originally CELLxGENE include a mix of scales and transformations
-specified in the <code>x_normalization</code> column.</p>
+<p>The <code>counts</code> assay represents RNA abundance on the
+positive real scale, without non-linear transformations (e.g., log or
+square root). In the original CELLxGENE data, values were provided using
+a mix of scales and transformations. The method required to invert these
+transformations is recorded in <code>inverse_transform</code>
+column.</p>
 <p>The <code>cpm</code> assay includes counts per million.</p>
 <p>The <code>sct</code> assay includes normalised counts by
 <code>sctranform</code>.</p>
@@ -716,7 +722,8 @@ specified in the <code>x_normalization</code> column.</p>
 <h2 id="other-representations">Other representations<a class="anchor" aria-label="anchor" href="#other-representations"></a>
 </h2>
 <p>The <code>rank</code> assay is the representation of each cell’s gene
-expression profile where genes are ranked by expression intensity.</p>
+expression profile where genes are ranked by expression intensity using
+<code>singscore</code>.</p>
 <p>The <code>pseudobulk</code> assay includes aggregated RNA abundance
 for sample and cell type combination.</p>
 <p>The detailed documentation for RNA abundance is available on the
@@ -728,7 +735,7 @@ documentation</a>.</p>
 </h2>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R Under development (unstable) (2026-04-16 r89906)</span></span>
+<span><span class="co">#&gt; R version 4.5.3 (2026-03-11)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -737,12 +744,10 @@ documentation</a>.</p>
 <span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
-<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
-<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
-<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
-<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
-<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       </span></span>
+<span><span class="co">#&gt;  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          </span></span>
+<span><span class="co">#&gt; [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; time zone: UTC</span></span>
 <span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
@@ -751,88 +756,88 @@ documentation</a>.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_4.0.2     dplyr_1.2.1       cellNexus_0.99.20 BiocStyle_2.39.0 </span></span>
+<span><span class="co">#&gt; [1] ggplot2_4.0.3     dplyr_1.2.1       cellNexus_0.99.21 BiocStyle_2.38.0 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] RcppAnnoy_0.0.23            splines_4.7.0              </span></span>
+<span><span class="co">#&gt;   [1] RcppAnnoy_0.0.23            splines_4.5.3              </span></span>
 <span><span class="co">#&gt;   [3] later_1.4.8                 filelock_1.0.3             </span></span>
 <span><span class="co">#&gt;   [5] tibble_3.3.1                polyclip_1.10-7            </span></span>
-<span><span class="co">#&gt;   [7] fastDummies_1.7.5           lifecycle_1.0.5            </span></span>
+<span><span class="co">#&gt;   [7] fastDummies_1.7.6           lifecycle_1.0.5            </span></span>
 <span><span class="co">#&gt;   [9] rprojroot_2.1.1             globals_0.19.1             </span></span>
 <span><span class="co">#&gt;  [11] lattice_0.22-9              MASS_7.3-65                </span></span>
 <span><span class="co">#&gt;  [13] backports_1.5.1             magrittr_2.0.5             </span></span>
 <span><span class="co">#&gt;  [15] plotly_4.12.0               sass_0.4.10                </span></span>
 <span><span class="co">#&gt;  [17] rmarkdown_2.31              jquerylib_0.1.4            </span></span>
 <span><span class="co">#&gt;  [19] yaml_2.3.12                 httpuv_1.6.17              </span></span>
-<span><span class="co">#&gt;  [21] otel_0.2.0                  Seurat_5.4.0               </span></span>
+<span><span class="co">#&gt;  [21] otel_0.2.0                  Seurat_5.5.0               </span></span>
 <span><span class="co">#&gt;  [23] sctransform_0.4.3           spam_2.11-3                </span></span>
 <span><span class="co">#&gt;  [25] sp_2.2-1                    spatstat.sparse_3.1-0      </span></span>
 <span><span class="co">#&gt;  [27] reticulate_1.46.0           cowplot_1.2.0              </span></span>
 <span><span class="co">#&gt;  [29] pbapply_1.7-4               DBI_1.3.0                  </span></span>
 <span><span class="co">#&gt;  [31] RColorBrewer_1.1-3          abind_1.4-8                </span></span>
-<span><span class="co">#&gt;  [33] Rtsne_0.17                  GenomicRanges_1.63.2       </span></span>
-<span><span class="co">#&gt;  [35] purrr_1.2.2                 BiocGenerics_0.57.1        </span></span>
-<span><span class="co">#&gt;  [37] IRanges_2.45.0              S4Vectors_0.49.2           </span></span>
+<span><span class="co">#&gt;  [33] Rtsne_0.17                  GenomicRanges_1.62.1       </span></span>
+<span><span class="co">#&gt;  [35] purrr_1.2.2                 BiocGenerics_0.56.0        </span></span>
+<span><span class="co">#&gt;  [37] IRanges_2.44.0              S4Vectors_0.48.1           </span></span>
 <span><span class="co">#&gt;  [39] ggrepel_0.9.8               irlba_2.3.7                </span></span>
 <span><span class="co">#&gt;  [41] listenv_0.10.1              spatstat.utils_3.2-2       </span></span>
 <span><span class="co">#&gt;  [43] goftest_1.2-3               RSpectra_0.16-2            </span></span>
 <span><span class="co">#&gt;  [45] spatstat.random_3.4-5       fitdistrplus_1.2-6         </span></span>
 <span><span class="co">#&gt;  [47] parallelly_1.47.0           pkgdown_2.2.0              </span></span>
-<span><span class="co">#&gt;  [49] codetools_0.2-20            DelayedArray_0.37.1        </span></span>
+<span><span class="co">#&gt;  [49] codetools_0.2-20            DelayedArray_0.36.1        </span></span>
 <span><span class="co">#&gt;  [51] tidyselect_1.2.1            rclipboard_0.2.1           </span></span>
 <span><span class="co">#&gt;  [53] farver_2.1.2                shinyWidgets_0.9.1         </span></span>
-<span><span class="co">#&gt;  [55] matrixStats_1.5.0           stats4_4.7.0               </span></span>
-<span><span class="co">#&gt;  [57] spatstat.explore_3.8-0      Seqinfo_1.1.0              </span></span>
+<span><span class="co">#&gt;  [55] matrixStats_1.5.0           stats4_4.5.3               </span></span>
+<span><span class="co">#&gt;  [57] spatstat.explore_3.8-0      Seqinfo_1.0.0              </span></span>
 <span><span class="co">#&gt;  [59] duckdb_1.5.2                jsonlite_2.0.0             </span></span>
 <span><span class="co">#&gt;  [61] progressr_0.19.0            ggridges_0.5.7             </span></span>
 <span><span class="co">#&gt;  [63] survival_3.8-6              systemfonts_1.3.2          </span></span>
-<span><span class="co">#&gt;  [65] tools_4.7.0                 ragg_1.5.2                 </span></span>
-<span><span class="co">#&gt;  [67] ica_1.0-3                   Rcpp_1.1.1-1               </span></span>
+<span><span class="co">#&gt;  [65] tools_4.5.3                 ragg_1.5.2                 </span></span>
+<span><span class="co">#&gt;  [67] ica_1.0-3                   Rcpp_1.1.1-1.1             </span></span>
 <span><span class="co">#&gt;  [69] glue_1.8.1                  gridExtra_2.3              </span></span>
-<span><span class="co">#&gt;  [71] SparseArray_1.11.13         xfun_0.57                  </span></span>
-<span><span class="co">#&gt;  [73] MatrixGenerics_1.23.0       HDF5Array_1.39.1           </span></span>
+<span><span class="co">#&gt;  [71] SparseArray_1.10.10         xfun_0.57                  </span></span>
+<span><span class="co">#&gt;  [73] MatrixGenerics_1.22.0       HDF5Array_1.38.0           </span></span>
 <span><span class="co">#&gt;  [75] withr_3.0.2                 BiocManager_1.30.27        </span></span>
-<span><span class="co">#&gt;  [77] fastmap_1.2.0               basilisk_1.23.0            </span></span>
-<span><span class="co">#&gt;  [79] rhdf5filters_1.23.3         digest_0.6.39              </span></span>
+<span><span class="co">#&gt;  [77] fastmap_1.2.0               basilisk_1.22.0            </span></span>
+<span><span class="co">#&gt;  [79] rhdf5filters_1.22.0         digest_0.6.39              </span></span>
 <span><span class="co">#&gt;  [81] R6_2.6.1                    mime_0.13                  </span></span>
 <span><span class="co">#&gt;  [83] textshaping_1.0.5           scattermore_1.2            </span></span>
 <span><span class="co">#&gt;  [85] tensor_1.5.1                spatstat.data_3.1-9        </span></span>
-<span><span class="co">#&gt;  [87] h5mread_1.3.3               utf8_1.2.6                 </span></span>
+<span><span class="co">#&gt;  [87] h5mread_1.2.1               utf8_1.2.6                 </span></span>
 <span><span class="co">#&gt;  [89] tidyr_1.3.2                 generics_0.1.4             </span></span>
 <span><span class="co">#&gt;  [91] data.table_1.18.2.1         httr_1.4.8                 </span></span>
-<span><span class="co">#&gt;  [93] htmlwidgets_1.6.4           S4Arrays_1.11.1            </span></span>
+<span><span class="co">#&gt;  [93] htmlwidgets_1.6.4           S4Arrays_1.10.1            </span></span>
 <span><span class="co">#&gt;  [95] uwot_0.2.4                  pkgconfig_2.0.3            </span></span>
 <span><span class="co">#&gt;  [97] gtable_0.3.6                blob_1.3.0                 </span></span>
-<span><span class="co">#&gt;  [99] lmtest_0.9-40               S7_0.2.1-1                 </span></span>
-<span><span class="co">#&gt; [101] SingleCellExperiment_1.33.2 XVector_0.51.0             </span></span>
+<span><span class="co">#&gt;  [99] lmtest_0.9-40               S7_0.2.2                   </span></span>
+<span><span class="co">#&gt; [101] SingleCellExperiment_1.32.0 XVector_0.50.0             </span></span>
 <span><span class="co">#&gt; [103] htmltools_0.5.9             dotCall64_1.2              </span></span>
 <span><span class="co">#&gt; [105] bookdown_0.46               SeuratObject_5.4.0         </span></span>
-<span><span class="co">#&gt; [107] scales_1.4.0                Biobase_2.71.0             </span></span>
+<span><span class="co">#&gt; [107] scales_1.4.0                Biobase_2.70.0             </span></span>
 <span><span class="co">#&gt; [109] png_0.1-9                   spatstat.univar_3.1-7      </span></span>
 <span><span class="co">#&gt; [111] knitr_1.51                  reshape2_1.4.5             </span></span>
-<span><span class="co">#&gt; [113] checkmate_2.3.4             nlme_3.1-169               </span></span>
-<span><span class="co">#&gt; [115] curl_7.0.0                  anndataR_1.1.2             </span></span>
+<span><span class="co">#&gt; [113] checkmate_2.3.4             nlme_3.1-168               </span></span>
+<span><span class="co">#&gt; [115] curl_7.1.0                  anndataR_1.0.2             </span></span>
 <span><span class="co">#&gt; [117] cachem_1.1.0                zoo_1.8-15                 </span></span>
-<span><span class="co">#&gt; [119] rhdf5_2.55.16               stringr_1.6.0              </span></span>
-<span><span class="co">#&gt; [121] KernSmooth_2.23-26          parallel_4.7.0             </span></span>
+<span><span class="co">#&gt; [119] rhdf5_2.54.1                stringr_1.6.0              </span></span>
+<span><span class="co">#&gt; [121] KernSmooth_2.23-26          parallel_4.5.3             </span></span>
 <span><span class="co">#&gt; [123] miniUI_0.1.2                arrow_23.0.1.2             </span></span>
-<span><span class="co">#&gt; [125] zellkonverter_1.21.2        desc_1.4.3                 </span></span>
-<span><span class="co">#&gt; [127] pillar_1.11.1               grid_4.7.0                 </span></span>
+<span><span class="co">#&gt; [125] zellkonverter_1.20.1        desc_1.4.3                 </span></span>
+<span><span class="co">#&gt; [127] pillar_1.11.1               grid_4.5.3                 </span></span>
 <span><span class="co">#&gt; [129] vctrs_0.7.3                 RANN_2.6.2                 </span></span>
 <span><span class="co">#&gt; [131] promises_1.5.0              dbplyr_2.5.2               </span></span>
 <span><span class="co">#&gt; [133] xtable_1.8-8                cluster_2.1.8.2            </span></span>
 <span><span class="co">#&gt; [135] evaluate_1.0.5              cli_3.6.6                  </span></span>
-<span><span class="co">#&gt; [137] compiler_4.7.0              rlang_1.2.0                </span></span>
+<span><span class="co">#&gt; [137] compiler_4.5.3              rlang_1.2.0                </span></span>
 <span><span class="co">#&gt; [139] future.apply_1.20.2         plyr_1.8.9                 </span></span>
 <span><span class="co">#&gt; [141] fs_2.1.0                    stringi_1.8.7              </span></span>
 <span><span class="co">#&gt; [143] viridisLite_0.4.3           deldir_2.0-4               </span></span>
 <span><span class="co">#&gt; [145] assertthat_0.2.1            lazyeval_0.2.3             </span></span>
-<span><span class="co">#&gt; [147] spatstat.geom_3.7-3         Matrix_1.7-5               </span></span>
-<span><span class="co">#&gt; [149] dir.expiry_1.19.0           RcppHNSW_0.6.0             </span></span>
-<span><span class="co">#&gt; [151] patchwork_1.3.2             bit64_4.6.0-1              </span></span>
-<span><span class="co">#&gt; [153] future_1.70.0               Rhdf5lib_1.33.6            </span></span>
-<span><span class="co">#&gt; [155] shiny_1.13.0                SummarizedExperiment_1.41.1</span></span>
-<span><span class="co">#&gt; [157] ROCR_1.0-12                 igraph_2.2.3               </span></span>
+<span><span class="co">#&gt; [147] spatstat.geom_3.7-3         Matrix_1.7-4               </span></span>
+<span><span class="co">#&gt; [149] dir.expiry_1.18.0           RcppHNSW_0.6.0             </span></span>
+<span><span class="co">#&gt; [151] patchwork_1.3.2             bit64_4.8.0                </span></span>
+<span><span class="co">#&gt; [153] future_1.70.0               Rhdf5lib_1.32.0            </span></span>
+<span><span class="co">#&gt; [155] shiny_1.13.0                SummarizedExperiment_1.40.0</span></span>
+<span><span class="co">#&gt; [157] ROCR_1.0-12                 igraph_2.3.0               </span></span>
 <span><span class="co">#&gt; [159] bslib_0.10.0                bit_4.6.0</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

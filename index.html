@@ -43,7 +43,7 @@
 
     <a class="navbar-brand me-2" href="index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.20</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.21</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,9 +95,14 @@
 <div class="section level3">
 <h3 id="quality-control-steps">Quality control steps<a class="anchor" aria-label="anchor" href="#quality-control-steps"></a>
 </h3>
-<p>The QC flags used throughout <code>cellNexus</code> are computed using <a href="https://github.com/MangiolaLaboratory/HPCell" class="external-link">HPCell</a>. In brief: - Empty droplets (<code>empty_droplet</code>): - Computed from a <code>SingleCellExperiment</code>. - Excludes mitochondrial genes and ribosomal genes before scoring: - Computes, per cell, the number of expressed genes and flags a cell as an empty droplet when (n_ &lt;) <code>RNA_feature_threshold</code> (by default 200, except for targeted panels such as Rhapsody technology).</p>
+<p>The QC flags used throughout <code>cellNexus</code> are computed using <a href="https://github.com/MangiolaLaboratory/HPCell" class="external-link">HPCell</a>. In brief:</p>
 <ul>
-<li>Alive cells (<code>alive</code>):
+<li><p>Empty droplets (<code>empty_droplet</code>):</p></li>
+<li><p>Computed from a <code>SingleCellExperiment</code>.</p></li>
+<li><p>Excludes mitochondrial genes and ribosomal genes before scoring:</p></li>
+<li><p>Computes, per cell, the number of expressed genes and flags a cell as an empty droplet when (n_ &lt;) <code>RNA_feature_threshold</code> (by default 200, except for targeted panels such as Rhapsody technology).</p></li>
+<li>
+<p>Alive cells (<code>alive</code>):</p>
 <ul>
 <li>Filters out empty droplets.</li>
 <li>Computes per-cell QC metrics from raw counts using <code>scuttle::perCellQCMetrics(..., subsets=list(Mito=...))</code>, where the mitochondrial subset is defined by <code>^MT</code> in the feature names.</li>
@@ -105,7 +110,8 @@
 <li>Alive cells are labelled as those without high mitochondrial content (<code>!high_mitochondrion</code>).</li>
 </ul>
 </li>
-<li>Doublets (<code>scDblFinder.class</code>):
+<li>
+<p>Doublets (<code>scDblFinder.class</code>):</p>
 <ul>
 <li>Filters out empty droplets.</li>
 <li>
@@ -153,302 +159,166 @@
 <div class="section level2">
 <h2 id="metadata-explore">Metadata Explore<a class="anchor" aria-label="anchor" href="#metadata-explore"></a>
 </h2>
-<p>Detailed field definitions for the CELLxGENE schema follow the <a href="https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/5.1.0/schema.md" class="external-link">CELLxGENE schema 5.1.0</a>, and <a href="https://github.com/chanzuckerberg/cellxgene-census/blob/main/docs/cellxgene_census_schema.md#schema" class="external-link">CELLxGENE Census schema</a></p>
-<div class="section level3">
-<h3 id="dataset-level-columns">Dataset-level columns<a class="anchor" aria-label="anchor" href="#dataset-level-columns"></a>
-</h3>
-<table class="table">
-<thead><tr>
-<th>Column</th>
-<th>Description</th>
-</tr></thead>
-<tbody>
-<tr>
-<td><code>dataset_id</code></td>
-<td>Primary dataset identifier in the atlas.</td>
-</tr>
-<tr>
-<td><code>collection_id</code></td>
-<td>Parent collection grouping related datasets.</td>
-</tr>
-<tr>
-<td><code>citation</code></td>
-<td>Citation or reference for the dataset.</td>
-</tr>
-<tr>
-<td><code>dataset_version_id</code></td>
-<td>Versioned identifier for a dataset release.</td>
-</tr>
-<tr>
-<td><code>explorer_url</code></td>
-<td>URL to browse the dataset in CELLxGENE explorer.</td>
-</tr>
-<tr>
-<td><code>filesize</code></td>
-<td>Reported size of source data files.</td>
-</tr>
-<tr>
-<td><code>filetype</code></td>
-<td>Storage format of source expression files.</td>
-</tr>
-<tr>
-<td><code>published_at</code></td>
-<td>Publication timestamp for dataset release.</td>
-</tr>
-<tr>
-<td><code>raw_data_location</code></td>
-<td>Location of raw data upstream.</td>
-</tr>
-<tr>
-<td><code>revised_at</code></td>
-<td>Last revision timestamp for dataset metadata.</td>
-</tr>
-<tr>
-<td><code>schema_version</code></td>
-<td>CELLxGENE schema version for this record.</td>
-</tr>
-<tr>
-<td><code>suspension_type</code></td>
-<td>Suspension type (e.g. cell vs nucleus).</td>
-</tr>
-<tr>
-<td><code>title</code></td>
-<td>Dataset publication title.</td>
-</tr>
-<tr>
-<td><code>url</code></td>
-<td>Dataset H5AD URL.</td>
-</tr>
-<tr>
-<td><code>donor_id</code></td>
-<td>Donor identifier.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section level3">
-<h3 id="sample-level-columns">Sample-level columns<a class="anchor" aria-label="anchor" href="#sample-level-columns"></a>
-</h3>
-<table class="table">
-<colgroup>
-<col width="38%">
-<col width="61%">
-</colgroup>
-<thead><tr>
-<th>Column</th>
-<th>Description</th>
-</tr></thead>
-<tbody>
-<tr>
-<td><code>assay</code></td>
-<td>Sequencing technology label.</td>
-</tr>
-<tr>
-<td><code>assay_ontology_term_id</code></td>
-<td>Ontology identifier for <code>assay</code>.</td>
-</tr>
-<tr>
-<td><code>development_stage</code></td>
-<td>Developmental stage label.</td>
-</tr>
-<tr>
-<td><code>development_stage_ontology_term_id</code></td>
-<td>Ontology identifier for <code>development_stage</code>.</td>
-</tr>
-<tr>
-<td><code>self_reported_ethnicity</code></td>
-<td>Self-reported ancestry or ethnicity label.</td>
-</tr>
-<tr>
-<td><code>self_reported_ethnicity_ontology_term_id</code></td>
-<td>Ontology identifier for self-reported ethnicity.</td>
-</tr>
-<tr>
-<td><code>experiment___</code></td>
-<td>Upstream experiment grouping variable.</td>
-</tr>
-<tr>
-<td><code>organism</code></td>
-<td>Organism name (e.g. human).</td>
-</tr>
-<tr>
-<td><code>organism_ontology_term_id</code></td>
-<td>Ontology identifier for <code>organism</code>.</td>
-</tr>
-<tr>
-<td><code>sex</code></td>
-<td>Recorded biological sex label.</td>
-</tr>
-<tr>
-<td><code>sex_ontology_term_id</code></td>
-<td>Ontology identifier for <code>sex</code>.</td>
-</tr>
-<tr>
-<td><code>tissue</code></td>
-<td>Tissue label.</td>
-</tr>
-<tr>
-<td><code>tissue_type</code></td>
-<td>Tissue class (e.g. tissue vs organoid).</td>
-</tr>
-<tr>
-<td><code>tissue_ontology_term_id</code></td>
-<td>Ontology identifier for <code>tissue</code>.</td>
-</tr>
-<tr>
-<td><code>disease</code></td>
-<td>Disease annotation.</td>
-</tr>
-<tr>
-<td><code>disease_ontology_term_id</code></td>
-<td>Ontology identifier for <code>disease</code>.</td>
-</tr>
-<tr>
-<td><code>is_primary_data</code></td>
-<td>Whether observations are marked as primary (avoid duplicated cells).</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section level3">
-<h3 id="cell-level-columns">Cell-level columns<a class="anchor" aria-label="anchor" href="#cell-level-columns"></a>
-</h3>
-<table class="table">
-<thead><tr>
-<th>Column</th>
-<th>Description</th>
-</tr></thead>
-<tbody>
-<tr>
-<td><code>cell_id</code></td>
-<td>Cell identifier.</td>
-</tr>
-<tr>
-<td><code>cell_type</code></td>
-<td>Cell-type label from CELLxGENE Census API.</td>
-</tr>
-<tr>
-<td><code>cell_type_ontology_term_id</code></td>
-<td>Ontology identifier for <code>cell_type</code>.</td>
-</tr>
-<tr>
-<td><code>observation_joinid</code></td>
-<td>Cell ID join key linking metadata.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section level3">
-<h3 id="harmonised-and-custom-columns-cellnexus">Harmonised and custom columns (cellNexus)<a class="anchor" aria-label="anchor" href="#harmonised-and-custom-columns-cellnexus"></a>
-</h3>
 <p>Through harmonisation and curation, <code>cellNexus</code> adds columns that are not present in the original CELLxGENE metadata alone.</p>
 <table class="table">
 <colgroup>
 <col width="38%">
 <col width="61%">
 </colgroup>
-<thead><tr>
+<thead><tr class="header">
 <th>Column</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr>
-<td><code>cell_count</code></td>
-<td>Number of cells in a dataset.</td>
+<tr class="odd">
+<td><code>cell_id</code></td>
+<td>Cell identifier.</td>
 </tr>
-<tr>
-<td><code>feature_count</code></td>
-<td>Number of genes in a dataset.</td>
+<tr class="even">
+<td><code>observation_joinid</code></td>
+<td>Cell ID join key linking metadata.</td>
 </tr>
-<tr>
+<tr class="odd">
+<td><code>dataset_id</code></td>
+<td>Primary dataset identifier in the atlas.</td>
+</tr>
+<tr class="even">
+<td><code>sample_id</code></td>
+<td>Harmonised sample identifier.</td>
+</tr>
+<tr class="odd">
+<td><code>sample_</code></td>
+<td>Internal sample subdivision helper.</td>
+</tr>
+<tr class="even">
+<td><code>experiment___</code></td>
+<td>Upstream experiment grouping variable.</td>
+</tr>
+<tr class="odd">
+<td><code>sample_heuristic</code></td>
+<td>Internal sample subdivision helper.</td>
+</tr>
+<tr class="even">
 <td><code>age_days</code></td>
 <td>Donor age in days.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>tissue_groups</code></td>
 <td>Coarse tissue grouping for analysis.</td>
 </tr>
-<tr>
+<tr class="even">
+<td><code>nFeature_expressed_in_sample</code></td>
+<td>Number of expressed features per cell.</td>
+</tr>
+<tr class="odd">
+<td><code>nCount_RNA</code></td>
+<td>Total RNA counts per cell (sample-aware).</td>
+</tr>
+<tr class="even">
 <td><code>empty_droplet</code></td>
 <td>Quality-control flag for empty droplets.</td>
 </tr>
-<tr>
-<td><code>alive</code></td>
-<td>Quality-control flag for viable cells (e.g. mitochondrial signal).</td>
-</tr>
-<tr>
-<td><code>scDblFinder.class</code></td>
-<td>Quality-control flag for doublet classification from <code>scDblFinder</code>.</td>
-</tr>
-<tr>
+<tr class="odd">
 <td><code>cell_type_unified_ensemble</code></td>
 <td>Consensus immune identity from Azimuth and <code>SingleR</code> (Blueprint, Monaco).</td>
 </tr>
-<tr>
-<td><code>cell_annotation_azimuth_l2</code></td>
-<td>Azimuth cell annotation.</td>
+<tr class="even">
+<td><code>is_immune</code></td>
+<td>Curated flag for immune-cell context.</td>
 </tr>
-<tr>
+<tr class="odd">
+<td><code>subsets_Mito_percent</code></td>
+<td>Percent of each cell’s total counts coming from mitochondrial genes in a sample.</td>
+</tr>
+<tr class="even">
+<td><code>subsets_Ribo_percent</code></td>
+<td>Percent of each cell’s total counts coming from ribosomal genes in a sample.</td>
+</tr>
+<tr class="odd">
+<td><code>high_mitochondrion</code></td>
+<td>TRUE if the cell’s mitochondrial percent exceeds the QC cutoff.</td>
+</tr>
+<tr class="even">
+<td><code>high_ribosome</code></td>
+<td>TRUE if the cell’s ribosomal percent exceeds the QC cutoff.</td>
+</tr>
+<tr class="odd">
+<td><code>scDblFinder.class</code></td>
+<td>Quality-control flag for doublet classification from <code>scDblFinder</code>.</td>
+</tr>
+<tr class="even">
+<td><code>sample_chunk</code></td>
+<td>Internal sample subdivision chunks.</td>
+</tr>
+<tr class="odd">
+<td><code>cell_chunk</code></td>
+<td>Internal cell subdivision chunks.</td>
+</tr>
+<tr class="even">
+<td><code>sample_pseudobulk_chunk</code></td>
+<td>Internal pseudobulk subdivision chunks.</td>
+</tr>
+<tr class="odd">
+<td><code>file_id_cellNexus_single_cell</code></td>
+<td>Internal file id for single-cell layers.</td>
+</tr>
+<tr class="even">
+<td><code>file_id_cellNexus_pseudobulk</code></td>
+<td>Internal file id for pseudobulk layers.</td>
+</tr>
+<tr class="odd">
+<td><code>count_upper_bound</code></td>
+<td>Count capping threshold used in transformation.</td>
+</tr>
+<tr class="even">
+<td><code>nfeature_expressed_thresh</code></td>
+<td>Threshold of the number of expressed features per cell.</td>
+</tr>
+<tr class="odd">
+<td><code>inverse_transform</code></td>
+<td>Transformation method used in pre-processing pipeline.</td>
+</tr>
+<tr class="even">
+<td><code>alive</code></td>
+<td>Quality-control flag for viable cells (e.g. mitochondrial signal).</td>
+</tr>
+<tr class="odd">
 <td><code>cell_annotation_blueprint_singler</code></td>
 <td>
 <code>SingleR</code> annotation (Blueprint).</td>
 </tr>
-<tr>
-<td><code>cell_annotation_blueprint_monaco</code></td>
+<tr class="even">
+<td><code>cell_annotation_monaco_singler</code></td>
 <td>
 <code>SingleR</code> annotation (Monaco).</td>
 </tr>
-<tr>
-<td><code>sample_heuristic</code></td>
-<td>Internal sample subdivision helper.</td>
+<tr class="odd">
+<td><code>cell_annotation_azimuth_l2</code></td>
+<td>Azimuth cell annotation.</td>
 </tr>
-<tr>
-<td><code>file_id_cellNexus_single_cell</code></td>
-<td>Internal file id for single-cell layers.</td>
-</tr>
-<tr>
-<td><code>file_id_cellNexus_pseudobulk</code></td>
-<td>Internal file id for pseudobulk layers.</td>
-</tr>
-<tr>
-<td><code>sample_id</code></td>
-<td>Harmonised sample identifier.</td>
-</tr>
-<tr>
-<td><code>nCount_RNA</code></td>
-<td>Total RNA counts per cell (sample-aware).</td>
-</tr>
-<tr>
-<td><code>nFeature_expressed_in_sample</code></td>
-<td>Number of expressed features per cell.</td>
-</tr>
-<tr>
+<tr class="even">
 <td><code>ethnicity_flagging_score</code></td>
 <td>Supporting score for ethnicity imputation.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>low_confidence_ethnicity</code></td>
 <td>Supporting flag for low-confidence ethnicity calls.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>.aggregated_cells</code></td>
 <td>Post-QC cells combined into each pseudobulk sample.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>imputed_ethnicity</code></td>
 <td>Imputed ethnicity label.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>atlas_id</code></td>
 <td>cellNexus atlas release identifier (internal use).</td>
 </tr>
-<tr>
-<td><code>is_immune</code></td>
-<td>Curated flag for immune-cell context.</td>
-</tr>
 </tbody>
 </table>
-</div>
+<p>Field definitions for the CELLxGENE schema follow the <a href="https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/5.1.0/schema.md" class="external-link">CELLxGENE schema 5.1.0</a>, and <a href="https://github.com/chanzuckerberg/cellxgene-census/blob/main/docs/cellxgene_census_schema.md#schema" class="external-link">CELLxGENE Census schema</a></p>
 </div>
 <div class="section level2">
 <h2 id="client-usage-examples">Client Usage Examples<a class="anchor" aria-label="anchor" href="#client-usage-examples"></a>

@@ -77,14 +77,12 @@ doi:10.1101/2023.06.08.542671.
 
 ``` r
 get_atlas_versions()
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/atlas_versions.parquet to /tmp/RtmpQWE1lc/atlas_versions.parquet
-#> Registered S3 method overwritten by 'bit64':
-#>   method          from 
-#>   print.bitstring tools
-#> # A tibble: 3 × 5
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/atlas_versions.parquet to /tmp/Rtmp6m4tz9/atlas_versions.parquet
+#> # A tibble: 4 × 5
 #>   atlas_id             census_version change_type description        modified_at
 #>   <chr>                <chr>          <chr>       <chr>              <chr>      
 #> 1 cellxgene_2024/0.1.0 01-07-2024     initial     Initial release l… 2026-03-26 
 #> 2 hta_2025/0.1.0       21-10-2025     initial     Initial release i… 2026-03-26 
 #> 3 cellxgene_2024/0.2.0 01-07-2024     minor       Changed file id c… 2026-04-16 
+#> 4 cellxgene_2024/0.2.1 01-07-2024     bug         Fixed cell type m… 2026-04-21 
 ```

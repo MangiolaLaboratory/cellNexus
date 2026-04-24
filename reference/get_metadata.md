@@ -11,7 +11,7 @@ to obtain a
 
 ``` r
 get_metadata(
-  cloud_metadata = get_metadata_url("cellnexus_metadata.2.2.0.parquet"),
+  cloud_metadata = get_metadata_url("cellnexus_metadata.2.2.1.parquet"),
   local_metadata = NULL,
   cache_directory = get_default_cache_dir(),
   use_cache = TRUE
@@ -77,22 +77,6 @@ levels, in a unique coherent database table.
 
 Field definitions for the CELLxGENE schema follow the [CELLxGENE schema
 5.1.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/5.1.0/schema.md).
-
-Dataset-specific columns: `dataset_id`, `collection_id`, `citation`,
-`dataset_version_id`, `explorer_url`, `filesize`, `filetype`,
-`published_at`, `raw_data_location`, `revised_at`, `schema_version`,
-`suspension_type`, `title`, `url`, `donor_id`
-
-Sample-specific columns: `assay`, `assay_ontology_term_id`,
-`development_stage`, `development_stage_ontology_term_id`,
-`self_reported_ethnicity`, `self_reported_ethnicity_ontology_term_id`,
-`experiment___`, `organism`, `organism_ontology_term_id`, `sex`,
-`sex_ontology_term_id`, `tissue`, `tissue_type`,
-`tissue_ontology_term_id`, `disease`, `disease_ontology_term_id`,
-`is_primary_data`
-
-Cell-specific columns `cell_id`, `cell_type`,
-`cell_type_ontology_term_id`, `observation_joinid`
 
 Through harmonisation and curation we introduced custom columns not
 present in the original CELLxGENE metadata:

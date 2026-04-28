@@ -58,6 +58,7 @@ library(cellNexus)
 suppressPackageStartupMessages({
   library(ggplot2)
 })
+#> Warning: package 'ggplot2' was built under R version 4.7.0
 ```
 
 ### Load and explore the metadata
@@ -78,9 +79,9 @@ metadata
 ```
 
     #> ℹ Downloading 1 file, totalling 0 GB
-    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.1.parquet to /tmp/RtmpcMRXYW/cellnexus_sample_metadata.2.2.1.parquet
+    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.1.parquet to /tmp/RtmpajuatR/cellnexus_sample_metadata.2.2.1.parquet
     #> # Source:   SQL [?? x 76]
-    #> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
+    #> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1011-azure:R 4.6.0/:memory:]
     #>    cell_id observation_joinid dataset_id         sample_id sample_ experiment___
     #>      <dbl> <chr>              <chr>              <chr>     <chr>   <chr>        
     #>  1      14 qxl7HJjL$L         842c6f5d-4a94-4ee… 1119f482… 1119f4… ""           
@@ -113,7 +114,7 @@ unless a custom path is provided via the cache_directory argument. The
 metadata |>
   dplyr::distinct(tissue, cell_type_unified_ensemble)
 #> # Source:   SQL [?? x 2]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1011-azure:R 4.6.0/:memory:]
 #>    tissue  cell_type_unified_ensemble
 #>    <chr>   <chr>                     
 #>  1 breast  cd16 mono                 
@@ -311,7 +312,7 @@ get_cell_communication_strength()
 ```
 
     #> # Source:   SQL [?? x 16]
-    #> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.7.0/:memory:]
+    #> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1011-azure:R 4.6.0/:memory:]
     #>   source    target ligand receptor   lr_prob lr_pval interaction_name   
     #>   <chr>     <chr>  <chr>  <chr>        <dbl>   <dbl> <chr>              
     #> 1 b         b      TGFB1  TGFbR1_R2 0.000116    1    TGFB1_TGFBR1_TGFBR2
@@ -630,7 +631,7 @@ get_metadata(
   dplyr::select(cell_id, sample_id, dataset_id, cell_type_unified_ensemble, atlas_id, file_id_cellNexus_single_cell) |>
   get_single_cell_experiment(cache_directory = local_cache)
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.1.parquet to /tmp/RtmpcMRXYW/census_sample_metadata.2.2.1.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.1.parquet to /tmp/RtmpajuatR/census_sample_metadata.2.2.1.parquet
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.
@@ -686,7 +687,7 @@ documentation site: [cellNexus documentation](https://cellnexus.org/).
 ``` r
 
 sessionInfo()
-#> R Under development (unstable) (2026-04-19 r89916)
+#> R version 4.6.0 (2026-04-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -712,7 +713,7 @@ sessionInfo()
 #> [1] ggplot2_4.0.3     dplyr_1.2.1       cellNexus_0.99.21 BiocStyle_2.39.0 
 #> 
 #> loaded via a namespace (and not attached):
-#>   [1] RcppAnnoy_0.0.23            splines_4.7.0              
+#>   [1] RcppAnnoy_0.0.23            splines_4.6.0              
 #>   [3] later_1.4.8                 filelock_1.0.3             
 #>   [5] tibble_3.3.1                polyclip_1.10-7            
 #>   [7] fastDummies_1.7.6           lifecycle_1.0.5            
@@ -739,12 +740,12 @@ sessionInfo()
 #>  [49] codetools_0.2-20            DelayedArray_0.37.1        
 #>  [51] tidyselect_1.2.1            rclipboard_0.2.1           
 #>  [53] farver_2.1.2                shinyWidgets_0.9.1         
-#>  [55] matrixStats_1.5.0           stats4_4.7.0               
+#>  [55] matrixStats_1.5.0           stats4_4.6.0               
 #>  [57] spatstat.explore_3.8-0      Seqinfo_1.1.0              
 #>  [59] duckdb_1.5.2                jsonlite_2.0.0             
 #>  [61] progressr_0.19.0            ggridges_0.5.7             
 #>  [63] survival_3.8-6              systemfonts_1.3.2          
-#>  [65] tools_4.7.0                 ragg_1.5.2                 
+#>  [65] tools_4.6.0                 ragg_1.5.2                 
 #>  [67] ica_1.0-3                   Rcpp_1.1.1-1.1             
 #>  [69] glue_1.8.1                  gridExtra_2.3              
 #>  [71] SparseArray_1.11.13         xfun_0.57                  
@@ -772,15 +773,15 @@ sessionInfo()
 #> [115] curl_7.1.0                  anndataR_1.1.2             
 #> [117] cachem_1.1.0                zoo_1.8-15                 
 #> [119] rhdf5_2.55.16               stringr_1.6.0              
-#> [121] KernSmooth_2.23-26          parallel_4.7.0             
+#> [121] KernSmooth_2.23-26          parallel_4.6.0             
 #> [123] miniUI_0.1.2                arrow_23.0.1.2             
 #> [125] zellkonverter_1.21.2        desc_1.4.3                 
-#> [127] pillar_1.11.1               grid_4.7.0                 
+#> [127] pillar_1.11.1               grid_4.6.0                 
 #> [129] vctrs_0.7.3                 RANN_2.6.2                 
 #> [131] promises_1.5.0              dbplyr_2.5.2               
 #> [133] xtable_1.8-8                cluster_2.1.8.2            
 #> [135] evaluate_1.0.5              cli_3.6.6                  
-#> [137] compiler_4.7.0              rlang_1.2.0                
+#> [137] compiler_4.6.0              rlang_1.2.0                
 #> [139] future.apply_1.20.2         plyr_1.8.9                 
 #> [141] fs_2.1.0                    stringi_1.8.7              
 #> [143] viridisLite_0.4.3           deldir_2.0-4               

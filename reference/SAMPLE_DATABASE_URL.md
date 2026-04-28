@@ -34,9 +34,9 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL["cellnexus"], cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.1.parquet to /tmp/Rtmp45Yk18/cellnexus_sample_metadata.2.2.1.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.1.parquet to /tmp/Rtmpj4oLu5/cellnexus_sample_metadata.2.2.1.parquet
 #> # Source:   SQL [?? x 58]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1011-azure:R 4.6.0/:memory:]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0/:memory:]
 #>    cell_id observation_joinid dataset_id         sample_id sample_ experiment___
 #>      <dbl> <chr>              <chr>              <chr>     <chr>   <chr>        
 #>  1      14 qxl7HJjL$L         842c6f5d-4a94-4ee… 1119f482… 1119f4… ""           

@@ -74,7 +74,7 @@ metadata
 ```
 
     #> ℹ Downloading 1 file, totalling 0 GB
-    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.1.parquet to /tmp/RtmpqF1HXy/cellnexus_sample_metadata.2.2.1.parquet
+    #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.2.1.parquet to /tmp/RtmpmIteT7/cellnexus_sample_metadata.2.2.1.parquet
     #> # Source:   SQL [?? x 76]
     #> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0/:memory:]
     #>    cell_id observation_joinid dataset_id         sample_id sample_ experiment___
@@ -616,7 +616,7 @@ get_metadata(
   dplyr::select(cell_id, sample_id, dataset_id, cell_type_unified_ensemble, atlas_id, file_id_cellNexus_single_cell) |>
   get_single_cell_experiment(cache_directory = local_cache)
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.1.parquet to /tmp/RtmpqF1HXy/census_sample_metadata.2.2.1.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/census_sample_metadata.2.2.1.parquet to /tmp/RtmpmIteT7/census_sample_metadata.2.2.1.parquet
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.

@@ -131,7 +131,7 @@
 </li>
 <li>CPM:
 <ul>
-<li>Counts-per-million normalisation computed from the raw counts assay via <code><a href="https://rdrr.io/pkg/scuttle/man/calculateCPM.html" class="external-link">scuttle::calculateCPM()</a></code>.</li>
+<li>Counts-per-million normalisation computed from the raw counts assay via <code>scuttle::calculateCPM()</code>.</li>
 </ul>
 </li>
 <li>Rank:
@@ -150,7 +150,7 @@
 <li>Pseudobulk:
 <ul>
 <li>All low-quality cells flagged by QC are removed before aggregation.</li>
-<li>Aggregates counts across cells using <code><a href="https://rdrr.io/pkg/scuttle/man/aggregateAcrossCells.html" class="external-link">scuttle::aggregateAcrossCells()</a></code>, aggregating <code>sample_id</code> and the harmonised cell type (<code>cell_type_harmonised_ensemble</code>).</li>
+<li>Aggregates counts across cells using <code>scuttle::aggregateAcrossCells()</code>, aggregating <code>sample_id</code> and the harmonised cell type (<code>cell_type_harmonised_ensemble</code>).</li>
 </ul>
 </li>
 </ul>
@@ -165,154 +165,154 @@
 <col width="38%">
 <col width="61%">
 </colgroup>
-<thead><tr>
+<thead><tr class="header">
 <th>Column</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>cell_id</code></td>
 <td>Cell identifier.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>observation_joinid</code></td>
 <td>Cell ID join key linking metadata.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>dataset_id</code></td>
 <td>Primary dataset identifier in the atlas.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>sample_id</code></td>
 <td>Harmonised sample identifier.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>sample_</code></td>
 <td>Internal sample subdivision helper.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>experiment___</code></td>
 <td>Upstream experiment grouping variable.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>sample_heuristic</code></td>
 <td>Internal sample subdivision helper.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>age_days</code></td>
 <td>Donor age in days.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>tissue_groups</code></td>
 <td>Coarse tissue grouping for analysis.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>nFeature_expressed_in_sample</code></td>
 <td>Number of expressed features per cell.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>nCount_RNA</code></td>
 <td>Total RNA counts per cell (sample-aware).</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>empty_droplet</code></td>
 <td>Quality-control flag for empty droplets.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>cell_type_unified_ensemble</code></td>
 <td>Consensus immune identity from Azimuth and <code>SingleR</code> (Blueprint, Monaco).</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>is_immune</code></td>
 <td>Curated flag for immune-cell context.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>subsets_Mito_percent</code></td>
 <td>Percent of each cell’s total counts coming from mitochondrial genes in a sample.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>subsets_Ribo_percent</code></td>
 <td>Percent of each cell’s total counts coming from ribosomal genes in a sample.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>high_mitochondrion</code></td>
 <td>TRUE if the cell’s mitochondrial percent exceeds the QC cutoff.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>high_ribosome</code></td>
 <td>TRUE if the cell’s ribosomal percent exceeds the QC cutoff.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>scDblFinder.class</code></td>
 <td>Quality-control flag for doublet classification from <code>scDblFinder</code>.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>sample_chunk</code></td>
 <td>Internal sample subdivision chunks.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>cell_chunk</code></td>
 <td>Internal cell subdivision chunks.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>sample_pseudobulk_chunk</code></td>
 <td>Internal pseudobulk subdivision chunks.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>file_id_cellNexus_single_cell</code></td>
 <td>Internal file id for single-cell layers.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>file_id_cellNexus_pseudobulk</code></td>
 <td>Internal file id for pseudobulk layers.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>count_upper_bound</code></td>
 <td>Count capping threshold used in transformation.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>nfeature_expressed_thresh</code></td>
 <td>Threshold of the number of expressed features per cell.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>inverse_transform</code></td>
 <td>Transformation method used in pre-processing pipeline.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>alive</code></td>
 <td>Quality-control flag for viable cells (e.g. mitochondrial signal).</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>cell_annotation_blueprint_singler</code></td>
 <td>
 <code>SingleR</code> annotation (Blueprint).</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>cell_annotation_monaco_singler</code></td>
 <td>
 <code>SingleR</code> annotation (Monaco).</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>cell_annotation_azimuth_l2</code></td>
 <td>Azimuth cell annotation.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>ethnicity_flagging_score</code></td>
 <td>Supporting score for ethnicity imputation.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>low_confidence_ethnicity</code></td>
 <td>Supporting flag for low-confidence ethnicity calls.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>.aggregated_cells</code></td>
 <td>Post-QC cells combined into each pseudobulk sample.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>imputed_ethnicity</code></td>
 <td>Imputed ethnicity label.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>atlas_id</code></td>
 <td>cellNexus atlas release identifier (internal use).</td>
 </tr>

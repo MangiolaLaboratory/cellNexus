@@ -12,10 +12,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
-
 <!-- badges: start -->
+
 [![Lifecycle:maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
+
 <!-- badges: end -->
 
 # Introduction
@@ -28,33 +28,79 @@ Data are hosted on the ARDC Nectar Research Cloud, and most functions access the
 
 While both cellNexus and CuratedAtlasQueryR rely on precomputed expression layers, cellNexus adopts a more standardised and transparent processing workflow. This includes explicit removal of empty droplets and dead cells, followed by harmonised quality control, normalisation, and multi-layer data generation, ensuring alignment with evolving CELLxGENE releases.
 
+::: figure
+<img src="../man/figures/logo.png" alt="plot of chunk fig-logo" width="120x" height="139px"/>
 
-<div class="figure">
-<img src="man/figures/logo.png" alt="plot of chunk fig-logo" width="120x" height="139px" />
-<p class="caption">plot of chunk fig-logo</p>
-</div>
+<p class="caption">
 
-<div class="figure">
-<img src="man/figures/svcf_logo.jpeg" alt="plot of chunk fig-funders" width="155x" height="58px" />
-<p class="caption">plot of chunk fig-funders</p>
-</div><div class="figure">
-<img src="man/figures/czi_logo.png" alt="plot of chunk fig-funders" width="129px" height="58px" />
-<p class="caption">plot of chunk fig-funders</p>
-</div><div class="figure">
-<img src="man/figures/bioconductor_logo.jpg" alt="plot of chunk fig-funders" width="202px" height="58px" />
-<p class="caption">plot of chunk fig-funders</p>
-</div><div class="figure">
-<img src="man/figures/vca_logo.png" alt="plot of chunk fig-funders" width="219px" height="58px" />
-<p class="caption">plot of chunk fig-funders</p>
-</div><div class="figure">
-<img src="man/figures/nectar_logo.png" alt="plot of chunk fig-funders" width="180px" height="58px" />
-<p class="caption">plot of chunk fig-funders</p>
-</div>
+plot of chunk fig-logo
+
+</p>
+:::
+
+::: figure
+<img src="../man/figures/svcf_logo.jpeg" alt="plot of chunk fig-funders" width="155x" height="58px"/>
+
+<p class="caption">
+
+plot of chunk fig-funders
+
+</p>
+:::
+
+::: figure
+<img src="../man/figures/czi_logo.png" alt="plot of chunk fig-funders" width="129px" height="58px"/>
+
+<p class="caption">
+
+plot of chunk fig-funders
+
+</p>
+:::
+
+::: figure
+<img src="../man/figures/bioconductor_logo.jpg" alt="plot of chunk fig-funders" width="202px" height="58px"/>
+
+<p class="caption">
+
+plot of chunk fig-funders
+
+</p>
+:::
+
+::: figure
+<img src="../man/figures/vca_logo.png" alt="plot of chunk fig-funders" width="219px" height="58px"/>
+
+<p class="caption">
+
+plot of chunk fig-funders
+
+</p>
+:::
+
+::: figure
+<img src="../man/figures/nectar_logo.png" alt="plot of chunk fig-funders" width="180px" height="58px"/>
+
+<p class="caption">
+
+plot of chunk fig-funders
+
+</p>
+:::
+
+::: figure
+<img src="../man/figures/CSL_Limited_logo.svg.png" alt="plot of chunk fig-funders" width="120px" height="50px"/>
+
+<p class="caption">
+
+plot of chunk fig-funders
+
+</p>
+:::
 
 # Query interface
 
 ## Installation
-
 
 ``` r
 devtools::install_github("MangiolaLaboratory/cellNexus")
@@ -62,13 +108,11 @@ devtools::install_github("MangiolaLaboratory/cellNexus")
 
 ## Load the package
 
-
 ``` r
 library(cellNexus)
 ```
 
 ## Load additional packages
-
 
 ``` r
 suppressPackageStartupMessages({
@@ -79,8 +123,8 @@ suppressPackageStartupMessages({
 ## Load and explore the metadata
 
 ### Load the metadata
-By default, `get_metadata()` loads harmonised annotations. Users can retrieve original Census annotations by the function `join_census_table()`. 
 
+By default, `get_metadata()` loads harmonised annotations. Users can retrieve original Census annotations by the function `join_census_table()`.
 
 ``` r
 metadata <- get_metadata() |>
@@ -113,10 +157,9 @@ metadata
 #> #   cell_annotation_azimuth_l2 <chr>, ethnicity_flagging_score <dbl>, low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, …
 ```
 
-Metadata is saved to `get_default_cache_dir()` unless a custom path is provided via the cache_directory argument. The `metadata` variable can then be re-used for all subsequent queries. 
+Metadata is saved to `get_default_cache_dir()` unless a custom path is provided via the cache_directory argument. The `metadata` variable can then be re-used for all subsequent queries.
 
-### Explore the tissue 
-
+### Explore the tissue
 
 ``` r
 metadata |>
@@ -139,8 +182,8 @@ metadata |>
 ```
 
 ## Quality control
-cellNexus metadata applies standardised quality control to filter out empty droplets, dead or damaged cells, doublets, and samples with low gene counts.
 
+cellNexus metadata applies standardised quality control to filter out empty droplets, dead or damaged cells, doublets, and samples with low gene counts.
 
 ``` r
 metadata <- metadata |>
@@ -150,11 +193,9 @@ metadata <- metadata |>
   dplyr::filter(feature_count >= 5000)
 ```
 
-
-## Download single-cell RNA sequencing counts 
+## Download single-cell RNA sequencing counts
 
 ### Query raw counts
-
 
 ``` r
 single_cell_counts <-
@@ -171,7 +212,25 @@ single_cell_counts <-
 #> ℹ Downloading 10 files, totalling 0.03 GB
 #> ℹ Downloading 10 files in parallel...
 #> ℹ Reading files.
-#> Reading counts ■■■■■■■                           20% | ETA:  6sReading counts ■■■■■■■■■■                        30% | ETA:  5sReading counts ■■■■■■■■■■■■■                     40% | ETA:  4sReading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  3sReading counts ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2sReading counts ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2sReading counts ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1sReading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s                                                                ℹ Compiling Experiment.
+#> 
+Reading counts ■■■■■■■                           20% | ETA:  6s
+
+Reading counts ■■■■■■■■■■                        30% | ETA:  5s
+
+Reading counts ■■■■■■■■■■■■■                     40% | ETA:  4s
+
+Reading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+
+                                                                
+ℹ Compiling Experiment.
 
 single_cell_counts
 #> class: SingleCellExperiment 
@@ -185,7 +244,6 @@ single_cell_counts
 ```
 
 ### Query counts scaled per million
-
 
 ``` r
 single_cell_cpm <-
@@ -202,7 +260,23 @@ single_cell_cpm <-
 #> ℹ Downloading 10 files, totalling 0.03 GB
 #> ℹ Downloading 10 files in parallel...
 #> ℹ Reading files.
-#> Reading cpm ■■■■■■■■■■                        30% | ETA:  4sReading cpm ■■■■■■■■■■■■■                     40% | ETA:  3sReading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  3sReading cpm ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2sReading cpm ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2sReading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1sReading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s                                                             ℹ Compiling Experiment.
+#> 
+Reading cpm ■■■■■■■■■■                        30% | ETA:  4s
+
+Reading cpm ■■■■■■■■■■■■■                     40% | ETA:  3s
+
+Reading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+
+Reading cpm ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2s
+
+Reading cpm ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+
+Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+
+Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+
+                                                             
+ℹ Compiling Experiment.
 
 single_cell_cpm
 #> class: SingleCellExperiment 
@@ -232,7 +306,25 @@ single_cell_sct <-
 #> ℹ Downloading 10 files, totalling 0.09 GB
 #> ℹ Downloading 10 files in parallel...
 #> ℹ Reading files.
-#> Reading sct ■■■■■■■                           20% | ETA:  4sReading sct ■■■■■■■■■■                        30% | ETA:  3sReading sct ■■■■■■■■■■■■■                     40% | ETA:  3sReading sct ■■■■■■■■■■■■■■■■                  50% | ETA:  3sReading sct ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2sReading sct ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2sReading sct ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1sReading sct ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  0s                                                             ℹ Compiling Experiment.
+#> 
+Reading sct ■■■■■■■                           20% | ETA:  4s
+
+Reading sct ■■■■■■■■■■                        30% | ETA:  3s
+
+Reading sct ■■■■■■■■■■■■■                     40% | ETA:  3s
+
+Reading sct ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+
+Reading sct ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2s
+
+Reading sct ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+
+Reading sct ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+
+Reading sct ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  0s
+
+                                                             
+ℹ Compiling Experiment.
 
 single_cell_sct
 #> class: SingleCellExperiment 
@@ -246,7 +338,6 @@ single_cell_sct
 ```
 
 ### Query pseudobulk
-
 
 ``` r
 pseudobulk_counts <-
@@ -262,7 +353,21 @@ pseudobulk_counts <-
 #> ℹ Downloading 7 files, totalling 1.22 GB
 #> ℹ Downloading 7 files in parallel...
 #> ℹ Reading files.
-#> Reading counts ■■■■■                             14% | ETA:  8sReading counts ■■■■■■■■■■                        29% | ETA:  7sReading counts ■■■■■■■■■■■■■■                    43% | ETA:  6sReading counts ■■■■■■■■■■■■■■■■■■                57% | ETA:  4sReading counts ■■■■■■■■■■■■■■■■■■■■■■            71% | ETA:  3sReading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■       86% | ETA:  1s                                                                ! cellNexus says: Not all genes completely overlap across the provided objects. Counts are generated by genes intersection.
+#> 
+Reading counts ■■■■■                             14% | ETA:  8s
+
+Reading counts ■■■■■■■■■■                        29% | ETA:  7s
+
+Reading counts ■■■■■■■■■■■■■■                    43% | ETA:  6s
+
+Reading counts ■■■■■■■■■■■■■■■■■■                57% | ETA:  4s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■■■■            71% | ETA:  3s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■       86% | ETA:  1s
+
+                                                                
+! cellNexus says: Not all genes completely overlap across the provided objects. Counts are generated by genes intersection.
 #> ℹ Compiling Experiment.
 
 pseudobulk_counts
@@ -279,13 +384,13 @@ pseudobulk_counts
 
 ## Download cell communication metadata
 
-Cell communication metadata was generated based on post-QC cells per sample using `CellChat v2` method. It uses our harmonised cell type annotation (cell_type_unified_ensemble) to infer the communication. It captures inferred communication at both the ligand–receptor pair level and the signalling pathway level.  
+Cell communication metadata was generated based on post-QC cells per sample using `CellChat v2` method. It uses our harmonised cell type annotation (cell_type_unified_ensemble) to infer the communication. It captures inferred communication at both the ligand–receptor pair level and the signalling pathway level.
 
-- interaction_count: The number of inferred interactions between each pair of cell groups.  
+-   interaction_count: The number of inferred interactions between each pair of cell groups.
 
-- interaction_weight: The aggregated communication strength between each pair of cell groups.  
+-   interaction_weight: The aggregated communication strength between each pair of cell groups.
 
-For definitions of additional annotations, please refer to the CellChat v2 documentation: https://github.com/jinworks/CellChat.
+For definitions of additional annotations, please refer to the CellChat v2 documentation: <https://github.com/jinworks/CellChat>.
 
 For demonstration purpose, read cell communication metadata from a demo file here. Users do not need to specify cloud_metadata argument in this case.
 
@@ -310,7 +415,6 @@ get_cell_communication_strength(cloud_metadata = get_metadata_url("cellNexus_lr_
 
 This is helpful if just few genes are of interest (e.g ENSG00000134644 (PUM1)), as they can be compared across samples. cellNexus uses ENSEMBL gene ID(s).
 
-
 ``` r
 single_cell_cpm <-
   metadata |>
@@ -324,7 +428,27 @@ single_cell_cpm <-
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.
-#> Reading cpm ■■■■                              10% | ETA:  9sReading cpm ■■■■■■■                           20% | ETA:  6sReading cpm ■■■■■■■■■■                        30% | ETA:  5sReading cpm ■■■■■■■■■■■■■                     40% | ETA:  4sReading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  3sReading cpm ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2sReading cpm ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2sReading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1sReading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s                                                             ℹ Compiling Experiment.
+#> 
+Reading cpm ■■■■                              10% | ETA:  9s
+
+Reading cpm ■■■■■■■                           20% | ETA:  6s
+
+Reading cpm ■■■■■■■■■■                        30% | ETA:  5s
+
+Reading cpm ■■■■■■■■■■■■■                     40% | ETA:  4s
+
+Reading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+
+Reading cpm ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2s
+
+Reading cpm ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+
+Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+
+Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+
+                                                             
+ℹ Compiling Experiment.
 
 single_cell_cpm
 #> class: SingleCellExperiment 
@@ -341,7 +465,6 @@ single_cell_cpm
 
 This convert the H5 SingleCellExperiment to Seurat so it might take long time and occupy a lot of memory depending on how many cells you are requesting.
 
-
 ``` r
 seurat_counts <-
   metadata |>
@@ -355,7 +478,25 @@ seurat_counts <-
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.
-#> Reading counts ■■■■■■■                           20% | ETA:  6sReading counts ■■■■■■■■■■                        30% | ETA:  5sReading counts ■■■■■■■■■■■■■                     40% | ETA:  4sReading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  3sReading counts ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2sReading counts ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2sReading counts ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1sReading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s                                                                ℹ Compiling Experiment.
+#> 
+Reading counts ■■■■■■■                           20% | ETA:  6s
+
+Reading counts ■■■■■■■■■■                        30% | ETA:  5s
+
+Reading counts ■■■■■■■■■■■■■                     40% | ETA:  4s
+
+Reading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■               60% | ETA:  2s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+
+Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+
+                                                                
+ℹ Compiling Experiment.
 
 seurat_counts
 #> An object of class Seurat 
@@ -364,8 +505,7 @@ seurat_counts
 #>  2 layers present: counts, data
 ```
 
-By default, data is downloaded to `get_default_cache_dir()` output. If memory is a concern, users can specify a custom path to metadata and counts `cache_directory` argument. 
-For example, `get_metadata(cache_directory = "your_own_path")` and `get_single_cell_experiment(cache_directory = "your_own_path")`.
+By default, data is downloaded to `get_default_cache_dir()` output. If memory is a concern, users can specify a custom path to metadata and counts `cache_directory` argument. For example, `get_metadata(cache_directory = "your_own_path")` and `get_single_cell_experiment(cache_directory = "your_own_path")`.
 
 Same strategy can be applied for functions `get_pseuodbulk()` and `get_seurat()`.
 
@@ -377,10 +517,7 @@ The returned `SingleCellExperiment` can be saved with three modalities, as `.rds
 
 Saving as `.rds` has the advantage of being fast, and the `.rds` file occupies very little disk space as it only stores the links to the files in your cache.
 
-However it has the disadvantage that for big `SingleCellExperiment` objects, which merge a lot of HDF5 from your `get_single_cell_experiment`, the display and manipulation is going to be slow.
-In addition, an `.rds` saved in this way is not portable: you will not be able
-to share it with other users.
-
+However it has the disadvantage that for big `SingleCellExperiment` objects, which merge a lot of HDF5 from your `get_single_cell_experiment`, the display and manipulation is going to be slow. In addition, an `.rds` saved in this way is not portable: you will not be able to share it with other users.
 
 ``` r
 single_cell_counts |>
@@ -389,12 +526,9 @@ single_cell_counts |>
 
 ### Saving as HDF5 (slow saving, fast reading)
 
-Saving as `.hdf5` executes any computation on the `SingleCellExperiment` and writes it to disk as a monolithic `HDF5`.
-Once this is done, operations on the `SingleCellExperiment` will be comparatively very fast.
-The resulting `.hdf5` file will also be totally portable and sharable.
+Saving as `.hdf5` executes any computation on the `SingleCellExperiment` and writes it to disk as a monolithic `HDF5`. Once this is done, operations on the `SingleCellExperiment` will be comparatively very fast. The resulting `.hdf5` file will also be totally portable and sharable.
 
 However this `.hdf5` has the disadvantage of being larger than the corresponding `.rds` as it includes a copy of the count information, and the saving process is going to be slow for large objects.
-
 
 ``` r
 # ! IMPORTANT if you save 200K+ cells
@@ -411,11 +545,9 @@ single_cell_counts |>
 
 ### Saving as H5AD (slow saving, fast reading)
 
-Saving as `.h5ad` executes any computation on the `SingleCellExperiment` and writes it to disk as a monolithic `H5AD`.
-The `H5AD` format is the HDF5 disk representation of the AnnData object and is well-supported in Python.
+Saving as `.h5ad` executes any computation on the `SingleCellExperiment` and writes it to disk as a monolithic `H5AD`. The `H5AD` format is the HDF5 disk representation of the AnnData object and is well-supported in Python.
 
-However this `.h5ad` saving strategy has a bottleneck of handling columns with only NA values of a `SingleCellExperiment` metadata. 
-
+However this `.h5ad` saving strategy has a bottleneck of handling columns with only NA values of a `SingleCellExperiment` metadata.
 
 ``` r
 single_cell_counts |>
@@ -428,7 +560,6 @@ single_cell_counts |>
 ## Visualise gene transcription
 
 We can gather all CD14 monocytes cells and plot the distribution of ENSG00000085265 (FCN1) across all tissues
-
 
 ``` r
 # Plots with styling
@@ -469,8 +600,7 @@ counts |>
 #> Warning in scale_y_log10(): log-10 transformation introduced infinite values.
 ```
 
-![plot of chunk plot-fcn1-disease](/home/users/allstaff/shen.m/git_control/cellNexus/vignettes/plot-fcn1-disease-1.png)
-
+![plot of chunk plot-fcn1-disease](plot-fcn1-disease-1.png)
 
 ``` r
 # Plot by tissue
@@ -500,15 +630,13 @@ counts |>
 #> Warning in scale_y_log10(): log-10 transformation introduced infinite values.
 ```
 
-![plot of chunk plot-fcn1-tissue](/home/users/allstaff/shen.m/git_control/cellNexus/vignettes/plot-fcn1-tissue-1.png)
-
+![plot of chunk plot-fcn1-tissue](plot-fcn1-tissue-1.png)
 
 ## Integrate cloud and local metadata
-`cellNexus` not only enables users to query our metadata but also allows integration with your local metadata. Additionally, users can integrate with your metadata stored in the cloud. 
 
-To enable this feature, users must include `file_id_cellNexus_single_cell`
-and `atlas_id` (e.g cellxgene/dd-mm-yy) columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
+`cellNexus` not only enables users to query our metadata but also allows integration with your local metadata. Additionally, users can integrate with your metadata stored in the cloud.
 
+To enable this feature, users must include `file_id_cellNexus_single_cell` and `atlas_id` (e.g cellxgene/dd-mm-yy) columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
 
 ``` r
 # Set up local cache and paths
@@ -548,7 +676,6 @@ pbmc3k_sce |>
 pbmc3k_sce |>
   anndataR::write_h5ad(sce_path, compression = "gzip", mode = "w")
 ```
-
 
 ``` r
 # A cellNexus file

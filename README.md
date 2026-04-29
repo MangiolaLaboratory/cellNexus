@@ -3,107 +3,88 @@ cellNexus
 <!-- badges: start -->
 
 [![Lifecycle:maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
+
 <!-- badges: end -->
 
 # Introduction
 
-`cellNexus` extends the functionality of `CuratedAtlasQueryR` by
-providing a unified interface for querying and accessing the harmonised,
-curated, and reannotated the CELLxGENE human cell atlas. It enables
-reproducible, programmatic exploration of large-scale single-cell
-datasets, supporting data retrieval at the cell, sample, and dataset levels
-levels with flexible filtering based on tissue, cell type, and experimental
-condition, and other metadata. Retrieved data are returned in formats
-ready for downstream analysis.
+`cellNexus` extends the functionality of `CuratedAtlasQueryR` by providing a unified interface for querying and accessing the harmonised, curated, and reannotated the CELLxGENE human cell atlas. It enables reproducible, programmatic exploration of large-scale single-cell datasets, supporting data retrieval at the cell, sample, and dataset levels levels with flexible filtering based on tissue, cell type, and experimental condition, and other metadata. Retrieved data are returned in formats ready for downstream analysis.
 
-The package integrates over 44 million human cells processed through a
-standardised pipeline, including consistent quality control,
-normalisation, and unified abundance representations (e.g., single-cell,
-counts-per-million, normalised expression, and pseudobulk). This
-harmonisation facilitates efficient cross-dataset comparison and
-integration.
+The package integrates over 44 million human cells processed through a standardised pipeline, including consistent quality control, normalisation, and unified abundance representations (e.g., single-cell, counts-per-million, normalised expression, and pseudobulk). This harmonisation facilitates efficient cross-dataset comparison and integration.
 
-Data are hosted on the ARDC Nectar Research Cloud, and most functions
-access them via web requests; therefore, an active network connection is required
-required for typical use.
+Data are hosted on the ARDC Nectar Research Cloud, and most functions access them via web requests; therefore, an active network connection is required required for typical use.
 
-While both cellNexus and CuratedAtlasQueryR rely on precomputed
-expression layers, cellNexus adopts a more standardised and transparent
-processing workflow. This includes explicit removal of empty droplets
-and dead cells, followed by harmonised quality control, normalisation,
-and multi-layer data generation, ensuring alignment with evolving
-CELLxGENE releases.
+While both cellNexus and CuratedAtlasQueryR rely on precomputed expression layers, cellNexus adopts a more standardised and transparent processing workflow. This includes explicit removal of empty droplets and dead cells, followed by harmonised quality control, normalisation, and multi-layer data generation, ensuring alignment with evolving CELLxGENE releases.
 
-<div class="figure">
+::: figure
+<img src="man/figures/logo.png" alt="plot of chunk fig-logo" width="120x" height="139px"/>
 
-<img src="man/figures/logo.png" alt="plot of chunk fig-logo" width="120x" height="139px" />
 <p class="caption">
 
 plot of chunk fig-logo
+
 </p>
+:::
 
-</div>
+::: figure
+<img src="man/figures/svcf_logo.jpeg" alt="plot of chunk fig-funders" width="155x" height="58px"/>
 
-<div class="figure">
-
-<img src="man/figures/svcf_logo.jpeg" alt="plot of chunk fig-funders" width="155x" height="58px" />
 <p class="caption">
 
 plot of chunk fig-funders
+
 </p>
+:::
 
-</div>
+::: figure
+<img src="man/figures/czi_logo.png" alt="plot of chunk fig-funders" width="129px" height="58px"/>
 
-<div class="figure">
-
-<img src="man/figures/czi_logo.png" alt="plot of chunk fig-funders" width="129px" height="58px" />
 <p class="caption">
 
 plot of chunk fig-funders
+
 </p>
+:::
 
-</div>
+::: figure
+<img src="man/figures/bioconductor_logo.jpg" alt="plot of chunk fig-funders" width="202px" height="58px"/>
 
-<div class="figure">
-
-<img src="man/figures/bioconductor_logo.jpg" alt="plot of chunk fig-funders" width="202px" height="58px" />
 <p class="caption">
 
 plot of chunk fig-funders
+
 </p>
+:::
 
-</div>
+::: figure
+<img src="man/figures/vca_logo.png" alt="plot of chunk fig-funders" width="219px" height="58px"/>
 
-<div class="figure">
-
-<img src="man/figures/vca_logo.png" alt="plot of chunk fig-funders" width="219px" height="58px" />
 <p class="caption">
 
 plot of chunk fig-funders
+
 </p>
+:::
 
-</div>
+::: figure
+<img src="man/figures/nectar_logo.png" alt="plot of chunk fig-funders" width="180px" height="58px"/>
 
-<div class="figure">
-
-<img src="man/figures/nectar_logo.png" alt="plot of chunk fig-funders" width="180px" height="58px" />
 <p class="caption">
 
 plot of chunk fig-funders
+
 </p>
+:::
 
-</div>
+::: figure
+<img src="man/figures/CSL_Limited_logo.svg.png" alt="plot of chunk fig-funders" width="120px" height="50px"/>
 
-<div class="figure">
-
-<img src="man/figures/CSL_Limited_logo.svg.png" alt="plot of chunk fig-funders" width="120px" height="50px" />
 <p class="caption">
 
 plot of chunk fig-funders
+
 </p>
-
-</div>
-
+:::
 
 # Query interface
 
@@ -131,9 +112,7 @@ suppressPackageStartupMessages({
 
 ### Load the metadata
 
-By default, `get_metadata()` loads harmonised annotations. Users can
-retrieve original Census annotations by the function
-`join_census_table()`.
+By default, `get_metadata()` loads harmonised annotations. Users can retrieve original Census annotations by the function `join_census_table()`.
 
 ``` r
 metadata <- get_metadata() |>
@@ -166,9 +145,7 @@ metadata
 #> #   cell_annotation_azimuth_l2 <chr>, ethnicity_flagging_score <dbl>, low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, …
 ```
 
-Metadata is saved to `get_default_cache_dir()` unless a custom path is
-provided via the cache_directory argument. The `metadata` variable can
-then be re-used for all subsequent queries.
+Metadata is saved to `get_default_cache_dir()` unless a custom path is provided via the cache_directory argument. The `metadata` variable can then be re-used for all subsequent queries.
 
 ### Explore the tissue
 
@@ -194,9 +171,7 @@ metadata |>
 
 ## Quality control
 
-cellNexus metadata applies standardised quality control to filter out
-empty droplets, dead or damaged cells, doublets, and samples with low
-gene counts.
+cellNexus metadata applies standardised quality control to filter out empty droplets, dead or damaged cells, doublets, and samples with low gene counts.
 
 ``` r
 metadata <- metadata |>
@@ -397,24 +372,15 @@ pseudobulk_counts
 
 ## Download cell communication metadata
 
-Cell communication metadata was generated based on post-QC cells per
-sample using `CellChat v2` method. It uses our harmonised cell type
-annotation (cell_type_unified_ensemble) to infer the communication. It
-captures inferred communication at both the ligand–receptor pair level
-and the signalling pathway level.
+Cell communication metadata was generated based on post-QC cells per sample using `CellChat v2` method. It uses our harmonised cell type annotation (cell_type_unified_ensemble) to infer the communication. It captures inferred communication at both the ligand–receptor pair level and the signalling pathway level.
 
-- interaction_count: The number of inferred interactions between each
-  pair of cell groups.
+-   interaction_count: The number of inferred interactions between each pair of cell groups.
 
-- interaction_weight: The aggregated communication strength between each
-  pair of cell groups.
+-   interaction_weight: The aggregated communication strength between each pair of cell groups.
 
-For definitions of additional annotations, please refer to the CellChat
-v2 documentation: <https://github.com/jinworks/CellChat>.
+For definitions of additional annotations, please refer to the CellChat v2 documentation: <https://github.com/jinworks/CellChat>.
 
-For demonstration purpose, read cell communication metadata from a demo
-file here. Users do not need to specify cloud_metadata argument in this
-case.
+For demonstration purpose, read cell communication metadata from a demo file here. Users do not need to specify cloud_metadata argument in this case.
 
 ``` r
 get_cell_communication_strength(cloud_metadata = get_metadata_url("cellNexus_lr_signaling_pathway_strength_DEMO.parquet"))
@@ -435,9 +401,7 @@ get_cell_communication_strength(cloud_metadata = get_metadata_url("cellNexus_lr_
 
 ### Extract only a subset of genes
 
-This is helpful if just few genes are of interest (e.g ENSG00000134644
-(PUM1)), as they can be compared across samples. cellNexus uses ENSEMBL
-gene ID(s).
+This is helpful if just few genes are of interest (e.g ENSG00000134644 (PUM1)), as they can be compared across samples. cellNexus uses ENSEMBL gene ID(s).
 
 ``` r
 single_cell_cpm <-
@@ -487,9 +451,7 @@ single_cell_cpm
 
 ### Extract the counts as a Seurat object
 
-This convert the H5 SingleCellExperiment to Seurat so it might take long
-time and occupy a lot of memory depending on how many cells you are
-requesting.
+This convert the H5 SingleCellExperiment to Seurat so it might take long time and occupy a lot of memory depending on how many cells you are requesting.
 
 ``` r
 seurat_counts <-
@@ -531,31 +493,19 @@ seurat_counts
 #>  2 layers present: counts, data
 ```
 
-By default, data is downloaded to `get_default_cache_dir()` output. If
-memory is a concern, users can specify a custom path to metadata and
-counts `cache_directory` argument. For example,
-`get_metadata(cache_directory = "your_own_path")` and
-`get_single_cell_experiment(cache_directory = "your_own_path")`.
+By default, data is downloaded to `get_default_cache_dir()` output. If memory is a concern, users can specify a custom path to metadata and counts `cache_directory` argument. For example, `get_metadata(cache_directory = "your_own_path")` and `get_single_cell_experiment(cache_directory = "your_own_path")`.
 
-Same strategy can be applied for functions `get_pseuodbulk()` and
-`get_seurat()`.
+Same strategy can be applied for functions `get_pseuodbulk()` and `get_seurat()`.
 
 ## Save your `SingleCellExperiment`
 
-The returned `SingleCellExperiment` can be saved with three modalities,
-as `.rds` or as `HDF5` or as `H5AD`.
+The returned `SingleCellExperiment` can be saved with three modalities, as `.rds` or as `HDF5` or as `H5AD`.
 
 ### Saving as RDS (fast saving, slow reading)
 
-Saving as `.rds` has the advantage of being fast, and the `.rds` file
-occupies very little disk space as it only stores the links to the files
-in your cache.
+Saving as `.rds` has the advantage of being fast, and the `.rds` file occupies very little disk space as it only stores the links to the files in your cache.
 
-However it has the disadvantage that for big `SingleCellExperiment`
-objects, which merge a lot of HDF5 from your
-`get_single_cell_experiment`, the display and manipulation is going to
-be slow. In addition, an `.rds` saved in this way is not portable: you
-will not be able to share it with other users.
+However it has the disadvantage that for big `SingleCellExperiment` objects, which merge a lot of HDF5 from your `get_single_cell_experiment`, the display and manipulation is going to be slow. In addition, an `.rds` saved in this way is not portable: you will not be able to share it with other users.
 
 ``` r
 single_cell_counts |>
@@ -564,15 +514,9 @@ single_cell_counts |>
 
 ### Saving as HDF5 (slow saving, fast reading)
 
-Saving as `.hdf5` executes any computation on the `SingleCellExperiment`
-and writes it to disk as a monolithic `HDF5`. Once this is done,
-operations on the `SingleCellExperiment` will be comparatively very
-fast. The resulting `.hdf5` file will also be totally portable and
-sharable.
+Saving as `.hdf5` executes any computation on the `SingleCellExperiment` and writes it to disk as a monolithic `HDF5`. Once this is done, operations on the `SingleCellExperiment` will be comparatively very fast. The resulting `.hdf5` file will also be totally portable and sharable.
 
-However this `.hdf5` has the disadvantage of being larger than the
-corresponding `.rds` as it includes a copy of the count information, and
-the saving process is going to be slow for large objects.
+However this `.hdf5` has the disadvantage of being larger than the corresponding `.rds` as it includes a copy of the count information, and the saving process is going to be slow for large objects.
 
 ``` r
 # ! IMPORTANT if you save 200K+ cells
@@ -589,13 +533,9 @@ single_cell_counts |>
 
 ### Saving as H5AD (slow saving, fast reading)
 
-Saving as `.h5ad` executes any computation on the `SingleCellExperiment`
-and writes it to disk as a monolithic `H5AD`. The `H5AD` format is the
-HDF5 disk representation of the AnnData object and is well-supported in
-Python.
+Saving as `.h5ad` executes any computation on the `SingleCellExperiment` and writes it to disk as a monolithic `H5AD`. The `H5AD` format is the HDF5 disk representation of the AnnData object and is well-supported in Python.
 
-However this `.h5ad` saving strategy has a bottleneck of handling
-columns with only NA values of a `SingleCellExperiment` metadata.
+However this `.h5ad` saving strategy has a bottleneck of handling columns with only NA values of a `SingleCellExperiment` metadata.
 
 ``` r
 single_cell_counts |>
@@ -607,8 +547,7 @@ single_cell_counts |>
 
 ## Visualise gene transcription
 
-We can gather all CD14 monocytes cells and plot the distribution of
-ENSG00000085265 (FCN1) across all tissues
+We can gather all CD14 monocytes cells and plot the distribution of ENSG00000085265 (FCN1) across all tissues
 
 ``` r
 # Plots with styling
@@ -651,7 +590,7 @@ counts |>
 
 <figure>
 <img
-src="/home/users/allstaff/shen.m/git_control/cellNexus/vignettes/plot-fcn1-disease-1.png"
+src="vignettes/plot-fcn1-disease-1.png"
 alt="plot of chunk plot-fcn1-disease" />
 <figcaption aria-hidden="true">plot of chunk
 plot-fcn1-disease</figcaption>
@@ -687,21 +626,17 @@ counts |>
 
 <figure>
 <img
-src="/home/users/allstaff/shen.m/git_control/cellNexus/vignettes/plot-fcn1-tissue-1.png"
-alt="plot of chunk plot-fcn1-tissue" />
+src="vignettes/plot-fcn1-disease-1.png"
+alt="plot of chunk plot-fcn1-disease" />
 <figcaption aria-hidden="true">plot of chunk
-plot-fcn1-tissue</figcaption>
+plot-fcn1-disease</figcaption>
 </figure>
 
 ## Integrate cloud and local metadata
 
-`cellNexus` not only enables users to query our metadata but also allows
-integration with your local metadata. Additionally, users can integrate
-with your metadata stored in the cloud.
+`cellNexus` not only enables users to query our metadata but also allows integration with your local metadata. Additionally, users can integrate with your metadata stored in the cloud.
 
-To enable this feature, users must include
-`file_id_cellNexus_single_cell` and `atlas_id` (e.g cellxgene/dd-mm-yy)
-columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
+To enable this feature, users must include `file_id_cellNexus_single_cell` and `atlas_id` (e.g cellxgene/dd-mm-yy) columns in the metadata. See metadata structure in cellNexus::pbmc3k_sce
 
 ``` r
 # Set up local cache and paths
@@ -772,17 +707,11 @@ get_metadata(
 
 # Cell metadata
 
-The complete metadata dictionary for the harmonised fields is available
-on the documentation site: [cellNexus
-documentation](https://cellnexus.org/).
+The complete metadata dictionary for the harmonised fields is available on the documentation site: [cellNexus documentation](https://cellnexus.org/).
 
 # RNA abundance
 
-The `counts` assay represents RNA abundance on the positive real scale,
-without non-linear transformations (e.g., log or square root). In the
-original CELLxGENE data, values were provided using a mix of scales and
-transformations. The method required to invert these transformations is
-recorded in `inverse_transform` column.
+The `counts` assay represents RNA abundance on the positive real scale, without non-linear transformations (e.g., log or square root). In the original CELLxGENE data, values were provided using a mix of scales and transformations. The method required to invert these transformations is recorded in `inverse_transform` column.
 
 The `cpm` assay includes counts per million.
 
@@ -790,15 +719,11 @@ The `sct` assay includes normalised counts by `sctranform`.
 
 # Other representations
 
-The `rank` assay is the representation of each cell’s gene expression
-profile where genes are ranked by expression intensity using
-`singscore`.
+The `rank` assay is the representation of each cell’s gene expression profile where genes are ranked by expression intensity using `singscore`.
 
-The `pseudobulk` assay includes aggregated RNA abundance for sample and
-cell type combination.
+The `pseudobulk` assay includes aggregated RNA abundance for sample and cell type combination.
 
-The detailed documentation for RNA abundance is available on the
-documentation site: [cellNexus documentation](https://cellnexus.org/).
+The detailed documentation for RNA abundance is available on the documentation site: [cellNexus documentation](https://cellnexus.org/).
 
 # Session Info
 

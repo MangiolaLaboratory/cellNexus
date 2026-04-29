@@ -16,12 +16,10 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = file.path(
-   rprojroot::find_package_root_file(), "vignettes", ""
-  )
+  fig.path = ""
 )
 find_figure <- function(names) {
-  rprojroot::find_package_root_file("man", "figures", names)
+  file.path("..", "man", "figures", names)
 }
 ```
 
@@ -45,13 +43,14 @@ find_figure("logo.png") |>
   knitr::include_graphics()
 ```
 
-```{r fig-funders, echo=FALSE, out.height = c("58px"), out.width = c("155x", "129px", "202px", "219px", "180px")}
+```{r fig-funders, echo=FALSE, out.height = c("58px"), out.width = c("155x", "129px", "202px", "219px", "180px", "120px")}
 c(
   "svcf_logo.jpeg",
   "czi_logo.png",
   "bioconductor_logo.jpg",
   "vca_logo.png",
-  "nectar_logo.png"
+  "nectar_logo.png",
+  "CSL_Limited_logo.svg.png"
 ) |>
   find_figure() |>
   knitr::include_graphics()

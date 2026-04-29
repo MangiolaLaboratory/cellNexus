@@ -6,6 +6,7 @@ This page is a standalone metadata guide for `cellNexus` and documents
 the key fields used in downstream analysis.
 
 ``` r
+
 library(cellNexus)
 metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)
 metadata
@@ -23,48 +24,49 @@ metadata
 
 ## Metadata dictionary
 
-| Column                              | Description                                                                      |
-|-------------------------------------|----------------------------------------------------------------------------------|
-| `cell_id`                           | Cell identifier.                                                                 |
-| `observation_joinid`                | Cell ID join key linking metadata.                                               |
-| `dataset_id`                        | Primary dataset identifier in the atlas.                                         |
-| `sample_id`                         | Harmonised sample identifier.                                                    |
-| `sample_`                           | Internal sample subdivision helper.                                              |
-| `experiment___`                     | Upstream experiment grouping variable.                                           |
-| `sample_heuristic`                  | Internal sample subdivision helper.                                              |
-| `age_days`                          | Donor age in days.                                                               |
-| `tissue_groups`                     | Coarse tissue grouping for analysis.                                             |
-| `nFeature_expressed_in_sample`      | Number of expressed features per cell.                                           |
-| `nCount_RNA`                        | Total RNA counts per cell (sample-aware).                                        |
-| `empty_droplet`                     | Quality-control flag for empty droplets.                                         |
-| `cell_type_unified_ensemble`        | Consensus immune identity from Azimuth and `SingleR` (Blueprint, Monaco).        |
-| `is_immune`                         | Curated flag for immune-cell context.                                            |
-| `subsets_Mito_percent`              | Percent of each cell’s total counts coming from mitochondrial genes in a sample. |
-| `subsets_Ribo_percent`              | Percent of each cell’s total counts coming from ribosomal genes in a sample.     |
-| `high_mitochondrion`                | TRUE if the cell’s mitochondrial percent exceeds the QC cutoff.                  |
-| `high_ribosome`                     | TRUE if the cell’s ribosomal percent exceeds the QC cutoff.                      |
-| `scDblFinder.class`                 | Quality-control flag for doublet classification from `scDblFinder`.              |
-| `sample_chunk`                      | Internal sample subdivision chunks.                                              |
-| `cell_chunk`                        | Internal cell subdivision chunks.                                                |
-| `sample_pseudobulk_chunk`           | Internal pseudobulk subdivision chunks.                                          |
-| `file_id_cellNexus_single_cell`     | Internal file id for single-cell layers.                                         |
-| `file_id_cellNexus_pseudobulk`      | Internal file id for pseudobulk layers.                                          |
-| `count_upper_bound`                 | Count capping threshold used in transformation.                                  |
-| `nfeature_expressed_thresh`         | Threshold of the number of expressed features per cell.                          |
-| `inverse_transform`                 | Transformation method used in pre-processing pipeline.                           |
-| `alive`                             | Quality-control flag for viable cells (e.g. mitochondrial signal).               |
-| `cell_annotation_blueprint_singler` | `SingleR` annotation (Blueprint).                                                |
-| `cell_annotation_monaco_singler`    | `SingleR` annotation (Monaco).                                                   |
-| `cell_annotation_azimuth_l2`        | Azimuth cell annotation.                                                         |
-| `ethnicity_flagging_score`          | Supporting score for ethnicity imputation.                                       |
-| `low_confidence_ethnicity`          | Supporting flag for low-confidence ethnicity calls.                              |
-| `.aggregated_cells`                 | Post-QC cells combined into each pseudobulk sample.                              |
-| `imputed_ethnicity`                 | Imputed ethnicity label.                                                         |
-| `atlas_id`                          | cellNexus atlas release identifier (internal use).                               |
+| Column | Description |
+|----|----|
+| `cell_id` | Cell identifier. |
+| `observation_joinid` | Cell ID join key linking metadata. |
+| `dataset_id` | Primary dataset identifier in the atlas. |
+| `sample_id` | Harmonised sample identifier. |
+| `sample_` | Internal sample subdivision helper. |
+| `experiment___` | Upstream experiment grouping variable. |
+| `sample_heuristic` | Internal sample subdivision helper. |
+| `age_days` | Donor age in days. |
+| `tissue_groups` | Coarse tissue grouping for analysis. |
+| `nFeature_expressed_in_sample` | Number of expressed features per cell. |
+| `nCount_RNA` | Total RNA counts per cell (sample-aware). |
+| `empty_droplet` | Quality-control flag for empty droplets. |
+| `cell_type_unified_ensemble` | Consensus immune identity from Azimuth and `SingleR` (Blueprint, Monaco). |
+| `is_immune` | Curated flag for immune-cell context. |
+| `subsets_Mito_percent` | Percent of each cell’s total counts coming from mitochondrial genes in a sample. |
+| `subsets_Ribo_percent` | Percent of each cell’s total counts coming from ribosomal genes in a sample. |
+| `high_mitochondrion` | TRUE if the cell’s mitochondrial percent exceeds the QC cutoff. |
+| `high_ribosome` | TRUE if the cell’s ribosomal percent exceeds the QC cutoff. |
+| `scDblFinder.class` | Quality-control flag for doublet classification from `scDblFinder`. |
+| `sample_chunk` | Internal sample subdivision chunks. |
+| `cell_chunk` | Internal cell subdivision chunks. |
+| `sample_pseudobulk_chunk` | Internal pseudobulk subdivision chunks. |
+| `file_id_cellNexus_single_cell` | Internal file id for single-cell layers. |
+| `file_id_cellNexus_pseudobulk` | Internal file id for pseudobulk layers. |
+| `count_upper_bound` | Count capping threshold used in transformation. |
+| `nfeature_expressed_thresh` | Threshold of the number of expressed features per cell. |
+| `inverse_transform` | Transformation method used in pre-processing pipeline. |
+| `alive` | Quality-control flag for viable cells (e.g. mitochondrial signal). |
+| `cell_annotation_blueprint_singler` | `SingleR` annotation (Blueprint). |
+| `cell_annotation_monaco_singler` | `SingleR` annotation (Monaco). |
+| `cell_annotation_azimuth_l2` | Azimuth cell annotation. |
+| `ethnicity_flagging_score` | Supporting score for ethnicity imputation. |
+| `low_confidence_ethnicity` | Supporting flag for low-confidence ethnicity calls. |
+| `.aggregated_cells` | Post-QC cells combined into each pseudobulk sample. |
+| `imputed_ethnicity` | Imputed ethnicity label. |
+| `atlas_id` | cellNexus atlas release identifier (internal use). |
 
 \# Practical exploration
 
 ``` r
+
 # Which columns are available?
 colnames(metadata)
 
@@ -83,6 +85,7 @@ metadata_qc <- metadata |>
 ```
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.3 (2026-03-11)
 #> Platform: x86_64-pc-linux-gnu

@@ -84,13 +84,9 @@ doi:10.1101/2023.06.08.542671.
 ``` r
 # Use the lightweight sample database URL (for fast checks during development only)
 meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
-#> ℹ Downloading 2 files, totalling 0 GB
-#> ℹ Downloading 2 files in parallel...
 sce <- get_single_cell_experiment(meta)
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
-#> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/counts/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad to /home/runner/.cache/R/cellNexus/cellxgene_2024/0.2.1//counts/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad
 #> ℹ Reading files.
 #> For native R and reading and writing of H5AD files, an R <AnnData> object, and
 #> conversion to <SingleCellExperiment> or <Seurat> objects, check out the

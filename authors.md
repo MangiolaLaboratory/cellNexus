@@ -32,11 +32,12 @@
 Source:
 [`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/master/inst/CITATION)
 
-Mangiola, S., Milton, M., Ranathunga, N., Li-Wai-Suen, C., Odainic, A.,
-Yang, E., Hutchison, W., Garnham, A., Iskander, J., Pal, B., Yadav, V.,
-Rossello, J., Carey, V. J., Morgan, M., Bedoui, S., Kallies, A., &
-Papenfuss, A. T. A multi-organ map of the human immune system across
-age, sex and ethnicity. bioRxiv \[Preprint\]. 2023.06.08.542671
+Mangiola S, Milton M, Ranathunga N, Li-Wai-Suen CS, Odainic A, Yang E,
+Hutchison W, Garnham A, Iskander J, Pal B, Yadav VK, Rossello F, Carey
+V, Morgan M, Bedoui S, Kallies A, Papenfuss AT (2024). “A multi-organ
+map of the human immune system across age, sex and ethnicity.”
+*bioRxiv*.
+[doi:10.1101/2023.06.08.542671](https://doi.org/10.1101/2023.06.08.542671).
 
     @Article{,
       title = {A multi-organ map of the human immune system across age, sex and ethnicity},

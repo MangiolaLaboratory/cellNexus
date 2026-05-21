@@ -71,8 +71,7 @@ The QC flags used throughout `cellNexus` are computed using
     `x_approximate_distribution` column.
 - CPM:
   - Counts-per-million normalisation computed from the raw counts assay
-    via
-    [`scuttle::calculateCPM()`](https://rdrr.io/pkg/scuttle/man/calculateCPM.html).
+    via `scuttle::calculateCPM()`.
 - Rank:
   - Per-cell gene-expression ranks computed with
     `singscore::rankGenes()`.
@@ -89,9 +88,8 @@ The QC flags used throughout `cellNexus` are computed using
 - Pseudobulk:
   - All low-quality cells flagged by QC are removed before aggregation.
   - Aggregates counts across cells using
-    [`scuttle::aggregateAcrossCells()`](https://rdrr.io/pkg/scuttle/man/aggregateAcrossCells.html),
-    aggregating `sample_id` and the harmonised cell type
-    (`cell_type_harmonised_ensemble`).
+    `scuttle::aggregateAcrossCells()`, aggregating `sample_id` and the
+    harmonised cell type (`cell_type_harmonised_ensemble`).
 
 ## Metadata Explore
 

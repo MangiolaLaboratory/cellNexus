@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Queries the Human Cell Atlas">
 <meta name="description" content="Provides access to a copy of the Human Cell Atlas, but with harmonised metadata. This allows for uniform querying across numerous datasets within the Atlas using common fields such as cell type, tissue type, and patient ethnicity. Usage involves first querying the metadata table for cells of interest, and then downloading the corresponding cells into one of several supported formats, including SingleCellExperiment, Seurat, or pseudobulk SummarizedExperiment objects. Note: The Human Cell Atlas data accessed through this package is subject to its own licensing terms (typically Creative Commons Attribution or similar open data licenses as specified by the Human Cell Atlas Data Use Agreement), which differ from the package license (GPL-3). See the package documentation for details.">
@@ -131,7 +131,7 @@
 </li>
 <li>CPM:
 <ul>
-<li>Counts-per-million normalisation computed from the raw counts assay via <code><a href="https://rdrr.io/pkg/scuttle/man/calculateCPM.html" class="external-link">scuttle::calculateCPM()</a></code>.</li>
+<li>Counts-per-million normalisation computed from the raw counts assay via <code>scuttle::calculateCPM()</code>.</li>
 </ul>
 </li>
 <li>Rank:
@@ -150,7 +150,7 @@
 <li>Pseudobulk:
 <ul>
 <li>All low-quality cells flagged by QC are removed before aggregation.</li>
-<li>Aggregates counts across cells using <code><a href="https://rdrr.io/pkg/scuttle/man/aggregateAcrossCells.html" class="external-link">scuttle::aggregateAcrossCells()</a></code>, aggregating <code>sample_id</code> and the harmonised cell type (<code>cell_type_harmonised_ensemble</code>).</li>
+<li>Aggregates counts across cells using <code>scuttle::aggregateAcrossCells()</code>, aggregating <code>sample_id</code> and the harmonised cell type (<code>cell_type_harmonised_ensemble</code>).</li>
 </ul>
 </li>
 </ul>

@@ -50,7 +50,7 @@ A filtered data frame containing only cells that pass all QC checks.
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) |>
   head(2) |>
   keep_quality_cells()
-#> # Source:   SQL [?? x 76]
+#> # A query:  ?? x 76
 #> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0/:memory:]
 #>   cell_id observation_joinid dataset_id          sample_id sample_ experiment___
 #>     <dbl> <chr>              <chr>               <chr>     <chr>   <chr>        

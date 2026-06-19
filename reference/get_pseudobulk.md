@@ -100,8 +100,6 @@ meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |>
 pseudobulk <- meta |> get_pseudobulk()
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
-#> ℹ Downloading 2 files, totalling 0.03 GB
-#> ℹ Downloading 2 files in parallel...
 #> ℹ Reading files.
 #> ℹ Compiling Experiment.
 ```

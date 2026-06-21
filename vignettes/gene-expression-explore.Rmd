@@ -25,6 +25,18 @@ metadata <- metadata |>
   keep_quality_cells()
 ```
 
+``` python
+from cellnexuspy import get_metadata, keep_quality_cells, get_anndata, get_pseudobulk, SAMPLE_DATABASE_URL
+
+conn, metadata = get_metadata(SAMPLE_DATABASE_URL)
+#> File is missing or corrupted. Re-downloading...
+#> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.3.0.parquet to /home/juan/.cache/cellNexusPy/cellnexus_sample_metadata.2.3.0.parquet
+#> 1.65MB [00:05, 321kB/s]933 [00:00<?, ?it/s]
+#>   0%|          | 0/1724933 [00:05<?, ?it/s]
+
+metadata = keep_quality_cells(metadata)
+```
+
 # Choose cells through metadata filters
 
 
@@ -63,6 +75,35 @@ query_metadata
 #> #   default_embedding <chr>, published_at <chr>, raw_data_location <chr>, revised_at <chr>, primary_cell_count <chr>, schema_version <chr>, …
 ```
 
+``` python
+query_metadata = metadata.filter("""
+    age_days >= 40*365
+    AND cell_type_unified_ensemble == 'cd16 mono'
+    AND tissue_groups == 'breast'
+    AND imputed_ethnicity == 'African American'
+""")
+query_metadata
+#> ┌─────────┬────────────────────┬──────────────────────────────────────┬──────────────────────────────────┬──────────────────────────────────┬───────────────┬──────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────┬───────────────┬──────────────────────────────┬────────────────────┬───────────────┬────────────────────────────┬───────────┬──────────────────────┬──────────────────────┬────────────────────┬───────────────┬───────────────────┬──────────────┬────────────┬─────────────────────────┬───────────────────────────────────────────┬───────────────────────────────────────────┬───────────────────┬───────────────────────────┬───────────────────┬─────────┬───────────────────────────────────┬────────────────────────────────┬────────────────────────────┬──────────────────────────┬──────────────────────────┬───────────────────┬───────────────────┬──────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────────────────────────────────┬──────────────────────────────────────┬───────────────────┬──────────────┬───────────────────┬────────────┬────────────────────┬────────────────┬─────────────┬────────────────────────────┬───────────┬────────────────────────────┬──────────────────────────────────────────────────────────────────────────────┬────────────┬───────────────┬──────────────┬──────────┬─────────────────────┬─────────────────┬─────────────────────────────────────────────────────────────────────────────────────┐
+#> │ cell_id │ observation_joinid │              dataset_id              │            sample_id             │             sample_              │ experiment___ │ run_from_cell_id │                                                                                 sample_heuristic                                                                                 │ age_days │ tissue_groups │ nFeature_expressed_in_sample │     nCount_RNA     │ empty_droplet │ cell_type_unified_ensemble │ is_immune │ subsets_Mito_percent │ subsets_Ribo_percent │ high_mitochondrion │ high_ribosome │ scDblFinder.class │ sample_chunk │ cell_chunk │ sample_pseudobulk_chunk │       file_id_cellNexus_single_cell       │       file_id_cellNexus_pseudobulk        │ count_upper_bound │ nfeature_expressed_thresh │ inverse_transform │  alive  │ cell_annotation_blueprint_singler │ cell_annotation_monaco_singler │ cell_annotation_azimuth_l2 │ ethnicity_flagging_score │ low_confidence_ethnicity │ .aggregated_cells │ imputed_ethnicity │       atlas_id       │                                                                                                                                                    citation                                                                                                                                                    │            collection_id             │          dataset_version_id          │ default_embedding │ published_at │ raw_data_location │ revised_at │ primary_cell_count │ schema_version │ tissue_type │           title            │ tombstone │ x_approximate_distribution │                                 explorer_url                                 │ cell_count │ feature_count │   filesize   │ filetype │ mean_genes_per_cell │ suspension_type │                                         url                                         │
+#> │ double  │      varchar       │               varchar                │             varchar              │             varchar              │    varchar    │     varchar      │                                                                                     varchar                                                                                      │  int32   │    varchar    │            int32             │       double       │    boolean    │          varchar           │  boolean  │        int32         │        int32         │      boolean       │    boolean    │      varchar      │    int32     │   int32    │          int32          │                  varchar                  │                  varchar                  │      double       │          double           │      varchar      │ boolean │              varchar              │            varchar             │          varchar           │          double          │         varchar          │       int32       │      varchar      │       varchar        │                                                                                                                                                    varchar                                                                                                                                                     │               varchar                │               varchar                │      varchar      │   varchar    │      varchar      │  varchar   │      varchar       │    varchar     │   varchar   │          varchar           │  boolean  │          varchar           │                                   varchar                                    │   int32    │     int32     │    double    │ varchar  │       double        │     varchar     │                                       varchar                                       │
+#> ├─────────┼────────────────────┼──────────────────────────────────────┼──────────────────────────────────┼──────────────────────────────────┼───────────────┼──────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┼───────────────┼──────────────────────────────┼────────────────────┼───────────────┼────────────────────────────┼───────────┼──────────────────────┼──────────────────────┼────────────────────┼───────────────┼───────────────────┼──────────────┼────────────┼─────────────────────────┼───────────────────────────────────────────┼───────────────────────────────────────────┼───────────────────┼───────────────────────────┼───────────────────┼─────────┼───────────────────────────────────┼────────────────────────────────┼────────────────────────────┼──────────────────────────┼──────────────────────────┼───────────────────┼───────────────────┼──────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼──────────────────────────────────────┼──────────────────────────────────────┼───────────────────┼──────────────┼───────────────────┼────────────┼────────────────────┼────────────────┼─────────────┼────────────────────────────┼───────────┼────────────────────────────┼──────────────────────────────────────────────────────────────────────────────┼────────────┼───────────────┼──────────────┼──────────┼─────────────────────┼─────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+#> │    16.0 │ j}0<Y>a#X~         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 1119f4825edbcfb74341b89d9dec4ac8 │ 1119f4825edbcfb74341b89d9dec4ac8 │               │ NULL             │ 182a61cc-b041-4c9b-bf33-1d065115274d___P89___97daa149-e8a1-4873-8d57-7a3940fdab54___6753382c-8086-4e5f-8b53-a481720b2fa0___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         2438 │  7508.926150000006 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          6 │                       1 │ 001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 3 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    19.0 │ lNmuO5xs~3         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 1119f4825edbcfb74341b89d9dec4ac8 │ 1119f4825edbcfb74341b89d9dec4ac8 │               │ NULL             │ 182a61cc-b041-4c9b-bf33-1d065115274d___P89___97daa149-e8a1-4873-8d57-7a3940fdab54___6753382c-8086-4e5f-8b53-a481720b2fa0___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1876 │  7017.710589999993 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          6 │                       1 │ 001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 3 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    14.0 │ qxl7HJjL$L         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 1119f4825edbcfb74341b89d9dec4ac8 │ 1119f4825edbcfb74341b89d9dec4ac8 │               │ NULL             │ 182a61cc-b041-4c9b-bf33-1d065115274d___P89___97daa149-e8a1-4873-8d57-7a3940fdab54___6753382c-8086-4e5f-8b53-a481720b2fa0___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1547 │  7928.722270000016 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          6 │                       1 │ 001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 3 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │     2.0 │ $jvBt8wHSK         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 1f755b9b59313f6c5e80caa696799ac2 │ 1f755b9b59313f6c5e80caa696799ac2 │               │ NULL             │ 9ca47fe5-873e-4d1e-98e4-68884865f41a___P66___452d2f53-2206-44a1-a288-0025c82a27bb___01b59611-b3c3-4fd4-84db-cdf9ca7aa37c___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1342 │  6663.413549999989 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          6 │                       1 │ 001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ Platelet                   │                      1.0 │ FALSE                    │                 1 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    21.0 │ Mq^|(c<-#3         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ b0d0c16edf3fcbb1b0923889f1640f2d │ b0d0c16edf3fcbb1b0923889f1640f2d │               │ NULL             │ 0033e380-cba5-49d3-b27f-a4133aaf7caf___P92___ff1bbc9c-b7a2-43cf-afd0-898d60172b47___aabdb859-e43d-4d1e-94dc-d46f61d5149a___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1552 │   7366.77443000001 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          6 │                       1 │ 001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 3 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    24.0 │ I`4{4__f#J         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ b0d0c16edf3fcbb1b0923889f1640f2d │ b0d0c16edf3fcbb1b0923889f1640f2d │               │ NULL             │ 0033e380-cba5-49d3-b27f-a4133aaf7caf___P92___ff1bbc9c-b7a2-43cf-afd0-898d60172b47___aabdb859-e43d-4d1e-94dc-d46f61d5149a___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1800 │  7649.221309999987 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          6 │                       1 │ 001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 3 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    22.0 │ %vkLP;!cqY         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ b0d0c16edf3fcbb1b0923889f1640f2d │ b0d0c16edf3fcbb1b0923889f1640f2d │               │ NULL             │ 0033e380-cba5-49d3-b27f-a4133aaf7caf___P92___ff1bbc9c-b7a2-43cf-afd0-898d60172b47___aabdb859-e43d-4d1e-94dc-d46f61d5149a___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1759 │ 7819.2406500000025 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          6 │                       1 │ 001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 3 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    11.0 │ gncTL3)pV~         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ bd5f6876c65bbc0a1c3f27b5c19520b0 │ bd5f6876c65bbc0a1c3f27b5c19520b0 │               │ NULL             │ c5d33ad8-c134-4d74-9d75-c0e9f5ab12d6___P83___70270fa5-851b-4603-8f01-63ece285a386___de239d3d-0552-48c1-a193-568d6582400f___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                          399 │ 7873.9017600000025 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          6 │                       1 │ 001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 1 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    25.0 │ rfOnkhfWl8         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 04e410cbab17c7d05877161100a5d1e1 │ 04e410cbab17c7d05877161100a5d1e1 │               │ NULL             │ 68150f23-cfed-4dca-96e0-1d59260008bd___P101___6e0d41f4-1a99-40fa-8865-adb7f59059a3___70eaee84-94e3-4dd3-968e-32fc8d742c9b___breast___mature stage___10x 3' v3______normal___TRUE │    14600 │ breast        │                         1324 │  6640.145619999993 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          7 │                       1 │ 4a469d94fef0b1c60027fad9eb660b42___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 2 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    24.0 │ =tj7A<!2TZ         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 04e410cbab17c7d05877161100a5d1e1 │ 04e410cbab17c7d05877161100a5d1e1 │               │ NULL             │ 68150f23-cfed-4dca-96e0-1d59260008bd___P101___6e0d41f4-1a99-40fa-8865-adb7f59059a3___70eaee84-94e3-4dd3-968e-32fc8d742c9b___breast___mature stage___10x 3' v3______normal___TRUE │    14600 │ breast        │                         1254 │  7388.920140000002 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          7 │                       1 │ 4a469d94fef0b1c60027fad9eb660b42___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 2 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │    13.0 │ Py{Fqs?~!!         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 30ea4b4f8922b4a6b35bf1a12be2d5e9 │ 30ea4b4f8922b4a6b35bf1a12be2d5e9 │               │ NULL             │ 2f6cb696-f78d-4438-a2ad-e9869922a206___P87___a748c9d9-f797-45b9-b879-30792ba02b58___d7f4c04a-69ed-442a-98a1-88555cdfd104___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1368 │  7811.435809999989 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          7 │                       1 │ 4a469d94fef0b1c60027fad9eb660b42___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │                      1.0 │ FALSE                    │                 1 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │     9.0 │ s$u5u14ye$         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 49ef9551c2ddf79b01c74f863ea6f556 │ 49ef9551c2ddf79b01c74f863ea6f556 │               │ NULL             │ 6fa99d77-112d-454a-8207-9fb2869ebc08___P80___cd686124-c0fa-45dd-b6ca-c5095bedc9d0___f8bc66f3-79ef-4223-a6f6-31eb640206a7___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1767 │  7780.737670000004 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          7 │                       1 │ 4a469d94fef0b1c60027fad9eb660b42___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │       0.9444444444444444 │ FALSE                    │                 2 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> │     6.0 │ ?y4kdGGQ!^         │ 842c6f5d-4a94-4eef-8510-8c792d1124bc │ 49ef9551c2ddf79b01c74f863ea6f556 │ 49ef9551c2ddf79b01c74f863ea6f556 │               │ NULL             │ 6fa99d77-112d-454a-8207-9fb2869ebc08___P80___cd686124-c0fa-45dd-b6ca-c5095bedc9d0___f8bc66f3-79ef-4223-a6f6-31eb640206a7___breast___mature stage___10x 3' v3______normal___TRUE  │    14600 │ breast        │                         1771 │   7501.68829999998 │ false         │ cd16 mono                  │ true      │                    0 │                    0 │ false              │ false         │ singlet           │            1 │          7 │                       1 │ 4a469d94fef0b1c60027fad9eb660b42___1.h5ad │ 91acbf94110b95b1e994fdb1e1322fd1___1.h5ad │              20.0 │                     200.0 │ exp               │ true    │ Monocytes                         │ Non classical monocytes        │ HSPC                       │       0.9444444444444444 │ FALSE                    │                 2 │ African American  │ cellxgene_2024/0.2.1 │ Publication: https://doi.org/10.1038/s41586-023-06252-9 Dataset Version: https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad curated and distributed by CZ CELLxGENE Discover in Collection: https://cellxgene.cziscience.com/collections/4195ab4c-20bd-4cd3-8b3d-65601277e731 │ 4195ab4c-20bd-4cd3-8b3d-65601277e731 │ b8b5be07-061b-4390-af0a-f9ced877a068 │ X_umap            │ 2023-05-09   │ raw.X             │ 2024-06-11 │ 714331             │ 5.1.0          │ tissue      │ scRNA-seq data - all cells │ false     │ NULL                       │ https://cellxgene.cziscience.com/e/842c6f5d-4a94-4eef-8510-8c792d1124bc.cxg/ │     714331 │         33145 │ 6913908095.0 │ H5AD     │   1987.189890960913 │ cell            │ https://datasets.cellxgene.cziscience.com/b8b5be07-061b-4390-af0a-f9ced877a068.h5ad │
+#> └─────────┴────────────────────┴──────────────────────────────────────┴──────────────────────────────────┴──────────────────────────────────┴───────────────┴──────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴──────────┴───────────────┴──────────────────────────────┴────────────────────┴───────────────┴────────────────────────────┴───────────┴──────────────────────┴──────────────────────┴────────────────────┴───────────────┴───────────────────┴──────────────┴────────────┴─────────────────────────┴───────────────────────────────────────────┴───────────────────────────────────────────┴───────────────────┴───────────────────────────┴───────────────────┴─────────┴───────────────────────────────────┴────────────────────────────────┴────────────────────────────┴──────────────────────────┴──────────────────────────┴───────────────────┴───────────────────┴──────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴──────────────────────────────────────┴──────────────────────────────────────┴───────────────────┴──────────────┴───────────────────┴────────────┴────────────────────┴────────────────┴─────────────┴────────────────────────────┴───────────┴────────────────────────────┴──────────────────────────────────────────────────────────────────────────────┴────────────┴───────────────┴──────────────┴──────────┴─────────────────────┴─────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
+#>   13 rows         
+```
+
 # Retrieve expression by representation
 
 ## Single-cell counts
@@ -74,7 +115,21 @@ sce_counts <- query_metadata |>
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.
-#> Reading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  2s                                                                ℹ Compiling Experiment.
+#> 
+Reading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  2s
+
+                                                                
+ℹ Compiling Experiment.
+```
+
+``` python
+adata_counts = get_anndata(query_metadata)
+#> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/counts/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad to /home/juan/.cache/cellNexusPy/cellxgene_2024/0.2.1/single_cell/counts/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad
+#> 1.33MB [00:04, 278kB/s]491 [00:00<?, ?it/s]
+#>   0%|          | 0/1390491 [00:04<?, ?it/s]
+#> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/counts/4a469d94fef0b1c60027fad9eb660b42___1.h5ad to /home/juan/.cache/cellNexusPy/cellxgene_2024/0.2.1/single_cell/counts/4a469d94fef0b1c60027fad9eb660b42___1.h5ad
+#> 1.24MB [00:04, 281kB/s]527 [00:00<?, ?it/s]
+#>   0%|          | 0/1302527 [00:04<?, ?it/s]
 ```
 
 ## Counts per million
@@ -86,7 +141,11 @@ sce_cpm <- query_metadata |>
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.
-#> Reading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  6s                                                             ℹ Compiling Experiment.
+#> 
+Reading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  6s
+
+                                                             
+ℹ Compiling Experiment.
 sce_cpm
 #> # A SingleCellExperiment-tibble abstraction: 13 × 59
 #> # [90mFeatures=33145 | Cells=13 | Assays=cpm[0m
@@ -112,6 +171,20 @@ sce_cpm
 #> #   nfeature_expressed_thresh <dbl>, inverse_transform <chr>, alive <lgl>, cell_annotation_blueprint_singler <chr>,
 #> #   cell_annotation_monaco_singler <chr>, cell_annotation_azimuth_l2 <chr>, ethnicity_flagging_score <dbl>, low_confidence_ethnicity <chr>,
 #> #   .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, citation <chr>, collection_id <chr>, dataset_version_id <chr>, …
+```
+
+``` python
+adata_cpm = get_anndata(query_metadata, assays=["cpm"])
+#> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/cpm/4a469d94fef0b1c60027fad9eb660b42___1.h5ad to /home/juan/.cache/cellNexusPy/cellxgene_2024/0.2.1/single_cell/cpm/4a469d94fef0b1c60027fad9eb660b42___1.h5ad
+#> 1.24MB [00:04, 306kB/s]387 [00:00<?, ?it/s]
+#>   0%|          | 0/1302387 [00:04<?, ?it/s]
+#> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/cpm/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad to /home/juan/.cache/cellNexusPy/cellxgene_2024/0.2.1/single_cell/cpm/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad
+#> 1.33MB [00:04, 302kB/s]416 [00:00<?, ?it/s]
+#>   0%|          | 0/1390416 [00:04<?, ?it/s]
+adata_cpm
+#> View of AnnData object with n_obs × n_vars = 13 × 33145
+#>     obs: 'cell_id', 'observation_joinid', 'dataset_id', 'sample_id', 'sample_', 'experiment___', 'run_from_cell_id', 'sample_heuristic', 'age_days', 'tissue_groups', 'nFeature_expressed_in_sample', 'nCount_RNA', 'empty_droplet', 'cell_type_unified_ensemble', 'is_immune', 'subsets_Mito_percent', 'subsets_Ribo_percent', 'high_mitochondrion', 'high_ribosome', 'scDblFinder.class', 'sample_chunk', 'cell_chunk', 'sample_pseudobulk_chunk', 'file_id_cellNexus_single_cell', 'file_id_cellNexus_pseudobulk', 'count_upper_bound', 'nfeature_expressed_thresh', 'inverse_transform', 'alive', 'cell_annotation_blueprint_singler', 'cell_annotation_monaco_singler', 'cell_annotation_azimuth_l2', 'ethnicity_flagging_score', 'low_confidence_ethnicity', '.aggregated_cells', 'imputed_ethnicity', 'atlas_id', 'citation', 'collection_id', 'dataset_version_id', 'default_embedding', 'published_at', 'raw_data_location', 'revised_at', 'primary_cell_count', 'schema_version', 'tissue_type', 'title', 'tombstone', 'x_approximate_distribution', 'explorer_url', 'cell_count', 'feature_count', 'filesize', 'filetype', 'mean_genes_per_cell', 'suspension_type', 'url'
+#>     layers: 'cpm'
 ```
 
 ## Pseudobulk
@@ -151,6 +224,17 @@ sce_cpm
 #> #   .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, citation <chr>, collection_id <chr>, dataset_version_id <chr>, …
 ```
 
+``` python
+pb_counts = get_pseudobulk(query_metadata)
+#> Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/cellxgene_2024/0.2.1/pseudobulk/counts/91acbf94110b95b1e994fdb1e1322fd1___1.h5ad to /home/juan/.cache/cellNexusPy/cellxgene_2024/0.2.1/pseudobulk/counts/91acbf94110b95b1e994fdb1e1322fd1___1.h5ad
+#> 247MB [02:49, 1.53MB/s]30665 [00:00<?, ?it/s]
+#>   0%|          | 0/259330665 [02:49<?, ?it/s]
+pb_counts
+#> View of AnnData object with n_obs × n_vars = 7 × 33145
+#>     obs: 'dataset_id', 'sample_id', 'sample_', 'experiment___', 'run_from_cell_id', 'sample_heuristic', 'age_days', 'tissue_groups', 'cell_type_unified_ensemble', 'sample_chunk', 'cell_chunk', 'sample_pseudobulk_chunk', 'file_id_cellNexus_pseudobulk', 'count_upper_bound', 'nfeature_expressed_thresh', 'inverse_transform', 'ethnicity_flagging_score', 'low_confidence_ethnicity', '.aggregated_cells', 'imputed_ethnicity', 'atlas_id', 'citation', 'collection_id', 'dataset_version_id', 'default_embedding', 'published_at', 'raw_data_location', 'revised_at', 'primary_cell_count', 'schema_version', 'tissue_type', 'title', 'tombstone', 'x_approximate_distribution', 'explorer_url', 'cell_count', 'feature_count', 'filesize', 'filetype', 'mean_genes_per_cell', 'suspension_type', 'url'
+#>     layers: 'counts'
+```
+
 # Targeted gene queries
 
 
@@ -164,7 +248,11 @@ sce_gene <- query_metadata |>
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.
-#> Reading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  6s                                                             ℹ Compiling Experiment.
+#> 
+Reading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  6s
+
+                                                             
+ℹ Compiling Experiment.
 sce_gene
 #> # A SingleCellExperiment-tibble abstraction: 13 × 59
 #> # [90mFeatures=1 | Cells=13 | Assays=cpm[0m
@@ -192,6 +280,14 @@ sce_gene
 #> #   .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, citation <chr>, collection_id <chr>, dataset_version_id <chr>, …
 ```
 
+``` python
+sce_gene = get_anndata(query_metadata,assays=["cpm"], features=["ENSG00000134644"])
+sce_gene
+#> View of AnnData object with n_obs × n_vars = 13 × 1
+#>     obs: 'cell_id', 'observation_joinid', 'dataset_id', 'sample_id', 'sample_', 'experiment___', 'run_from_cell_id', 'sample_heuristic', 'age_days', 'tissue_groups', 'nFeature_expressed_in_sample', 'nCount_RNA', 'empty_droplet', 'cell_type_unified_ensemble', 'is_immune', 'subsets_Mito_percent', 'subsets_Ribo_percent', 'high_mitochondrion', 'high_ribosome', 'scDblFinder.class', 'sample_chunk', 'cell_chunk', 'sample_pseudobulk_chunk', 'file_id_cellNexus_single_cell', 'file_id_cellNexus_pseudobulk', 'count_upper_bound', 'nfeature_expressed_thresh', 'inverse_transform', 'alive', 'cell_annotation_blueprint_singler', 'cell_annotation_monaco_singler', 'cell_annotation_azimuth_l2', 'ethnicity_flagging_score', 'low_confidence_ethnicity', '.aggregated_cells', 'imputed_ethnicity', 'atlas_id', 'citation', 'collection_id', 'dataset_version_id', 'default_embedding', 'published_at', 'raw_data_location', 'revised_at', 'primary_cell_count', 'schema_version', 'tissue_type', 'title', 'tombstone', 'x_approximate_distribution', 'explorer_url', 'cell_count', 'feature_count', 'filesize', 'filetype', 'mean_genes_per_cell', 'suspension_type', 'url'
+#>     layers: 'cpm'
+```
+
 # Seurat
 
 
@@ -202,7 +298,11 @@ seurat_obj <- query_metadata |>
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Reading files.
-#> Reading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  4s                                                                ℹ Compiling Experiment.
+#> 
+Reading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  4s
+
+                                                                
+ℹ Compiling Experiment.
 seurat_obj
 #> An object of class Seurat 
 #> 33145 features across 13 samples within 1 assay 
@@ -221,6 +321,21 @@ HDF5Array::saveHDF5SummarizedExperiment(
   as.sparse = TRUE
 )
 anndataR::write_h5ad(sce_counts, "single_cell_counts.h5ad")
+```
+
+``` python
+adata_counts.obs.index.name = None
+adata_counts.obs["run_from_cell_id"] = adata_counts.obs["run_from_cell_id"].fillna("NA").astype(str)
+
+# convert all remaining object columns to str
+for col in adata_counts.obs.select_dtypes(include="object").columns:
+    adata_counts.obs[col] = adata_counts.obs[col].fillna("NA").astype(str)
+
+adata_counts.write_h5ad("myH5ADfile.h5ad")
+```
+
+``` python
+conn.close()
 ```
 
 # Interpretation notes
@@ -301,4 +416,110 @@ sessionInfo()
 #> [165] bit64_4.6.0-1                   future_1.70.0                   Rhdf5lib_1.32.0                 shiny_1.13.0                   
 #> [169] SummarizedExperiment_1.40.0     ROCR_1.0-12                     igraph_2.2.3                    memoise_2.0.1                  
 #> [173] bslib_0.10.0                    bit_4.6.0
+```
+
+``` python
+import session_info
+session_info.show()
+#> -----
+#> cellnexuspy         NA
+#> session_info        v1.0.1
+#> -----
+#> 81d243bd2c585b0f4821__mypyc NA
+#> anndata                     0.11.4
+#> anyio                       NA
+#> appdirs                     1.4.4
+#> arrow                       1.4.0
+#> asciitree                   NA
+#> asttokens                   NA
+#> attr                        26.1.0
+#> attrs                       26.1.0
+#> babel                       2.18.0
+#> certifi                     2026.02.25
+#> charset_normalizer          3.4.6
+#> colorama                    0.4.6
+#> comm                        0.2.3
+#> cython_runtime              NA
+#> dateutil                    2.9.0.post0
+#> debugpy                     1.8.20
+#> decorator                   5.2.1
+#> deprecated                  1.3.1
+#> duckdb                      1.5.1
+#> executing                   2.2.1
+#> fastjsonschema              NA
+#> fqdn                        NA
+#> h5py                        3.16.0
+#> idna                        3.11
+#> ipykernel                   7.2.0
+#> isoduration                 NA
+#> jedi                        0.19.2
+#> jinja2                      3.1.6
+#> json5                       0.13.0
+#> jsonpointer                 3.1.1
+#> jsonschema                  4.26.0
+#> jsonschema_specifications   NA
+#> jupyter_events              0.12.0
+#> jupyter_server              2.17.0
+#> jupyterlab_server           2.28.0
+#> lark                        1.3.1
+#> markupsafe                  3.0.3
+#> msgpack                     1.1.2
+#> natsort                     8.4.0
+#> nbformat                    5.10.4
+#> numcodecs                   0.15.1
+#> numpy                       2.4.3
+#> packaging                   26.0
+#> pandas                      2.3.3
+#> parso                       0.8.6
+#> platformdirs                4.9.4
+#> prometheus_client           NA
+#> prompt_toolkit              3.0.52
+#> psutil                      7.2.2
+#> pure_eval                   0.2.3
+#> pydev_ipython               NA
+#> pydevconsole                NA
+#> pydevd                      3.2.3
+#> pydevd_file_utils           NA
+#> pydevd_plugins              NA
+#> pydevd_tracing              NA
+#> pygments                    2.19.2
+#> pythonjsonlogger            NA
+#> pytz                        2026.1.post1
+#> referencing                 NA
+#> requests                    2.33.0
+#> rfc3339_validator           0.1.4
+#> rfc3986_validator           0.1.1
+#> rfc3987_syntax              NA
+#> rpds                        NA
+#> scipy                       1.17.1
+#> send2trash                  NA
+#> six                         1.17.0
+#> stack_data                  0.6.3
+#> torch                       2.11.0+cu130
+#> torchgen                    NA
+#> tornado                     6.5.5
+#> tqdm                        4.67.3
+#> traitlets                   5.14.3
+#> typing_extensions           NA
+#> uri_template                NA
+#> urllib3                     2.6.3
+#> vscode                      NA
+#> wcwidth                     0.6.0
+#> webcolors                   NA
+#> websocket                   1.9.0
+#> wrapt                       2.1.2
+#> yaml                        6.0.3
+#> zarr                        2.18.7
+#> zmq                         27.1.0
+#> -----
+#> IPython             9.11.0
+#> jupyter_client      8.8.0
+#> jupyter_core        5.9.1
+#> jupyterlab          4.5.6
+#> notebook            7.5.5
+#> -----
+#> Python 3.14.3 | packaged by conda-forge | (main, Feb  9 2026, 21:56:02) [GCC 14.3.0]
+#> Linux-6.17.0-29-generic-x86_64-with-glibc2.39
+#> -----
+#> Session information updated at 2026-06-09 18:26
 ```

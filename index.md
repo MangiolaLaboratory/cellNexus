@@ -140,27 +140,22 @@ Python support is available in the companion repository:
 [`MangiolaLaboratory/cellNexusPy`](https://github.com/MangiolaLaboratory/cellNexusPy).
 
 ```python
-from cellnexuspy import get_metadata, get_anndata
+from cellnexuspy import get_metadata, join_census_table, keep_quality_cells, get_anndata, get_pseudobulk
 
-sample_dataset = "https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet"
-conn, table = get_metadata(parquet_url=sample_dataset)
+conn, table = get_metadata()
+metadata = join_census_table(conn, table)
+metadata = keep_quality_cells(metadata)
 
-table = table.filter("""
-    empty_droplet = 'false'
-    AND alive = 'true'
-    AND "scDblFinder.class" != 'doublet'
-    AND feature_count >= 5000
-""")
+query = metadata.filter("""
+                     self_reported_ethnicity == 'African' AND
+                     assay LIKE '%10x%' AND
+                     tissue == 'lung parenchyma' AND
+                     cell_type LIKE '%CD4%'
+                     """)
 
-query = table.filter("""
-    self_reported_ethnicity = 'African'
-    AND assay LIKE '%10%'
-    AND tissue = 'lung parenchyma'
-    AND cell_type LIKE '%CD4%'
-""")
+sce = get_anndata(query, assays=["counts","cpm"])
+pb = get_pseudobulk(query)
 
-adata = get_anndata(query, assay="cpm")
-pb = get_anndata(query, aggregation="pseudobulk")
 conn.close()
 ```
 

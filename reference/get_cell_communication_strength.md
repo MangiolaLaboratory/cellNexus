@@ -7,8 +7,7 @@ local cache, and then opens it as a data frame. It can then be filtered.
 
 ``` r
 get_cell_communication_strength(
-  cloud_metadata =
-    get_metadata_url("cellNexus_lr_signaling_pathway_strength_DEMO.parquet"),
+  cloud_metadata = get_metadata_url("cellNexus_lr_signaling_pathway_strength.parquet"),
   local_metadata = NULL,
   cache_directory = get_default_cache_dir(),
   use_cache = TRUE

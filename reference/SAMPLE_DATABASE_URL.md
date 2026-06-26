@@ -15,8 +15,8 @@ An object of class `character` of length 2.
 
 ## Source
 
-[Mangiola et
-al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
+[Shen et
+al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
 
 ## Value
 
@@ -24,19 +24,20 @@ Character scalar consisting of the URL/URLs
 
 ## References
 
-Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, A.
-Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human
-immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.
-doi:10.1101/2023.06.08.542671.
+Shen, M., Y. Gao, N. Liu, D. Bhuva, M. Milton, J. Henao, J. Andrews, E.
+Yang, C. Zhan, N. Liu, S. Si, J. W. Hutchison, M. H. Shakeel, M. Morgan,
+A. T. Papenfuss, J. Iskander, J. M. Polo, and S. Mangiola. "cellNexus:
+Quality control, annotation, aggregation and analytical layers for the
+Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 
 ## Examples
 
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL["cellnexus"], cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.3.0.parquet to /tmp/Rtmpyn0raK/cellnexus_sample_metadata.2.3.0.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_sample_metadata.2.3.0.parquet to /tmp/RtmpuVIUbz/cellnexus_sample_metadata.2.3.0.parquet
 #> # A query:  ?? x 58
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0/:memory:]
+#> # Database: DuckDB 1.5.4 [unknown@Linux 6.17.0-1018-azure:R 4.6.0/:memory:]
 #>    cell_id observation_joinid dataset_id         sample_id sample_ experiment___
 #>      <dbl> <chr>              <chr>              <chr>     <chr>   <chr>        
 #>  1      17 QRMCN*8*|#         842c6f5d-4a94-4ee… 1119f482… 1119f4… ""           

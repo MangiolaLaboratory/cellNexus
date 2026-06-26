@@ -12,8 +12,8 @@ get_metadata_url(
 
 ## Source
 
-[Mangiola et
-al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
+[Shen et
+al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
 
 ## Arguments
 
@@ -28,10 +28,11 @@ A character vector of URLs to parquet files to download
 
 ## References
 
-Mangiola, S., M. Milton, N. Ranathunga, C. S. N. Li-Wai-Suen, A.
-Odainic, E. Yang, W. Hutchison et al. "A multi-organ map of the human
-immune system across age, sex and ethnicity." bioRxiv (2023): 2023-06.
-doi:10.1101/2023.06.08.542671.
+Shen, M., Y. Gao, N. Liu, D. Bhuva, M. Milton, J. Henao, J. Andrews, E.
+Yang, C. Zhan, N. Liu, S. Si, J. W. Hutchison, M. H. Shakeel, M. Morgan,
+A. T. Papenfuss, J. Iskander, J. M. Polo, and S. Mangiola. "cellNexus:
+Quality control, annotation, aggregation and analytical layers for the
+Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 
 ## Examples
 

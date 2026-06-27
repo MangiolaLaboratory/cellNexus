@@ -682,7 +682,9 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
     new_coldata <- df |>
       select(-dplyr::all_of(intersect(names(df), cell_level_anno))) |>
       # Remove metacell and single-cell level annotations in pseudobulk
-      dplyr::select(-dplyr::contains("metacell"), -dplyr::matches("azimuth|monaco|blueprint|subsets_|high_")) |>
+      dplyr::select(-dplyr::contains("metacell"), 
+                    -dplyr::matches("azimuth|monaco|blueprint|subsets_|high_"),
+                    -dplyr::matches("raw_|nnz|n_meatured_vars|soma_")) |>
       distinct() |>
       mutate(
         sample_identifier = paste(

@@ -81,21 +81,16 @@ suppressPackageStartupMessages({
 ## Load and explore the metadata
 
 ### Load the metadata
-By default, `get_metadata()` loads harmonised annotations. Users can retrieve original Census annotations by the function `join_census_table()`. 
+By default, `get_metadata()` loads harmonised annotations. Metadata is saved to `get_default_cache_dir()` unless a custom path is provided via the cache_directory argument. The `metadata` variable can then be re-used for all subsequent queries. 
+
+The unified pseudobulk AnnData object was generated after quality control and retaining at least 15,000 intersecting genes across samples, and uploaded to Zenodo [10.5281/zenodo.20500176](https://zenodo.org/records/20500176).
+
+The following sections demonstrate the metadata, quality control, generation of raw and normalised counts, and pseudobulk construction for the specified query.
+
 
 ```{r load-metadata}
-metadata <- get_metadata() |>
-  join_census_table()
+metadata <- get_metadata()
 metadata
-```
-
-Metadata is saved to `get_default_cache_dir()` unless a custom path is provided via the cache_directory argument. The `metadata` variable can then be re-used for all subsequent queries. 
-
-### Explore the tissue 
-
-```{r explore-tissue}
-metadata |>
-  dplyr::distinct(tissue, cell_type_unified_ensemble)
 ```
 
 ## Quality control
@@ -105,10 +100,36 @@ cellNexus metadata applies standardised quality control to filter out empty drop
 metadata <- metadata |>
   keep_quality_cells()
 
+nfeatures_df <- cellNexus:::get_cellxgene_metadata("dataset")
 metadata <- metadata |>
+  dplyr::left_join(nfeatures_df |>
+           dplyr::select(dplyr::where(~ !is.list(.x))),
+           by = "dataset_id", copy = TRUE) |>
   dplyr::filter(feature_count >= 5000)
 ```
 
+## Join Census metadata
+Original Census annotations can be retrieved by the function `get_census_metadata()`, and registered to lazy tibble format by [DuckDB](https://duckdb.org/docs/current/clients/r) 
+
+```{r load-census-metadata}
+census_metadata <- cellNexus:::get_census_metadata("2024-07-01")
+
+con <- dbplyr::remote_con(metadata)
+
+duckdb::duckdb_register_arrow(con, "census_metadata", census_metadata)
+
+metadata <- metadata |>
+  dplyr::left_join(tbl(con, "census_metadata") |> 
+                   dplyr::select(observation_joinid, dataset_id, tissue, self_reported_ethnicity, cell_type, assay, disease))
+
+```
+
+### Explore tissues 
+
+```{r explore-tissue}
+metadata |>
+  dplyr::distinct(tissue, cell_type_unified_ensemble)
+```
 
 ## Download single-cell RNA sequencing counts 
 
@@ -160,7 +181,6 @@ single_cell_sct
 ```
 
 ### Query pseudobulk
-
 ```{r get-pseudobulk}
 pseudobulk_counts <-
   metadata |>

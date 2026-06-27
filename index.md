@@ -116,11 +116,17 @@ library(cellNexus)
 library(dplyr)
 library(stringr)
 
-metadata <- get_metadata() |>
-  join_census_table()
+metadata <- get_metadata()
 
 metadata <- metadata |>
   keep_quality_cells()
+  
+census_metadata <- cellNexus:::get_census_metadata("2024-07-01")
+con <- dbplyr::remote_con(metadata)
+duckdb::duckdb_register_arrow(con, "census_metadata", census_metadata)
+
+metadata <- metadata |>
+  dplyr::left_join(tbl(con, "census_metadata"))
 
 query <- metadata |>
   filter(

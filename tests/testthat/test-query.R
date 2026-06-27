@@ -228,10 +228,9 @@ test_that("get_metadata_url() returns URLs for given database names", {
   expect_true(all(vapply(dbs, \(d) any(grepl(d, urls, fixed = TRUE)), logical(1))))
 })
 
-test_that("get_metadata() expect a unique cell_type `CD4-positive, alpha-beta T cell` is present", {
-  n_cell <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL["cellnexus"]) |>
-    join_census_table(cloud_metadata = SAMPLE_DATABASE_URL["census"]) |>
-    filter(cell_type == "CD4-positive, alpha-beta T cell") |>
+test_that("get_metadata() expect a cell_type_unified_ensemble `t cd4` is present", {
+  n_cell <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |>
+    filter(cell_type_unified_ensemble == "t cd4") |>
     as_tibble() |>
     nrow()
   expect_true(n_cell > 0)

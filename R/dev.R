@@ -237,17 +237,22 @@ hdf5_to_anndata <- function(input_directory, output_directory) {
 #' @keywords internal
 #' @noRd
 #' @param cellnexus_output Character scalar. Path to the cellnexus file.
-#' @param census_output Character scalar. Path to the census file.
+#' @param census_version Character scalar. Census LTS release in date format.
 #' @return NULL
 downsample_metadata <- function(
   cellnexus_output = "cellnexus_sample_metadata.2.3.0.parquet",
-  census_output = "census_sample_metadata.2.3.0.parquet"
+  census_version = "2024-07-01"
 ) {
-  metadata <- get_metadata() |>
-    join_census_table()
+  census_metadata <- get_census_metadata("census_version")
+  metadata <- get_metadata()
+  con <- dbplyr::remote_con(metadata)
+  duckdb_register_arrow(con, "census_metadata", census_metadata)
+
+  full_metadata <- metadata |>
+    left_join(tbl(con, "census_metadata"))
 
   # Make a table of rows per dataset
-  dataset_sizes <- metadata |>
+  dataset_sizes <- full_metadata |>
     dplyr::group_by(.data$file_id_cellNexus_single_cell) |>
     summarise(n = dplyr::n()) |>
     dplyr::collect()
@@ -291,30 +296,17 @@ downsample_metadata <- function(
     }) |>
     purrr::reduce(union)
 
-  metadata <- metadata |>
+  full_metadata <- full_metadata |>
     dplyr::filter(.data$file_id_cellNexus_single_cell %in% minimal_file_ids) |>
     dplyr::arrange(.data$file_id_cellNexus_single_cell, .data$sample_id) |>
     dplyr::collect()
 
-  census_cols <- c(
-    "observation_joinid", "dataset_id", "sample_id", "cell_type",
-    "cell_type_ontology_term_id", "assay", "assay_ontology_term_id",
-    "development_stage", "development_stage_ontology_term_id",
-    "disease", "disease_ontology_term_id", "donor_id", "is_primary_data",
-    "organism", "organism_ontology_term_id",
-    "self_reported_ethnicity", "self_reported_ethnicity_ontology_term_id",
-    "sex", "sex_ontology_term_id", "tissue", "tissue_ontology_term_id"
-  )
+  census_cols <- tbl(con, "census_metadata") |>
+    colnames()
 
-  keys <- c("observation_joinid", "dataset_id", "sample_id")
+  cellnexus_metadata <- full_metadata |>
+    dplyr::select(-dplyr::all_of(census_cols))
 
-  census_metadata <- metadata |>
-    dplyr::select(dplyr::all_of(census_cols))
-
-  cellnexus_metadata <- metadata |>
-    dplyr::select(-dplyr::all_of(setdiff(census_cols, keys)))
-
-  arrow::write_parquet(census_metadata, census_output)
   arrow::write_parquet(cellnexus_metadata, cellnexus_output)
 
   NULL
@@ -344,7 +336,7 @@ join_metacell_table <- function(tbl,
   walk(cloud_metadata, function(url) {
     # Calculate the file path from the URL
     path <- file.path(cache_directory, url |>
-                        basename())
+      basename())
     if (!file.exists(path)) {
       report_file_sizes(url)
       sync_remote_file(
@@ -355,7 +347,7 @@ join_metacell_table <- function(tbl,
     }
   })
   parquet_path <- file.path(cache_directory, cloud_metadata |>
-                              basename())
+    basename())
   # Fetch current connection
   conn <- dbplyr::remote_con(tbl)
   # Register the metacell parquet as a lazy table
@@ -428,9 +420,9 @@ duckdb_write_parquet <- function(.tbl_sql,
   sql_tbl <-
     .tbl_sql |>
     dbplyr::sql_render()
-  
+
   sql_call <- glue::glue("COPY ({sql_tbl}) TO '{path}' (FORMAT 'parquet')")
-  
+
   res <- dbExecute(con, sql_call)
   res
 }
@@ -455,12 +447,12 @@ save_sce_as_h5ad <- function(sce, path, ...) {
     as.data.frame() |>
     clean_and_report_NA_columns()
   SummarizedExperiment::colData(sce) <- S4Vectors::DataFrame(cleaned_coldata)
-  
+
   if (ncol(SummarizedExperiment::assay(sce)) == 1) {
     sce <- sce |>
       duplicate_single_column_assay()
   }
-  
+
   # anndataR does not support writing DelayedArray yet. Issue: https://github.com/scverse/anndataR/pull/387
   sce |>
     zellkonverter::writeH5AD(path, compression = "gzip", ...)
@@ -497,14 +489,14 @@ sync_metadata_assay_files <- function(data,
   atlas_name <- data |>
     pull(.data$atlas_id) |>
     unique()
-  
+
   subdirs <- assay_map[assays]
-  
+
   if (!is.null(repository)) {
     cli_alert_info("Synchronising files")
     parsed_repo <- parse_url(repository)
     assert(check_true(parsed_repo$scheme %in% c("http", "https")))
-    
+
     files_to_read <-
       data |>
       transmute(

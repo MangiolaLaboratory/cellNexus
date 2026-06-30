@@ -352,28 +352,23 @@
 <h3 id="python-client-cellnexuspy">Python client (<code>cellNexusPy</code>)<a class="anchor" aria-label="anchor" href="#python-client-cellnexuspy"></a>
 </h3>
 <p>Python support is available in the companion repository: <a href="https://github.com/MangiolaLaboratory/cellNexusPy" class="external-link"><code>MangiolaLaboratory/cellNexusPy</code></a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">from</span> cellnexuspy <span class="im">import</span> get_metadata, get_anndata</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">from</span> cellnexuspy <span class="im">import</span> get_metadata, join_census_table, keep_quality_cells, get_anndata, get_pseudobulk</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>sample_dataset <span class="op">=</span> <span class="st">"https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_metadata.1.3.0.parquet"</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>conn, table <span class="op">=</span> get_metadata(parquet_url<span class="op">=</span>sample_dataset)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>table <span class="op">=</span> table.<span class="bu">filter</span>(<span class="st">"""</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="st">    empty_droplet = 'false'</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="st">    AND alive = 'true'</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="st">    AND "scDblFinder.class" != 'doublet'</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="st">    AND feature_count &gt;= 5000</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="st">"""</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>query <span class="op">=</span> table.<span class="bu">filter</span>(<span class="st">"""</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="st">    self_reported_ethnicity = 'African'</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="st">    AND assay LIKE '</span><span class="sc">%10%</span><span class="st">'</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="st">    AND tissue = 'lung parenchyma'</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="st">    AND cell_type LIKE '%CD4%'</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="st">"""</span>)</span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>adata <span class="op">=</span> get_anndata(query, assay<span class="op">=</span><span class="st">"cpm"</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>pb <span class="op">=</span> get_anndata(query, aggregation<span class="op">=</span><span class="st">"pseudobulk"</span>)</span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>conn.close()</span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>conn, table <span class="op">=</span> get_metadata()</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>metadata <span class="op">=</span> join_census_table(conn, table)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>metadata <span class="op">=</span> keep_quality_cells(metadata)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>query <span class="op">=</span> metadata.<span class="bu">filter</span>(<span class="st">"""</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="st">                     self_reported_ethnicity == 'African' AND</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="st">                     assay LIKE '</span><span class="sc">%10x</span><span class="st">%' AND</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="st">                     tissue == 'lung parenchyma' AND</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="st">                     cell_type LIKE '%CD4%'</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="st">                     """</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>sce <span class="op">=</span> get_anndata(query, assays<span class="op">=</span>[<span class="st">"counts"</span>,<span class="st">"cpm"</span>])</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>pb <span class="op">=</span> get_pseudobulk(query)</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>conn.close()</span></code></pre></div>
 <p>For other implementation details and code examples, see <a href="https://github.com/MangiolaLaboratory/cellNexus" class="external-link">cellNexus README</a></p>
 </div>
 </div>

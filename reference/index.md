@@ -33,8 +33,6 @@
   corresponding to the samples in that data frame
 - [`get_single_cell_experiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md)
   : Gets a SingleCellExperiment from curated metadata
-- [`join_census_table()`](https://mangiolalaboratory.github.io/cellNexus/reference/join_census_table.md)
-  : Join Census metadata to an existing data frame
 - [`keep_quality_cells()`](https://mangiolalaboratory.github.io/cellNexus/reference/keep_quality_cells.md)
   : Keep high-quality cells based on QC columns
 - [`organize_inputs()`](https://mangiolalaboratory.github.io/cellNexus/reference/organize_inputs.md)

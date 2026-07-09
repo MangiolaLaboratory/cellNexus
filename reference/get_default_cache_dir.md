@@ -29,8 +29,8 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
-#> # A query:  ?? x 76
-#> # Database: DuckDB 1.5.4 [unknown@Linux 6.17.0-1018-azure:R 4.6.0/:memory:]
+#> # A query:  ?? x 58
+#> # Database: DuckDB 1.5.4 [unknown@Linux 6.17.0-1018-azure:R 4.6.1/:memory:]
 #>    cell_id observation_joinid dataset_id         sample_id sample_ experiment___
 #>      <dbl> <chr>              <chr>              <chr>     <chr>   <chr>        
 #>  1      17 QRMCN*8*|#         842c6f5d-4a94-4ee… 1119f482… 1119f4… ""           
@@ -44,7 +44,7 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default
 #>  9       2 $jvBt8wHSK         842c6f5d-4a94-4ee… 1f755b9b… 1f755b… ""           
 #> 10       5 N>_|{;6_6N         842c6f5d-4a94-4ee… 1f755b9b… 1f755b… ""           
 #> # ℹ more rows
-#> # ℹ 70 more variables: run_from_cell_id <chr>, sample_heuristic <chr>,
+#> # ℹ 52 more variables: run_from_cell_id <chr>, sample_heuristic <chr>,
 #> #   age_days <int>, tissue_groups <chr>, nFeature_expressed_in_sample <int>,
 #> #   nCount_RNA <dbl>, empty_droplet <lgl>, cell_type_unified_ensemble <chr>,
 #> #   is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,

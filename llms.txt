@@ -30,21 +30,16 @@ are consistent across studies:
 
 ### Quality control steps
 
-The QC flags used throughout `cellNexus` are computed using
-[HPCell](https://github.com/MangiolaLaboratory/HPCell). In brief:
+The QC flags used throughout `cellNexus` are computed on sample-level
+using [HPCell](https://github.com/MangiolaLaboratory/HPCell). In brief:
 
 - Empty droplets (`empty_droplet`):
-
-- Computed from a `SingleCellExperiment`.
-
-- Excludes mitochondrial genes and ribosomal genes before scoring:
-
-- Computes, per cell, the number of expressed genes and flags a cell as
-  an empty droplet when (n\_ \<) `RNA_feature_threshold` (by default
-  200, except for targeted panels such as Rhapsody technology).
-
+  - Excludes mitochondrial genes and ribosomal genes before scoring.
+  - Computes, per cell, the number of expressed genes and flags a cell
+    as an empty droplet when the number of expressed genes is less than
+    `RNA_feature_threshold` (by default 200, except for targeted panels
+    such as Rhapsody technology).
 - Alive cells (`alive`):
-
   - Filters out empty droplets.
   - Computes per-cell QC metrics from raw counts using
     `scuttle::perCellQCMetrics(..., subsets=list(Mito=...))`, where the
@@ -55,12 +50,10 @@ The QC flags used throughout `cellNexus` are computed using
     harmonised label `cell_type_unified_ensemble`.
   - Alive cells are labelled as those without high mitochondrial content
     (`!high_mitochondrion`).
-
 - Doublets (`scDblFinder.class`):
-
   - Filters out empty droplets.
   - `scDblFinder::scDblFinder()` default parameters are used. For cells
-    that cannot be classified by `scDblFinder`, the class is set to
+    that cannot be classified by `scDblFinder`, the label is set to
     `"Unknown"` to avoid dropping cells.
 
 ### RNA abundance
@@ -79,10 +72,11 @@ The QC flags used throughout `cellNexus` are computed using
     handle very large datasets; slices are written to disk as an
     `HDF5Array`-backed sparse integer matrix and then column-bound.
 - SCT:
+  - All low-quality cells flagged by QC are removed before
+    normalisation.
   - Variance-stabilising normalisation computed with Seurat
     `SCTransform()` (v2), with regression of cell-level covariates
     (`subsets_Mito_percent` and `subsets_Ribo_percent`).
-  - QC filtering is applied first.
   - The median common scale across the whole resource is applied
     (scale_factor=2186)
 - Pseudobulk:
@@ -150,11 +144,17 @@ library(cellNexus)
 library(dplyr)
 library(stringr)
 
-metadata <- get_metadata() |>
-  join_census_table()
+metadata <- get_metadata()
 
 metadata <- metadata |>
   keep_quality_cells()
+  
+census_metadata <- cellNexus:::get_census_metadata("2024-07-01")
+con <- dbplyr::remote_con(metadata)
+duckdb::duckdb_register_arrow(con, "census_metadata", census_metadata)
+
+metadata <- metadata |>
+  dplyr::left_join(tbl(con, "census_metadata"))
 
 query <- metadata |>
   filter(
@@ -231,8 +231,6 @@ README](https://github.com/MangiolaLaboratory/cellNexus)
   corresponding to the samples in that data frame
 - [`get_single_cell_experiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md)
   : Gets a SingleCellExperiment from curated metadata
-- [`join_census_table()`](https://mangiolalaboratory.github.io/cellNexus/reference/join_census_table.md)
-  : Join Census metadata to an existing data frame
 - [`keep_quality_cells()`](https://mangiolalaboratory.github.io/cellNexus/reference/keep_quality_cells.md)
   : Keep high-quality cells based on QC columns
 - [`organize_inputs()`](https://mangiolalaboratory.github.io/cellNexus/reference/organize_inputs.md)

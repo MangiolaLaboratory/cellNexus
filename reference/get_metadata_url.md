@@ -6,7 +6,7 @@ Returns the URLs for all metadata files
 
 ``` r
 get_metadata_url(
-  databases = c("cellnexus_metadata.2.3.0.parquet", "census_cell_metadata.2.3.0.parquet")
+  databases = c("hca2024_v2.3.0.parquet", "hca2025_v1.0.0.parquet")
 )
 ```
 
@@ -37,6 +37,6 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 ## Examples
 
 ``` r
-get_metadata_url("cellnexus_metadata.2.3.0.parquet")
-#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellnexus_metadata.2.3.0.parquet
+get_metadata_url("hca2024_v2.3.0.parquet")
+#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/hca2024_v2.3.0.parquet
 ```

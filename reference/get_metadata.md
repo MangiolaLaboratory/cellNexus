@@ -11,7 +11,7 @@ to obtain a
 
 ``` r
 get_metadata(
-  cloud_metadata = get_metadata_url("cellnexus_metadata.2.3.0.parquet"),
+  cloud_metadata = get_metadata_url("hca2024_v2.3.0.parquet"),
   local_metadata = NULL,
   cache_directory = get_default_cache_dir(),
   use_cache = TRUE
@@ -137,9 +137,8 @@ library(dplyr)
 # For fast build purpose only, you do not need to specify anything in cloud_metadata.
 filtered_metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |>
   filter(
-    self_reported_ethnicity == "African" &
-      assay %LIKE% "%10x%" &
-      tissue == "lung parenchyma" &
-      cell_type %LIKE% "%CD4%"
+    imputed_ethnicity == "African" &
+      tissue_groups == "breast" &
+      cell_type_unified_ensemble %LIKE% "%cd14%"
   )
 ```

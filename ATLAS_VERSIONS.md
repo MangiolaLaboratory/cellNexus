@@ -26,9 +26,41 @@ e.g. `cellxgene_2024/0.1.0`.
 
 - **Census version**: 01-07-2024
 - **Change type**: initial
+- **Modified**: 2026-03-26
 - Initial release of cellNexus atlas data linked to CellxGene Census
   01-07-2024. CellxGene Census data releases (LTS):
   <https://chanzuckerberg.github.io/cellxgene-census/cellxgene_census_docsite_data_release_info.html>
+
+------------------------------------------------------------------------
+
+## cellxgene_2024/0.2.0
+
+- **Census version**: 01-07-2024
+- **Change type**: minor
+- **Modified**: 2026-04-16
+- Changed file id creations, based on `cell_type` instead of
+  `cell_type_unified_ensemble`.
+
+------------------------------------------------------------------------
+
+## cellxgene_2024/0.2.1
+
+- **Census version**: 01-07-2024
+- **Change type**: bug
+- **Modified**: 2026-04-21
+- Fixed cell type mis-alignment from metadata and pseudobulk.
+
+------------------------------------------------------------------------
+
+## cellxgene_2024/0.4.0
+
+- **Census version**: 01-07-2024
+- **Change type**: minor
+- **Modified**: 2026-05-26
+- Updated transform methods for some samples. Involved double_log1p
+  normalisation inverse method. Fixed large expression for edge case
+  samples at
+  <https://github.com/MangiolaLaboratory/cellNexus/issues/105>.
 
 ------------------------------------------------------------------------
 

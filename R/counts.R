@@ -491,11 +491,12 @@ get_metacell <- function(data,
 # n_distinct(key_columns, x) == n_distinct(key_columns).
 get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
   if (!is.null(sample_n)) {
-    if (length(sample_n) != 1) {
-      cli::cli_abort("`sample_n` must be a positive integer when provided.")
-    }
-    if (is.na(sample_n) || sample_n < 1 || sample_n %% 1 != 0) {
-      cli::cli_abort("`sample_n` must be a positive integer when provided.")
+    sample_n_check <- checkmate::check_int(sample_n, lower = 1)
+    if (!isTRUE(sample_n_check)) {
+      cli::cli_abort(c(
+        "`sample_n` must be a single positive integer when provided.",
+        "i" = sample_n_check
+      ))
     }
     sample_n <- as.integer(sample_n)
     if (is.data.frame(.data)) {
@@ -508,16 +509,7 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
       dplyr::slice_sample(n = sample_n)
   }
 
-  key_names <- tryCatch(
-    names(tidyselect::eval_select(rlang::enquo(.col), .data)),
-    error = function(err) {
-      cli::cli_warn(c(
-        "Unable to select key columns for pseudobulk annotations: ensure `.col` selects valid columns in `.data`.",
-        "i" = conditionMessage(err)
-      ))
-      character()
-    }
-  )
+  key_names <- names(tidyselect::eval_select(rlang::enquo(.col), .data))
   if (!length(key_names)) {
     return(character())
   }

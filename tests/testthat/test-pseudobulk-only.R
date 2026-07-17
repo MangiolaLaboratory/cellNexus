@@ -82,11 +82,12 @@ test_that("get_specific_annotation_columns() handles edge cases", {
   )
   expect_true("custom_label" %in% empty_columns)
 
-  missing_key_columns <- cellNexus:::get_specific_annotation_columns(
-    tibble::tibble(a = 1:3, b = c("x", "x", "y")),
-    .col = c(sample_id, cell_type_unified_ensemble)
+  expect_error(
+    cellNexus:::get_specific_annotation_columns(
+      tibble::tibble(a = 1:3, b = c("x", "x", "y")),
+      .col = c(sample_id, cell_type_unified_ensemble)
+    )
   )
-  expect_identical(missing_key_columns, character())
 
   keys_only <- cellNexus:::get_specific_annotation_columns(
     tibble::tibble(

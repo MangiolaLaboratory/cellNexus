@@ -721,7 +721,7 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
       key_columns = c("sample_id", "cell_type_unified_ensemble")
     )
 
-    new_coldata <- df |>
+    new_coldata <- filtered_df |>
       select(all_of(unique(c("sample_id", "cell_type_unified_ensemble", pseudobulk_columns)))) |>
       distinct() |>
       mutate(

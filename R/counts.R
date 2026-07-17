@@ -486,7 +486,11 @@ get_metacell <- function(data,
     do.call(cbind, args = _)
 }
 
-# Keep columns functionally determined by key columns
+# Keep non-key columns that are functionally determined by key columns:
+# for each candidate column, keep it only when every unique key combination
+# maps to exactly one value of that column (i.e. it does not vary within
+# pseudo-sample groups).
+# `key_columns` are the grouping keys used to define pseudo-samples.
 get_specific_annotation_columns <- function(.data, key_columns) {
   key_columns <- intersect(key_columns, names(.data))
   if (!length(key_columns)) {

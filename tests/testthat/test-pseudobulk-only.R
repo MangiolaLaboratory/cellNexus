@@ -86,7 +86,8 @@ test_that("get_specific_annotation_columns() handles edge cases", {
     cellNexus:::get_specific_annotation_columns(
       tibble::tibble(a = 1:3, b = c("x", "x", "y")),
       .col = c(sample_id, cell_type_unified_ensemble)
-    )
+    ),
+    regexp = "must exist in `.data`"
   )
 
   keys_only <- cellNexus:::get_specific_annotation_columns(

@@ -502,14 +502,21 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
     if (is.data.frame(.data)) {
       sample_n <- min(sample_n, nrow(.data))
     }
-    if (sample_n == 0) {
-      return(character())
+    if (sample_n > 0) {
+      .data <- .data |>
+        dplyr::slice_sample(n = sample_n)
     }
-    .data <- .data |>
-      dplyr::slice_sample(n = sample_n)
   }
 
-  key_names <- names(tidyselect::eval_select(rlang::enquo(.col), .data))
+  key_names <- tryCatch(
+    names(tidyselect::eval_select(rlang::enquo(.col), .data)),
+    error = function(err) {
+      cli::cli_abort(c(
+        "Pseudobulk key columns selected via `.col` must exist in `.data`.",
+        "i" = conditionMessage(err)
+      ))
+    }
+  )
   if (!length(key_names)) {
     return(character())
   }

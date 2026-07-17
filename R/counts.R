@@ -486,6 +486,30 @@ get_metacell <- function(data,
     do.call(cbind, args = _)
 }
 
+# Keep columns functionally determined by key columns
+get_specific_annotation_columns <- function(.data, key_columns) {
+  key_columns <- intersect(key_columns, names(.data))
+  if (!length(key_columns)) {
+    return(character())
+  }
+
+  other_columns <- setdiff(names(.data), key_columns)
+  if (!length(other_columns)) {
+    return(character())
+  }
+
+  n_key <- dplyr::n_distinct(.data[key_columns])
+  keep <- vapply(
+    other_columns,
+    function(column_name) {
+      dplyr::n_distinct(.data[c(key_columns, column_name)]) == n_key
+    },
+    logical(1)
+  )
+
+  other_columns[keep]
+}
+
 #' Validate data parameters
 #'
 #' Given a data frame of Curated Atlas metadata obtained from [get_metadata()],
@@ -679,14 +703,22 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
       "empty_droplet", "observation_originalid", "alive", "scDblFinder.class", "is_immune"
     )
 
-    new_coldata <- df |>
+    filtered_df <- df |>
       select(-dplyr::all_of(intersect(names(df), cell_level_anno))) |>
       # Remove metacell and single-cell level annotations in pseudobulk
       dplyr::select(
         -dplyr::contains("metacell"),
         -dplyr::matches("azimuth|monaco|blueprint|subsets_|high_"),
         -dplyr::matches("raw_|nnz|n_meatured_vars|soma_")
-      ) |>
+      )
+
+    pseudobulk_columns <- get_specific_annotation_columns(
+      filtered_df,
+      key_columns = c("sample_id", "cell_type_unified_ensemble")
+    )
+
+    new_coldata <- df |>
+      select(all_of(c("sample_id", "cell_type_unified_ensemble", pseudobulk_columns))) |>
       distinct() |>
       mutate(
         sample_identifier = paste(

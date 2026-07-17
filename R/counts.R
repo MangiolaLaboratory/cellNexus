@@ -717,7 +717,7 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
       dplyr::select(
         -dplyr::contains("metacell"),
         -dplyr::matches("azimuth|monaco|blueprint|subsets_|high_"),
-        -dplyr::matches("raw_|nnz|n_meatured_vars|soma_")
+        -dplyr::matches("raw_|nnz|n_measured_vars|soma_")
       )
 
     pseudobulk_columns <- get_specific_annotation_columns(

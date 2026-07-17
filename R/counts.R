@@ -491,8 +491,17 @@ get_metacell <- function(data,
 # n_distinct(.col..., x) == n_distinct(.col...).
 get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
   if (!is.null(sample_n)) {
-    .data <- .data |>
-      dplyr::slice_sample(n = sample_n)
+    sample_n <- as.integer(sample_n)
+    if (length(sample_n) != 1 || is.na(sample_n) || sample_n < 1) {
+      cli::cli_abort("`sample_n` must be a positive integer when provided.")
+    }
+    if (is.data.frame(.data)) {
+      sample_n <- min(sample_n, nrow(.data))
+    }
+    if (sample_n > 0) {
+      .data <- .data |>
+        dplyr::slice_sample(n = sample_n)
+    }
   }
 
   key_names <- tryCatch(
@@ -523,7 +532,8 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
     counts <- dplyr::collect(counts)
   }
 
-  other_columns[as.numeric(counts[other_columns]) == counts$n_key]
+  count_values <- as.numeric(unlist(counts[other_columns], use.names = FALSE))
+  other_columns[count_values == counts$n_key]
 }
 
 #' Validate data parameters

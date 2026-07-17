@@ -491,10 +491,10 @@ get_metacell <- function(data,
 # n_distinct(key_columns, x) == n_distinct(key_columns).
 get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
   if (!is.null(sample_n)) {
-    sample_n <- as.integer(sample_n)
-    if (length(sample_n) != 1 || is.na(sample_n) || sample_n < 1) {
+    if (length(sample_n) != 1 || is.na(sample_n) || sample_n < 1 || sample_n %% 1 != 0) {
       cli::cli_abort("`sample_n` must be a positive integer when provided.")
     }
+    sample_n <- as.integer(sample_n)
     if (is.data.frame(.data)) {
       sample_n <- min(sample_n, nrow(.data))
     }
@@ -509,7 +509,7 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
     names(tidyselect::eval_select(rlang::enquo(.col), .data)),
     error = function(err) {
       cli::cli_warn(c(
-        "Unable to select key columns for pseudobulk annotations.",
+        "Unable to select key columns for pseudobulk annotations: ensure `.col` selects valid columns in `.data`.",
         "i" = conditionMessage(err)
       ))
       character()
@@ -525,15 +525,15 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
   }
 
   key_exprs <- rlang::syms(key_names)
-  dots <- lapply(other_columns, function(column_name) {
+  distinct_count_exprs <- lapply(other_columns, function(column_name) {
     rlang::expr(dplyr::n_distinct(!!!key_exprs, !!rlang::sym(column_name)))
   })
-  names(dots) <- other_columns
+  names(distinct_count_exprs) <- other_columns
 
   counts <- .data |>
     dplyr::summarise(
       n_key = dplyr::n_distinct(!!!key_exprs),
-      !!!dots
+      !!!distinct_count_exprs
     )
   if (inherits(counts, c("tbl_sql", "tbl_lazy"))) {
     counts <- dplyr::collect(counts)

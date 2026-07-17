@@ -486,9 +486,9 @@ get_metacell <- function(data,
     do.call(cbind, args = _)
 }
 
-# Keep non-key columns functionally determined by `.col`:
+# Keep non-key columns functionally determined by columns selected via `.col`:
 # keep candidate column `x` when
-# n_distinct(.col..., x) == n_distinct(.col...).
+# n_distinct(key_columns, x) == n_distinct(key_columns).
 get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
   if (!is.null(sample_n)) {
     sample_n <- as.integer(sample_n)
@@ -507,7 +507,13 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
 
   key_names <- tryCatch(
     names(tidyselect::eval_select(rlang::enquo(.col), .data)),
-    error = function(...) character()
+    error = function(err) {
+      cli::cli_warn(c(
+        "Unable to select key columns for pseudobulk annotations.",
+        "i" = conditionMessage(err)
+      ))
+      character()
+    }
   )
   if (!length(key_names)) {
     return(character())
@@ -533,7 +539,7 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
     counts <- dplyr::collect(counts)
   }
 
-  count_values <- as.integer(unlist(counts[other_columns], use.names = FALSE))
+  count_values <- unlist(counts[other_columns], use.names = FALSE)
   other_columns[count_values == counts$n_key]
 }
 

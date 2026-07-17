@@ -486,7 +486,7 @@ get_metacell <- function(data,
     do.call(cbind, args = _)
 }
 
-# Keep non-key columns functionally determined by columns selected via `.col`:
+# Keep non-key columns that are functionally determined by columns selected via `.col`:
 # keep candidate column `x` when
 # n_distinct(key_columns, x) == n_distinct(key_columns).
 # `sample_n` optionally samples rows before checking; if larger than available
@@ -502,9 +502,10 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
     }
     sample_n <- as.integer(sample_n)
     if (inherits(.data, "data.frame")) {
-      sample_n <- min(sample_n, nrow(.data))
+      n_rows <- nrow(.data)
+      sample_n <- if (n_rows == 0) NULL else min(sample_n, n_rows)
     }
-    if (sample_n > 0) {
+    if (!is.null(sample_n)) {
       .data <- .data |>
         dplyr::slice_sample(n = sample_n)
     }

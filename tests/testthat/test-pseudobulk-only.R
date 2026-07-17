@@ -61,7 +61,7 @@ test_that("get_specific_annotation_columns() keeps pseudo-sample-wise columns", 
 
   columns <- cellNexus:::get_specific_annotation_columns(
     meta,
-    key_columns = c("sample_id", "cell_type_unified_ensemble")
+    .col = c(sample_id, cell_type_unified_ensemble)
   )
 
   expect_true("custom_pseudobulk_label" %in% columns)
@@ -78,13 +78,13 @@ test_that("get_specific_annotation_columns() handles edge cases", {
   )
   empty_columns <- cellNexus:::get_specific_annotation_columns(
     empty_meta,
-    key_columns = c("sample_id", "cell_type_unified_ensemble")
+    .col = c(sample_id, cell_type_unified_ensemble)
   )
   expect_true("custom_label" %in% empty_columns)
 
   missing_key_columns <- cellNexus:::get_specific_annotation_columns(
     tibble::tibble(a = 1:3, b = c("x", "x", "y")),
-    key_columns = c("sample_id", "cell_type_unified_ensemble")
+    .col = c(sample_id, cell_type_unified_ensemble)
   )
   expect_identical(missing_key_columns, character())
 
@@ -93,7 +93,7 @@ test_that("get_specific_annotation_columns() handles edge cases", {
       sample_id = c("s1", "s2"),
       cell_type_unified_ensemble = c("ct1", "ct2")
     ),
-    key_columns = c("sample_id", "cell_type_unified_ensemble")
+    .col = c(sample_id, cell_type_unified_ensemble)
   )
   expect_identical(keys_only, character())
 
@@ -105,7 +105,7 @@ test_that("get_specific_annotation_columns() handles edge cases", {
   )
   na_columns <- cellNexus:::get_specific_annotation_columns(
     na_meta,
-    key_columns = c("sample_id", "cell_type_unified_ensemble")
+    .col = c(sample_id, cell_type_unified_ensemble)
   )
   expect_true("stable_with_na" %in% na_columns)
   expect_false("unstable_with_na" %in% na_columns)

@@ -486,36 +486,44 @@ get_metacell <- function(data,
     do.call(cbind, args = _)
 }
 
-# Keep non-key columns that are functionally determined by key columns:
-# for each candidate column, keep it only when every unique key combination
-# maps to exactly one value of that column (i.e. it does not vary within
-# pseudo-sample groups).
-# `key_columns` are the grouping keys used to define pseudo-samples.
-get_specific_annotation_columns <- function(.data, key_columns) {
-  key_columns <- intersect(key_columns, names(.data))
-  if (!length(key_columns)) {
+# Keep non-key columns functionally determined by `.col`:
+# keep candidate column `x` when
+# n_distinct(.col..., x) == n_distinct(.col...).
+get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
+  if (!is.null(sample_n)) {
+    .data <- .data |>
+      dplyr::slice_sample(n = sample_n)
+  }
+
+  key_names <- tryCatch(
+    names(tidyselect::eval_select(rlang::enquo(.col), .data)),
+    error = function(...) character()
+  )
+  if (!length(key_names)) {
     return(character())
   }
 
-  other_columns <- setdiff(names(.data), key_columns)
+  other_columns <- setdiff(colnames(.data), key_names)
   if (!length(other_columns)) {
     return(character())
   }
 
-  n_key <- .data[key_columns] |>
-    dplyr::distinct() |>
-    nrow()
-  keep <- vapply(
-    other_columns,
-    function(column_name) {
-      .data[c(key_columns, column_name)] |>
-        dplyr::distinct() |>
-        nrow() == n_key
-    },
-    logical(1)
-  )
+  key_exprs <- rlang::syms(key_names)
+  dots <- lapply(other_columns, function(column_name) {
+    rlang::expr(dplyr::n_distinct(!!!key_exprs, !!rlang::sym(column_name)))
+  })
+  names(dots) <- other_columns
 
-  other_columns[keep]
+  counts <- .data |>
+    dplyr::summarise(
+      n_key = dplyr::n_distinct(!!!key_exprs),
+      !!!dots
+    )
+  if (inherits(counts, c("tbl_sql", "tbl_lazy"))) {
+    counts <- dplyr::collect(counts)
+  }
+
+  other_columns[as.numeric(counts[other_columns]) == counts$n_key]
 }
 
 #' Validate data parameters
@@ -722,7 +730,7 @@ group_to_data_container <- function(i, df, dir_prefix, features, grouping_column
 
     pseudobulk_columns <- get_specific_annotation_columns(
       filtered_df,
-      key_columns = c("sample_id", "cell_type_unified_ensemble")
+      .col = c(sample_id, cell_type_unified_ensemble)
     )
 
     new_coldata <- filtered_df |>

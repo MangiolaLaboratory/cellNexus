@@ -498,10 +498,11 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
     if (is.data.frame(.data)) {
       sample_n <- min(sample_n, nrow(.data))
     }
-    if (sample_n > 0) {
-      .data <- .data |>
-        dplyr::slice_sample(n = sample_n)
+    if (sample_n == 0) {
+      return(character())
     }
+    .data <- .data |>
+      dplyr::slice_sample(n = sample_n)
   }
 
   key_names <- tryCatch(
@@ -532,7 +533,7 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
     counts <- dplyr::collect(counts)
   }
 
-  count_values <- as.numeric(unlist(counts[other_columns], use.names = FALSE))
+  count_values <- as.integer(unlist(counts[other_columns], use.names = FALSE))
   other_columns[count_values == counts$n_key]
 }
 

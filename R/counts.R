@@ -489,6 +489,8 @@ get_metacell <- function(data,
 # Keep non-key columns functionally determined by columns selected via `.col`:
 # keep candidate column `x` when
 # n_distinct(key_columns, x) == n_distinct(key_columns).
+# `sample_n` optionally samples rows before checking; if larger than available
+# rows for in-memory data, it is capped to the number of available rows.
 get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
   if (!is.null(sample_n)) {
     sample_n_check <- checkmate::check_int(sample_n, lower = 1)
@@ -499,7 +501,7 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
       ))
     }
     sample_n <- as.integer(sample_n)
-    if (is.data.frame(.data)) {
+    if (inherits(.data, "data.frame")) {
       sample_n <- min(sample_n, nrow(.data))
     }
     if (sample_n > 0) {

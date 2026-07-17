@@ -491,7 +491,10 @@ get_metacell <- function(data,
 # n_distinct(key_columns, x) == n_distinct(key_columns).
 get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
   if (!is.null(sample_n)) {
-    if (length(sample_n) != 1 || is.na(sample_n) || sample_n < 1 || sample_n %% 1 != 0) {
+    if (length(sample_n) != 1) {
+      cli::cli_abort("`sample_n` must be a positive integer when provided.")
+    }
+    if (is.na(sample_n) || sample_n < 1 || sample_n %% 1 != 0) {
       cli::cli_abort("`sample_n` must be a positive integer when provided.")
     }
     sample_n <- as.integer(sample_n)
@@ -519,7 +522,7 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
     return(character())
   }
 
-  other_columns <- setdiff(colnames(.data), key_names)
+  other_columns <- setdiff(names(.data), key_names)
   if (!length(other_columns)) {
     return(character())
   }
@@ -535,7 +538,7 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL) {
       n_key = dplyr::n_distinct(!!!key_exprs),
       !!!distinct_count_exprs
     )
-  if (inherits(counts, c("tbl_sql", "tbl_lazy"))) {
+  if (inherits(counts, "tbl_sql")) {
     counts <- dplyr::collect(counts)
   }
 

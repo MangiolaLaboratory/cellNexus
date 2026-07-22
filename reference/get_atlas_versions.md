@@ -78,13 +78,14 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 
 ``` r
 get_atlas_versions()
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/atlas_versions.parquet to /tmp/Rtmph5kZUN/atlas_versions.parquet
-#> # A tibble: 5 × 5
-#>   atlas_id             census_version change_type description        modified_at
-#>   <chr>                <chr>          <chr>       <chr>              <chr>      
-#> 1 cellxgene_2024/0.1.0 01-07-2024     initial     Initial release l… 2026-03-26 
-#> 2 hta_2025/0.1.0       21-10-2025     initial     Initial release i… 2026-03-26 
-#> 3 cellxgene_2024/0.2.0 01-07-2024     minor       Changed file id c… 2026-04-16 
-#> 4 cellxgene_2024/0.2.1 01-07-2024     bug         Fixed cell type m… 2026-04-21 
-#> 5 cellxgene_2024/0.4.0 01-07-2024     minor       Updated transform… 2026-05-26 
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/atlas_versions.parquet to /tmp/Rtmpctku0h/atlas_versions.parquet
+#> # A tibble: 6 × 6
+#>   atlas_id          census_version change_type description modified_at container
+#>   <chr>             <chr>          <chr>       <chr>       <chr>       <chr>    
+#> 1 cellxgene_2024/0… 01-07-2024     initial     Initial re… 2026-03-26  cellNexu…
+#> 2 hta_2025/0.1.0    21-10-2025     initial     Initial re… 2026-03-26  cellNexu…
+#> 3 cellxgene_2024/0… 01-07-2024     minor       Changed fi… 2026-04-16  cellNexu…
+#> 4 cellxgene_2024/0… 01-07-2024     bug         Fixed cell… 2026-04-21  cellNexu…
+#> 5 cellxgene_2024/0… 01-07-2024     minor       Updated tr… 2026-05-26  cellNexu…
+#> 6 hca_2024/0.4.1    01-07-2024     minor       Updated th… 2026-07-22  cellNexu…
 ```

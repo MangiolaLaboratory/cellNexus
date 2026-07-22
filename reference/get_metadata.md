@@ -11,7 +11,7 @@ to obtain a
 
 ``` r
 get_metadata(
-  cloud_metadata = get_metadata_url("hca2024_v2.3.0.parquet"),
+  cloud_metadata = get_metadata_url("hca_2024"),
   local_metadata = NULL,
   cache_directory = get_default_cache_dir(),
   use_cache = TRUE

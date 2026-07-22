@@ -30,7 +30,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/pseudobulk-select-column-dynamically/inst/CITATION)
+[`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/master/inst/CITATION)
 
 Mangiola S, Milton M, Ranathunga N, Li-Wai-Suen CS, Odainic A, Yang E,
 Hutchison W, Garnham A, Iskander J, Pal B, Yadav VK, Rossello F, Carey

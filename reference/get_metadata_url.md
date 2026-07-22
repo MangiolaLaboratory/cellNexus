@@ -5,9 +5,7 @@ Returns the URLs for all metadata files
 ## Usage
 
 ``` r
-get_metadata_url(
-  databases = c("hca2024_v2.3.0.parquet", "hca2025_v1.0.0.parquet")
-)
+get_metadata_url(databases = c("hca_2024", "hca_2025"))
 ```
 
 ## Source
@@ -19,12 +17,14 @@ al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
 
 - databases:
 
-  A character vector specifying the names of the metadata files.
-  Download the specific metadata by defining the metadata version.
+  A character vector of atlas aliases or raw parquet filenames.
+  Recognised aliases are `"hca_2024"` and `"hca_2025"`. Raw filenames
+  (e.g. `"atlas_versions.parquet"`) are passed through unchanged and are
+  intended for internal package use.
 
 ## Value
 
-A character vector of URLs to parquet files to download
+A character vector of URLs to parquet files
 
 ## References
 
@@ -37,6 +37,6 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 ## Examples
 
 ``` r
-get_metadata_url("hca2024_v2.3.0.parquet")
-#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/hca2024_v2.3.0.parquet
+get_metadata_url("hca_2024")
+#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/hca2024_v2.3.1.parquet
 ```

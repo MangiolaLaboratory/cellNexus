@@ -50,16 +50,16 @@ A filtered data frame containing only cells that pass all QC checks.
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) |>
   head(2) |>
   keep_quality_cells()
-#> # A query:  ?? x 58
+#> # A query:  ?? x 36
 #> # Database: DuckDB 1.5.4 [unknown@Linux 6.17.0-1020-azure:R 4.6.1/:memory:]
-#>   cell_id observation_joinid dataset_id          sample_id sample_ experiment___
-#>     <dbl> <chr>              <chr>               <chr>     <chr>   <chr>        
-#> 1      17 QRMCN*8*|#         842c6f5d-4a94-4eef… 1119f482… 1119f4… ""           
-#> 2      16 j}0<Y>a#X~         842c6f5d-4a94-4eef… 1119f482… 1119f4… ""           
-#> # ℹ 52 more variables: run_from_cell_id <chr>, sample_heuristic <chr>,
-#> #   age_days <int>, tissue_groups <chr>, nFeature_expressed_in_sample <int>,
-#> #   nCount_RNA <dbl>, empty_droplet <lgl>, cell_type_unified_ensemble <chr>,
-#> #   is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
+#>   cell_id dataset_id            sample_id sample_ experiment___ run_from_cell_id
+#>     <dbl> <chr>                 <chr>     <chr>   <chr>         <chr>           
+#> 1      15 842c6f5d-4a94-4eef-8… 1119f482… 1119f4… ""            NA              
+#> 2      16 842c6f5d-4a94-4eef-8… 1119f482… 1119f4… ""            NA              
+#> # ℹ 30 more variables: sample_heuristic <chr>, age_days <int>,
+#> #   tissue_groups <chr>, nFeature_expressed_in_sample <int>, nCount_RNA <dbl>,
+#> #   empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>,
+#> #   subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
 #> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>,
 #> #   sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>,
 #> #   file_id_cellNexus_single_cell <chr>, file_id_cellNexus_pseudobulk <chr>, …

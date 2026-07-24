@@ -35,9 +35,9 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.1.parquet to /tmp/Rtmpvkb4hO/sample_hca2024_v2.3.1.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.1.parquet to /tmp/RtmpdwFdgg/sample_hca2024_v2.3.1.parquet
 #> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/Rtmpvkb4hO/duckdb/extensions
+#> ℹ /tmp/RtmpdwFdgg/duckdb/extensions
 #> This is removed when the R session ends, so extensions are re-downloaded each session.
 #> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
 #> # A query:  ?? x 36

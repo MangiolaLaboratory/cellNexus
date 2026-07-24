@@ -365,8 +365,9 @@ get_specific_annotation_columns <- function(.data, .col, sample_n = NULL,
     collect()
 
   specific_cols <- other_cols[as.numeric(counts[other_cols]) == counts$n_key]
-  if (include_query_columns) 
-    specific_cols = c(key_names, specific_cols)
+  if (include_query_columns) {
+    specific_cols <- c(key_names, specific_cols)
+  }
 
   return(specific_cols)
 }

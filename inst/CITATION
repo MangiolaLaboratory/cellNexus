@@ -1,28 +1,29 @@
 citHeader("To cite cellNexus in publications use:")
 bibentry(
   bibtype = "article",
-  title = "A multi-organ map of the human immune system across age, sex and ethnicity",
+  title = "cellNexus: Quality control, annotation, aggregation and analytical layers for the Human Cell Atlas data",
   author = c(
     as.person("Stefano Mangiola"),
+    as.person("Mengyuan Shen"),
+    as.person("Yingnan Gao"),
+    as.person("Ning Liu"),
+    as.person("Dharmesh Bhuva"),
     as.person("Michael Milton"),
-    as.person("Nishika Ranathunga"),
-    as.person("Connie SN Li-Wai-Suen"),
-    as.person("Alexandru Odainic"),
+    as.person("Juan Henao"),
+    as.person("Jared Andrews"),
     as.person("Edward Yang"),
-    as.person("William Hutchison"),
-    as.person("Alexandra Garnham"),
-    as.person("Julie Iskander"),
-    as.person("Bhupinder Pal"),
-    as.person("Vijay Kumar Yadav"),
-    as.person("Fernando Rossello"),
-    as.person("Vincent Carey"),
+    as.person("Chen Zhan"),
+    as.person("Nora Liu"),
+    as.person("S Si"),
+    as.person("J. William Hutchison"),
+    as.person("Haroon M. Shakeel"),
     as.person("Martin Morgan"),
-    as.person("Sammy Bedoui"),
-    as.person("Axel Kallies"),
-    as.person("Anthony T. Papenfuss")
+    as.person("Anthony T. Papenfuss"),
+    as.person("Julie Iskander"),
+    as.person("Jose M. Polo")
   ),
-  year = 2024,
+  year = 2026,
   journal = "bioRxiv",
-  doi = "10.1101/2023.06.08.542671"
+  doi = "10.64898/2026.04.14.718336"
 )
 citFooter("URL: https://github.com/MangiolaLaboratory/cellNexus")

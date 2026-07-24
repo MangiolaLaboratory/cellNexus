@@ -96,9 +96,12 @@ loads harmonised annotations. Metadata is saved to
 unless a custom path is provided via the cache_directory argument. The
 `metadata` variable can then be re-used for all subsequent queries.
 
-The unified pseudobulk AnnData object was generated after quality
-control and retaining at least 15,000 intersecting genes across samples,
-and uploaded to Zenodo
+The unified pseudobulk AnnData object was pre-generated outside of this
+vignette applying quality control and retaining at least 15,000
+intersecting genes across samples and hosted on Zenodo to avoid lengthy
+recompilation. Download the latest version:
+[pseudobulk_se.h5ad](https://zenodo.org/records/21388944/files/pseudobulk_se.h5ad?download=1).
+For all versions:
 [10.5281/zenodo.21388944](https://zenodo.org/records/21388944).
 
 The following sections demonstrate the metadata, quality control,
@@ -111,21 +114,21 @@ metadata <- get_metadata()
 metadata
 #> # Source:   SQL [?? x 37]
 #> # Database: DuckDB 1.4.3 [unknown@Linux 5.14.0-570.123.1.el9_6.x86_64:R 4.5.3/:memory:]
-#>    cell_id observation_joinid dataset_id   sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA
+#>    cell_id observation_joinid dataset_id   sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>      <dbl> <chr>              <chr>        <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
-#>  1       1 `;+Wwc*oS9         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                        1025      113. 
-#>  2       1 s<8rT5qe3X         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                        2586       77.6
-#>  3       2 Se=|eIq*={         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                         992       57.6
-#>  4       2 dcNO`ReB5o         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                        2002      163. 
-#>  5       3 F_Jf~Pzj<!         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                         730       93.6
-#>  6      16 i(U>N;cU4_         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                         718      342. 
-#>  7       4 MK~^fbPVCl         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                         846       99.8
-#>  8       4 J+o&MJmtR5         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                         829      123. 
-#>  9      12 $LL!IWeW`F         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                        2482       61.8
-#> 10      18 $zB;$PErEP         574e9f9e-f8… b290d7ef… b290d7… ""            <NA>             BPH556PrGA2_Fco…    25915 prostate                         828       86.6
-#> # ℹ more rows
-#> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
-#> # ℹ 25 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
+#>  1       1 `;+Wwc*oS9         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                        1025      113. 
+#>  2       1 s<8rT5qe3X         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                        2586       77.6
+#>  3       2 Se=|eIq*={         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                         992       57.6
+#>  4       2 dcNO`ReB5o         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                        2002      163. 
+#>  5       3 F_Jf~Pzj<!         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                         730       93.6
+#>  6      16 i(U>N;cU4_         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                         718      342. 
+#>  7       4 MK~^fbPVCl         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                         846       99.8
+#>  8       4 J+o&MJmtR5         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                         829      123. 
+#>  9      12 $LL!IWeW`F         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                        2482       61.8
+#> 10      18 $zB;$PErEP         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            <NA>             BPH556PrGA2_Fcoâ€¦    25915 prostate                         828       86.6
+#> # â„¹ more rows
+#> # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample
+#> # â„¹ 25 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
 #> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>, sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>,
 #> #   file_id_cellNexus_single_cell <chr>, file_id_cellNexus_pseudobulk <chr>, count_upper_bound <dbl>, nfeature_expressed_thresh <dbl>, inverse_transform <chr>,
 #> #   alive <lgl>, cell_annotation_blueprint_singler <chr>, cell_annotation_monaco_singler <chr>, cell_annotation_azimuth_l2 <chr>, ethnicity_flagging_score <dbl>,
@@ -162,8 +165,8 @@ Original Census annotations can be retrieved by the function
 ``` r
 
 census_metadata <- cellNexus:::get_census_metadata("2024-07-01")
-#> ℹ Opening Census version 2024-07-01.
-#> ℹ Reading Census obs table.
+#> â„¹ Opening Census version 2024-07-01.
+#> â„¹ Reading Census obs table.
 
 con <- dbplyr::remote_con(metadata)
 
@@ -197,7 +200,7 @@ metadata |>
 #>  8 subcutaneous adipose tissue cd4 th1/th17 em           
 #>  9 subcutaneous adipose tissue granulocyte               
 #> 10 subcutaneous adipose tissue cd4 naive                 
-#> # ℹ more rows
+#> # â„¹ more rows
 ```
 
 ### Download single-cell RNA sequencing counts
@@ -214,53 +217,53 @@ single_cell_counts <-
       cell_type == "T cell"
   ) |>
   get_single_cell_experiment()
-#> ℹ Realising metadata.
-#> ℹ Synchronising files
-#> ℹ Reading files.
+#> â„¹ Realising metadata.
+#> â„¹ Synchronising files
+#> â„¹ Reading files.
 #> 
-Reading counts ■■■■                              10% | ETA: 11s
+Reading counts â– â– â– â–                               10% | ETA: 11s
 
-Reading counts ■■■■■■■                           20% | ETA:  7s
+Reading counts â– â– â– â– â– â– â–                            20% | ETA:  7s
 
-Reading counts ■■■■■■■■■■                        30% | ETA:  6s
+Reading counts â– â– â– â– â– â– â– â– â– â–                         30% | ETA:  6s
 
-Reading counts ■■■■■■■■■■■■■                     40% | ETA:  5s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â–                      40% | ETA:  5s
 
-Reading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  4s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   50% | ETA:  4s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■               60% | ETA:  3s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                60% | ETA:  3s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             70% | ETA:  2s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          80% | ETA:  1s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       90% | ETA:  1s
 
                                                                 
-ℹ Compiling Experiment.
+â„¹ Compiling Experiment.
 
 single_cell_counts
-#> # A SingleCellExperiment-tibble abstraction: 2,806 × 60
+#> # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60
 #> #  [90mFeatures=33145 | Cells=2806 | Assays=counts [0m
-#>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA
+#>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>    <chr> <chr>              <chr>          <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
-#>  1 80_1  zz-!e5_XAo         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            <NA>             7fabaf1c-52fd-4…    14600 breast                          1749      10.8 
-#>  2 81_1  -mb&DWckf(         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            <NA>             7fabaf1c-52fd-4…    14600 breast                          1993      12.4 
-#>  3 73_1  z_=CTOs4{z         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            <NA>             04983012-bb56-4…    14600 breast                          2866      10.3 
-#>  4 74_1  fNzorxA`Mf         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            <NA>             04983012-bb56-4…    14600 breast                          1942       7.58
-#>  5 76_1  bTlx!HK=oS         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1671       9.65
-#>  6 77_1  E4g5+)v;AV         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          2340      11.9 
-#>  7 78_1  +q?29B%2nH         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1714      13.2 
-#>  8 79_1  zuJ#MBMWy;         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1506      12.3 
-#>  9 1_1   I8a42<8st4         842c6f5d-4a94… 184fa234… 184fa2… ""            <NA>             c2aa4d8d-e9df-4…    14600 breast                          3395      11.8 
-#> 10 72_1  8wGs7JgUjj         842c6f5d-4a94… 6b194412… 6b1944… ""            <NA>             b3ff1aad-40fd-4…    14600 breast                          2548      13.1 
-#> # ℹ 2,796 more rows
-#> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
-#> # ℹ 48 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
+#>  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 
+#>  2 81_1  -mb&DWckf(         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1993      12.4 
+#>  3 73_1  z_=CTOs4{z         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            <NA>             04983012-bb56-4â€¦    14600 breast                          2866      10.3 
+#>  4 74_1  fNzorxA`Mf         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            <NA>             04983012-bb56-4â€¦    14600 breast                          1942       7.58
+#>  5 76_1  bTlx!HK=oS         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1671       9.65
+#>  6 77_1  E4g5+)v;AV         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          2340      11.9 
+#>  7 78_1  +q?29B%2nH         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1714      13.2 
+#>  8 79_1  zuJ#MBMWy;         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1506      12.3 
+#>  9 1_1   I8a42<8st4         842c6f5d-4a94â€¦ 184fa234â€¦ 184fa2â€¦ ""            <NA>             c2aa4d8d-e9df-4â€¦    14600 breast                          3395      11.8 
+#> 10 72_1  8wGs7JgUjj         842c6f5d-4a94â€¦ 6b194412â€¦ 6b1944â€¦ ""            <NA>             b3ff1aad-40fd-4â€¦    14600 breast                          2548      13.1 
+#> # â„¹ 2,796 more rows
+#> # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample
+#> # â„¹ 48 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
 #> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>, sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>,
 #> #   file_id_cellNexus_single_cell <chr>, file_id_cellNexus_pseudobulk <chr>, count_upper_bound <dbl>, nfeature_expressed_thresh <dbl>, inverse_transform <chr>,
 #> #   alive <lgl>, cell_annotation_blueprint_singler <chr>, cell_annotation_monaco_singler <chr>, cell_annotation_azimuth_l2 <chr>, ethnicity_flagging_score <dbl>,
-#> #   low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, dataset_version_id <chr>, collection_id <chr>, …
+#> #   low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, dataset_version_id <chr>, collection_id <chr>, â€¦
 ```
 
 #### Query counts scaled per million
@@ -275,51 +278,51 @@ single_cell_cpm <-
       cell_type == "T cell"
   ) |>
   get_single_cell_experiment(assays = "cpm")
-#> ℹ Realising metadata.
-#> ℹ Synchronising files
-#> ℹ Reading files.
+#> â„¹ Realising metadata.
+#> â„¹ Synchronising files
+#> â„¹ Reading files.
 #> 
-Reading cpm ■■■■■■■                           20% | ETA:  5s
+Reading cpm â– â– â– â– â– â– â–                            20% | ETA:  5s
 
-Reading cpm ■■■■■■■■■■                        30% | ETA:  4s
+Reading cpm â– â– â– â– â– â– â– â– â– â–                         30% | ETA:  4s
 
-Reading cpm ■■■■■■■■■■■■■                     40% | ETA:  4s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â–                      40% | ETA:  4s
 
-Reading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   50% | ETA:  3s
 
-Reading cpm ■■■■■■■■■■■■■■■■■■■               60% | ETA:  3s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                60% | ETA:  3s
 
-Reading cpm ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             70% | ETA:  2s
 
-Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          80% | ETA:  1s
 
-Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       90% | ETA:  1s
 
                                                              
-ℹ Compiling Experiment.
+â„¹ Compiling Experiment.
 
 single_cell_cpm
-#> # A SingleCellExperiment-tibble abstraction: 2,806 × 60
+#> # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60
 #> #  [90mFeatures=33145 | Cells=2806 | Assays=cpm [0m
-#>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA
+#>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>    <chr> <chr>              <chr>          <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
-#>  1 80_1  zz-!e5_XAo         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            <NA>             7fabaf1c-52fd-4…    14600 breast                          1749      10.8 
-#>  2 81_1  -mb&DWckf(         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            <NA>             7fabaf1c-52fd-4…    14600 breast                          1993      12.4 
-#>  3 73_1  z_=CTOs4{z         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            <NA>             04983012-bb56-4…    14600 breast                          2866      10.3 
-#>  4 74_1  fNzorxA`Mf         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            <NA>             04983012-bb56-4…    14600 breast                          1942       7.58
-#>  5 76_1  bTlx!HK=oS         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1671       9.65
-#>  6 77_1  E4g5+)v;AV         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          2340      11.9 
-#>  7 78_1  +q?29B%2nH         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1714      13.2 
-#>  8 79_1  zuJ#MBMWy;         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1506      12.3 
-#>  9 1_1   I8a42<8st4         842c6f5d-4a94… 184fa234… 184fa2… ""            <NA>             c2aa4d8d-e9df-4…    14600 breast                          3395      11.8 
-#> 10 72_1  8wGs7JgUjj         842c6f5d-4a94… 6b194412… 6b1944… ""            <NA>             b3ff1aad-40fd-4…    14600 breast                          2548      13.1 
-#> # ℹ 2,796 more rows
-#> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
-#> # ℹ 48 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
+#>  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 
+#>  2 81_1  -mb&DWckf(         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1993      12.4 
+#>  3 73_1  z_=CTOs4{z         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            <NA>             04983012-bb56-4â€¦    14600 breast                          2866      10.3 
+#>  4 74_1  fNzorxA`Mf         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            <NA>             04983012-bb56-4â€¦    14600 breast                          1942       7.58
+#>  5 76_1  bTlx!HK=oS         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1671       9.65
+#>  6 77_1  E4g5+)v;AV         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          2340      11.9 
+#>  7 78_1  +q?29B%2nH         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1714      13.2 
+#>  8 79_1  zuJ#MBMWy;         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1506      12.3 
+#>  9 1_1   I8a42<8st4         842c6f5d-4a94â€¦ 184fa234â€¦ 184fa2â€¦ ""            <NA>             c2aa4d8d-e9df-4â€¦    14600 breast                          3395      11.8 
+#> 10 72_1  8wGs7JgUjj         842c6f5d-4a94â€¦ 6b194412â€¦ 6b1944â€¦ ""            <NA>             b3ff1aad-40fd-4â€¦    14600 breast                          2548      13.1 
+#> # â„¹ 2,796 more rows
+#> # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample
+#> # â„¹ 48 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
 #> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>, sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>,
 #> #   file_id_cellNexus_single_cell <chr>, file_id_cellNexus_pseudobulk <chr>, count_upper_bound <dbl>, nfeature_expressed_thresh <dbl>, inverse_transform <chr>,
 #> #   alive <lgl>, cell_annotation_blueprint_singler <chr>, cell_annotation_monaco_singler <chr>, cell_annotation_azimuth_l2 <chr>, ethnicity_flagging_score <dbl>,
-#> #   low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, dataset_version_id <chr>, collection_id <chr>, …
+#> #   low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, dataset_version_id <chr>, collection_id <chr>, â€¦
 ```
 
 #### Query SCT normalised counts
@@ -334,65 +337,65 @@ single_cell_sct <-
       cell_type == "T cell"
   ) |>
   get_single_cell_experiment(assays = "sct")
-#> ℹ Realising metadata.
-#> ℹ Synchronising files
-#> ℹ Reading files.
+#> â„¹ Realising metadata.
+#> â„¹ Synchronising files
+#> â„¹ Reading files.
 #> ! The number of cells in the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?
 #> 
-Reading sct ■■■■■■■                           20% | ETA:  5s
+Reading sct â– â– â– â– â– â– â–                            20% | ETA:  5s
 
-Reading sct ■■■■■■■■■■                        30% | ETA:  4s
+Reading sct â– â– â– â– â– â– â– â– â– â–                         30% | ETA:  4s
 
-Reading sct ■■■■■■■■■■■■■                     40% | ETA:  4s
-
-                                                             
-! The number of cells in the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?
-#> Reading sct ■■■■■■■■■■■■■                     40% | ETA:  4s
-
-Reading sct ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â–                      40% | ETA:  4s
 
                                                              
 ! The number of cells in the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?
-#> Reading sct ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+#> Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â–                      40% | ETA:  4s
 
-Reading sct ■■■■■■■■■■■■■■■■■■■               60% | ETA:  3s
-
-Reading sct ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   50% | ETA:  3s
 
                                                              
 ! The number of cells in the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?
-#> Reading sct ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+#> Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   50% | ETA:  3s
 
-Reading sct ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                60% | ETA:  3s
 
-Reading sct ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             70% | ETA:  2s
+
+                                                             
+! The number of cells in the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?
+#> Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             70% | ETA:  2s
+
+Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          80% | ETA:  1s
+
+Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       90% | ETA:  1s
 
                                                              
 ! cellNexus says: 1613 cell(s) from your metadata are absent from the SCT assay across 4 file(s). This is expected: SCT normalisation is run per sample and may fail for samples with very few cells or extreme count distributions. The returned object contains only cells from samples where SCT succeeded. Affected sample_id(s): 52ab92226337d36c306466eefe67f9c1, 765554078ca8d1eaf2712000c0df0d6f, 8940e0767e7eca1b72d37b4138be2276, a79912cb9aaa8d8c0b1a3cdcc9294f8c, 5e641a2218d1d8b91f638989626c89e0.
-#> ℹ Compiling Experiment.
+#> â„¹ Compiling Experiment.
 
 single_cell_sct
-#> # A SingleCellExperiment-tibble abstraction: 1,193 × 60
+#> # A SingleCellExperiment-tibble abstraction: 1,193 Ã— 60
 #> #  [90mFeatures=33145 | Cells=1193 | Assays=sct [0m
-#>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA
+#>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>    <chr> <chr>              <chr>          <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
-#>  1 80_1  zz-!e5_XAo         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            <NA>             7fabaf1c-52fd-4…    14600 breast                          1749      10.8 
-#>  2 81_1  -mb&DWckf(         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            <NA>             7fabaf1c-52fd-4…    14600 breast                          1993      12.4 
-#>  3 73_1  z_=CTOs4{z         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            <NA>             04983012-bb56-4…    14600 breast                          2866      10.3 
-#>  4 74_1  fNzorxA`Mf         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            <NA>             04983012-bb56-4…    14600 breast                          1942       7.58
-#>  5 1_1   I8a42<8st4         842c6f5d-4a94… 184fa234… 184fa2… ""            <NA>             c2aa4d8d-e9df-4…    14600 breast                          3395      11.8 
-#>  6 72_1  8wGs7JgUjj         842c6f5d-4a94… 6b194412… 6b1944… ""            <NA>             b3ff1aad-40fd-4…    14600 breast                          2548      13.1 
-#>  7 75_1  F9G7A+GgjA         842c6f5d-4a94… db5a69ed… db5a69… ""            <NA>             49beb83c-66a1-4…    14600 breast                          1291      10.2 
-#>  8 1_2   >8f0}-gXFY         842c6f5d-4a94… 81d05f17… 81d05f… ""            <NA>             b866c1d4-3dfd-4…    14600 breast                          2513      13.3 
-#>  9 22_2  2lQ`<&l3-A         842c6f5d-4a94… 30967738… 309677… ""            <NA>             7d4045ff-3f48-4…    14600 breast                          2058       9.91
-#> 10 5_2   +p4uNj_7$S         842c6f5d-4a94… a91e6814… a91e68… ""            <NA>             700a819c-03f9-4…    14600 breast                          1870      11.1 
-#> # ℹ 1,183 more rows
-#> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
-#> # ℹ 48 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
+#>  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 
+#>  2 81_1  -mb&DWckf(         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1993      12.4 
+#>  3 73_1  z_=CTOs4{z         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            <NA>             04983012-bb56-4â€¦    14600 breast                          2866      10.3 
+#>  4 74_1  fNzorxA`Mf         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            <NA>             04983012-bb56-4â€¦    14600 breast                          1942       7.58
+#>  5 1_1   I8a42<8st4         842c6f5d-4a94â€¦ 184fa234â€¦ 184fa2â€¦ ""            <NA>             c2aa4d8d-e9df-4â€¦    14600 breast                          3395      11.8 
+#>  6 72_1  8wGs7JgUjj         842c6f5d-4a94â€¦ 6b194412â€¦ 6b1944â€¦ ""            <NA>             b3ff1aad-40fd-4â€¦    14600 breast                          2548      13.1 
+#>  7 75_1  F9G7A+GgjA         842c6f5d-4a94â€¦ db5a69edâ€¦ db5a69â€¦ ""            <NA>             49beb83c-66a1-4â€¦    14600 breast                          1291      10.2 
+#>  8 1_2   >8f0}-gXFY         842c6f5d-4a94â€¦ 81d05f17â€¦ 81d05fâ€¦ ""            <NA>             b866c1d4-3dfd-4â€¦    14600 breast                          2513      13.3 
+#>  9 22_2  2lQ`<&l3-A         842c6f5d-4a94â€¦ 30967738â€¦ 309677â€¦ ""            <NA>             7d4045ff-3f48-4â€¦    14600 breast                          2058       9.91
+#> 10 5_2   +p4uNj_7$S         842c6f5d-4a94â€¦ a91e6814â€¦ a91e68â€¦ ""            <NA>             700a819c-03f9-4â€¦    14600 breast                          1870      11.1 
+#> # â„¹ 1,183 more rows
+#> # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample
+#> # â„¹ 48 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
 #> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>, sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>,
 #> #   file_id_cellNexus_single_cell <chr>, file_id_cellNexus_pseudobulk <chr>, count_upper_bound <dbl>, nfeature_expressed_thresh <dbl>, inverse_transform <chr>,
 #> #   alive <lgl>, cell_annotation_blueprint_singler <chr>, cell_annotation_monaco_singler <chr>, cell_annotation_azimuth_l2 <chr>, ethnicity_flagging_score <dbl>,
-#> #   low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, dataset_version_id <chr>, collection_id <chr>, …
+#> #   low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, dataset_version_id <chr>, collection_id <chr>, â€¦
 ```
 
 #### Query pseudobulk
@@ -406,44 +409,44 @@ pseudobulk_counts <-
       cell_type == "classical monocyte"
   ) |>
   get_pseudobulk()
-#> ℹ Realising metadata.
-#> ℹ Synchronising files
-#> ℹ Reading files.
+#> â„¹ Realising metadata.
+#> â„¹ Synchronising files
+#> â„¹ Reading files.
 #> 
-Reading counts ■■■■■                             14% | ETA:  8s
+Reading counts â– â– â– â– â–                              14% | ETA:  8s
 
-Reading counts ■■■■■■■■■■                        29% | ETA: 11s
+Reading counts â– â– â– â– â– â– â– â– â– â–                         29% | ETA: 11s
 
-Reading counts ■■■■■■■■■■■■■■                    43% | ETA:  9s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â–                     43% | ETA:  9s
 
-Reading counts ■■■■■■■■■■■■■■■■■■                57% | ETA:  6s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                 57% | ETA:  6s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■■■■            71% | ETA:  4s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             71% | ETA:  4s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■       86% | ETA:  2s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–        86% | ETA:  2s
 
                                                                 
 ! cellNexus says: Not all genes completely overlap across the provided objects. Counts are generated by genes intersection.
-#> ℹ Compiling Experiment.
+#> â„¹ Compiling Experiment.
 
 pseudobulk_counts
-#> # A SingleCellExperiment-tibble abstraction: 139 × 43
+#> # A SingleCellExperiment-tibble abstraction: 139 Ã— 43
 #> #  [90mFeatures=15888 | Cells=139 | Assays=counts [0m
-#>    .cell           dataset_id sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups cell_type_unified_en…¹ sample_chunk cell_chunk
+#>    .cell           dataset_id sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups cell_type_unified_enâ€¦Â¹ sample_chunk cell_chunk
 #>    <chr>           <chr>      <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>         <chr>                         <int>      <int>
-#>  1 2e8c9911c9bfbf… 0ba16f4b-… 2e8c9911… 2e8c99… ""            <NA>             HDBR15279,HDBR1…       NA respiratory … cd14 mono                         1          1
-#>  2 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            <NA>             Leader_Merad_20…    29930 respiratory … monocytic                         1          5
-#>  3 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            <NA>             Leader_Merad_20…    29930 respiratory … cd14 mono                         1          5
-#>  4 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            <NA>             Leader_Merad_20…    29930 respiratory … cd16 mono                         1          5
-#>  5 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            <NA>             Leader_Merad_20…    29930 respiratory … macrophage                        1          5
-#>  6 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            <NA>             Leader_Merad_20…    29930 respiratory … other                             1          5
-#>  7 11721339cb1dfc… 1e6a6ef9-… 11721339… 117213… ""            <NA>             Leader_Merad_20…    26645 respiratory … monocytic                         1          7
-#>  8 11721339cb1dfc… 1e6a6ef9-… 11721339… 117213… ""            <NA>             Leader_Merad_20…    26645 respiratory … cd14 mono                         1          7
-#>  9 f71af64a552d45… 1e6a6ef9-… f71af64a… f71af6… ""            <NA>             Leader_Merad_20…    27010 respiratory … monocytic                         1          6
-#> 10 f71af64a552d45… 1e6a6ef9-… f71af64a… f71af6… ""            <NA>             Leader_Merad_20…    27010 respiratory … cd14 mono                         1          6
-#> # ℹ 129 more rows
-#> # ℹ abbreviated name: ¹​cell_type_unified_ensemble
-#> # ℹ 31 more variables: sample_pseudobulk_chunk <int>, file_id_cellNexus_pseudobulk <chr>, count_upper_bound <dbl>, nfeature_expressed_thresh <dbl>,
+#>  1 2e8c9911c9bfbfâ€¦ 0ba16f4b-â€¦ 2e8c9911â€¦ 2e8c99â€¦ ""            <NA>             HDBR15279,HDBR1â€¦       NA respiratory â€¦ cd14 mono                         1          1
+#>  2 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            <NA>             Leader_Merad_20â€¦    29930 respiratory â€¦ monocytic                         1          5
+#>  3 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            <NA>             Leader_Merad_20â€¦    29930 respiratory â€¦ cd14 mono                         1          5
+#>  4 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            <NA>             Leader_Merad_20â€¦    29930 respiratory â€¦ cd16 mono                         1          5
+#>  5 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            <NA>             Leader_Merad_20â€¦    29930 respiratory â€¦ macrophage                        1          5
+#>  6 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            <NA>             Leader_Merad_20â€¦    29930 respiratory â€¦ other                             1          5
+#>  7 11721339cb1dfcâ€¦ 1e6a6ef9-â€¦ 11721339â€¦ 117213â€¦ ""            <NA>             Leader_Merad_20â€¦    26645 respiratory â€¦ monocytic                         1          7
+#>  8 11721339cb1dfcâ€¦ 1e6a6ef9-â€¦ 11721339â€¦ 117213â€¦ ""            <NA>             Leader_Merad_20â€¦    26645 respiratory â€¦ cd14 mono                         1          7
+#>  9 f71af64a552d45â€¦ 1e6a6ef9-â€¦ f71af64aâ€¦ f71af6â€¦ ""            <NA>             Leader_Merad_20â€¦    27010 respiratory â€¦ monocytic                         1          6
+#> 10 f71af64a552d45â€¦ 1e6a6ef9-â€¦ f71af64aâ€¦ f71af6â€¦ ""            <NA>             Leader_Merad_20â€¦    27010 respiratory â€¦ cd14 mono                         1          6
+#> # â„¹ 129 more rows
+#> # â„¹ abbreviated name: Â¹â€‹cell_type_unified_ensemble
+#> # â„¹ 31 more variables: sample_pseudobulk_chunk <int>, file_id_cellNexus_pseudobulk <chr>, count_upper_bound <dbl>, nfeature_expressed_thresh <dbl>,
 #> #   inverse_transform <chr>, ethnicity_flagging_score <dbl>, low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>,
 #> #   dataset_version_id <chr>, collection_id <chr>, cell_count <int>, citation <chr>, default_embedding <chr>, explorer_url <chr>, feature_count <int>,
 #> #   mean_genes_per_cell <dbl>, primary_cell_count <int>, schema_version <chr>, title <chr>, tombstone <lgl>, x_approximate_distribution <chr>, published_at <date>,
@@ -455,7 +458,7 @@ pseudobulk_counts
 Cell communication metadata was generated based on post-QC cells per
 sample using `CellChat v2` method. It uses our harmonised cell type
 annotation (cell_type_unified_ensemble) to infer the communication. It
-captures inferred communication at both the ligand–receptor pair level
+captures inferred communication at both the ligandâ€“receptor pair level
 and the signalling pathway level.
 
 - interaction_count: The number of inferred interactions between each
@@ -478,13 +481,13 @@ get_cell_communication_strength(cloud_metadata = get_metadata_url("cellNexus_lr_
 #> # Database: DuckDB 1.4.3 [unknown@Linux 5.14.0-570.123.1.el9_6.x86_64:R 4.5.3/:memory:]
 #>   source    target ligand receptor   lr_prob lr_pval interaction_name    interaction_name_2      pathway_name annotation evidence pathway_prob pathway_pval sample_id
 #>   <chr>     <chr>  <chr>  <chr>        <dbl>   <dbl> <chr>               <chr>                   <chr>        <chr>      <chr>           <dbl>        <dbl> <chr>    
-#> 1 b         b      TGFB1  TGFbR1_R2 0.000116    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.000420        1     b290d7ef…
-#> 2 b memory  b      TGFB1  TGFbR1_R2 0.000865    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00185         1     b290d7ef…
-#> 3 b naive   b      TGFB1  TGFbR1_R2 0.000696    0.99 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00146         0.994 b290d7ef…
-#> 4 cd14 mono b      TGFB1  TGFbR1_R2 0.00240     0.81 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00472         0.924 b290d7ef…
-#> 5 cd4 naive b      TGFB1  TGFbR1_R2 0.000957    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00201         0.998 b290d7ef…
-#> 6 cd4 tem   b      TGFB1  TGFbR1_R2 0.00242     0.76 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00467         0.797 b290d7ef…
-#> # ℹ 2 more variables: interaction_count <dbl>, interaction_weight <dbl>
+#> 1 b         b      TGFB1  TGFbR1_R2 0.000116    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.000420        1     b290d7efâ€¦
+#> 2 b memory  b      TGFB1  TGFbR1_R2 0.000865    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00185         1     b290d7efâ€¦
+#> 3 b naive   b      TGFB1  TGFbR1_R2 0.000696    0.99 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00146         0.994 b290d7efâ€¦
+#> 4 cd14 mono b      TGFB1  TGFbR1_R2 0.00240     0.81 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00472         0.924 b290d7efâ€¦
+#> 5 cd4 naive b      TGFB1  TGFbR1_R2 0.000957    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00201         0.998 b290d7efâ€¦
+#> 6 cd4 tem   b      TGFB1  TGFbR1_R2 0.00242     0.76 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00467         0.797 b290d7efâ€¦
+#> # â„¹ 2 more variables: interaction_count <dbl>, interaction_weight <dbl>
 ```
 
 #### Extract only a subset of genes
@@ -503,51 +506,51 @@ single_cell_cpm <-
       cell_type == "T cell"
   ) |>
   get_single_cell_experiment(assays = "cpm", features = "ENSG00000134644")
-#> ℹ Realising metadata.
-#> ℹ Synchronising files
-#> ℹ Reading files.
+#> â„¹ Realising metadata.
+#> â„¹ Synchronising files
+#> â„¹ Reading files.
 #> 
-Reading cpm ■■■■■■■                           20% | ETA:  5s
+Reading cpm â– â– â– â– â– â– â–                            20% | ETA:  5s
 
-Reading cpm ■■■■■■■■■■                        30% | ETA:  4s
+Reading cpm â– â– â– â– â– â– â– â– â– â–                         30% | ETA:  4s
 
-Reading cpm ■■■■■■■■■■■■■                     40% | ETA:  4s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â–                      40% | ETA:  4s
 
-Reading cpm ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   50% | ETA:  3s
 
-Reading cpm ■■■■■■■■■■■■■■■■■■■               60% | ETA:  3s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                60% | ETA:  3s
 
-Reading cpm ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             70% | ETA:  2s
 
-Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  1s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          80% | ETA:  1s
 
-Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       90% | ETA:  1s
 
                                                              
-ℹ Compiling Experiment.
+â„¹ Compiling Experiment.
 
 single_cell_cpm
-#> # A SingleCellExperiment-tibble abstraction: 2,806 × 60
+#> # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60
 #> #  [90mFeatures=1 | Cells=2806 | Assays=cpm [0m
-#>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA
+#>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>    <chr> <chr>              <chr>          <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
-#>  1 80_1  zz-!e5_XAo         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            <NA>             7fabaf1c-52fd-4…    14600 breast                          1749      10.8 
-#>  2 81_1  -mb&DWckf(         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            <NA>             7fabaf1c-52fd-4…    14600 breast                          1993      12.4 
-#>  3 72_1  8wGs7JgUjj         842c6f5d-4a94… 6b194412… 6b1944… ""            <NA>             b3ff1aad-40fd-4…    14600 breast                          2548      13.1 
-#>  4 75_1  F9G7A+GgjA         842c6f5d-4a94… db5a69ed… db5a69… ""            <NA>             49beb83c-66a1-4…    14600 breast                          1291      10.2 
-#>  5 73_1  z_=CTOs4{z         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            <NA>             04983012-bb56-4…    14600 breast                          2866      10.3 
-#>  6 74_1  fNzorxA`Mf         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            <NA>             04983012-bb56-4…    14600 breast                          1942       7.58
-#>  7 76_1  bTlx!HK=oS         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1671       9.65
-#>  8 77_1  E4g5+)v;AV         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          2340      11.9 
-#>  9 78_1  +q?29B%2nH         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1714      13.2 
-#> 10 79_1  zuJ#MBMWy;         842c6f5d-4a94… 52ab9222… 52ab92… ""            <NA>             7ce86149-8906-4…    14600 breast                          1506      12.3 
-#> # ℹ 2,796 more rows
-#> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
-#> # ℹ 48 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
+#>  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 
+#>  2 81_1  -mb&DWckf(         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1993      12.4 
+#>  3 72_1  8wGs7JgUjj         842c6f5d-4a94â€¦ 6b194412â€¦ 6b1944â€¦ ""            <NA>             b3ff1aad-40fd-4â€¦    14600 breast                          2548      13.1 
+#>  4 75_1  F9G7A+GgjA         842c6f5d-4a94â€¦ db5a69edâ€¦ db5a69â€¦ ""            <NA>             49beb83c-66a1-4â€¦    14600 breast                          1291      10.2 
+#>  5 73_1  z_=CTOs4{z         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            <NA>             04983012-bb56-4â€¦    14600 breast                          2866      10.3 
+#>  6 74_1  fNzorxA`Mf         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            <NA>             04983012-bb56-4â€¦    14600 breast                          1942       7.58
+#>  7 76_1  bTlx!HK=oS         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1671       9.65
+#>  8 77_1  E4g5+)v;AV         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          2340      11.9 
+#>  9 78_1  +q?29B%2nH         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1714      13.2 
+#> 10 79_1  zuJ#MBMWy;         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            <NA>             7ce86149-8906-4â€¦    14600 breast                          1506      12.3 
+#> # â„¹ 2,796 more rows
+#> # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample
+#> # â„¹ 48 more variables: empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>, subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
 #> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>, sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>,
 #> #   file_id_cellNexus_single_cell <chr>, file_id_cellNexus_pseudobulk <chr>, count_upper_bound <dbl>, nfeature_expressed_thresh <dbl>, inverse_transform <chr>,
 #> #   alive <lgl>, cell_annotation_blueprint_singler <chr>, cell_annotation_monaco_singler <chr>, cell_annotation_azimuth_l2 <chr>, ethnicity_flagging_score <dbl>,
-#> #   low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, dataset_version_id <chr>, collection_id <chr>, …
+#> #   low_confidence_ethnicity <chr>, .aggregated_cells <int>, imputed_ethnicity <chr>, atlas_id <chr>, dataset_version_id <chr>, collection_id <chr>, â€¦
 ```
 
 #### Extract the counts as a Seurat object
@@ -566,28 +569,28 @@ seurat_counts <-
       cell_type == "T cell"
   ) |>
   get_seurat()
-#> ℹ Realising metadata.
-#> ℹ Synchronising files
-#> ℹ Reading files.
+#> â„¹ Realising metadata.
+#> â„¹ Synchronising files
+#> â„¹ Reading files.
 #> 
-Reading counts ■■■■■■■                           20% | ETA:  5s
+Reading counts â– â– â– â– â– â– â–                            20% | ETA:  5s
 
-Reading counts ■■■■■■■■■■                        30% | ETA:  5s
+Reading counts â– â– â– â– â– â– â– â– â– â–                         30% | ETA:  5s
 
-Reading counts ■■■■■■■■■■■■■                     40% | ETA:  4s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â–                      40% | ETA:  4s
 
-Reading counts ■■■■■■■■■■■■■■■■                  50% | ETA:  3s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   50% | ETA:  3s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■               60% | ETA:  3s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                60% | ETA:  3s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  3s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             70% | ETA:  3s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  2s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          80% | ETA:  2s
 
-Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  1s
+Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       90% | ETA:  1s
 
                                                                 
-ℹ Compiling Experiment.
+â„¹ Compiling Experiment.
 
 seurat_counts
 #> An object of class Seurat 
@@ -821,11 +824,11 @@ get_metadata(
   dplyr::filter(file_id_cellNexus_single_cell %in% c(file_id_from_cloud, file_id_local)) |>
   dplyr::select(cell_id, sample_id, dataset_id, cell_type_unified_ensemble, atlas_id, file_id_cellNexus_single_cell) |>
   get_single_cell_experiment(cache_directory = local_cache)
-#> ℹ Realising metadata.
-#> ℹ Synchronising files
-#> ℹ Reading files.
-#> ℹ Compiling Experiment.
-#> # A SingleCellExperiment-tibble abstraction: 500 × 7
+#> â„¹ Realising metadata.
+#> â„¹ Synchronising files
+#> â„¹ Reading files.
+#> â„¹ Compiling Experiment.
+#> # A SingleCellExperiment-tibble abstraction: 500 Ã— 7
 #> # Features=13132 | Cells=500 | Assays=counts
 #>    .cell            sample_id dataset_id cell_type_unified_ensemble atlas_id             file_id_cellNexus_single_cell         original_cell_
 #>    <chr>            <chr>     <chr>      <chr>                      <chr>                <chr>                                 <chr>         
@@ -839,7 +842,7 @@ get_metadata(
 #>  8 AAACGCTGGTTCTT_1 pbmc3k    pbmc3k     CD8 T                      cellxgene/03-10-2025 67e196a3c4e145151fc9e06c200e2f7f.h5ad AAACGCTGGTTCTT
 #>  9 AAACGCTGTAGCCA_1 pbmc3k    pbmc3k     Naive CD4 T                cellxgene/03-10-2025 67e196a3c4e145151fc9e06c200e2f7f.h5ad AAACGCTGTAGCCA
 #> 10 AAACGCTGTTTCTG_1 pbmc3k    pbmc3k     FCGR3A+ Mono               cellxgene/03-10-2025 67e196a3c4e145151fc9e06c200e2f7f.h5ad AAACGCTGTTTCTG
-#> # ℹ 490 more rows
+#> # â„¹ 490 more rows
 ```
 
 ## Cell metadata

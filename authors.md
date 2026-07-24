@@ -30,19 +30,19 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/pseudobulk-select-column-dynamically/inst/CITATION)
+[`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/master/inst/CITATION)
 
-Mangiola S, Milton M, Ranathunga N, Li-Wai-Suen CS, Odainic A, Yang E,
-Hutchison W, Garnham A, Iskander J, Pal B, Yadav VK, Rossello F, Carey
-V, Morgan M, Bedoui S, Kallies A, Papenfuss AT (2024). “A multi-organ
-map of the human immune system across age, sex and ethnicity.”
-*bioRxiv*.
-[doi:10.1101/2023.06.08.542671](https://doi.org/10.1101/2023.06.08.542671).
+Mangiola S, Shen M, Gao Y, Liu N, Bhuva D, Milton M, Henao J, Andrews J,
+Yang E, Zhan C, Liu N, Si S, Hutchison JW, Shakeel HM, Morgan M,
+Papenfuss AT, Iskander J, Polo JM (2026). “cellNexus: Quality control,
+annotation, aggregation and analytical layers for the Human Cell Atlas
+data.” *bioRxiv*.
+[doi:10.64898/2026.04.14.718336](https://doi.org/10.64898/2026.04.14.718336).
 
     @Article{,
-      title = {A multi-organ map of the human immune system across age, sex and ethnicity},
-      author = {Stefano Mangiola and Michael Milton and Nishika Ranathunga and Connie SN Li-Wai-Suen and Alexandru Odainic and Edward Yang and William Hutchison and Alexandra Garnham and Julie Iskander and Bhupinder Pal and Vijay Kumar Yadav and Fernando Rossello and Vincent Carey and Martin Morgan and Sammy Bedoui and Axel Kallies and Anthony T. Papenfuss},
-      year = {2024},
+      title = {cellNexus: Quality control, annotation, aggregation and analytical layers for the Human Cell Atlas data},
+      author = {Stefano Mangiola and Mengyuan Shen and Yingnan Gao and Ning Liu and Dharmesh Bhuva and Michael Milton and Juan Henao and Jared Andrews and Edward Yang and Chen Zhan and Nora Liu and S Si and J. William Hutchison and Haroon M. Shakeel and Martin Morgan and Anthony T. Papenfuss and Julie Iskander and Jose M. Polo},
+      year = {2026},
       journal = {bioRxiv},
-      doi = {10.1101/2023.06.08.542671},
+      doi = {10.64898/2026.04.14.718336},
     }

@@ -74,7 +74,7 @@
 al.</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/pseudobulk-select-column-dynamically/vignettes/cellNexus.Rmd" class="external-link"><code>vignettes/cellNexus.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/vignettes/cellNexus.Rmd" class="external-link"><code>vignettes/cellNexus.Rmd</code></a></small>
       <div class="d-none name"><code>cellNexus.Rmd</code></div>
     </div>
 
@@ -152,7 +152,7 @@ plot of chunk fig-funders
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install-deprecated.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="load-the-package">Load the package<a class="anchor" aria-label="anchor" href="#load-the-package"></a>
@@ -179,9 +179,11 @@ Metadata is saved to <code><a href="../reference/get_default_cache_dir.html">get
 custom path is provided via the cache_directory argument. The
 <code>metadata</code> variable can then be re-used for all subsequent
 queries.</p>
-<p>The unified pseudobulk AnnData object was generated after quality
-control and retaining at least 15,000 intersecting genes across samples,
-and uploaded to Zenodo <a href="https://zenodo.org/records/21388944" class="external-link">10.5281/zenodo.21388944</a>.</p>
+<p>The unified pseudobulk AnnData object was pre-generated outside of
+this vignette applying quality control and retaining at least 15,000
+intersecting genes across samples and hosted on Zenodo to avoid lengthy
+recompilation. Download the latest version: <a href="https://zenodo.org/records/21388944/files/pseudobulk_se.h5ad?download=1" class="external-link">pseudobulk_se.h5ad</a>.
+For all versions: <a href="https://zenodo.org/records/21388944" class="external-link">10.5281/zenodo.21388944</a>.</p>
 <p>The following sections demonstrate the metadata, quality control,
 generation of raw and normalised counts, and pseudobulk construction for
 the specified query.</p>
@@ -190,21 +192,21 @@ the specified query.</p>
 <span><span class="va">metadata</span></span>
 <span><span class="co">#&gt; # Source:   SQL [?? x 37]</span></span>
 <span><span class="co">#&gt; # Database: DuckDB 1.4.3 [unknown@Linux 5.14.0-570.123.1.el9_6.x86_64:R 4.5.3/:memory:]</span></span>
-<span><span class="co">#&gt;    cell_id observation_joinid dataset_id   sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA</span></span>
+<span><span class="co">#&gt;    cell_id observation_joinid dataset_id   sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span><span class="co">#&gt;      &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1       1 `;+Wwc*oS9         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                        1025      113. </span></span>
-<span><span class="co">#&gt;  2       1 s&lt;8rT5qe3X         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                        2586       77.6</span></span>
-<span><span class="co">#&gt;  3       2 Se=|eIq*={         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                         992       57.6</span></span>
-<span><span class="co">#&gt;  4       2 dcNO`ReB5o         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                        2002      163. </span></span>
-<span><span class="co">#&gt;  5       3 F_Jf~Pzj&lt;!         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                         730       93.6</span></span>
-<span><span class="co">#&gt;  6      16 i(U&gt;N;cU4_         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                         718      342. </span></span>
-<span><span class="co">#&gt;  7       4 MK~^fbPVCl         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                         846       99.8</span></span>
-<span><span class="co">#&gt;  8       4 J+o&amp;MJmtR5         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                         829      123. </span></span>
-<span><span class="co">#&gt;  9      12 $LL!IWeW`F         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                        2482       61.8</span></span>
-<span><span class="co">#&gt; 10      18 $zB;$PErEP         574e9f9e-f8… b290d7ef… b290d7… ""            &lt;NA&gt;             BPH556PrGA2_Fco…    25915 prostate                         828       86.6</span></span>
-<span><span class="co">#&gt; # ℹ more rows</span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​nFeature_expressed_in_sample</span></span>
-<span><span class="co">#&gt; # ℹ 25 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
+<span><span class="co">#&gt;  1       1 `;+Wwc*oS9         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                        1025      113. </span></span>
+<span><span class="co">#&gt;  2       1 s&lt;8rT5qe3X         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                        2586       77.6</span></span>
+<span><span class="co">#&gt;  3       2 Se=|eIq*={         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                         992       57.6</span></span>
+<span><span class="co">#&gt;  4       2 dcNO`ReB5o         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                        2002      163. </span></span>
+<span><span class="co">#&gt;  5       3 F_Jf~Pzj&lt;!         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                         730       93.6</span></span>
+<span><span class="co">#&gt;  6      16 i(U&gt;N;cU4_         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                         718      342. </span></span>
+<span><span class="co">#&gt;  7       4 MK~^fbPVCl         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                         846       99.8</span></span>
+<span><span class="co">#&gt;  8       4 J+o&amp;MJmtR5         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                         829      123. </span></span>
+<span><span class="co">#&gt;  9      12 $LL!IWeW`F         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                        2482       61.8</span></span>
+<span><span class="co">#&gt; 10      18 $zB;$PErEP         574e9f9e-f8â€¦ b290d7efâ€¦ b290d7â€¦ ""            &lt;NA&gt;             BPH556PrGA2_Fcoâ€¦    25915 prostate                         828       86.6</span></span>
+<span><span class="co">#&gt; # â„¹ more rows</span></span>
+<span><span class="co">#&gt; # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample</span></span>
+<span><span class="co">#&gt; # â„¹ 25 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, sample_chunk &lt;int&gt;, cell_chunk &lt;int&gt;, sample_pseudobulk_chunk &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   file_id_cellNexus_single_cell &lt;chr&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   alive &lt;lgl&gt;, cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;, ethnicity_flagging_score &lt;dbl&gt;,</span></span>
@@ -238,8 +240,8 @@ gene counts.</p>
 by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">DuckDB</a></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">census_metadata</span> <span class="op">&lt;-</span> <span class="fu">cellNexus</span><span class="fu">:::</span><span class="fu">get_census_metadata</span><span class="op">(</span><span class="st">"2024-07-01"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Opening Census version 2024-07-01.</span></span>
-<span><span class="co">#&gt; ℹ Reading Census obs table.</span></span>
+<span><span class="co">#&gt; â„¹ Opening Census version 2024-07-01.</span></span>
+<span><span class="co">#&gt; â„¹ Reading Census obs table.</span></span>
 <span></span>
 <span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">dbplyr</span><span class="fu">::</span><span class="fu"><a href="https://dbplyr.tidyverse.org/reference/remote_name.html" class="external-link">remote_con</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span></span>
 <span></span>
@@ -271,7 +273,7 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span><span class="co">#&gt;  8 subcutaneous adipose tissue cd4 th1/th17 em           </span></span>
 <span><span class="co">#&gt;  9 subcutaneous adipose tissue granulocyte               </span></span>
 <span><span class="co">#&gt; 10 subcutaneous adipose tissue cd4 naive                 </span></span>
-<span><span class="co">#&gt; # ℹ more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # â„¹ more rows</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -289,53 +291,53 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>      cell_type <span class="sc">==</span> <span class="st">"T cell"</span></span>
 <span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>  <span class="fu">get_single_cell_experiment</span>()</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; ℹ Reading files.</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; â„¹ Realising metadata.</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; â„¹ Synchronising files</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; â„¹ Reading files.</span></span>
 <span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>Reading counts ■■■■                              <span class="dv">10</span>% <span class="sc">|</span> ETA<span class="sc">:</span> <span class="dv">11</span>s</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>Reading counts â– â– â– â–                               <span class="dv">10</span>% <span class="sc">|</span> ETA<span class="sc">:</span> <span class="dv">11</span>s</span>
 <span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>Reading counts ■■■■■■■                           <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">7</span>s</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â–                            <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">7</span>s</span>
 <span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>Reading counts ■■■■■■■■■■                        <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">6</span>s</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â–                         <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">6</span>s</span>
 <span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■                     <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â–                      <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
 <span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■                  <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■               <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■■■■            <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
 <span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■         <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a></span>
 <span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>                                                                </span>
-<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a>ℹ Compiling Experiment.</span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a>â„¹ Compiling Experiment.</span>
 <span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a></span>
 <span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>single_cell_counts</span>
-<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 × 60</span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60</span></span>
 <span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=33145 | Cells=2806 | Assays=counts [0m</span></span>
-<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA</span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
-<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            &lt;NA&gt;             7fabaf1c-52fd-4…    14600 breast                          1749      10.8 </span></span>
-<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a><span class="co">#&gt;  2 81_1  -mb&amp;DWckf(         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            &lt;NA&gt;             7fabaf1c-52fd-4…    14600 breast                          1993      12.4 </span></span>
-<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a><span class="co">#&gt;  3 73_1  z_=CTOs4{z         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            &lt;NA&gt;             04983012-bb56-4…    14600 breast                          2866      10.3 </span></span>
-<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a><span class="co">#&gt;  4 74_1  fNzorxA`Mf         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            &lt;NA&gt;             04983012-bb56-4…    14600 breast                          1942       7.58</span></span>
-<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="co">#&gt;  5 76_1  bTlx!HK=oS         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1671       9.65</span></span>
-<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="co">#&gt;  6 77_1  E4g5+)v;AV         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          2340      11.9 </span></span>
-<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">#&gt;  7 78_1  +q?29B%2nH         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1714      13.2 </span></span>
-<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co">#&gt;  8 79_1  zuJ#MBMWy;         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1506      12.3 </span></span>
-<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="co">#&gt;  9 1_1   I8a42&lt;8st4         842c6f5d-4a94… 184fa234… 184fa2… ""            &lt;NA&gt;             c2aa4d8d-e9df-4…    14600 breast                          3395      11.8 </span></span>
-<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="co">#&gt; 10 72_1  8wGs7JgUjj         842c6f5d-4a94… 6b194412… 6b1944… ""            &lt;NA&gt;             b3ff1aad-40fd-4…    14600 breast                          2548      13.1 </span></span>
-<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,796 more rows</span></span>
-<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a><span class="co">#&gt; # ℹ abbreviated name: ¹​nFeature_expressed_in_sample</span></span>
-<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a><span class="co">#&gt; # ℹ 48 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 </span></span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a><span class="co">#&gt;  2 81_1  -mb&amp;DWckf(         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1993      12.4 </span></span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a><span class="co">#&gt;  3 73_1  z_=CTOs4{z         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            &lt;NA&gt;             04983012-bb56-4â€¦    14600 breast                          2866      10.3 </span></span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a><span class="co">#&gt;  4 74_1  fNzorxA`Mf         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            &lt;NA&gt;             04983012-bb56-4â€¦    14600 breast                          1942       7.58</span></span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="co">#&gt;  5 76_1  bTlx!HK=oS         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1671       9.65</span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="co">#&gt;  6 77_1  E4g5+)v;AV         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          2340      11.9 </span></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">#&gt;  7 78_1  +q?29B%2nH         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1714      13.2 </span></span>
+<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co">#&gt;  8 79_1  zuJ#MBMWy;         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1506      12.3 </span></span>
+<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="co">#&gt;  9 1_1   I8a42&lt;8st4         842c6f5d-4a94â€¦ 184fa234â€¦ 184fa2â€¦ ""            &lt;NA&gt;             c2aa4d8d-e9df-4â€¦    14600 breast                          3395      11.8 </span></span>
+<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="co">#&gt; 10 72_1  8wGs7JgUjj         842c6f5d-4a94â€¦ 6b194412â€¦ 6b1944â€¦ ""            &lt;NA&gt;             b3ff1aad-40fd-4â€¦    14600 breast                          2548      13.1 </span></span>
+<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a><span class="co">#&gt; # â„¹ 2,796 more rows</span></span>
+<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a><span class="co">#&gt; # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample</span></span>
+<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a><span class="co">#&gt; # â„¹ 48 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
 <span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a><span class="co">#&gt; #   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, sample_chunk &lt;int&gt;, cell_chunk &lt;int&gt;, sample_pseudobulk_chunk &lt;int&gt;,</span></span>
 <span id="cb8-54"><a href="#cb8-54" tabindex="-1"></a><span class="co">#&gt; #   file_id_cellNexus_single_cell &lt;chr&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
 <span id="cb8-55"><a href="#cb8-55" tabindex="-1"></a><span class="co">#&gt; #   alive &lt;lgl&gt;, cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;, ethnicity_flagging_score &lt;dbl&gt;,</span></span>
-<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, …</span></span></code></pre></div>
+<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, â€¦</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="query-counts-scaled-per-million">Query counts scaled per million<a class="anchor" aria-label="anchor" href="#query-counts-scaled-per-million"></a>
@@ -349,51 +351,51 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>      cell_type <span class="sc">==</span> <span class="st">"T cell"</span></span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  <span class="fu">get_single_cell_experiment</span>(<span class="at">assays =</span> <span class="st">"cpm"</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; ℹ Reading files.</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; â„¹ Realising metadata.</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; â„¹ Synchronising files</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; â„¹ Reading files.</span></span>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>Reading cpm ■■■■■■■                           <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â–                            <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
 <span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>Reading cpm ■■■■■■■■■■                        <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â–                         <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■                     <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â–                      <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■                  <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■■■■               <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■■■■■■■            <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
 <span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a></span>
-<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■         <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a></span>
 <span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>                                                             </span>
-<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a>ℹ Compiling Experiment.</span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a>â„¹ Compiling Experiment.</span>
 <span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a></span>
 <span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a>single_cell_cpm</span>
-<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 × 60</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60</span></span>
 <span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=33145 | Cells=2806 | Assays=cpm [0m</span></span>
-<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA</span></span>
+<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
-<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            &lt;NA&gt;             7fabaf1c-52fd-4…    14600 breast                          1749      10.8 </span></span>
-<span id="cb9-39"><a href="#cb9-39" tabindex="-1"></a><span class="co">#&gt;  2 81_1  -mb&amp;DWckf(         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            &lt;NA&gt;             7fabaf1c-52fd-4…    14600 breast                          1993      12.4 </span></span>
-<span id="cb9-40"><a href="#cb9-40" tabindex="-1"></a><span class="co">#&gt;  3 73_1  z_=CTOs4{z         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            &lt;NA&gt;             04983012-bb56-4…    14600 breast                          2866      10.3 </span></span>
-<span id="cb9-41"><a href="#cb9-41" tabindex="-1"></a><span class="co">#&gt;  4 74_1  fNzorxA`Mf         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            &lt;NA&gt;             04983012-bb56-4…    14600 breast                          1942       7.58</span></span>
-<span id="cb9-42"><a href="#cb9-42" tabindex="-1"></a><span class="co">#&gt;  5 76_1  bTlx!HK=oS         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1671       9.65</span></span>
-<span id="cb9-43"><a href="#cb9-43" tabindex="-1"></a><span class="co">#&gt;  6 77_1  E4g5+)v;AV         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          2340      11.9 </span></span>
-<span id="cb9-44"><a href="#cb9-44" tabindex="-1"></a><span class="co">#&gt;  7 78_1  +q?29B%2nH         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1714      13.2 </span></span>
-<span id="cb9-45"><a href="#cb9-45" tabindex="-1"></a><span class="co">#&gt;  8 79_1  zuJ#MBMWy;         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1506      12.3 </span></span>
-<span id="cb9-46"><a href="#cb9-46" tabindex="-1"></a><span class="co">#&gt;  9 1_1   I8a42&lt;8st4         842c6f5d-4a94… 184fa234… 184fa2… ""            &lt;NA&gt;             c2aa4d8d-e9df-4…    14600 breast                          3395      11.8 </span></span>
-<span id="cb9-47"><a href="#cb9-47" tabindex="-1"></a><span class="co">#&gt; 10 72_1  8wGs7JgUjj         842c6f5d-4a94… 6b194412… 6b1944… ""            &lt;NA&gt;             b3ff1aad-40fd-4…    14600 breast                          2548      13.1 </span></span>
-<span id="cb9-48"><a href="#cb9-48" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,796 more rows</span></span>
-<span id="cb9-49"><a href="#cb9-49" tabindex="-1"></a><span class="co">#&gt; # ℹ abbreviated name: ¹​nFeature_expressed_in_sample</span></span>
-<span id="cb9-50"><a href="#cb9-50" tabindex="-1"></a><span class="co">#&gt; # ℹ 48 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
+<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 </span></span>
+<span id="cb9-39"><a href="#cb9-39" tabindex="-1"></a><span class="co">#&gt;  2 81_1  -mb&amp;DWckf(         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1993      12.4 </span></span>
+<span id="cb9-40"><a href="#cb9-40" tabindex="-1"></a><span class="co">#&gt;  3 73_1  z_=CTOs4{z         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            &lt;NA&gt;             04983012-bb56-4â€¦    14600 breast                          2866      10.3 </span></span>
+<span id="cb9-41"><a href="#cb9-41" tabindex="-1"></a><span class="co">#&gt;  4 74_1  fNzorxA`Mf         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            &lt;NA&gt;             04983012-bb56-4â€¦    14600 breast                          1942       7.58</span></span>
+<span id="cb9-42"><a href="#cb9-42" tabindex="-1"></a><span class="co">#&gt;  5 76_1  bTlx!HK=oS         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1671       9.65</span></span>
+<span id="cb9-43"><a href="#cb9-43" tabindex="-1"></a><span class="co">#&gt;  6 77_1  E4g5+)v;AV         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          2340      11.9 </span></span>
+<span id="cb9-44"><a href="#cb9-44" tabindex="-1"></a><span class="co">#&gt;  7 78_1  +q?29B%2nH         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1714      13.2 </span></span>
+<span id="cb9-45"><a href="#cb9-45" tabindex="-1"></a><span class="co">#&gt;  8 79_1  zuJ#MBMWy;         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1506      12.3 </span></span>
+<span id="cb9-46"><a href="#cb9-46" tabindex="-1"></a><span class="co">#&gt;  9 1_1   I8a42&lt;8st4         842c6f5d-4a94â€¦ 184fa234â€¦ 184fa2â€¦ ""            &lt;NA&gt;             c2aa4d8d-e9df-4â€¦    14600 breast                          3395      11.8 </span></span>
+<span id="cb9-47"><a href="#cb9-47" tabindex="-1"></a><span class="co">#&gt; 10 72_1  8wGs7JgUjj         842c6f5d-4a94â€¦ 6b194412â€¦ 6b1944â€¦ ""            &lt;NA&gt;             b3ff1aad-40fd-4â€¦    14600 breast                          2548      13.1 </span></span>
+<span id="cb9-48"><a href="#cb9-48" tabindex="-1"></a><span class="co">#&gt; # â„¹ 2,796 more rows</span></span>
+<span id="cb9-49"><a href="#cb9-49" tabindex="-1"></a><span class="co">#&gt; # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample</span></span>
+<span id="cb9-50"><a href="#cb9-50" tabindex="-1"></a><span class="co">#&gt; # â„¹ 48 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
 <span id="cb9-51"><a href="#cb9-51" tabindex="-1"></a><span class="co">#&gt; #   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, sample_chunk &lt;int&gt;, cell_chunk &lt;int&gt;, sample_pseudobulk_chunk &lt;int&gt;,</span></span>
 <span id="cb9-52"><a href="#cb9-52" tabindex="-1"></a><span class="co">#&gt; #   file_id_cellNexus_single_cell &lt;chr&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
 <span id="cb9-53"><a href="#cb9-53" tabindex="-1"></a><span class="co">#&gt; #   alive &lt;lgl&gt;, cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;, ethnicity_flagging_score &lt;dbl&gt;,</span></span>
-<span id="cb9-54"><a href="#cb9-54" tabindex="-1"></a><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, …</span></span></code></pre></div>
+<span id="cb9-54"><a href="#cb9-54" tabindex="-1"></a><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, â€¦</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="query-sct-normalised-counts">Query SCT normalised counts<a class="anchor" aria-label="anchor" href="#query-sct-normalised-counts"></a>
@@ -407,65 +409,65 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>      cell_type <span class="sc">==</span> <span class="st">"T cell"</span></span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  <span class="fu">get_single_cell_experiment</span>(<span class="at">assays =</span> <span class="st">"sct"</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; ℹ Reading files.</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; â„¹ Realising metadata.</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; â„¹ Synchronising files</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; â„¹ Reading files.</span></span>
 <span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; ! The number of cells in the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?</span></span>
 <span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>Reading sct ■■■■■■■                           <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>Reading sct â– â– â– â– â– â– â–                            <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
 <span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>Reading sct ■■■■■■■■■■                        <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>Reading sct â– â– â– â– â– â– â– â– â– â–                         <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>Reading sct ■■■■■■■■■■■■■                     <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â–                      <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a></span>
 <span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>                                                             </span>
 <span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="sc">!</span> The number of cells <span class="cf">in</span> the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?</span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; Reading sct ■■■■■■■■■■■■■                     40% | ETA:  4s</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â–                      40% | ETA:  4s</span></span>
 <span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>Reading sct ■■■■■■■■■■■■■■■■                  <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a></span>
 <span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>                                                             </span>
 <span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a><span class="sc">!</span> The number of cells <span class="cf">in</span> the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?</span>
-<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="co">#&gt; Reading sct ■■■■■■■■■■■■■■■■                  50% | ETA:  3s</span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="co">#&gt; Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   50% | ETA:  3s</span></span>
 <span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a></span>
-<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>Reading sct ■■■■■■■■■■■■■■■■■■■               <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a></span>
-<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a>Reading sct ■■■■■■■■■■■■■■■■■■■■■■            <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a>Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
 <span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a></span>
 <span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>                                                             </span>
 <span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a><span class="sc">!</span> The number of cells <span class="cf">in</span> the SingleCellExperiment will be less than the number of cells you have selected from the metadata. Are cell IDs duplicated? Or, do cell IDs correspond to the counts file?</span>
-<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a><span class="co">#&gt; Reading sct ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  2s</span></span>
+<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a><span class="co">#&gt; Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             70% | ETA:  2s</span></span>
 <span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a></span>
-<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a>Reading sct ■■■■■■■■■■■■■■■■■■■■■■■■■         <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a>Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a></span>
-<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a>Reading sct ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a>Reading sct â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a></span>
 <span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a>                                                             </span>
 <span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a><span class="sc">!</span> cellNexus says<span class="sc">:</span> <span class="dv">1613</span> <span class="fu">cell</span>(s) from your metadata are absent from the SCT assay across <span class="dv">4</span> <span class="fu">file</span>(s). This is expected<span class="sc">:</span> SCT normalisation is run per sample and may fail <span class="cf">for</span> samples with very few cells or extreme count distributions. The returned object contains only cells from samples where SCT succeeded. Affected <span class="fu">sample_id</span>(s)<span class="sc">:</span> <span class="dv">52</span>ab92226337d36c306466eefe67f9c1, <span class="dv">765554078</span>ca8d1eaf2712000c0df0d6f, <span class="fl">8940e0767</span>e7eca1b72d37b4138be2276, a79912cb9aaa8d8c0b1a3cdcc9294f8c, <span class="fl">5e641</span>a2218d1d8b91f638989626c89e0.</span>
-<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a><span class="co">#&gt; ℹ Compiling Experiment.</span></span>
+<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a><span class="co">#&gt; â„¹ Compiling Experiment.</span></span>
 <span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a></span>
 <span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a>single_cell_sct</span>
-<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 1,193 × 60</span></span>
+<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 1,193 Ã— 60</span></span>
 <span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=33145 | Cells=1193 | Assays=sct [0m</span></span>
-<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA</span></span>
+<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
-<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            &lt;NA&gt;             7fabaf1c-52fd-4…    14600 breast                          1749      10.8 </span></span>
-<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a><span class="co">#&gt;  2 81_1  -mb&amp;DWckf(         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            &lt;NA&gt;             7fabaf1c-52fd-4…    14600 breast                          1993      12.4 </span></span>
-<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a><span class="co">#&gt;  3 73_1  z_=CTOs4{z         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            &lt;NA&gt;             04983012-bb56-4…    14600 breast                          2866      10.3 </span></span>
-<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a><span class="co">#&gt;  4 74_1  fNzorxA`Mf         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            &lt;NA&gt;             04983012-bb56-4…    14600 breast                          1942       7.58</span></span>
-<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a><span class="co">#&gt;  5 1_1   I8a42&lt;8st4         842c6f5d-4a94… 184fa234… 184fa2… ""            &lt;NA&gt;             c2aa4d8d-e9df-4…    14600 breast                          3395      11.8 </span></span>
-<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a><span class="co">#&gt;  6 72_1  8wGs7JgUjj         842c6f5d-4a94… 6b194412… 6b1944… ""            &lt;NA&gt;             b3ff1aad-40fd-4…    14600 breast                          2548      13.1 </span></span>
-<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a><span class="co">#&gt;  7 75_1  F9G7A+GgjA         842c6f5d-4a94… db5a69ed… db5a69… ""            &lt;NA&gt;             49beb83c-66a1-4…    14600 breast                          1291      10.2 </span></span>
-<span id="cb10-59"><a href="#cb10-59" tabindex="-1"></a><span class="co">#&gt;  8 1_2   &gt;8f0}-gXFY         842c6f5d-4a94… 81d05f17… 81d05f… ""            &lt;NA&gt;             b866c1d4-3dfd-4…    14600 breast                          2513      13.3 </span></span>
-<span id="cb10-60"><a href="#cb10-60" tabindex="-1"></a><span class="co">#&gt;  9 22_2  2lQ`&lt;&amp;l3-A         842c6f5d-4a94… 30967738… 309677… ""            &lt;NA&gt;             7d4045ff-3f48-4…    14600 breast                          2058       9.91</span></span>
-<span id="cb10-61"><a href="#cb10-61" tabindex="-1"></a><span class="co">#&gt; 10 5_2   +p4uNj_7$S         842c6f5d-4a94… a91e6814… a91e68… ""            &lt;NA&gt;             700a819c-03f9-4…    14600 breast                          1870      11.1 </span></span>
-<span id="cb10-62"><a href="#cb10-62" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,183 more rows</span></span>
-<span id="cb10-63"><a href="#cb10-63" tabindex="-1"></a><span class="co">#&gt; # ℹ abbreviated name: ¹​nFeature_expressed_in_sample</span></span>
-<span id="cb10-64"><a href="#cb10-64" tabindex="-1"></a><span class="co">#&gt; # ℹ 48 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
+<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 </span></span>
+<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a><span class="co">#&gt;  2 81_1  -mb&amp;DWckf(         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1993      12.4 </span></span>
+<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a><span class="co">#&gt;  3 73_1  z_=CTOs4{z         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            &lt;NA&gt;             04983012-bb56-4â€¦    14600 breast                          2866      10.3 </span></span>
+<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a><span class="co">#&gt;  4 74_1  fNzorxA`Mf         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            &lt;NA&gt;             04983012-bb56-4â€¦    14600 breast                          1942       7.58</span></span>
+<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a><span class="co">#&gt;  5 1_1   I8a42&lt;8st4         842c6f5d-4a94â€¦ 184fa234â€¦ 184fa2â€¦ ""            &lt;NA&gt;             c2aa4d8d-e9df-4â€¦    14600 breast                          3395      11.8 </span></span>
+<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a><span class="co">#&gt;  6 72_1  8wGs7JgUjj         842c6f5d-4a94â€¦ 6b194412â€¦ 6b1944â€¦ ""            &lt;NA&gt;             b3ff1aad-40fd-4â€¦    14600 breast                          2548      13.1 </span></span>
+<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a><span class="co">#&gt;  7 75_1  F9G7A+GgjA         842c6f5d-4a94â€¦ db5a69edâ€¦ db5a69â€¦ ""            &lt;NA&gt;             49beb83c-66a1-4â€¦    14600 breast                          1291      10.2 </span></span>
+<span id="cb10-59"><a href="#cb10-59" tabindex="-1"></a><span class="co">#&gt;  8 1_2   &gt;8f0}-gXFY         842c6f5d-4a94â€¦ 81d05f17â€¦ 81d05fâ€¦ ""            &lt;NA&gt;             b866c1d4-3dfd-4â€¦    14600 breast                          2513      13.3 </span></span>
+<span id="cb10-60"><a href="#cb10-60" tabindex="-1"></a><span class="co">#&gt;  9 22_2  2lQ`&lt;&amp;l3-A         842c6f5d-4a94â€¦ 30967738â€¦ 309677â€¦ ""            &lt;NA&gt;             7d4045ff-3f48-4â€¦    14600 breast                          2058       9.91</span></span>
+<span id="cb10-61"><a href="#cb10-61" tabindex="-1"></a><span class="co">#&gt; 10 5_2   +p4uNj_7$S         842c6f5d-4a94â€¦ a91e6814â€¦ a91e68â€¦ ""            &lt;NA&gt;             700a819c-03f9-4â€¦    14600 breast                          1870      11.1 </span></span>
+<span id="cb10-62"><a href="#cb10-62" tabindex="-1"></a><span class="co">#&gt; # â„¹ 1,183 more rows</span></span>
+<span id="cb10-63"><a href="#cb10-63" tabindex="-1"></a><span class="co">#&gt; # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample</span></span>
+<span id="cb10-64"><a href="#cb10-64" tabindex="-1"></a><span class="co">#&gt; # â„¹ 48 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
 <span id="cb10-65"><a href="#cb10-65" tabindex="-1"></a><span class="co">#&gt; #   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, sample_chunk &lt;int&gt;, cell_chunk &lt;int&gt;, sample_pseudobulk_chunk &lt;int&gt;,</span></span>
 <span id="cb10-66"><a href="#cb10-66" tabindex="-1"></a><span class="co">#&gt; #   file_id_cellNexus_single_cell &lt;chr&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
 <span id="cb10-67"><a href="#cb10-67" tabindex="-1"></a><span class="co">#&gt; #   alive &lt;lgl&gt;, cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;, ethnicity_flagging_score &lt;dbl&gt;,</span></span>
-<span id="cb10-68"><a href="#cb10-68" tabindex="-1"></a><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, …</span></span></code></pre></div>
+<span id="cb10-68"><a href="#cb10-68" tabindex="-1"></a><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, â€¦</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="query-pseudobulk">Query pseudobulk<a class="anchor" aria-label="anchor" href="#query-pseudobulk"></a>
@@ -478,44 +480,44 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>      cell_type <span class="sc">==</span> <span class="st">"classical monocyte"</span></span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  <span class="fu">get_pseudobulk</span>()</span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; ℹ Reading files.</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; â„¹ Realising metadata.</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; â„¹ Synchronising files</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; â„¹ Reading files.</span></span>
 <span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>Reading counts ■■■■■                             <span class="dv">14</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">8</span>s</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>Reading counts â– â– â– â– â–                              <span class="dv">14</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">8</span>s</span>
 <span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>Reading counts ■■■■■■■■■■                        <span class="dv">29</span>% <span class="sc">|</span> ETA<span class="sc">:</span> <span class="dv">11</span>s</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â–                         <span class="dv">29</span>% <span class="sc">|</span> ETA<span class="sc">:</span> <span class="dv">11</span>s</span>
 <span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■                    <span class="dv">43</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">9</span>s</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â–                     <span class="dv">43</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">9</span>s</span>
 <span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■                <span class="dv">57</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">6</span>s</span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                 <span class="dv">57</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">6</span>s</span>
 <span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■■■■            <span class="dv">71</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             <span class="dv">71</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a></span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■       <span class="dv">86</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–        <span class="dv">86</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
 <span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a></span>
 <span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>                                                                </span>
 <span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="sc">!</span> cellNexus says<span class="sc">:</span> Not all genes completely overlap across the provided objects. Counts are generated by genes intersection.</span>
-<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="co">#&gt; ℹ Compiling Experiment.</span></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="co">#&gt; â„¹ Compiling Experiment.</span></span>
 <span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a></span>
 <span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>pseudobulk_counts</span>
-<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 139 × 43</span></span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 139 Ã— 43</span></span>
 <span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=15888 | Cells=139 | Assays=counts [0m</span></span>
-<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a><span class="co">#&gt;    .cell           dataset_id sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups cell_type_unified_en…¹ sample_chunk cell_chunk</span></span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a><span class="co">#&gt;    .cell           dataset_id sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups cell_type_unified_enâ€¦Â¹ sample_chunk cell_chunk</span></span>
 <span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;                         &lt;int&gt;      &lt;int&gt;</span></span>
-<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="co">#&gt;  1 2e8c9911c9bfbf… 0ba16f4b-… 2e8c9911… 2e8c99… ""            &lt;NA&gt;             HDBR15279,HDBR1…       NA respiratory … cd14 mono                         1          1</span></span>
-<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a><span class="co">#&gt;  2 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            &lt;NA&gt;             Leader_Merad_20…    29930 respiratory … monocytic                         1          5</span></span>
-<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a><span class="co">#&gt;  3 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            &lt;NA&gt;             Leader_Merad_20…    29930 respiratory … cd14 mono                         1          5</span></span>
-<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a><span class="co">#&gt;  4 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            &lt;NA&gt;             Leader_Merad_20…    29930 respiratory … cd16 mono                         1          5</span></span>
-<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="co">#&gt;  5 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            &lt;NA&gt;             Leader_Merad_20…    29930 respiratory … macrophage                        1          5</span></span>
-<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a><span class="co">#&gt;  6 0d874636bc714a… 1e6a6ef9-… 0d874636… 0d8746… ""            &lt;NA&gt;             Leader_Merad_20…    29930 respiratory … other                             1          5</span></span>
-<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a><span class="co">#&gt;  7 11721339cb1dfc… 1e6a6ef9-… 11721339… 117213… ""            &lt;NA&gt;             Leader_Merad_20…    26645 respiratory … monocytic                         1          7</span></span>
-<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a><span class="co">#&gt;  8 11721339cb1dfc… 1e6a6ef9-… 11721339… 117213… ""            &lt;NA&gt;             Leader_Merad_20…    26645 respiratory … cd14 mono                         1          7</span></span>
-<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a><span class="co">#&gt;  9 f71af64a552d45… 1e6a6ef9-… f71af64a… f71af6… ""            &lt;NA&gt;             Leader_Merad_20…    27010 respiratory … monocytic                         1          6</span></span>
-<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a><span class="co">#&gt; 10 f71af64a552d45… 1e6a6ef9-… f71af64a… f71af6… ""            &lt;NA&gt;             Leader_Merad_20…    27010 respiratory … cd14 mono                         1          6</span></span>
-<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a><span class="co">#&gt; # ℹ 129 more rows</span></span>
-<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a><span class="co">#&gt; # ℹ abbreviated name: ¹​cell_type_unified_ensemble</span></span>
-<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a><span class="co">#&gt; # ℹ 31 more variables: sample_pseudobulk_chunk &lt;int&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;,</span></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="co">#&gt;  1 2e8c9911c9bfbfâ€¦ 0ba16f4b-â€¦ 2e8c9911â€¦ 2e8c99â€¦ ""            &lt;NA&gt;             HDBR15279,HDBR1â€¦       NA respiratory â€¦ cd14 mono                         1          1</span></span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a><span class="co">#&gt;  2 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    29930 respiratory â€¦ monocytic                         1          5</span></span>
+<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a><span class="co">#&gt;  3 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    29930 respiratory â€¦ cd14 mono                         1          5</span></span>
+<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a><span class="co">#&gt;  4 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    29930 respiratory â€¦ cd16 mono                         1          5</span></span>
+<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="co">#&gt;  5 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    29930 respiratory â€¦ macrophage                        1          5</span></span>
+<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a><span class="co">#&gt;  6 0d874636bc714aâ€¦ 1e6a6ef9-â€¦ 0d874636â€¦ 0d8746â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    29930 respiratory â€¦ other                             1          5</span></span>
+<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a><span class="co">#&gt;  7 11721339cb1dfcâ€¦ 1e6a6ef9-â€¦ 11721339â€¦ 117213â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    26645 respiratory â€¦ monocytic                         1          7</span></span>
+<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a><span class="co">#&gt;  8 11721339cb1dfcâ€¦ 1e6a6ef9-â€¦ 11721339â€¦ 117213â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    26645 respiratory â€¦ cd14 mono                         1          7</span></span>
+<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a><span class="co">#&gt;  9 f71af64a552d45â€¦ 1e6a6ef9-â€¦ f71af64aâ€¦ f71af6â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    27010 respiratory â€¦ monocytic                         1          6</span></span>
+<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a><span class="co">#&gt; 10 f71af64a552d45â€¦ 1e6a6ef9-â€¦ f71af64aâ€¦ f71af6â€¦ ""            &lt;NA&gt;             Leader_Merad_20â€¦    27010 respiratory â€¦ cd14 mono                         1          6</span></span>
+<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a><span class="co">#&gt; # â„¹ 129 more rows</span></span>
+<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a><span class="co">#&gt; # â„¹ abbreviated name: Â¹â€‹cell_type_unified_ensemble</span></span>
+<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a><span class="co">#&gt; # â„¹ 31 more variables: sample_pseudobulk_chunk &lt;int&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;,</span></span>
 <span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a><span class="co">#&gt; #   inverse_transform &lt;chr&gt;, ethnicity_flagging_score &lt;dbl&gt;, low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;,</span></span>
 <span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a><span class="co">#&gt; #   dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, cell_count &lt;int&gt;, citation &lt;chr&gt;, default_embedding &lt;chr&gt;, explorer_url &lt;chr&gt;, feature_count &lt;int&gt;,</span></span>
 <span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a><span class="co">#&gt; #   mean_genes_per_cell &lt;dbl&gt;, primary_cell_count &lt;int&gt;, schema_version &lt;chr&gt;, title &lt;chr&gt;, tombstone &lt;lgl&gt;, x_approximate_distribution &lt;chr&gt;, published_at &lt;date&gt;,</span></span>
@@ -529,7 +531,7 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 sample using <code>CellChat v2</code> method. It uses our harmonised
 cell type annotation (cell_type_unified_ensemble) to infer the
 communication. It captures inferred communication at both the
-ligand–receptor pair level and the signalling pathway level.</p>
+ligandâ€“receptor pair level and the signalling pathway level.</p>
 <ul>
 <li><p>interaction_count: The number of inferred interactions between
 each pair of cell groups.</p></li>
@@ -547,13 +549,13 @@ this case.</p>
 <span><span class="co">#&gt; # Database: DuckDB 1.4.3 [unknown@Linux 5.14.0-570.123.1.el9_6.x86_64:R 4.5.3/:memory:]</span></span>
 <span><span class="co">#&gt;   source    target ligand receptor   lr_prob lr_pval interaction_name    interaction_name_2      pathway_name annotation evidence pathway_prob pathway_pval sample_id</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;                   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;    </span></span>
-<span><span class="co">#&gt; 1 b         b      TGFB1  TGFbR1_R2 0.000116    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.000420        1     b290d7ef…</span></span>
-<span><span class="co">#&gt; 2 b memory  b      TGFB1  TGFbR1_R2 0.000865    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00185         1     b290d7ef…</span></span>
-<span><span class="co">#&gt; 3 b naive   b      TGFB1  TGFbR1_R2 0.000696    0.99 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00146         0.994 b290d7ef…</span></span>
-<span><span class="co">#&gt; 4 cd14 mono b      TGFB1  TGFbR1_R2 0.00240     0.81 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00472         0.924 b290d7ef…</span></span>
-<span><span class="co">#&gt; 5 cd4 naive b      TGFB1  TGFbR1_R2 0.000957    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00201         0.998 b290d7ef…</span></span>
-<span><span class="co">#&gt; 6 cd4 tem   b      TGFB1  TGFbR1_R2 0.00242     0.76 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted … KEGG: h…     0.00467         0.797 b290d7ef…</span></span>
-<span><span class="co">#&gt; # ℹ 2 more variables: interaction_count &lt;dbl&gt;, interaction_weight &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 b         b      TGFB1  TGFbR1_R2 0.000116    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.000420        1     b290d7efâ€¦</span></span>
+<span><span class="co">#&gt; 2 b memory  b      TGFB1  TGFbR1_R2 0.000865    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00185         1     b290d7efâ€¦</span></span>
+<span><span class="co">#&gt; 3 b naive   b      TGFB1  TGFbR1_R2 0.000696    0.99 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00146         0.994 b290d7efâ€¦</span></span>
+<span><span class="co">#&gt; 4 cd14 mono b      TGFB1  TGFbR1_R2 0.00240     0.81 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00472         0.924 b290d7efâ€¦</span></span>
+<span><span class="co">#&gt; 5 cd4 naive b      TGFB1  TGFbR1_R2 0.000957    1    TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00201         0.998 b290d7efâ€¦</span></span>
+<span><span class="co">#&gt; 6 cd4 tem   b      TGFB1  TGFbR1_R2 0.00242     0.76 TGFB1_TGFBR1_TGFBR2 TGFB1 - (TGFBR1+TGFBR2) TGFb         Secreted â€¦ KEGG: hâ€¦     0.00467         0.797 b290d7efâ€¦</span></span>
+<span><span class="co">#&gt; # â„¹ 2 more variables: interaction_count &lt;dbl&gt;, interaction_weight &lt;dbl&gt;</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="extract-only-a-subset-of-genes">Extract only a subset of genes<a class="anchor" aria-label="anchor" href="#extract-only-a-subset-of-genes"></a>
 </h4>
@@ -569,51 +571,51 @@ cellNexus uses ENSEMBL gene ID(s).</p>
 <span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>      cell_type <span class="sc">==</span> <span class="st">"T cell"</span></span>
 <span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>  <span class="fu">get_single_cell_experiment</span>(<span class="at">assays =</span> <span class="st">"cpm"</span>, <span class="at">features =</span> <span class="st">"ENSG00000134644"</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; ℹ Reading files.</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; â„¹ Realising metadata.</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; â„¹ Synchronising files</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; â„¹ Reading files.</span></span>
 <span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>Reading cpm ■■■■■■■                           <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â–                            <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
 <span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>Reading cpm ■■■■■■■■■■                        <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â–                         <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■                     <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â–                      <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a></span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■                  <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a></span>
-<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■■■■               <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a></span>
-<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■■■■■■■            <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
 <span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a></span>
-<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■         <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a></span>
-<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>Reading cpm ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>Reading cpm â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a></span>
 <span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a>                                                             </span>
-<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>ℹ Compiling Experiment.</span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>â„¹ Compiling Experiment.</span>
 <span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a></span>
 <span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a>single_cell_cpm</span>
-<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 × 60</span></span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60</span></span>
 <span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=1 | Cells=2806 | Assays=cpm [0m</span></span>
-<span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA</span></span>
+<span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span id="cb13-37"><a href="#cb13-37" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
-<span id="cb13-38"><a href="#cb13-38" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            &lt;NA&gt;             7fabaf1c-52fd-4…    14600 breast                          1749      10.8 </span></span>
-<span id="cb13-39"><a href="#cb13-39" tabindex="-1"></a><span class="co">#&gt;  2 81_1  -mb&amp;DWckf(         842c6f5d-4a94… 1de3f3ba… 1de3f3… ""            &lt;NA&gt;             7fabaf1c-52fd-4…    14600 breast                          1993      12.4 </span></span>
-<span id="cb13-40"><a href="#cb13-40" tabindex="-1"></a><span class="co">#&gt;  3 72_1  8wGs7JgUjj         842c6f5d-4a94… 6b194412… 6b1944… ""            &lt;NA&gt;             b3ff1aad-40fd-4…    14600 breast                          2548      13.1 </span></span>
-<span id="cb13-41"><a href="#cb13-41" tabindex="-1"></a><span class="co">#&gt;  4 75_1  F9G7A+GgjA         842c6f5d-4a94… db5a69ed… db5a69… ""            &lt;NA&gt;             49beb83c-66a1-4…    14600 breast                          1291      10.2 </span></span>
-<span id="cb13-42"><a href="#cb13-42" tabindex="-1"></a><span class="co">#&gt;  5 73_1  z_=CTOs4{z         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            &lt;NA&gt;             04983012-bb56-4…    14600 breast                          2866      10.3 </span></span>
-<span id="cb13-43"><a href="#cb13-43" tabindex="-1"></a><span class="co">#&gt;  6 74_1  fNzorxA`Mf         842c6f5d-4a94… 4b5e66fa… 4b5e66… ""            &lt;NA&gt;             04983012-bb56-4…    14600 breast                          1942       7.58</span></span>
-<span id="cb13-44"><a href="#cb13-44" tabindex="-1"></a><span class="co">#&gt;  7 76_1  bTlx!HK=oS         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1671       9.65</span></span>
-<span id="cb13-45"><a href="#cb13-45" tabindex="-1"></a><span class="co">#&gt;  8 77_1  E4g5+)v;AV         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          2340      11.9 </span></span>
-<span id="cb13-46"><a href="#cb13-46" tabindex="-1"></a><span class="co">#&gt;  9 78_1  +q?29B%2nH         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1714      13.2 </span></span>
-<span id="cb13-47"><a href="#cb13-47" tabindex="-1"></a><span class="co">#&gt; 10 79_1  zuJ#MBMWy;         842c6f5d-4a94… 52ab9222… 52ab92… ""            &lt;NA&gt;             7ce86149-8906-4…    14600 breast                          1506      12.3 </span></span>
-<span id="cb13-48"><a href="#cb13-48" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,796 more rows</span></span>
-<span id="cb13-49"><a href="#cb13-49" tabindex="-1"></a><span class="co">#&gt; # ℹ abbreviated name: ¹​nFeature_expressed_in_sample</span></span>
-<span id="cb13-50"><a href="#cb13-50" tabindex="-1"></a><span class="co">#&gt; # ℹ 48 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
+<span id="cb13-38"><a href="#cb13-38" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 </span></span>
+<span id="cb13-39"><a href="#cb13-39" tabindex="-1"></a><span class="co">#&gt;  2 81_1  -mb&amp;DWckf(         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1993      12.4 </span></span>
+<span id="cb13-40"><a href="#cb13-40" tabindex="-1"></a><span class="co">#&gt;  3 72_1  8wGs7JgUjj         842c6f5d-4a94â€¦ 6b194412â€¦ 6b1944â€¦ ""            &lt;NA&gt;             b3ff1aad-40fd-4â€¦    14600 breast                          2548      13.1 </span></span>
+<span id="cb13-41"><a href="#cb13-41" tabindex="-1"></a><span class="co">#&gt;  4 75_1  F9G7A+GgjA         842c6f5d-4a94â€¦ db5a69edâ€¦ db5a69â€¦ ""            &lt;NA&gt;             49beb83c-66a1-4â€¦    14600 breast                          1291      10.2 </span></span>
+<span id="cb13-42"><a href="#cb13-42" tabindex="-1"></a><span class="co">#&gt;  5 73_1  z_=CTOs4{z         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            &lt;NA&gt;             04983012-bb56-4â€¦    14600 breast                          2866      10.3 </span></span>
+<span id="cb13-43"><a href="#cb13-43" tabindex="-1"></a><span class="co">#&gt;  6 74_1  fNzorxA`Mf         842c6f5d-4a94â€¦ 4b5e66faâ€¦ 4b5e66â€¦ ""            &lt;NA&gt;             04983012-bb56-4â€¦    14600 breast                          1942       7.58</span></span>
+<span id="cb13-44"><a href="#cb13-44" tabindex="-1"></a><span class="co">#&gt;  7 76_1  bTlx!HK=oS         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1671       9.65</span></span>
+<span id="cb13-45"><a href="#cb13-45" tabindex="-1"></a><span class="co">#&gt;  8 77_1  E4g5+)v;AV         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          2340      11.9 </span></span>
+<span id="cb13-46"><a href="#cb13-46" tabindex="-1"></a><span class="co">#&gt;  9 78_1  +q?29B%2nH         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1714      13.2 </span></span>
+<span id="cb13-47"><a href="#cb13-47" tabindex="-1"></a><span class="co">#&gt; 10 79_1  zuJ#MBMWy;         842c6f5d-4a94â€¦ 52ab9222â€¦ 52ab92â€¦ ""            &lt;NA&gt;             7ce86149-8906-4â€¦    14600 breast                          1506      12.3 </span></span>
+<span id="cb13-48"><a href="#cb13-48" tabindex="-1"></a><span class="co">#&gt; # â„¹ 2,796 more rows</span></span>
+<span id="cb13-49"><a href="#cb13-49" tabindex="-1"></a><span class="co">#&gt; # â„¹ abbreviated name: Â¹â€‹nFeature_expressed_in_sample</span></span>
+<span id="cb13-50"><a href="#cb13-50" tabindex="-1"></a><span class="co">#&gt; # â„¹ 48 more variables: empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
 <span id="cb13-51"><a href="#cb13-51" tabindex="-1"></a><span class="co">#&gt; #   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, sample_chunk &lt;int&gt;, cell_chunk &lt;int&gt;, sample_pseudobulk_chunk &lt;int&gt;,</span></span>
 <span id="cb13-52"><a href="#cb13-52" tabindex="-1"></a><span class="co">#&gt; #   file_id_cellNexus_single_cell &lt;chr&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
 <span id="cb13-53"><a href="#cb13-53" tabindex="-1"></a><span class="co">#&gt; #   alive &lt;lgl&gt;, cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;, ethnicity_flagging_score &lt;dbl&gt;,</span></span>
-<span id="cb13-54"><a href="#cb13-54" tabindex="-1"></a><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, …</span></span></code></pre></div>
+<span id="cb13-54"><a href="#cb13-54" tabindex="-1"></a><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, dataset_version_id &lt;chr&gt;, collection_id &lt;chr&gt;, â€¦</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="extract-the-counts-as-a-seurat-object">Extract the counts as a Seurat object<a class="anchor" aria-label="anchor" href="#extract-the-counts-as-a-seurat-object"></a>
@@ -630,28 +632,28 @@ requesting.</p>
 <span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>      cell_type <span class="sc">==</span> <span class="st">"T cell"</span></span>
 <span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  <span class="fu">get_seurat</span>()</span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; ℹ Reading files.</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; â„¹ Realising metadata.</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; â„¹ Synchronising files</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; â„¹ Reading files.</span></span>
 <span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>Reading counts ■■■■■■■                           <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â–                            <span class="dv">20</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
 <span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>Reading counts ■■■■■■■■■■                        <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â–                         <span class="dv">30</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">5</span>s</span>
 <span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■                     <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â–                      <span class="dv">40</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">4</span>s</span>
 <span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■                  <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                   <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■               <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–                <span class="dv">60</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a></span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■■■■            <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–             <span class="dv">70</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">3</span>s</span>
 <span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a></span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■         <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–          <span class="dv">80</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">2</span>s</span>
 <span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a></span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a>Reading counts â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â–       <span class="dv">90</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
 <span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a></span>
 <span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a>                                                                </span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a>ℹ Compiling Experiment.</span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a>â„¹ Compiling Experiment.</span>
 <span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a></span>
 <span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a>seurat_counts</span>
 <span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="co">#&gt; An object of class Seurat </span></span>
@@ -870,11 +872,11 @@ in cellNexus::pbmc3k_sce</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">file_id_cellNexus_single_cell</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">file_id_from_cloud</span>, <span class="va">file_id_local</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">cell_id</span>, <span class="va">sample_id</span>, <span class="va">dataset_id</span>, <span class="va">cell_type_unified_ensemble</span>, <span class="va">atlas_id</span>, <span class="va">file_id_cellNexus_single_cell</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_single_cell_experiment.html">get_single_cell_experiment</a></span><span class="op">(</span>cache_directory <span class="op">=</span> <span class="va">local_cache</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span><span class="co">#&gt; ℹ Reading files.</span></span>
-<span><span class="co">#&gt; ℹ Compiling Experiment.</span></span>
-<span><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 500 × 7</span></span>
+<span><span class="co">#&gt; â„¹ Realising metadata.</span></span>
+<span><span class="co">#&gt; â„¹ Synchronising files</span></span>
+<span><span class="co">#&gt; â„¹ Reading files.</span></span>
+<span><span class="co">#&gt; â„¹ Compiling Experiment.</span></span>
+<span><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 500 Ã— 7</span></span>
 <span><span class="co">#&gt; # <span style="color: #555555;">Features=13132 | Cells=500 | Assays=counts</span></span></span>
 <span><span class="co">#&gt;    .cell            sample_id dataset_id cell_type_unified_ensemble atlas_id             file_id_cellNexus_single_cell         original_cell_</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;                      &lt;chr&gt;                &lt;chr&gt;                                 &lt;chr&gt;         </span></span>
@@ -888,7 +890,7 @@ in cellNexus::pbmc3k_sce</p>
 <span><span class="co">#&gt;  8 AAACGCTGGTTCTT_1 pbmc3k    pbmc3k     CD8 T                      cellxgene/03-10-2025 67e196a3c4e145151fc9e06c200e2f7f.h5ad AAACGCTGGTTCTT</span></span>
 <span><span class="co">#&gt;  9 AAACGCTGTAGCCA_1 pbmc3k    pbmc3k     Naive CD4 T                cellxgene/03-10-2025 67e196a3c4e145151fc9e06c200e2f7f.h5ad AAACGCTGTAGCCA</span></span>
 <span><span class="co">#&gt; 10 AAACGCTGTTTCTG_1 pbmc3k    pbmc3k     FCGR3A+ Mono               cellxgene/03-10-2025 67e196a3c4e145151fc9e06c200e2f7f.h5ad AAACGCTGTTTCTG</span></span>
-<span><span class="co">#&gt; # ℹ 490 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # â„¹ 490 more rows</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

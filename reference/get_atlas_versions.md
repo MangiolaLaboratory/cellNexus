@@ -78,7 +78,7 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 
 ``` r
 get_atlas_versions()
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/atlas_versions.parquet to /tmp/Rtmprfsss4/atlas_versions.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/atlas_versions.parquet to /tmp/Rtmpvkb4hO/atlas_versions.parquet
 #> # A tibble: 6 × 6
 #>   atlas_id          census_version change_type description modified_at container
 #>   <chr>             <chr>          <chr>       <chr>       <chr>       <chr>    

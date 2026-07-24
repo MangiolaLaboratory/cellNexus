@@ -25,7 +25,7 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.28</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.29</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,6 +129,13 @@ feature rownames; <code>get_pseudobulk()</code> restores them after coercion.</p
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>By default, a <code>SingleCellExperiment</code> object. If
 <code>as_SummarizedExperiment</code> is <code>TRUE</code>, a <code>SummarizedExperiment</code> object.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Columns in <code>data</code> that are constant within each
+<code>sample_id</code> × <code>cell_type_unified_ensemble</code> combination (including
+user-added annotations) are retained in <code>colData</code>. Cell-level columns are
+dropped via internal <code>keep_specific_annotation_columns()</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

@@ -83,6 +83,13 @@ al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
 By default, a `SingleCellExperiment` object. If
 `as_SummarizedExperiment` is `TRUE`, a `SummarizedExperiment` object.
 
+## Details
+
+Columns in `data` that are constant within each `sample_id` ×
+`cell_type_unified_ensemble` combination (including user-added
+annotations) are retained in `colData`. Cell-level columns are dropped
+via internal `keep_specific_annotation_columns()`.
+
 ## References
 
 Shen, M., Y. Gao, N. Liu, D. Bhuva, M. Milton, J. Henao, J. Andrews, E.

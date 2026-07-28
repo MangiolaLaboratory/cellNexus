@@ -88,7 +88,11 @@ using [HPCell](https://github.com/MangiolaLaboratory/HPCell). In brief:
 ## Metadata Explore
 
 Through harmonisation and curation, `cellNexus` adds columns that are
-not present in the original CELLxGENE metadata alone.
+not present in the original CELLxGENE metadata alone. The latest
+metadata is downloaded automatically when you call
+[`get_metadata()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metadata.md)
+— no need to supply a download link manually. See the client usage
+examples for details on the columns available.
 
 | Column | Description |
 |----|----|

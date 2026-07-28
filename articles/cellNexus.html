@@ -152,7 +152,7 @@ plot of chunk fig-funders
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install-deprecated.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"MangiolaLaboratory/cellNexus"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="load-the-package">Load the package<a class="anchor" aria-label="anchor" href="#load-the-package"></a>
@@ -182,8 +182,8 @@ queries.</p>
 <p>The unified pseudobulk AnnData object was pre-generated outside of
 this vignette applying quality control and retaining at least 15,000
 intersecting genes across samples and hosted on Zenodo to avoid lengthy
-recompilation. Download the latest version: <a href="https://zenodo.org/records/21388944/files/pseudobulk_se.h5ad?download=1" class="external-link">pseudobulk_se.h5ad</a>.
-For all versions: <a href="https://zenodo.org/records/21388944" class="external-link">10.5281/zenodo.21388944</a>.</p>
+recompilation. Download the latest version: <a href="https://zenodo.org/records/21633607/files/pseudobulk_se.h5ad?download=1" class="external-link">pseudobulk_se.h5ad</a>.
+For all versions: <a href="https://zenodo.org/records/21633607" class="external-link">10.5281/zenodo.21633607</a>.</p>
 <p>The following sections demonstrate the metadata, quality control,
 generation of raw and normalised counts, and pseudobulk construction for
 the specified query.</p>
@@ -318,7 +318,7 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a></span>
 <span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>single_cell_counts</span>
 <span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60</span></span>
-<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=33145 | Cells=2806 | Assays=counts [0m</span></span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="co">#&gt; # [90mFeatures=33145 | Cells=2806 | Assays=counts[0m</span></span>
 <span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
 <span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 </span></span>
@@ -376,7 +376,7 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a></span>
 <span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a>single_cell_cpm</span>
 <span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60</span></span>
-<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=33145 | Cells=2806 | Assays=cpm [0m</span></span>
+<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt; # [90mFeatures=33145 | Cells=2806 | Assays=cpm[0m</span></span>
 <span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
 <span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 </span></span>
@@ -448,7 +448,7 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a></span>
 <span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a>single_cell_sct</span>
 <span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 1,193 Ã— 60</span></span>
-<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=33145 | Cells=1193 | Assays=sct [0m</span></span>
+<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a><span class="co">#&gt; # [90mFeatures=33145 | Cells=1193 | Assays=sct[0m</span></span>
 <span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
 <span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 </span></span>
@@ -502,7 +502,7 @@ by <a href="https://duckdb.org/docs/current/clients/r" class="external-link">Duc
 <span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a></span>
 <span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>pseudobulk_counts</span>
 <span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 139 Ã— 43</span></span>
-<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=15888 | Cells=139 | Assays=counts [0m</span></span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a><span class="co">#&gt; # [90mFeatures=15888 | Cells=139 | Assays=counts[0m</span></span>
 <span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a><span class="co">#&gt;    .cell           dataset_id sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups cell_type_unified_enâ€¦Â¹ sample_chunk cell_chunk</span></span>
 <span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;                         &lt;int&gt;      &lt;int&gt;</span></span>
 <span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="co">#&gt;  1 2e8c9911c9bfbfâ€¦ 0ba16f4b-â€¦ 2e8c9911â€¦ 2e8c99â€¦ ""            &lt;NA&gt;             HDBR15279,HDBR1â€¦       NA respiratory â€¦ cd14 mono                         1          1</span></span>
@@ -596,7 +596,7 @@ cellNexus uses ENSEMBL gene ID(s).</p>
 <span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a></span>
 <span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a>single_cell_cpm</span>
 <span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60</span></span>
-<span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=1 | Cells=2806 | Assays=cpm [0m</span></span>
+<span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a><span class="co">#&gt; # [90mFeatures=1 | Cells=2806 | Assays=cpm[0m</span></span>
 <span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co">#&gt;    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA</span></span>
 <span id="cb13-37"><a href="#cb13-37" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt;</span></span>
 <span id="cb13-38"><a href="#cb13-38" tabindex="-1"></a><span class="co">#&gt;  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            &lt;NA&gt;             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 </span></span>
@@ -877,7 +877,7 @@ in cellNexus::pbmc3k_sce</p>
 <span><span class="co">#&gt; â„¹ Reading files.</span></span>
 <span><span class="co">#&gt; â„¹ Compiling Experiment.</span></span>
 <span><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 500 Ã— 7</span></span>
-<span><span class="co">#&gt; # <span style="color: #555555;">Features=13132 | Cells=500 | Assays=counts</span></span></span>
+<span><span class="co">#&gt; # [90mFeatures=13132 | Cells=500 | Assays=counts[0m</span></span>
 <span><span class="co">#&gt;    .cell            sample_id dataset_id cell_type_unified_ensemble atlas_id             file_id_cellNexus_single_cell         original_cell_</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;                      &lt;chr&gt;                &lt;chr&gt;                                 &lt;chr&gt;         </span></span>
 <span><span class="co">#&gt;  1 AAACATACAACCAC_1 pbmc3k    pbmc3k     Memory CD4 T               cellxgene/03-10-2025 67e196a3c4e145151fc9e06c200e2f7f.h5ad AAACATACAACCAC</span></span>

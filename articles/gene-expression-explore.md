@@ -6,9 +6,9 @@ The unified pseudobulk AnnData object was pre-generated outside of this
 vignette applying quality control and retaining at least 15,000
 intersecting genes across samples and hosted on Zenodo to avoid lengthy
 recompilation. Download the latest version:
-[pseudobulk_se.h5ad](https://zenodo.org/records/21388944/files/pseudobulk_se.h5ad?download=1).
+[pseudobulk_se.h5ad](https://zenodo.org/records/21633607/files/pseudobulk_se.h5ad?download=1).
 For all versions:
-[10.5281/zenodo.21388944](https://zenodo.org/records/21388944).
+[10.5281/zenodo.21633607](https://zenodo.org/records/21633607).
 
 This page focuses on expression-layer retrieval workflows after metadata
 filtering.

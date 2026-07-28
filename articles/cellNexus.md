@@ -100,9 +100,9 @@ The unified pseudobulk AnnData object was pre-generated outside of this
 vignette applying quality control and retaining at least 15,000
 intersecting genes across samples and hosted on Zenodo to avoid lengthy
 recompilation. Download the latest version:
-[pseudobulk_se.h5ad](https://zenodo.org/records/21388944/files/pseudobulk_se.h5ad?download=1).
+[pseudobulk_se.h5ad](https://zenodo.org/records/21633607/files/pseudobulk_se.h5ad?download=1).
 For all versions:
-[10.5281/zenodo.21388944](https://zenodo.org/records/21388944).
+[10.5281/zenodo.21633607](https://zenodo.org/records/21633607).
 
 The following sections demonstrate the metadata, quality control,
 generation of raw and normalised counts, and pseudobulk construction for
@@ -244,7 +244,7 @@ Reading counts â– â– â– â– â– â– â– â– â– â
 
 single_cell_counts
 #> # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60
-#> #  [90mFeatures=33145 | Cells=2806 | Assays=counts [0m
+#> # [90mFeatures=33145 | Cells=2806 | Assays=counts[0m
 #>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>    <chr> <chr>              <chr>          <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
 #>  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 
@@ -303,7 +303,7 @@ Reading cpm â– â– â– â– â– â– â– â– â– â–
 
 single_cell_cpm
 #> # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60
-#> #  [90mFeatures=33145 | Cells=2806 | Assays=cpm [0m
+#> # [90mFeatures=33145 | Cells=2806 | Assays=cpm[0m
 #>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>    <chr> <chr>              <chr>          <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
 #>  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 
@@ -376,7 +376,7 @@ Reading sct â– â– â– â– â– â– â– â– â– â–
 
 single_cell_sct
 #> # A SingleCellExperiment-tibble abstraction: 1,193 Ã— 60
-#> #  [90mFeatures=33145 | Cells=1193 | Assays=sct [0m
+#> # [90mFeatures=33145 | Cells=1193 | Assays=sct[0m
 #>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>    <chr> <chr>              <chr>          <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
 #>  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 
@@ -431,7 +431,7 @@ Reading counts â– â– â– â– â– â– â– â– â– â
 
 pseudobulk_counts
 #> # A SingleCellExperiment-tibble abstraction: 139 Ã— 43
-#> #  [90mFeatures=15888 | Cells=139 | Assays=counts [0m
+#> # [90mFeatures=15888 | Cells=139 | Assays=counts[0m
 #>    .cell           dataset_id sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups cell_type_unified_enâ€¦Â¹ sample_chunk cell_chunk
 #>    <chr>           <chr>      <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>         <chr>                         <int>      <int>
 #>  1 2e8c9911c9bfbfâ€¦ 0ba16f4b-â€¦ 2e8c9911â€¦ 2e8c99â€¦ ""            <NA>             HDBR15279,HDBR1â€¦       NA respiratory â€¦ cd14 mono                         1          1
@@ -531,7 +531,7 @@ Reading cpm â– â– â– â– â– â– â– â– â– â–
 
 single_cell_cpm
 #> # A SingleCellExperiment-tibble abstraction: 2,806 Ã— 60
-#> #  [90mFeatures=1 | Cells=2806 | Assays=cpm [0m
+#> # [90mFeatures=1 | Cells=2806 | Assays=cpm[0m
 #>    .cell observation_joinid dataset_id     sample_id sample_ experiment___ run_from_cell_id sample_heuristic age_days tissue_groups nFeature_expressed_iâ€¦Â¹ nCount_RNA
 #>    <chr> <chr>              <chr>          <chr>     <chr>   <chr>         <chr>            <chr>               <int> <chr>                          <int>      <dbl>
 #>  1 80_1  zz-!e5_XAo         842c6f5d-4a94â€¦ 1de3f3baâ€¦ 1de3f3â€¦ ""            <NA>             7fabaf1c-52fd-4â€¦    14600 breast                          1749      10.8 
@@ -829,7 +829,7 @@ get_metadata(
 #> â„¹ Reading files.
 #> â„¹ Compiling Experiment.
 #> # A SingleCellExperiment-tibble abstraction: 500 Ã— 7
-#> # Features=13132 | Cells=500 | Assays=counts
+#> # [90mFeatures=13132 | Cells=500 | Assays=counts[0m
 #>    .cell            sample_id dataset_id cell_type_unified_ensemble atlas_id             file_id_cellNexus_single_cell         original_cell_
 #>    <chr>            <chr>     <chr>      <chr>                      <chr>                <chr>                                 <chr>         
 #>  1 AAACATACAACCAC_1 pbmc3k    pbmc3k     Memory CD4 T               cellxgene/03-10-2025 67e196a3c4e145151fc9e06c200e2f7f.h5ad AAACATACAACCAC

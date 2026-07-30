@@ -5,7 +5,7 @@ Returns the URLs for all metadata files
 ## Usage
 
 ``` r
-get_metadata_url(databases = c("hca_2024", "hca_2025"))
+get_metadata_url(databases = c("hca_2024"))
 ```
 
 ## Source
@@ -18,8 +18,8 @@ al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
 - databases:
 
   A character vector of atlas aliases or raw parquet filenames.
-  Recognised aliases are `"hca_2024"` and `"hca_2025"`. Raw filenames
-  (e.g. `"atlas_versions.parquet"`) are passed through unchanged and are
+  Recognised aliases are `"hca_2024"` Raw filenames (e.g.
+  `"atlas_versions.parquet"`) are passed through unchanged and are
   intended for internal package use.
 
 ## Value

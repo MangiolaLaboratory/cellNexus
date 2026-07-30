@@ -30,7 +30,7 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
 #> # A query:  ?? x 36
-#> # Database: DuckDB 1.5.4 [unknown@Linux 6.17.0-1020-azure:R 4.6.1/:memory:]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1/:memory:]
 #>    cell_id dataset_id           sample_id sample_ experiment___ run_from_cell_id
 #>      <dbl> <chr>                <chr>     <chr>   <chr>         <chr>           
 #>  1      15 842c6f5d-4a94-4eef-… 1119f482… 1119f4… ""            NA              

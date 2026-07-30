@@ -85,7 +85,7 @@ By default, a `SingleCellExperiment` object. If
 
 ## Details
 
-Columns in `data` that are constant within each `sample_id` ×
+Columns in `data` that are constant within each `sample_id` x
 `cell_type_unified_ensemble` combination (including user-added
 annotations) are retained in `colData`. Cell-level columns are dropped
 via internal `keep_specific_annotation_columns()`.
@@ -108,6 +108,8 @@ meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |>
 pseudobulk <- meta |> get_pseudobulk()
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
+#> ℹ Downloading 2 files, totalling 0.02 GB
+#> ℹ Downloading 2 files in parallel...
 #> ℹ Reading files.
 #> ℹ Compiling Experiment.
 ```

@@ -74,8 +74,10 @@ communication_meta <- get_cell_communication_strength(
     "cellNexus_lr_signaling_pathway_strength_DEMO.parquet"
   )
 )
+#> ℹ Downloading 1 file, totalling 0 GB
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/cellNexus_lr_signaling_pathway_strength_DEMO.parquet to /home/runner/.cache/R/cellNexus/cellNexus_lr_signaling_pathway_strength_DEMO.parquet
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmplRUtl9/duckdb
+#> ℹ /tmp/RtmpykUaPl/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.

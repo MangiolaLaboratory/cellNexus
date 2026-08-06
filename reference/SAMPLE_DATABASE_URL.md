@@ -35,34 +35,34 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.1.parquet to /tmp/Rtmp4vPdhy/sample_hca2024_v2.3.1.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.2.parquet to /tmp/RtmplRUtl9/sample_hca2024_v2.3.2.parquet
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmp4vPdhy/duckdb
+#> ℹ /tmp/RtmplRUtl9/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
 #> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
 #> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
 #> ℹ See ?duckdb_storage for details and alternatives.
-#> # A query:  ?? x 36
+#> # A query:  ?? x 29
 #> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1/:memory:]
-#>    cell_id dataset_id           sample_id sample_ experiment___ run_from_cell_id
-#>      <dbl> <chr>                <chr>     <chr>   <chr>         <chr>           
-#>  1      15 842c6f5d-4a94-4eef-… 1119f482… 1119f4… ""            NA              
-#>  2      16 842c6f5d-4a94-4eef-… 1119f482… 1119f4… ""            NA              
-#>  3      17 842c6f5d-4a94-4eef-… 1119f482… 1119f4… ""            NA              
-#>  4      18 842c6f5d-4a94-4eef-… 1119f482… 1119f4… ""            NA              
-#>  5      19 842c6f5d-4a94-4eef-… 1119f482… 1119f4… ""            NA              
-#>  6      20 842c6f5d-4a94-4eef-… 1119f482… 1119f4… ""            NA              
-#>  7      14 842c6f5d-4a94-4eef-… 1119f482… 1119f4… ""            NA              
-#>  8       2 842c6f5d-4a94-4eef-… 1f755b9b… 1f755b… ""            NA              
-#>  9       3 842c6f5d-4a94-4eef-… 1f755b9b… 1f755b… ""            NA              
-#> 10       4 842c6f5d-4a94-4eef-… 1f755b9b… 1f755b… ""            NA              
+#>    cell_id dataset_id    sample_id age_days tissue_groups nFeature_expressed_i…¹
+#>      <dbl> <chr>         <chr>        <int> <chr>                          <int>
+#>  1      18 842c6f5d-4a9… 1119f482…    14600 breast                          1894
+#>  2      19 842c6f5d-4a9… 1119f482…    14600 breast                          1876
+#>  3      20 842c6f5d-4a9… 1119f482…    14600 breast                          1441
+#>  4      14 842c6f5d-4a9… 1119f482…    14600 breast                          1547
+#>  5      15 842c6f5d-4a9… 1119f482…    14600 breast                          1701
+#>  6      16 842c6f5d-4a9… 1119f482…    14600 breast                          2438
+#>  7      17 842c6f5d-4a9… 1119f482…    14600 breast                          2122
+#>  8       2 842c6f5d-4a9… 1f755b9b…    14600 breast                          1342
+#>  9       5 842c6f5d-4a9… 1f755b9b…    14600 breast                          1820
+#> 10       4 842c6f5d-4a9… 1f755b9b…    14600 breast                          1514
 #> # ℹ more rows
-#> # ℹ 30 more variables: sample_heuristic <chr>, age_days <int>,
-#> #   tissue_groups <chr>, nFeature_expressed_in_sample <int>, nCount_RNA <dbl>,
-#> #   empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>,
+#> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
+#> # ℹ 23 more variables: nCount_RNA <dbl>, empty_droplet <lgl>,
+#> #   cell_type_unified_ensemble <chr>, is_immune <lgl>,
 #> #   subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
-#> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>,
-#> #   sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>, …
+#> #   high_mitochondrion <lgl>, high_ribosome <lgl>, alive <lgl>,
+#> #   scDblFinder.class <chr>, file_id_cellNexus_single_cell <chr>, …
 ```

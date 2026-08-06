@@ -27,7 +27,7 @@ SingleCellExperiment::SingleCellExperiment"><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.30</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,8 +123,7 @@ levels, in a unique coherent database table.</p>
 <a href="https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/5.1.0/schema.md" class="external-link">CELLxGENE schema 5.1.0</a>.</p>
 <p>Through harmonisation and curation we introduced custom columns not present
 in the original CELLxGENE metadata:</p>
-<p><code>cell_count</code>: Number of cells in a dataset.
-<code>feature_count</code>: Number of genes in a dataset.
+<p><code>sample_id</code>: Sample identifier.
 <code>age_days</code>: Donor age in days.
 <code>tissue_groups</code>: Coarse tissue grouping for analysis.
 <code>empty_droplet</code>: Whether a cell is called an empty droplet from expressed-gene count per sample (default threshold 200; targeted panels may differ).
@@ -133,9 +132,15 @@ in the original CELLxGENE metadata:</p>
 <code>cell_type_unified_ensemble</code>: Consensus immune identity from Azimuth and SingleR (Blueprint, Monaco).
 <code>cell_annotation_azimuth_l2</code>: Azimuth cell annotation.
 <code>cell_annotation_blueprint_singler</code>: SingleR annotation (Blueprint).
-<code>cell_annotation_blueprint_monaco</code>: SingleR annotation (Monaco).
-<code>is_immune</code>: Whether a cell is an immune cell.
-<code>sample_heuristic</code>: Internal sample subdivision helper.
+<code>cell_annotation_monaco_singler</code>: SingleR annotation (Monaco).
+<code>subsets_Mito_percent</code>: Percent of each cell’s total counts coming from mitochondrial genes in a sample.
+<code>subsets_Ribo_percent</code>: Percent of each cell’s total counts coming from ribosomal genes in a sample.
+<code>high_mitochondrion</code>: TRUE if the cell’s mitochondrial percent exceeds the QC cutoff.
+<code>high_ribosome</code>: TRUE if the cell’s ribosomal percent exceeds the QC cutoff.
+<code>count_upper_bound</code>: Count capping threshold used in counts transformation.
+<code>inverse_transform</code>: Transformation method used in pre-processing pipeline.
+<code>nfeature_expressed_thresh</code>: Threshold of the number of expressed features per cell.
+<code>is_immune</code>: Curated logical flag for immune-cell context.
 <code>file_id_cellNexus_single_cell</code>: Internal file id for single-cell layers.
 <code>file_id_cellNexus_pseudobulk</code>: Internal file id for pseudobulk layers.
 <code>sample_id</code>: Harmonised sample identifier.

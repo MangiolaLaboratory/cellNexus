@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.30</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,27 +77,27 @@ doi:10.64898/2026.04.14.718336.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span>, cache_directory <span class="op">=</span> <span class="fu">get_default_cache_dir</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A query:  ?? x 36</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A query:  ?? x 29</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1/:memory:]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    cell_id dataset_id           sample_id sample_ experiment___ run_from_cell_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>      15 842c6f5d-4a94-4eef-… 1119f482… 1119f4… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>      16 842c6f5d-4a94-4eef-… 1119f482… 1119f4… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>      17 842c6f5d-4a94-4eef-… 1119f482… 1119f4… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>      18 842c6f5d-4a94-4eef-… 1119f482… 1119f4… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>      19 842c6f5d-4a94-4eef-… 1119f482… 1119f4… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>      20 842c6f5d-4a94-4eef-… 1119f482… 1119f4… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>      14 842c6f5d-4a94-4eef-… 1119f482… 1119f4… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       2 842c6f5d-4a94-4eef-… 1f755b9b… 1f755b… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       3 842c6f5d-4a94-4eef-… 1f755b9b… 1f755b… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>       4 842c6f5d-4a94-4eef-… 1f755b9b… 1f755b… <span style="color: #949494;">""</span>            <span style="color: #BB0000;">NA</span>              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    cell_id dataset_id    sample_id age_days tissue_groups nFeature_expressed_i…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>      18 842c6f5d-4a9… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>894</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>      19 842c6f5d-4a9… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>876</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>      20 842c6f5d-4a9… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>441</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>      14 842c6f5d-4a9… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>547</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>      15 842c6f5d-4a9… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>      16 842c6f5d-4a9… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">2</span>438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>      17 842c6f5d-4a9… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">2</span>122</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       2 842c6f5d-4a9… 1f755b9b…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>342</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       5 842c6f5d-4a9… 1f755b9b…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>       4 842c6f5d-4a9… 1f755b9b…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>514</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 30 more variables: sample_heuristic &lt;chr&gt;, age_days &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   tissue_groups &lt;chr&gt;, nFeature_expressed_in_sample &lt;int&gt;, nCount_RNA &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​nFeature_expressed_in_sample</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 23 more variables: nCount_RNA &lt;dbl&gt;, empty_droplet &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sample_chunk &lt;int&gt;, cell_chunk &lt;int&gt;, sample_pseudobulk_chunk &lt;int&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, alive &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   scDblFinder.class &lt;chr&gt;, file_id_cellNexus_single_cell &lt;chr&gt;, …</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -50,17 +50,17 @@ A filtered data frame containing only cells that pass all QC checks.
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) |>
   head(2) |>
   keep_quality_cells()
-#> # A query:  ?? x 36
+#> # A query:  ?? x 29
 #> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1/:memory:]
-#>   cell_id dataset_id            sample_id sample_ experiment___ run_from_cell_id
-#>     <dbl> <chr>                 <chr>     <chr>   <chr>         <chr>           
-#> 1      15 842c6f5d-4a94-4eef-8… 1119f482… 1119f4… ""            NA              
-#> 2      16 842c6f5d-4a94-4eef-8… 1119f482… 1119f4… ""            NA              
-#> # ℹ 30 more variables: sample_heuristic <chr>, age_days <int>,
-#> #   tissue_groups <chr>, nFeature_expressed_in_sample <int>, nCount_RNA <dbl>,
-#> #   empty_droplet <lgl>, cell_type_unified_ensemble <chr>, is_immune <lgl>,
+#>   cell_id dataset_id     sample_id age_days tissue_groups nFeature_expressed_i…¹
+#>     <dbl> <chr>          <chr>        <int> <chr>                          <int>
+#> 1      18 842c6f5d-4a94… 1119f482…    14600 breast                          1894
+#> 2      19 842c6f5d-4a94… 1119f482…    14600 breast                          1876
+#> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
+#> # ℹ 23 more variables: nCount_RNA <dbl>, empty_droplet <lgl>,
+#> #   cell_type_unified_ensemble <chr>, is_immune <lgl>,
 #> #   subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
-#> #   high_mitochondrion <lgl>, high_ribosome <lgl>, scDblFinder.class <chr>,
-#> #   sample_chunk <int>, cell_chunk <int>, sample_pseudobulk_chunk <int>,
-#> #   file_id_cellNexus_single_cell <chr>, file_id_cellNexus_pseudobulk <chr>, …
+#> #   high_mitochondrion <lgl>, high_ribosome <lgl>, alive <lgl>,
+#> #   scDblFinder.class <chr>, file_id_cellNexus_single_cell <chr>,
+#> #   file_id_cellNexus_pseudobulk <chr>, count_upper_bound <dbl>, …
 ```

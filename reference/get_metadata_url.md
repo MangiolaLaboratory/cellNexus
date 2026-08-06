@@ -38,5 +38,5 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 
 ``` r
 get_metadata_url("hca_2024")
-#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/hca2024_v2.3.1.parquet
+#> https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/hca2024_v2.3.2.parquet
 ```

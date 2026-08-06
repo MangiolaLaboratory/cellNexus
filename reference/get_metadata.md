@@ -81,29 +81,36 @@ Field definitions for the CELLxGENE schema follow the [CELLxGENE schema
 Through harmonisation and curation we introduced custom columns not
 present in the original CELLxGENE metadata:
 
-`cell_count`: Number of cells in a dataset. `feature_count`: Number of
-genes in a dataset. `age_days`: Donor age in days. `tissue_groups`:
-Coarse tissue grouping for analysis. `empty_droplet`: Whether a cell is
-called an empty droplet from expressed-gene count per sample (default
-threshold 200; targeted panels may differ). `alive`: Whether a cell
-passes viability / mitochondrial QC. `scDblFinder.class`: Doublet,
-singlet, or unknown (`scDblFinder` default parameters).
+`sample_id`: Sample identifier. `age_days`: Donor age in days.
+`tissue_groups`: Coarse tissue grouping for analysis. `empty_droplet`:
+Whether a cell is called an empty droplet from expressed-gene count per
+sample (default threshold 200; targeted panels may differ). `alive`:
+Whether a cell passes viability / mitochondrial QC. `scDblFinder.class`:
+Doublet, singlet, or unknown (`scDblFinder` default parameters).
 `cell_type_unified_ensemble`: Consensus immune identity from Azimuth and
 SingleR (Blueprint, Monaco). `cell_annotation_azimuth_l2`: Azimuth cell
 annotation. `cell_annotation_blueprint_singler`: SingleR annotation
-(Blueprint). `cell_annotation_blueprint_monaco`: SingleR annotation
-(Monaco). `is_immune`: Whether a cell is an immune cell.
-`sample_heuristic`: Internal sample subdivision helper.
-`file_id_cellNexus_single_cell`: Internal file id for single-cell
-layers. `file_id_cellNexus_pseudobulk`: Internal file id for pseudobulk
-layers. `sample_id`: Harmonised sample identifier. `nCount_RNA`: Total
-RNA counts per cell (sample-aware). `nFeature_expressed_in_sample`:
-Number of expressed features per cell. `ethnicity_flagging_score`:
-Supporting score for ethnicity imputation. `low_confidence_ethnicity`:
-Supporting flag for low-confidence ethnicity calls. `.aggregated_cells`:
-Post-QC cells combined into each pseudobulk sample. `imputed_ethnicity`:
-Imputed ethnicity label. `atlas_id`: cellNexus atlas release identifier
-(internal use).
+(Blueprint). `cell_annotation_monaco_singler`: SingleR annotation
+(Monaco). `subsets_Mito_percent`: Percent of each cell’s total counts
+coming from mitochondrial genes in a sample. `subsets_Ribo_percent`:
+Percent of each cell’s total counts coming from ribosomal genes in a
+sample. `high_mitochondrion`: TRUE if the cell’s mitochondrial percent
+exceeds the QC cutoff. `high_ribosome`: TRUE if the cell’s ribosomal
+percent exceeds the QC cutoff. `count_upper_bound`: Count capping
+threshold used in counts transformation. `inverse_transform`:
+Transformation method used in pre-processing pipeline.
+`nfeature_expressed_thresh`: Threshold of the number of expressed
+features per cell. `is_immune`: Curated logical flag for immune-cell
+context. `file_id_cellNexus_single_cell`: Internal file id for
+single-cell layers. `file_id_cellNexus_pseudobulk`: Internal file id for
+pseudobulk layers. `sample_id`: Harmonised sample identifier.
+`nCount_RNA`: Total RNA counts per cell (sample-aware).
+`nFeature_expressed_in_sample`: Number of expressed features per cell.
+`ethnicity_flagging_score`: Supporting score for ethnicity imputation.
+`low_confidence_ethnicity`: Supporting flag for low-confidence ethnicity
+calls. `.aggregated_cells`: Post-QC cells combined into each pseudobulk
+sample. `imputed_ethnicity`: Imputed ethnicity label. `atlas_id`:
+cellNexus atlas release identifier (internal use).
 
 For all fields definitions, please refer to our [documentation
 site](https://cellnexus.org/)

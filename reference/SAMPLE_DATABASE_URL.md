@@ -35,9 +35,9 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.2.parquet to /tmp/RtmpK6kH2t/sample_hca2024_v2.3.2.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.2.parquet to /tmp/Rtmpr3KBjF/sample_hca2024_v2.3.2.parquet
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpK6kH2t/duckdb
+#> ℹ /tmp/Rtmpr3KBjF/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.

@@ -68,6 +68,13 @@ al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
   :   An optional character vector of features (ie genes) to return the
       counts for. By default counts for all features will be returned.
 
+  `download_only`
+
+  :   Logical scalar. When `TRUE`, remote files are synchronised to
+      `cache_directory` but the data is not read or assembled into an
+      in-memory object. Returns `invisible(NULL)`. Useful for
+      pre-fetching datasets only.
+
 ## Value
 
 A `SingleCellExperiment` object.
@@ -88,7 +95,7 @@ meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
 #> ℹ Downloading 1 file, totalling 0 GB
 #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.2.parquet to /home/runner/.cache/R/cellNexus/sample_hca2024_v2.3.2.parquet
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpykUaPl/duckdb
+#> ℹ /tmp/RtmpK6kH2t/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.

@@ -25,7 +25,7 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.32</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,8 @@ corresponding to the samples in that data frame</p>
 <span>  cache_directory <span class="op">=</span> <span class="fu"><a href="get_default_cache_dir.html">get_default_cache_dir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  repository <span class="op">=</span> <span class="va">COUNTS_URL</span>,</span>
 <span>  features <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  as_SummarizedExperiment <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  as_SummarizedExperiment <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  download_only <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -122,13 +123,22 @@ A warning is emitted when samples are dropped.</p></dd>
 <dt id="arg-as-summarizedexperiment">as_SummarizedExperiment<a class="anchor" aria-label="anchor" href="#arg-as-summarizedexperiment"></a></dt>
 <dd><p>If <code>TRUE</code>, coerce the result to a
 <code>SummarizedExperiment</code>. Note that <code>as(x, "SummarizedExperiment")</code> drops
-feature rownames; <code>get_pseudobulk()</code> restores them after coercion.</p></dd>
+feature rownames; <code>get_pseudobulk()</code> restores them after coercion.
+Ignored when <code>download_only = TRUE</code>.</p></dd>
+
+
+<dt id="arg-download-only">download_only<a class="anchor" aria-label="anchor" href="#arg-download-only"></a></dt>
+<dd><p>Logical scalar. When <code>TRUE</code>, remote files are
+synchronised to <code>cache_directory</code> but the data is not read or assembled
+into an in-memory object. Returns <code>invisible(NULL)</code>. Useful for
+pre-fetching datasets only.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>By default, a <code>SingleCellExperiment</code> object. If
-<code>as_SummarizedExperiment</code> is <code>TRUE</code>, a <code>SummarizedExperiment</code> object.</p>
+<code>as_SummarizedExperiment</code> is <code>TRUE</code>, a <code>SummarizedExperiment</code> object.
+Returns <code>invisible(NULL)</code> when <code>download_only = TRUE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

@@ -60,6 +60,14 @@ fig-funders](../reference/figures/CSL_Limited_logo.svg.png)
 
 plot of chunk fig-funders
 
+## Repositories
+
+#### R API: [here](https://github.com/MangiolaLaboratory/cellNexus)
+
+#### Python API: [here](https://github.com/MangiolaLaboratory/cellNexusPy/)
+
+#### Article code: [here](https://github.com/MangiolaLaboratory/cellNexus_article)
+
 ## Query interface
 
 ### Installation
@@ -242,7 +250,7 @@ Reading counts ■■■■■■■■■■■■■■■■■■■■■�
 
 single_cell_counts
 #> # A SingleCellExperiment-tibble abstraction: 2,806 × 54
-#> #  [90mFeatures=33145 | Cells=2806 | Assays=counts [0m
+#> # [90mFeatures=33145 | Cells=2806 | Assays=counts[0m
 #>    .cell observation_joinid dataset_id sample_id donor_id age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA empty_droplet
 #>    <chr> <chr>              <chr>      <chr>     <chr>       <int> <chr>                          <int>      <dbl> <lgl>        
 #>  1 80_1  zz-!e5_XAo         842c6f5d-… 1de3f3ba… P58         14600 breast                          1749      10.8  FALSE        
@@ -301,7 +309,7 @@ Reading cpm ■■■■■■■■■■■■■■■■■■■■■■�
 
 single_cell_cpm
 #> # A SingleCellExperiment-tibble abstraction: 2,806 × 54
-#> #  [90mFeatures=33145 | Cells=2806 | Assays=cpm [0m
+#> # [90mFeatures=33145 | Cells=2806 | Assays=cpm[0m
 #>    .cell observation_joinid dataset_id sample_id donor_id age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA empty_droplet
 #>    <chr> <chr>              <chr>      <chr>     <chr>       <int> <chr>                          <int>      <dbl> <lgl>        
 #>  1 76_1  bTlx!HK=oS         842c6f5d-… 52ab9222… P58         14600 breast                          1671       9.65 FALSE        
@@ -374,7 +382,7 @@ Reading sct ■■■■■■■■■■■■■■■■■■■■■■�
 
 single_cell_sct
 #> # A SingleCellExperiment-tibble abstraction: 1,193 × 54
-#> #  [90mFeatures=33145 | Cells=1193 | Assays=sct [0m
+#> # [90mFeatures=33145 | Cells=1193 | Assays=sct[0m
 #>    .cell observation_joinid dataset_id sample_id donor_id age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA empty_droplet
 #>    <chr> <chr>              <chr>      <chr>     <chr>       <int> <chr>                          <int>      <dbl> <lgl>        
 #>  1 80_1  zz-!e5_XAo         842c6f5d-… 1de3f3ba… P58         14600 breast                          1749      10.8  FALSE        
@@ -429,7 +437,7 @@ Reading counts ■■■■■■■■■■■■■■■■■■■■■�
 
 pseudobulk_counts
 #> # A SingleCellExperiment-tibble abstraction: 146 × 46
-#> #  [90mFeatures=15888 | Cells=146 | Assays=counts [0m
+#> # [90mFeatures=15888 | Cells=146 | Assays=counts[0m
 #>    .cell  sample_id cell_type_unified_en…¹ dataset_id donor_id age_days tissue_groups empty_droplet is_immune high_mitochondrion
 #>    <chr>  <chr>     <chr>                  <chr>      <chr>       <int> <chr>         <lgl>         <lgl>     <lgl>             
 #>  1 2e8c9… 2e8c9911… cd14 mono              0ba16f4b-… HDBR152…       NA respiratory … FALSE         TRUE      FALSE             
@@ -530,7 +538,7 @@ Reading cpm ■■■■■■■■■■■■■■■■■■■■■■�
 
 single_cell_cpm
 #> # A SingleCellExperiment-tibble abstraction: 2,806 × 54
-#> #  [90mFeatures=1 | Cells=2806 | Assays=cpm [0m
+#> # [90mFeatures=1 | Cells=2806 | Assays=cpm[0m
 #>    .cell observation_joinid dataset_id sample_id donor_id age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA empty_droplet
 #>    <chr> <chr>              <chr>      <chr>     <chr>       <int> <chr>                          <int>      <dbl> <lgl>        
 #>  1 76_1  bTlx!HK=oS         842c6f5d-… 52ab9222… P58         14600 breast                          1671       9.65 FALSE        
@@ -593,7 +601,7 @@ Reading counts ■■■■■■■■■■■■■■■■■■■■■�
 
 seurat_counts
 #> # A Seurat-tibble abstraction: 2,806 × 59
-#> #  [90mFeatures=33145 | Cells=2806 | Active assay=counts | Assays=counts [0m
+#> # [90mFeatures=33145 | Cells=2806 | Active assay=counts | Assays=counts[0m
 #>    .cell orig.ident    nCount_originalexp nFeature_originalexp observation_joinid dataset_id         sample_id donor_id age_days
 #>    <chr> <fct>                      <dbl>                <int> <chr>              <chr>              <chr>     <chr>       <int>
 #>  1 73_1  SeuratProject               14.1                 2958 z_=CTOs4{z         842c6f5d-4a94-4ee… 4b5e66fa… P39         14600
@@ -847,7 +855,7 @@ get_metadata(
 #> ℹ Reading files.
 #> ℹ Compiling Experiment.
 #> # A SingleCellExperiment-tibble abstraction: 500 × 7
-#> # Features=13132 | Cells=500 | Assays=counts
+#> # [90mFeatures=13132 | Cells=500 | Assays=counts[0m
 #>    .cell            sample_id dataset_id cell_type_unified_ensemble atlas_id             file_id_cellNexus_sing…¹ original_cell_
 #>    <chr>            <chr>     <chr>      <chr>                      <chr>                <chr>                    <chr>         
 #>  1 AAACATACAACCAC_1 pbmc3k    pbmc3k     Memory CD4 T               cellxgene/03-10-2025 67e196a3c4e145151fc9e06… AAACATACAACCAC

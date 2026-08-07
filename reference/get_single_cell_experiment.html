@@ -25,7 +25,7 @@ corresponding to the samples in that data frame"><meta property="og:image" conte
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.32</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,8 @@ corresponding to the samples in that data frame</p>
 <span>  cell_aggregation <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  cache_directory <span class="op">=</span> <span class="fu"><a href="get_default_cache_dir.html">get_default_cache_dir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  repository <span class="op">=</span> <span class="va">COUNTS_URL</span>,</span>
-<span>  features <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  features <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  download_only <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -114,10 +115,18 @@ an HTTP URL pointing to the location where the single cell data is stored.</p></
 <dd><p>An optional character vector of features (ie genes) to return
 the counts for. By default counts for all features will be returned.</p></dd>
 
+
+<dt id="arg-download-only">download_only<a class="anchor" aria-label="anchor" href="#arg-download-only"></a></dt>
+<dd><p>Logical scalar. When <code>TRUE</code>, remote files are
+synchronised to <code>cache_directory</code> but the data is not read or assembled
+into an in-memory object. Returns <code>invisible(NULL)</code>. Useful for
+pre-fetching datasets only.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>SingleCellExperiment</code> object.</p>
+    <p>A <code>SingleCellExperiment</code> object, or <code>invisible(NULL)</code> when
+<code>download_only = TRUE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

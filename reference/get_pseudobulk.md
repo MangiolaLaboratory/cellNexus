@@ -16,7 +16,8 @@ get_pseudobulk(
   cache_directory = get_default_cache_dir(),
   repository = COUNTS_URL,
   features = NULL,
-  as_SummarizedExperiment = FALSE
+  as_SummarizedExperiment = FALSE,
+  download_only = FALSE
 )
 ```
 
@@ -76,12 +77,21 @@ al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
 
   If `TRUE`, coerce the result to a `SummarizedExperiment`. Note that
   `as(x, "SummarizedExperiment")` drops feature rownames;
-  `get_pseudobulk()` restores them after coercion.
+  `get_pseudobulk()` restores them after coercion. Ignored when
+  `download_only = TRUE`.
+
+- download_only:
+
+  Logical scalar. When `TRUE`, remote files are synchronised to
+  `cache_directory` but the data is not read or assembled into an
+  in-memory object. Returns `invisible(NULL)`. Useful for pre-fetching
+  datasets only.
 
 ## Value
 
 By default, a `SingleCellExperiment` object. If
 `as_SummarizedExperiment` is `TRUE`, a `SummarizedExperiment` object.
+Returns `invisible(NULL)` when `download_only = TRUE`.
 
 ## Details
 

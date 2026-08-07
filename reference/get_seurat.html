@@ -23,7 +23,7 @@ the samples in that data frame"><meta property="og:image" content="https://mangi
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.31</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.32</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@ the samples in that data frame</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_seurat</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_seurat</span><span class="op">(</span><span class="va">...</span>, download_only <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -103,11 +103,18 @@ the counts for. By default counts for all features will be returned.</p></dd>
 
 </dl></dd>
 
+
+<dt id="arg-download-only">download_only<a class="anchor" aria-label="anchor" href="#arg-download-only"></a></dt>
+<dd><p>Logical scalar. When <code>TRUE</code>, remote files are
+synchronised to <code>cache_directory</code> but not read or assembled. Returns
+<code>invisible(NULL)</code>. See <code><a href="get_single_cell_experiment.html">get_single_cell_experiment()</a></code> for details.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A Seurat object containing the same data as a call to
-<code><a href="get_single_cell_experiment.html">get_single_cell_experiment()</a></code>. All requested assays are present in the
+<code><a href="get_single_cell_experiment.html">get_single_cell_experiment()</a></code>, or <code>invisible(NULL)</code> when
+<code>download_only = TRUE</code>. All requested assays are present in the
 returned object under their original names (e.g. <code>"counts"</code>, <code>"cpm"</code>).</p>
     </div>
     <div class="section level2">

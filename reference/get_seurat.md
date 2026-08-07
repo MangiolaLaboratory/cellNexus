@@ -6,7 +6,7 @@ corresponding to the samples in that data frame
 ## Usage
 
 ``` r
-get_seurat(...)
+get_seurat(..., download_only = FALSE)
 ```
 
 ## Source
@@ -65,12 +65,21 @@ al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
   :   An optional character vector of features (ie genes) to return the
       counts for. By default counts for all features will be returned.
 
+- download_only:
+
+  Logical scalar. When `TRUE`, remote files are synchronised to
+  `cache_directory` but not read or assembled. Returns
+  `invisible(NULL)`. See
+  [`get_single_cell_experiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md)
+  for details.
+
 ## Value
 
 A Seurat object containing the same data as a call to
-[`get_single_cell_experiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md).
-All requested assays are present in the returned object under their
-original names (e.g. `"counts"`, `"cpm"`).
+[`get_single_cell_experiment()`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md),
+or `invisible(NULL)` when `download_only = TRUE`. All requested assays
+are present in the returned object under their original names (e.g.
+`"counts"`, `"cpm"`).
 
 ## References
 

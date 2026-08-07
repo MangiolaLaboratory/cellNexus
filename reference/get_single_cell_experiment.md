@@ -15,7 +15,8 @@ get_single_cell_experiment(
   cell_aggregation = "",
   cache_directory = get_default_cache_dir(),
   repository = COUNTS_URL,
-  features = NULL
+  features = NULL,
+  download_only = FALSE
 )
 ```
 
@@ -69,9 +70,17 @@ al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
   An optional character vector of features (ie genes) to return the
   counts for. By default counts for all features will be returned.
 
+- download_only:
+
+  Logical scalar. When `TRUE`, remote files are synchronised to
+  `cache_directory` but the data is not read or assembled into an
+  in-memory object. Returns `invisible(NULL)`. Useful for pre-fetching
+  datasets only.
+
 ## Value
 
-A `SingleCellExperiment` object.
+A `SingleCellExperiment` object, or `invisible(NULL)` when
+`download_only = TRUE`.
 
 ## References
 

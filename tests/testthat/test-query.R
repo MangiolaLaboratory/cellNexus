@@ -420,3 +420,24 @@ test_that("get_atlas_versions() returns a registry-like data frame", {
   expect_true("atlas_id" %in% colnames(tbl))
   expect_true("census_version" %in% colnames(tbl))
 })
+
+test_that("get_census_metadata() is the Census metadata helper", {
+  expect_true(is.function(cellNexus:::get_census_metadata))
+  expect_identical(
+    formals(cellNexus:::get_census_metadata)$census_version,
+    "2024-07-01"
+  )
+})
+
+test_that("join_census_table() soft-deprecates to get_census_metadata()", {
+  local_mocked_bindings(
+    get_census_metadata = function(census_version) census_version,
+    .package = "cellNexus"
+  )
+
+  expect_warning(
+    result <- cellNexus:::join_census_table(tbl = NULL),
+    class = "lifecycle_warning_deprecated"
+  )
+  expect_identical(result, "2024-07-01")
+})

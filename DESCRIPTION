@@ -96,6 +96,7 @@ Imports:
     httr,
     curl,
     cli,
+    lifecycle,
     methods,
     rlang,
     S4Vectors,

@@ -430,8 +430,11 @@ test_that("get_census_metadata() is the Census metadata helper", {
 })
 
 test_that("join_census_table() soft-deprecates to get_census_metadata()", {
+  old_options <- options(lifecycle_verbosity = "warning")
+  on.exit(options(old_options), add = TRUE)
+
   local_mocked_bindings(
-    get_census_metadata = function(census_version) census_version,
+    get_census_metadata = function(census_version = "2024-07-01") census_version,
     .package = "cellNexus"
   )
 

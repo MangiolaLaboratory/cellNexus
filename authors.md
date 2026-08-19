@@ -30,7 +30,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/rename-join-census-table/inst/CITATION)
 
 Mangiola S, Shen M, Gao Y, Liu N, Bhuva D, Milton M, Henao J, Andrews J,
 Yang E, Zhan C, Liu N, Si S, Hutchison JW, Shakeel HM, Morgan M,

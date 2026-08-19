@@ -35,9 +35,9 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir())
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.2.parquet to /tmp/Rtmpr3KBjF/sample_hca2024_v2.3.2.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.2.parquet to /tmp/RtmpKDCVT9/sample_hca2024_v2.3.2.parquet
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmpr3KBjF/duckdb
+#> ℹ /tmp/RtmpKDCVT9/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -45,7 +45,7 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir())
 #> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
 #> ℹ See ?duckdb_storage for details and alternatives.
 #> # A query:  ?? x 29
-#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1/:memory:]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]
 #>    cell_id dataset_id    sample_id age_days tissue_groups nFeature_expressed_i…¹
 #>      <dbl> <chr>         <chr>        <int> <chr>                          <int>
 #>  1      18 842c6f5d-4a9… 1119f482…    14600 breast                          1894

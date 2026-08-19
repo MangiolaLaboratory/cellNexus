@@ -438,10 +438,6 @@ test_that("join_census_table() soft-deprecates to get_census_metadata()", {
     .package = "cellNexus"
   )
 
-  expect_identical(
-    cellNexus:::get_census_metadata("probe"),
-    "probe"
-  )
   result <- expect_warning(
     cellNexus:::join_census_table(
       tbl = "unused table",

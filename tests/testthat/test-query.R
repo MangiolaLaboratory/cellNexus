@@ -440,7 +440,7 @@ test_that("join_census_table() soft-deprecates to get_census_metadata()", {
 
   result <- expect_warning(
     cellNexus:::join_census_table(
-      tbl = NULL,
+      tbl = "unused table",
       census_version = "2023-07-01"
     ),
     class = "lifecycle_warning_deprecated"

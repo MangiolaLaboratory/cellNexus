@@ -75,7 +75,7 @@ communication_meta <- get_cell_communication_strength(
   )
 )
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpKDCVT9/duckdb
+#> ℹ /tmp/RtmprCs2cv/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.

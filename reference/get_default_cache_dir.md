@@ -17,6 +17,17 @@ al.,2026](https://www.biorxiv.org/content/10.64898/2026.04.14.718336v3)
 
 A length one character vector.
 
+## Cache integrity checking
+
+By default, every file in the cache is verified against its remote ETag
+(MD5) before being reused. This catches partial downloads left by
+interrupted sessions. You should only disable the check when the cache
+is known to be intact.
+
+    options(cellNexus.check_cache_integrity = FALSE)
+
+To make this permanent, add the line to your `~/.Rprofile`.
+
 ## References
 
 Shen, M., Y. Gao, N. Liu, D. Bhuva, M. Milton, J. Henao, J. Andrews, E.

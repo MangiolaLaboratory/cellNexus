@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.32</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.33</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Returns the default cache directory with a version number</h1>
-      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/copilot/rename-join-census-table/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MangiolaLaboratory/cellNexus/blob/master/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
       <div class="d-none name"><code>get_default_cache_dir.Rd</code></div>
     </div>
 
@@ -63,6 +63,17 @@
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A length one character vector.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="cache-integrity-checking">Cache integrity checking<a class="anchor" aria-label="anchor" href="#cache-integrity-checking"></a></h2>
+
+
+<p>By default, every file in the cache is verified against its remote ETag
+(MD5) before being reused.  This catches partial downloads left by
+interrupted sessions.  You should only disable the check when the cache
+is known to be intact.</p><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>cellNexus.check_cache_integrity <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+
+<p>To make this permanent, add the line to your <code class="file">~/.Rprofile</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

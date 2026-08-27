@@ -127,7 +127,7 @@ SAMPLE_DATABASE_URL <- c(
 #'
 #' Through harmonisation and curation we introduced custom columns not present
 #' in the original CELLxGENE metadata:
-#' 
+#'
 #' `sample_id`: Sample identifier.
 #' `age_days`: Donor age in days.
 #' `tissue_groups`: Coarse tissue grouping for analysis.
@@ -186,18 +186,18 @@ get_metadata <- function(cloud_metadata = get_metadata_url("hca_2024"),
                          local_metadata = NULL,
                          cache_directory = get_default_cache_dir(),
                          use_cache = TRUE) {
-  # Synchronize remote files using parallel downloads
+  # Synchronize remote files.  All cloud paths are passed to sync_remote_files
+  # so the integrity check runs on already-cached files too,
+  # not only on files that are missing.  sync_remote_files handles the
+  # skip-if-intact / re-download-if-corrupt logic internally.
   if (!is.null(cloud_metadata) && length(cloud_metadata) > 0) {
     output_paths <- file.path(cache_directory, basename(cloud_metadata))
-    # Filter to only files that need downloading
-    to_download <- !file.exists(output_paths)
-    if (any(to_download)) {
-      report_file_sizes(cloud_metadata[to_download])
-      sync_remote_files(cloud_metadata[to_download],
-        output_paths[to_download],
-        progress = TRUE
-      )
+    # Size report only for files that genuinely need downloading
+    new_files <- !file.exists(output_paths)
+    if (any(new_files)) {
+      report_file_sizes(cloud_metadata[new_files])
     }
+    sync_remote_files(cloud_metadata, output_paths, progress = TRUE)
   }
 
   if (is.null(cloud_metadata)) all_parquet <- c(local_metadata)

@@ -1068,18 +1068,20 @@ sync_all_assay_files <- function(file_list, ignore_not_found = FALSE) {
     return(invisible(character(0)))
   }
 
-  # Filter to only files that don't already exist
-  to_download <- !file.exists(file_list$output_file)
-
-  if (sum(to_download) > 0) {
-    report_file_sizes(file_list$full_url[to_download])
-    sync_remote_files(
-      file_list$full_url[to_download],
-      file_list$output_file[to_download],
-      progress = TRUE,
-      ignore_not_found = ignore_not_found
-    )
+  # Size report only for files that genuinely need downloading (pre-integrity).
+  # The full list is then passed to sync_remote_files so the integrity check
+  # (size + MD5 vs ETag) also runs on already-cached files.  Files that are
+  # corrupt are deleted inside sync_remote_files and re-downloaded.
+  new_files <- !file.exists(file_list$output_file)
+  if (any(new_files)) {
+    report_file_sizes(file_list$full_url[new_files])
   }
+  sync_remote_files(
+    file_list$full_url,
+    file_list$output_file,
+    progress = TRUE,
+    ignore_not_found = ignore_not_found
+  )
 
   invisible(file_list$output_file)
 }

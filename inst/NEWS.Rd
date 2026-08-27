@@ -1,6 +1,62 @@
 \name{NEWS}
 \title{News for Package \pkg{cellNexus}}
 
+\section{News in version 0.99.33}{
+\itemize{
+    \item Batched parallel downloads: \code{sync_remote_files()} now splits large
+    download queues into batches (default 500 files per batch) before passing
+    them to \code{curl::multi_download()}.  Previously, all URLs were submitted
+    in a single call; when requesting multiple assays simultaneously (e.g.\
+    \code{assays = c("counts", "cpm", "rank")} over 1\,000 files = 3\,000
+    requests), the Nectar OpenStack Swift server would reject the excess
+    connections with HTTP 4xx/5xx responses, silently failing thousands of
+    downloads.  Batching keeps each parallel burst below the server's
+    per-account connection threshold.
+    \itemize{
+        \item The batch size defaults to 500 and can be adjusted via
+        \code{options(cellNexus.download_batch_size = N)}.
+        \item When more than one batch is required, a progress message is
+        printed for each batch (e.g.\ \emph{Batch 2/6: 500 files...}).
+        \item Failure counting is now accumulated across all batches so the
+        final warning correctly reports the total number of files that could
+        not be downloaded.
+    }
+    \item Cache integrity: \code{sync_remote_file()} and
+    \code{sync_remote_files()} now verify that a locally cached file has not
+    been partially downloaded or corrupted by comparing its MD5 digest against
+    the remote object's ETag (OpenStack Swift stores the MD5 as the ETag for
+    every object).  When a mismatch is detected the stale file is deleted and
+    the download restarts cleanly, preventing silent failures on the second
+    query after an interrupted first download.
+    \itemize{
+        \item New internal helper \code{url_file_head_info()} performs a single
+        parallel batch of HEAD requests and returns both the \code{ETag} (MD5)
+        and \code{Content-Length} for each URL.
+        \item New internal helper \code{check_file_integrity()} uses a
+        two-stage approach to avoid reading large files unnecessarily:
+        \enumerate{
+            \item \strong{Size check} (no file I/O): compare
+            \code{file.size()} with \code{Content-Length}.  A mismatch means
+            the file was partially downloaded and is caught immediately.
+            \item \strong{MD5 check} (reads the file): compare
+            \code{tools::md5sum()} with the ETag.  Only reached when sizes
+            agree, guarding against silent disk corruption without penalising
+            correctly cached files where the size is wrong.
+        }
+        \item \code{sync_remote_files()} retrieves both \code{Content-Length}
+        and \code{ETag} in one parallel HEAD batch, then applies the two-stage
+        check to all already-cached files before deciding which files need to
+        be (re-)downloaded.
+        \item \code{get_metadata()} and \code{sync_all_assay_files()} now pass
+        the full file list to \code{sync_remote_files()} instead of
+        pre-filtering to only missing files, so the integrity check fires for
+        already-cached parquet and H5AD files too, not just freshly
+        downloaded ones.
+        \item Set \code{options(cellNexus.check_cache_integrity = FALSE)} to
+        skip the integrity check only when the cache is known to be intact.
+    }
+}}
+
 \section{News in version 0.99.32}{
 \itemize{
     \item Added \code{download_only} argument (default \code{FALSE}) to

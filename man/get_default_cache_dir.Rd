@@ -15,6 +15,17 @@ A length one character vector.
 \description{
 Returns the default cache directory with a version number
 }
+\section{Cache integrity checking}{
+
+By default, every file in the cache is verified against its remote ETag
+(MD5) before being reused.  This catches partial downloads left by
+interrupted sessions.  You should only disable the check when the cache
+is known to be intact.
+\preformatted{options(cellNexus.check_cache_integrity = FALSE)}
+
+To make this permanent, add the line to your \file{~/.Rprofile}.
+}
+
 \examples{
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
 }

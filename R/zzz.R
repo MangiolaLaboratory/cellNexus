@@ -71,7 +71,12 @@ NULL
   op <- options()
   op.cellNexus <- list(
     cellNexus.parallel_downloads = TRUE,
-    cellNexus.download_connections = 6L
+    cellNexus.download_connections = 6L,
+    # Verify locally cached files against the remote ETag (MD5) before reuse.
+    # Two-stage check: file size (no I/O) then MD5 (reads file).
+    # Disable with:  options(cellNexus.check_cache_integrity = FALSE)
+    # Only disable when files are known to be intact.
+    cellNexus.check_cache_integrity = TRUE
   )
   toset <- !(names(op.cellNexus) %in% names(op))
   if (any(toset)) options(op.cellNexus[toset])

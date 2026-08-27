@@ -342,7 +342,7 @@ join_census_table <- function(tbl,
                               census_version = "2024-07-01",
                               ...) {
   deprecate_soft(
-    when = "0.99.33",
+    when = "0.99.27",
     what = "join_census_table()",
     with = "get_census_metadata()"
   )

@@ -335,19 +335,17 @@ get_atlas_versions <- function(cache = tempdir()) {
 #' @rdname get_census_metadata
 #' @param tbl Deprecated. Previously a `tbl_sql` object to join against.
 #' @param ... Deprecated arguments, ignored.
-#' @importFrom cli cli_alert_warning
+#' @importFrom lifecycle deprecate_soft
 #' @keywords internal
 #' @noRd
 join_census_table <- function(tbl,
                               census_version = "2024-07-01",
                               ...) {
-  cli_alert_warning(paste(
-    "{.fun join_census_table} is no longer supported",
-    "Use {.fun get_census_metadata} instead to retrieve a Census data frame",
-    "and join it to your metadata manually.",
-    "Falling back to {.fun get_census_metadata} with",
-    "census_version = {.val {census_version}}."
-  ))
+  deprecate_soft(
+    when = "0.99.27",
+    what = "join_census_table()",
+    with = "get_census_metadata()"
+  )
   get_census_metadata(census_version = census_version)
 }
 
@@ -369,7 +367,7 @@ join_census_table <- function(tbl,
 #' @importFrom cli cli_abort cli_alert_info
 #' @keywords internal
 #' @noRd
-get_census_metadata <- function(census_version) {
+get_census_metadata <- function(census_version = "2024-07-01") {
   if (!requireNamespace("cellxgene.census", quietly = TRUE)) {
     cli_abort(paste(
       "The {.pkg cellxgene.census} package is required.",

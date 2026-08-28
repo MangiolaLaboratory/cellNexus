@@ -73,6 +73,6 @@ show_datasets <- function(tissue = NULL,
 
   metadata |>
     dplyr::distinct(dataset_id, tissue, tissue_groups) |>
-    dplyr::arrange(dataset_id, tissue, tissue_groups) |>
+    dplyr::arrange(tissue, tissue_groups, dataset_id) |>
     dplyr::collect()
 }

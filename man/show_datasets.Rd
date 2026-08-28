@@ -29,7 +29,7 @@ A tibble with \code{dataset_id}, \code{tissue}, and \code{tissue_groups} columns
 }
 \description{
 Returns the datasets available in the harmonised metadata database,
-optionally restricted to one or more tissues or tissue groups.
+optionally restricted to one or more tissues and tissue groups.
 }
 \examples{
 show_datasets(tissue_groups = "blood")

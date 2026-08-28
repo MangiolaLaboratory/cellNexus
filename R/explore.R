@@ -34,7 +34,7 @@ show_tissues <- function(metadata = NULL,
 #' Show datasets available for a tissue
 #'
 #' Returns the datasets available in the harmonised metadata database,
-#' optionally restricted to one or more tissues or tissue groups.
+#' optionally restricted to one or more tissues and tissue groups.
 #'
 #' @param tissue Optional character vector of tissues to include.
 #' @param tissue_groups Optional character vector of tissue groups to include.

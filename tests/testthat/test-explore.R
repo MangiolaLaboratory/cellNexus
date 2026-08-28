@@ -29,4 +29,12 @@ test_that("show_datasets() filters by tissue and tissue group", {
     show_datasets(tissue_groups = "blood", metadata = metadata),
     metadata[3:4, ]
   )
+  expect_equal(
+    show_datasets(
+      tissue = "blood",
+      tissue_groups = "blood",
+      metadata = metadata
+    ),
+    metadata[3:4, ]
+  )
 })

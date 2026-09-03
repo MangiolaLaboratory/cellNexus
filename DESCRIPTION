@@ -157,6 +157,7 @@ Collate:
     'counts_per_million.R'
     'data.R'
     'dev.R'
+    'explore.R'
     'interface_app.R'
     'metadata.R'
     'seurat.R'

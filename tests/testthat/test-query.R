@@ -16,7 +16,7 @@ test_that("sync_assay_files() syncs appropriate files", {
   temp <- tempfile()
 
   test_file <- "72fd05df1f26137b07fd4f4fc799d61c___1.h5ad"
-  atlas_name <- "cellxgene_2024/0.2.0"
+  atlas_name <- "hca_2024/0.5.0"
 
   sync_assay_files(
     atlas_name = atlas_name,

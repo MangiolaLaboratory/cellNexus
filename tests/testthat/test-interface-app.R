@@ -40,8 +40,7 @@ test_that("create_interface_app() builds an app and generated code updates", {
     disease = c("healthy", "healthy"),
     self_reported_ethnicity = c("NA", "NA"),
     sex = c("female", "male"),
-    tissue = c("lung", "lung"),
-    tissue_groups = c("respiratory", "respiratory")
+    tissue = c("lung", "lung")
   )
 
   app <- create_interface_app(metadata)

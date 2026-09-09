@@ -63,7 +63,6 @@ in the original CELLxGENE metadata:
 
 \code{sample_id}: Sample identifier.
 \code{age_days}: Donor age in days.
-\code{tissue_groups}: Coarse tissue grouping for analysis.
 \code{empty_droplet}: Whether a cell is called an empty droplet from expressed-gene count per sample (default threshold 200; targeted panels may differ).
 \code{alive}: Whether a cell passes viability / mitochondrial QC.
 \code{scDblFinder.class}: Doublet, singlet, or unknown (\code{scDblFinder} default parameters).
@@ -76,7 +75,7 @@ in the original CELLxGENE metadata:
 \code{high_mitochondrion}: TRUE if the cell’s mitochondrial percent exceeds the QC cutoff.
 \code{high_ribosome}: TRUE if the cell’s ribosomal percent exceeds the QC cutoff.
 \code{count_upper_bound}: Count capping threshold used in counts transformation.
-\code{inverse_transform}: Transformation method used in pre-processing pipeline.
+\code{inversed_inferred_distribution}: Transformation method used in pre-processing pipeline.
 \code{nfeature_expressed_thresh}: Threshold of the number of expressed features per cell.
 \code{is_immune}: Curated logical flag for immune-cell context.
 \code{file_id_cellNexus_single_cell}: Internal file id for single-cell layers.
@@ -113,7 +112,6 @@ library(dplyr)
 filtered_metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |>
   filter(
     imputed_ethnicity == "African" &
-      tissue_groups == "breast" &
       cell_type_unified_ensemble \%LIKE\% "\%cd14\%"
   )
 

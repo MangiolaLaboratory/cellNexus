@@ -70,8 +70,8 @@ Through harmonisation and curation, `cellNexus` adds columns that are not presen
 | `dataset_id` | Primary dataset identifier in the atlas. |
 | `sample_id` | Harmonised sample identifier. |
 | `donor_id` | Donor identifier. |
+| `feature_count` | Number of features/genes for a dataset. |
 | `age_days` | Donor age in days. |
-| `tissue_groups` | Coarse tissue grouping for analysis. |
 | `nFeature_expressed_in_sample` | Number of expressed features per cell. |
 | `nCount_RNA` | Total RNA counts per cell (sample-aware). |
 | `empty_droplet` | Quality-control flag for empty droplets. |
@@ -86,7 +86,8 @@ Through harmonisation and curation, `cellNexus` adds columns that are not presen
 | `file_id_cellNexus_pseudobulk` | Internal file id for pseudobulk layers. |
 | `count_upper_bound` | Count capping threshold used in transformation. |
 | `nfeature_expressed_thresh` | Threshold of the number of expressed features per cell. |
-| `inverse_transform` | Transformation method used in pre-processing pipeline. |
+| `inferred_distribution` | Inferred sample distribution. |
+| `inversed_inferred_distribution` | Transformation method used in pre-processing pipeline for each sample. |
 | `alive` | Quality-control flag for viable cells (e.g. mitochondrial signal). |
 | `cell_annotation_blueprint_singler` | `SingleR` annotation (Blueprint). |
 | `cell_annotation_monaco_singler` | `SingleR` annotation (Monaco). |
@@ -95,6 +96,7 @@ Through harmonisation and curation, `cellNexus` adds columns that are not presen
 | `low_confidence_ethnicity` | Supporting flag for low-confidence ethnicity calls. |
 | `.aggregated_cells` | Post-QC cells combined into each pseudobulk sample. |
 | `imputed_ethnicity` | Imputed ethnicity label. |
+| `max_lt_10,min_lt_0,rounding_error` | Sample post-transformation count sanity-check flags. Identify samples with an unusually low maximum count (max_lt_10), negative values (min_lt_0), or non-integer count values beyond numerical tolerance (rounding_error). |
 | `atlas_id` | cellNexus atlas release identifier (internal use). |
 
 

@@ -185,8 +185,7 @@ create_interface_app <- function(ui_choices, return_as_list = FALSE) {
     "self_reported_ethnicity",
     "sex",
     # "age_days",
-    "tissue",
-    "tissue_groups"
+    "tissue"
   )
 
   # Extract sample choices from pre-computed choices

@@ -476,7 +476,9 @@ duplicate_single_column_assay <- function(sce) {
 #' @param doublet_col A string specifying the column name
 #'   that indicates doublets (default: `"scDblFinder.class"`).
 #'   Expected character vector: `"doublet"` and/or `"singlet"` and/or `"unknown"`.
-#'
+#' @param nfeature_col Column containing the number of detected features per dataset
+#' @param min_features Minimum number of detected features required.
+#' 
 #' @return A filtered data frame containing only cells that pass all QC checks.
 #' @examples
 #' get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) |>
@@ -489,12 +491,15 @@ duplicate_single_column_assay <- function(sce) {
 keep_quality_cells <- function(data,
                                empty_droplet_col = "empty_droplet",
                                alive_col = "alive",
-                               doublet_col = "scDblFinder.class") {
+                               doublet_col = "scDblFinder.class",
+                               nfeature_col = "feature_count",
+                               min_features = 5000L) {
   data |>
     filter(
       !.data[[empty_droplet_col]],
       .data[[alive_col]],
-      .data[[doublet_col]] != "doublet"
+      .data[[doublet_col]] != "doublet",
+      .data[[nfeature_col]] >= min_features
     )
 }
 

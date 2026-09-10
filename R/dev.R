@@ -240,7 +240,7 @@ hdf5_to_anndata <- function(input_directory, output_directory) {
 #' @param census_version Character scalar. Census LTS release in date format.
 #' @return NULL
 downsample_metadata <- function(
-  cellnexus_output = "sample_hca2024_v2.3.2.parquet",
+  cellnexus_output = "sample_hca2024_v2.4.0.parquet",
   census_version = "2024-07-01"
 ) {
   census_metadata <- get_census_metadata(census_version)

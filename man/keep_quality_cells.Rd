@@ -11,7 +11,9 @@ keep_quality_cells(
   data,
   empty_droplet_col = "empty_droplet",
   alive_col = "alive",
-  doublet_col = "scDblFinder.class"
+  doublet_col = "scDblFinder.class",
+  nfeature_col = "feature_count",
+  min_features = 5000L
 )
 }
 \arguments{
@@ -28,6 +30,10 @@ Expected logical vector}
 \item{doublet_col}{A string specifying the column name
 that indicates doublets (default: \code{"scDblFinder.class"}).
 Expected character vector: \code{"doublet"} and/or \code{"singlet"} and/or \code{"unknown"}.}
+
+\item{nfeature_col}{Column containing the number of detected features per dataset}
+
+\item{min_features}{Minimum number of detected features required.}
 }
 \value{
 A filtered data frame containing only cells that pass all QC checks.

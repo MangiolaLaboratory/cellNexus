@@ -60,7 +60,6 @@
 #'   \item{self_reported_ethnicity}{Character vector of ethnicity labels}
 #'   \item{sex}{Character vector of sex labels}
 #'   \item{tissue}{Character vector of tissue types}
-#'   \item{tissue_groups}{Character vector of tissue group labels}
 #' }
 #'
 #' @source Generated from cellNexus metadata

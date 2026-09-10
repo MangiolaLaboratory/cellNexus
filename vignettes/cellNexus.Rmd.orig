@@ -92,7 +92,7 @@ suppressPackageStartupMessages({
 ### Load the metadata
 By default, `get_metadata()` loads harmonised annotations. Metadata is saved to `get_default_cache_dir()` unless a custom path is provided via the cache_directory argument. The `metadata` variable can then be re-used for all subsequent queries. 
 
-The unified pseudobulk AnnData object was pre-generated outside of this vignette applying quality control and retaining at least 15,000 intersecting genes across samples and hosted on Zenodo to avoid lengthy recompilation. Download the latest version: [pseudobulk_se.h5ad](https://zenodo.org/records/21633607/files/pseudobulk_se.h5ad?download=1). For all versions: [10.5281/zenodo.21633607](https://zenodo.org/records/21633607).
+The unified pseudobulk AnnData object was pre-generated outside of this vignette applying quality control and retaining at least 15,000 intersecting genes across samples and hosted on Zenodo to avoid lengthy recompilation. Download the latest version: [pseudobulk_se.h5ad](https://zenodo.org/records/22668580/files/pseudobulk_se.h5ad?download=1). For all versions: [10.5281/zenodo.22668580](https://zenodo.org/records/22668580).
 
 The following sections demonstrate the metadata, quality control, generation of raw and normalised counts, and pseudobulk construction for the specified query.
 
@@ -102,24 +102,15 @@ metadata <- get_metadata()
 metadata
 ```
 
-## Quality control
+### Quality control
 cellNexus metadata applies standardised quality control to filter out empty droplets, dead or damaged cells, doublets, and samples with low gene counts.
 
 ```{r qc-filter}
 metadata <- metadata |>
   keep_quality_cells()
-
-nfeatures_df <- cellNexus:::get_cellxgene_metadata("dataset") |>
-  dplyr::select(dplyr::where(~ !is.list(.x)))
-  
-metadata <- metadata |>
-  dplyr::left_join(nfeatures_df,
-                   by = "dataset_id",
-                   copy = TRUE) |>
-  dplyr::filter(feature_count >= 5000)
 ```
 
-## Join Census metadata
+### Join Census metadata
 Original Census annotations can be retrieved by the function `get_census_metadata()`, and registered to lazy tibble format by [DuckDB](https://duckdb.org/docs/current/clients/r) 
 
 ```{r load-census-metadata}
@@ -134,7 +125,6 @@ metadata <- metadata |>
                    dplyr::select(observation_joinid, dataset_id, tissue,
                                  self_reported_ethnicity, cell_type, assay,
                                  disease, sex))
-
 ```
 
 ### Explore tissues 
@@ -450,6 +440,19 @@ get_metadata(
 # Cell metadata
 
 The complete metadata dictionary for the harmonised fields is available on the documentation site: [cellNexus documentation](https://cellnexus.org/).
+
+# Annotational annotations
+
+Optionally, you can explore CELLxGENE metadata to retrieve additional information, such as the CELLxGENE URL (`explorer_url`), published paper title (`title`), published date (`published at`), and other dataset-level, file-level, or collection-level annotations.
+
+This information can be joined with cellNexus metadata when needed. Note that these additional annotations are not used to produce this vignette.
+
+For example, to explore CELLxGENE dataset-level annotations.
+
+```{r query-cellxgene-dataset-info}
+cellNexus:::get_cellxgene_metadata("dataset") |>
+  dplyr::select(dplyr::where(~ !is.list(.x)))
+```
 
 # RNA abundance
 

@@ -1,6 +1,31 @@
 \name{NEWS}
 \title{News for Package \pkg{cellNexus}}
 
+\section{News in version 0.99.35}{
+\itemize{
+    \item Metadata version bumps: \code{hca_2024} now points to
+    \code{hca2024_v2.4.0.parquet} (previously \code{v2.3.2}) and
+    \code{hca_2025} to \code{hca2025_v0.2.0.parquet} (previously
+    \code{v0.1.1}). The sample database URL (\code{SAMPLE_DATABASE_URL}) has
+    been updated accordingly.
+    \item \code{keep_quality_cells()} gains a feature-count filter.
+    \itemize{
+        \item Two new parameters: \code{nfeature_col} (default
+        \code{"feature_count"}) and \code{min_features} (default
+        \code{5000L}).
+        \item Cells with fewer than \code{min_features} detected features are
+        now excluded in addition to empty droplets, dead cells, and doublets.
+    }
+    \item Removed \code{tissue_groups} column: the harmonised metadata column
+    \code{tissue_groups} has been retired due to mapping fragility. 
+    \item Column rename: \code{inverse_transform} is now documented as
+    \code{inversed_inferred_distribution} to reflect its actual name in the
+    metadata.
+    \code{feature_count} is added as a column to the metadata.
+    \item Vignettes and README updated throughout to reflect the new metadata
+    version, the removal of \code{tissue_groups}, and revised usage examples.
+}}
+
 \section{News in version 0.99.33}{
 \itemize{
     \item Batched parallel downloads: \code{sync_remote_files()} now splits large

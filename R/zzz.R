@@ -20,7 +20,7 @@
 #' \preformatted{
 #' filtered_metadata <- metadata |>
 #'     dplyr::filter(
-#'         tissue_groups == "blood" &
+#'         imputed_ethnicity == "African" &
 #'         cell_type_unified_ensemble \%LIKE\% "\%cd4\%"
 #'     )
 #'

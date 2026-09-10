@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 # Overview
 
-The unified pseudobulk AnnData object was pre-generated outside of this vignette applying quality control and retaining at least 15,000 intersecting genes across samples and hosted on Zenodo to avoid lengthy recompilation. Download the latest version: [pseudobulk_se.h5ad](https://zenodo.org/records/21633607/files/pseudobulk_se.h5ad?download=1). For all versions: [10.5281/zenodo.21633607](https://zenodo.org/records/21633607).
+The unified pseudobulk AnnData object was pre-generated outside of this vignette applying quality control and retaining at least 15,000 intersecting genes across samples and hosted on Zenodo to avoid lengthy recompilation. Download the latest version: [pseudobulk_se.h5ad](https://zenodo.org/records/22668580/files/pseudobulk_se.h5ad?download=1). For all versions: [10.5281/zenodo.22668580](https://zenodo.org/records/22668580).
 
 This page focuses on expression-layer retrieval workflows after metadata filtering. 
 
@@ -33,7 +33,7 @@ query_metadata <- metadata |>
   dplyr::filter(
     age_days >= 40*365,
     cell_type_unified_ensemble == "cd16 mono",
-    tissue_groups == "breast",
+    tissue |> stringr::str_detect("breast"),
     imputed_ethnicity == "African American"
   )
 query_metadata  

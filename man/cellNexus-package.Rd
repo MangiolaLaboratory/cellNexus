@@ -32,7 +32,7 @@ Then filter the metadata to find cells of interest and download the data:
 \preformatted{
 filtered_metadata <- metadata |>
     dplyr::filter(
-        tissue_groups == "blood" &
+        imputed_ethnicity == "African" &
         cell_type_unified_ensemble \%LIKE\% "\%cd4\%"
     )
 

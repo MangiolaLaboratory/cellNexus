@@ -40,23 +40,23 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 
 ``` r
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = get_default_cache_dir())
-#> # A query:  ?? x 29
+#> # A query:  ?? x 31
 #> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]
-#>    cell_id dataset_id    sample_id age_days tissue_groups nFeature_expressed_i…¹
-#>      <dbl> <chr>         <chr>        <int> <chr>                          <int>
-#>  1      18 842c6f5d-4a9… 1119f482…    14600 breast                          1894
-#>  2      19 842c6f5d-4a9… 1119f482…    14600 breast                          1876
-#>  3      20 842c6f5d-4a9… 1119f482…    14600 breast                          1441
-#>  4      14 842c6f5d-4a9… 1119f482…    14600 breast                          1547
-#>  5      15 842c6f5d-4a9… 1119f482…    14600 breast                          1701
-#>  6      16 842c6f5d-4a9… 1119f482…    14600 breast                          2438
-#>  7      17 842c6f5d-4a9… 1119f482…    14600 breast                          2122
-#>  8       2 842c6f5d-4a9… 1f755b9b…    14600 breast                          1342
-#>  9       5 842c6f5d-4a9… 1f755b9b…    14600 breast                          1820
-#> 10       4 842c6f5d-4a9… 1f755b9b…    14600 breast                          1514
+#>    cell_id dataset_id    sample_id feature_count age_days nFeature_expressed_i…¹
+#>      <dbl> <chr>         <chr>             <int>    <int>                  <int>
+#>  1      14 842c6f5d-4a9… 1119f482…         33145    14600                   1547
+#>  2      15 842c6f5d-4a9… 1119f482…         33145    14600                   1701
+#>  3      16 842c6f5d-4a9… 1119f482…         33145    14600                   2438
+#>  4      17 842c6f5d-4a9… 1119f482…         33145    14600                   2122
+#>  5      18 842c6f5d-4a9… 1119f482…         33145    14600                   1894
+#>  6      19 842c6f5d-4a9… 1119f482…         33145    14600                   1876
+#>  7      20 842c6f5d-4a9… 1119f482…         33145    14600                   1441
+#>  8       2 842c6f5d-4a9… 1f755b9b…         33145    14600                   1342
+#>  9       5 842c6f5d-4a9… 1f755b9b…         33145    14600                   1820
+#> 10       4 842c6f5d-4a9… 1f755b9b…         33145    14600                   1514
 #> # ℹ more rows
 #> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
-#> # ℹ 23 more variables: nCount_RNA <dbl>, empty_droplet <lgl>,
+#> # ℹ 25 more variables: nCount_RNA <dbl>, empty_droplet <lgl>,
 #> #   cell_type_unified_ensemble <chr>, is_immune <lgl>,
 #> #   subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
 #> #   high_mitochondrion <lgl>, high_ribosome <lgl>, alive <lgl>,

@@ -93,9 +93,9 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 # Use the lightweight sample database URL (for fast checks during development only)
 meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.2.parquet to /home/runner/.cache/R/cellNexus/sample_hca2024_v2.3.2.parquet
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.4.0.parquet to /home/runner/.cache/R/cellNexus/sample_hca2024_v2.4.0.parquet
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmp2jiZKp/duckdb
+#> ℹ /tmp/RtmpGVsAjc/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -106,7 +106,7 @@ sce <- get_single_cell_experiment(meta)
 #> ℹ Realising metadata.
 #> ℹ Synchronising files
 #> ℹ Downloading 1 file, totalling 0 GB
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/hca_2024/0.4.1/counts/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad to /home/runner/.cache/R/cellNexus/hca_2024/0.4.1//counts/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-anndata/hca_2024/0.5.0/counts/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad to /home/runner/.cache/R/cellNexus/hca_2024/0.5.0//counts/001f82656d61ccb98f0ae26a2eb9e5ba___1.h5ad
 #> ℹ Reading files.
 #> For native R and reading and writing of H5AD files, an R <AnnData> object, and
 #> conversion to <SingleCellExperiment> or <Seurat> objects, check out the

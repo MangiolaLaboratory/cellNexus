@@ -43,7 +43,7 @@
 
     <a class="navbar-brand me-2" href="index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.35</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -191,12 +191,12 @@
 <td>Donor identifier.</td>
 </tr>
 <tr>
-<td><code>age_days</code></td>
-<td>Donor age in days.</td>
+<td><code>feature_count</code></td>
+<td>Number of features/genes for a dataset.</td>
 </tr>
 <tr>
-<td><code>tissue_groups</code></td>
-<td>Coarse tissue grouping for analysis.</td>
+<td><code>age_days</code></td>
+<td>Donor age in days.</td>
 </tr>
 <tr>
 <td><code>nFeature_expressed_in_sample</code></td>
@@ -255,8 +255,12 @@
 <td>Threshold of the number of expressed features per cell.</td>
 </tr>
 <tr>
-<td><code>inverse_transform</code></td>
-<td>Transformation method used in pre-processing pipeline.</td>
+<td><code>inferred_distribution</code></td>
+<td>Inferred sample distribution.</td>
+</tr>
+<tr>
+<td><code>inversed_inferred_distribution</code></td>
+<td>Transformation method used in pre-processing pipeline for each sample.</td>
 </tr>
 <tr>
 <td><code>alive</code></td>
@@ -291,6 +295,10 @@
 <tr>
 <td><code>imputed_ethnicity</code></td>
 <td>Imputed ethnicity label.</td>
+</tr>
+<tr>
+<td><code>max_lt_10,min_lt_0,rounding_error</code></td>
+<td>Sample post-transformation count sanity-check flags. Identify samples with an unusually low maximum count (max_lt_10), negative values (min_lt_0), or non-integer count values beyond numerical tolerance (rounding_error).</td>
 </tr>
 <tr>
 <td><code>atlas_id</code></td>

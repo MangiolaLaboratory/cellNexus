@@ -58,10 +58,6 @@ A named list where each element contains unique values for a column:
 
   Character vector of tissue types
 
-- tissue_groups:
-
-  Character vector of tissue group labels
-
 ## Source
 
 Generated from cellNexus metadata

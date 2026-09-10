@@ -39,7 +39,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.35</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,8 +84,8 @@
 <p>The unified pseudobulk AnnData object was pre-generated outside of
 this vignette applying quality control and retaining at least 15,000
 intersecting genes across samples and hosted on Zenodo to avoid lengthy
-recompilation. Download the latest version: <a href="https://zenodo.org/records/21633607/files/pseudobulk_se.h5ad?download=1" class="external-link">pseudobulk_se.h5ad</a>.
-For all versions: <a href="https://zenodo.org/records/21633607" class="external-link">10.5281/zenodo.21633607</a>.</p>
+recompilation. Download the latest version: <a href="https://zenodo.org/records/22668580/files/pseudobulk_se.h5ad?download=1" class="external-link">pseudobulk_se.h5ad</a>.
+For all versions: <a href="https://zenodo.org/records/22668580" class="external-link">10.5281/zenodo.22668580</a>.</p>
 <p>This page focuses on expression-layer retrieval workflows after
 metadata filtering.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -93,8 +93,6 @@ metadata filtering.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Downloading 1 file, totalling 0 GB</span></span>
-<span><span class="co">#&gt; ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.3.2.parquet to /vast/scratch/users/shen.m/r_cache/R/cellNexus/sample_hca2024_v2.3.2.parquet</span></span>
 <span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/keep_quality_cells.html">keep_quality_cells</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -106,34 +104,16 @@ metadata filtering.</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">age_days</span> <span class="op">&gt;=</span> <span class="fl">40</span><span class="op">*</span><span class="fl">365</span>,</span>
 <span>    <span class="va">cell_type_unified_ensemble</span> <span class="op">==</span> <span class="st">"cd16 mono"</span>,</span>
-<span>    <span class="va">tissue_groups</span> <span class="op">==</span> <span class="st">"breast"</span>,</span>
+<span>    <span class="va">tissue</span> <span class="op">|&gt;</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="st">"breast"</span><span class="op">)</span>,</span>
 <span>    <span class="va">imputed_ethnicity</span> <span class="op">==</span> <span class="st">"African American"</span></span>
 <span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `dplyr::filter()`:</span></span>
+<span><span class="co">#&gt; ℹ In argument: `stringr::str_detect(tissue, "breast")`</span></span>
+<span><span class="co">#&gt; Caused by error:</span></span>
+<span><span class="co">#&gt; ! Object `tissue` not found.</span></span>
 <span><span class="va">query_metadata</span>  </span>
-<span><span class="co">#&gt; # Source:   SQL [?? x 29]</span></span>
-<span><span class="co">#&gt; # Database: DuckDB 1.4.3 [unknown@Linux 5.14.0-570.123.1.el9_6.x86_64:R 4.5.3/:memory:]</span></span>
-<span><span class="co">#&gt;    cell_id dataset_id    sample_id age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA empty_droplet cell_type_unified_en…²</span></span>
-<span><span class="co">#&gt;      &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt; &lt;lgl&gt;         &lt;chr&gt;                 </span></span>
-<span><span class="co">#&gt;  1      19 842c6f5d-4a9… 1119f482…    14600 breast                          1876       9.15 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  2      14 842c6f5d-4a9… 1119f482…    14600 breast                          1547      10.5  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  3      16 842c6f5d-4a9… 1119f482…    14600 breast                          2438       9.80 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  4       2 842c6f5d-4a9… 1f755b9b…    14600 breast                          1342       9.40 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  5      24 842c6f5d-4a9… b0d0c16e…    14600 breast                          1800      10.7  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  6      22 842c6f5d-4a9… b0d0c16e…    14600 breast                          1759      11.1  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  7      21 842c6f5d-4a9… b0d0c16e…    14600 breast                          1552      10.2  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  8      11 842c6f5d-4a9… bd5f6876…    14600 breast                           399      11.2  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  9      25 842c6f5d-4a9… 04e410cb…    14600 breast                          1324      13.0  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 10      24 842c6f5d-4a9… 04e410cb…    14600 breast                          1254      13.8  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 11      13 842c6f5d-4a9… 30ea4b4f…    14600 breast                          1368      11.0  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 12       6 842c6f5d-4a9… 49ef9551…    14600 breast                          1771      11.6  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 13       9 842c6f5d-4a9… 49ef9551…    14600 breast                          1767      12.3  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; # ℹ abbreviated names: ¹​nFeature_expressed_in_sample, ²​cell_type_unified_ensemble</span></span>
-<span><span class="co">#&gt; # ℹ 20 more variables: is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;, high_mitochondrion &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   high_ribosome &lt;lgl&gt;, alive &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, file_id_cellNexus_single_cell &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   ethnicity_flagging_score &lt;dbl&gt;, low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   atlas_id &lt;chr&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'query_metadata' not found</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="retrieve-expression-by-representation">Retrieve expression by representation<a class="anchor" aria-label="anchor" href="#retrieve-expression-by-representation"></a>
@@ -141,41 +121,14 @@ metadata filtering.</p>
 <div class="section level3">
 <h3 id="single-cell-counts">Single-cell counts<a class="anchor" aria-label="anchor" href="#single-cell-counts"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>sce_counts <span class="ot">&lt;-</span> query_metadata <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">get_single_cell_experiment</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; ℹ Reading files.</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>Reading counts ■■■■■■■■■■■■■■■■                  <span class="dv">50</span>% <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>s</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>                                                                </span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>ℹ Compiling Experiment.</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>sce_counts</span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 13 × 30</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; #  [90mFeatures=33145 | Cells=13 | Assays=counts [0m</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;    .cell dataset_id      sample_id age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA empty_droplet cell_type_unified_en…²</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt; &lt;lgl&gt;         &lt;chr&gt;                 </span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;  1 19_1  842c6f5d-4a94-… 1119f482…    14600 breast                          1876       9.15 FALSE         cd16 mono             </span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;  2 14_1  842c6f5d-4a94-… 1119f482…    14600 breast                          1547      10.5  FALSE         cd16 mono             </span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;  3 16_1  842c6f5d-4a94-… 1119f482…    14600 breast                          2438       9.80 FALSE         cd16 mono             </span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt;  4 2_1   842c6f5d-4a94-… 1f755b9b…    14600 breast                          1342       9.40 FALSE         cd16 mono             </span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt;  5 24_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1800      10.7  FALSE         cd16 mono             </span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt;  6 22_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1759      11.1  FALSE         cd16 mono             </span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt;  7 21_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1552      10.2  FALSE         cd16 mono             </span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt;  8 11_1  842c6f5d-4a94-… bd5f6876…    14600 breast                           399      11.2  FALSE         cd16 mono             </span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;  9 25_2  842c6f5d-4a94-… 04e410cb…    14600 breast                          1324      13.0  FALSE         cd16 mono             </span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; 10 24_2  842c6f5d-4a94-… 04e410cb…    14600 breast                          1254      13.8  FALSE         cd16 mono             </span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; 11 13_2  842c6f5d-4a94-… 30ea4b4f…    14600 breast                          1368      11.0  FALSE         cd16 mono             </span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; 12 6_2   842c6f5d-4a94-… 49ef9551…    14600 breast                          1771      11.6  FALSE         cd16 mono             </span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; 13 9_2   842c6f5d-4a94-… 49ef9551…    14600 breast                          1767      12.3  FALSE         cd16 mono             </span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; # ℹ abbreviated names: ¹​nFeature_expressed_in_sample, ²​cell_type_unified_ensemble</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; # ℹ 21 more variables: is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;, high_mitochondrion &lt;lgl&gt;,</span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; #   high_ribosome &lt;lgl&gt;, alive &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, file_id_cellNexus_single_cell &lt;chr&gt;,</span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt; #   file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; #   cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;,</span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt; #   ethnicity_flagging_score &lt;dbl&gt;, low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;,</span></span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#&gt; #   atlas_id &lt;chr&gt;, original_cell_ &lt;chr&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sce_counts</span> <span class="op">&lt;-</span> <span class="va">query_metadata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/get_single_cell_experiment.html">get_single_cell_experiment</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'query_metadata' not found</span></span>
+<span><span class="va">sce_counts</span></span>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'sce_counts' not found</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="counts-per-million">Counts per million<a class="anchor" aria-label="anchor" href="#counts-per-million"></a>
@@ -183,35 +136,11 @@ metadata filtering.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sce_cpm</span> <span class="op">&lt;-</span> <span class="va">query_metadata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_single_cell_experiment.html">get_single_cell_experiment</a></span><span class="op">(</span>assays <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span><span class="co">#&gt; ℹ Reading files.</span></span>
-<span><span class="co">#&gt; ℹ Compiling Experiment.</span></span>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'query_metadata' not found</span></span>
 <span><span class="va">sce_cpm</span></span>
-<span><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 13 × 30</span></span>
-<span><span class="co">#&gt; # <span style="color: #555555;">Features=33145 | Cells=13 | Assays=cpm</span></span></span>
-<span><span class="co">#&gt;    .cell dataset_id      sample_id age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA empty_droplet cell_type_unified_en…²</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt; &lt;lgl&gt;         &lt;chr&gt;                 </span></span>
-<span><span class="co">#&gt;  1 19_1  842c6f5d-4a94-… 1119f482…    14600 breast                          1876       9.15 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  2 14_1  842c6f5d-4a94-… 1119f482…    14600 breast                          1547      10.5  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  3 16_1  842c6f5d-4a94-… 1119f482…    14600 breast                          2438       9.80 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  4 2_1   842c6f5d-4a94-… 1f755b9b…    14600 breast                          1342       9.40 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  5 24_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1800      10.7  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  6 22_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1759      11.1  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  7 21_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1552      10.2  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  8 11_1  842c6f5d-4a94-… bd5f6876…    14600 breast                           399      11.2  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  9 25_2  842c6f5d-4a94-… 04e410cb…    14600 breast                          1324      13.0  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 10 24_2  842c6f5d-4a94-… 04e410cb…    14600 breast                          1254      13.8  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 11 13_2  842c6f5d-4a94-… 30ea4b4f…    14600 breast                          1368      11.0  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 12 6_2   842c6f5d-4a94-… 49ef9551…    14600 breast                          1771      11.6  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 13 9_2   842c6f5d-4a94-… 49ef9551…    14600 breast                          1767      12.3  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; # ℹ abbreviated names: ¹​nFeature_expressed_in_sample, ²​cell_type_unified_ensemble</span></span>
-<span><span class="co">#&gt; # ℹ 21 more variables: is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;, high_mitochondrion &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   high_ribosome &lt;lgl&gt;, alive &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, file_id_cellNexus_single_cell &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   ethnicity_flagging_score &lt;dbl&gt;, low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   atlas_id &lt;chr&gt;, original_cell_ &lt;chr&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'sce_cpm' not found</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="pseudobulk">Pseudobulk<a class="anchor" aria-label="anchor" href="#pseudobulk"></a>
@@ -219,27 +148,11 @@ metadata filtering.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pb_counts</span> <span class="op">&lt;-</span> <span class="va">query_metadata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_pseudobulk.html">get_pseudobulk</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span><span class="co">#&gt; ℹ Reading files.</span></span>
-<span><span class="co">#&gt; ℹ Compiling Experiment.</span></span>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'query_metadata' not found</span></span>
 <span><span class="va">pb_counts</span></span>
-<span><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 7 × 25</span></span>
-<span><span class="co">#&gt; # <span style="color: #555555;">Features=33145 | Cells=7 | Assays=counts</span></span></span>
-<span><span class="co">#&gt;   .cell      sample_id cell_type_unified_en…¹ dataset_id age_days tissue_groups empty_droplet is_immune high_mitochondrion alive</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;                  &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;         &lt;lgl&gt;         &lt;lgl&gt;     &lt;lgl&gt;              &lt;lgl&gt;</span></span>
-<span><span class="co">#&gt; 1 1119f4825… 1119f482… cd16 mono              842c6f5d-…    14600 breast        FALSE         TRUE      FALSE              TRUE </span></span>
-<span><span class="co">#&gt; 2 1f755b9b5… 1f755b9b… cd16 mono              842c6f5d-…    14600 breast        FALSE         TRUE      FALSE              TRUE </span></span>
-<span><span class="co">#&gt; 3 b0d0c16ed… b0d0c16e… cd16 mono              842c6f5d-…    14600 breast        FALSE         TRUE      FALSE              TRUE </span></span>
-<span><span class="co">#&gt; 4 bd5f6876c… bd5f6876… cd16 mono              842c6f5d-…    14600 breast        FALSE         TRUE      FALSE              TRUE </span></span>
-<span><span class="co">#&gt; 5 04e410cba… 04e410cb… cd16 mono              842c6f5d-…    14600 breast        FALSE         TRUE      FALSE              TRUE </span></span>
-<span><span class="co">#&gt; 6 30ea4b4f8… 30ea4b4f… cd16 mono              842c6f5d-…    14600 breast        FALSE         TRUE      FALSE              TRUE </span></span>
-<span><span class="co">#&gt; 7 49ef9551c… 49ef9551… cd16 mono              842c6f5d-…    14600 breast        FALSE         TRUE      FALSE              TRUE </span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​cell_type_unified_ensemble</span></span>
-<span><span class="co">#&gt; # ℹ 15 more variables: scDblFinder.class &lt;chr&gt;, file_id_cellNexus_single_cell &lt;chr&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;, cell_annotation_blueprint_singler &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;, ethnicity_flagging_score &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, sample_identifier &lt;chr&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'pb_counts' not found</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -252,35 +165,11 @@ metadata filtering.</p>
 <span>    assays <span class="op">=</span> <span class="st">"cpm"</span>,</span>
 <span>    features <span class="op">=</span> <span class="st">"ENSG00000134644"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span><span class="co">#&gt; ℹ Reading files.</span></span>
-<span><span class="co">#&gt; ℹ Compiling Experiment.</span></span>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'query_metadata' not found</span></span>
 <span><span class="va">sce_gene</span></span>
-<span><span class="co">#&gt; # A SingleCellExperiment-tibble abstraction: 13 × 30</span></span>
-<span><span class="co">#&gt; # <span style="color: #555555;">Features=1 | Cells=13 | Assays=cpm</span></span></span>
-<span><span class="co">#&gt;    .cell dataset_id      sample_id age_days tissue_groups nFeature_expressed_i…¹ nCount_RNA empty_droplet cell_type_unified_en…²</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;      &lt;dbl&gt; &lt;lgl&gt;         &lt;chr&gt;                 </span></span>
-<span><span class="co">#&gt;  1 19_1  842c6f5d-4a94-… 1119f482…    14600 breast                          1876       9.15 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  2 14_1  842c6f5d-4a94-… 1119f482…    14600 breast                          1547      10.5  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  3 16_1  842c6f5d-4a94-… 1119f482…    14600 breast                          2438       9.80 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  4 2_1   842c6f5d-4a94-… 1f755b9b…    14600 breast                          1342       9.40 FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  5 24_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1800      10.7  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  6 22_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1759      11.1  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  7 21_1  842c6f5d-4a94-… b0d0c16e…    14600 breast                          1552      10.2  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  8 11_1  842c6f5d-4a94-… bd5f6876…    14600 breast                           399      11.2  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt;  9 25_2  842c6f5d-4a94-… 04e410cb…    14600 breast                          1324      13.0  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 10 24_2  842c6f5d-4a94-… 04e410cb…    14600 breast                          1254      13.8  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 11 13_2  842c6f5d-4a94-… 30ea4b4f…    14600 breast                          1368      11.0  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 12 6_2   842c6f5d-4a94-… 49ef9551…    14600 breast                          1771      11.6  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; 13 9_2   842c6f5d-4a94-… 49ef9551…    14600 breast                          1767      12.3  FALSE         cd16 mono             </span></span>
-<span><span class="co">#&gt; # ℹ abbreviated names: ¹​nFeature_expressed_in_sample, ²​cell_type_unified_ensemble</span></span>
-<span><span class="co">#&gt; # ℹ 21 more variables: is_immune &lt;lgl&gt;, subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;, high_mitochondrion &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   high_ribosome &lt;lgl&gt;, alive &lt;lgl&gt;, scDblFinder.class &lt;chr&gt;, file_id_cellNexus_single_cell &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;, nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   cell_annotation_blueprint_singler &lt;chr&gt;, cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   ethnicity_flagging_score &lt;dbl&gt;, low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   atlas_id &lt;chr&gt;, original_cell_ &lt;chr&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'sce_gene' not found</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="seurat">Seurat<a class="anchor" aria-label="anchor" href="#seurat"></a>
@@ -289,41 +178,11 @@ metadata filtering.</p>
 <code class="sourceCode R"><span><span class="co"># Seurat conversion</span></span>
 <span><span class="va">seurat_obj</span> <span class="op">&lt;-</span> <span class="va">query_metadata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_seurat.html">get_seurat</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Realising metadata.</span></span>
-<span><span class="co">#&gt; ℹ Synchronising files</span></span>
-<span><span class="co">#&gt; ℹ Reading files.</span></span>
-<span><span class="co">#&gt; ℹ Compiling Experiment.</span></span>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'query_metadata' not found</span></span>
 <span><span class="va">seurat_obj</span></span>
-<span><span class="co">#&gt; Warning: `when()` was deprecated in purrr 1.0.0.</span></span>
-<span><span class="co">#&gt; ℹ Please use `if` instead.</span></span>
-<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the tidyseurat package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at &lt;https://github.com/stemangiola/tidyseurat/issues&gt;.</span></span>
-<span><span class="co">#&gt; This warning is displayed once per session.</span></span>
-<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span>
-<span><span class="co">#&gt; # A Seurat-tibble abstraction: 13 × 35</span></span>
-<span><span class="co">#&gt; # <span style="color: #555555;">Features=33145 | Cells=13 | Active assay=counts | Assays=counts</span></span></span>
-<span><span class="co">#&gt;    .cell orig.ident nCount_originalexp nFeature_originalexp dataset_id   sample_id age_days tissue_groups nFeature_expressed_i…¹</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt; &lt;fct&gt;                   &lt;dbl&gt;                &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;                          &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 19_1  19                       13.0                 1970 842c6f5d-4a… 1119f482…    14600 breast                          1876</span></span>
-<span><span class="co">#&gt;  2 14_1  14                       13.1                 1633 842c6f5d-4a… 1119f482…    14600 breast                          1547</span></span>
-<span><span class="co">#&gt;  3 16_1  16                       13.0                 2529 842c6f5d-4a… 1119f482…    14600 breast                          2438</span></span>
-<span><span class="co">#&gt;  4 2_1   2                        14.0                 1430 842c6f5d-4a… 1f755b9b…    14600 breast                          1342</span></span>
-<span><span class="co">#&gt;  5 24_1  24                       13.9                 1889 842c6f5d-4a… b0d0c16e…    14600 breast                          1800</span></span>
-<span><span class="co">#&gt;  6 22_1  22                       14.0                 1850 842c6f5d-4a… b0d0c16e…    14600 breast                          1759</span></span>
-<span><span class="co">#&gt;  7 21_1  21                       13.8                 1640 842c6f5d-4a… b0d0c16e…    14600 breast                          1552</span></span>
-<span><span class="co">#&gt;  8 11_1  11                       14.1                  456 842c6f5d-4a… bd5f6876…    14600 breast                           399</span></span>
-<span><span class="co">#&gt;  9 25_2  25                       18.9                 1416 842c6f5d-4a… 04e410cb…    14600 breast                          1324</span></span>
-<span><span class="co">#&gt; 10 24_2  24                       18.3                 1342 842c6f5d-4a… 04e410cb…    14600 breast                          1254</span></span>
-<span><span class="co">#&gt; 11 13_2  13                       14.0                 1456 842c6f5d-4a… 30ea4b4f…    14600 breast                          1368</span></span>
-<span><span class="co">#&gt; 12 6_2   6                        15.3                 1861 842c6f5d-4a… 49ef9551…    14600 breast                          1771</span></span>
-<span><span class="co">#&gt; 13 9_2   9                        15.6                 1857 842c6f5d-4a… 49ef9551…    14600 breast                          1767</span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​nFeature_expressed_in_sample</span></span>
-<span><span class="co">#&gt; # ℹ 26 more variables: nCount_RNA &lt;dbl&gt;, empty_droplet &lt;lgl&gt;, cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;, high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, alive &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   scDblFinder.class &lt;chr&gt;, file_id_cellNexus_single_cell &lt;chr&gt;, file_id_cellNexus_pseudobulk &lt;chr&gt;, count_upper_bound &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   nfeature_expressed_thresh &lt;dbl&gt;, inverse_transform &lt;chr&gt;, cell_annotation_blueprint_singler &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   cell_annotation_monaco_singler &lt;chr&gt;, cell_annotation_azimuth_l2 &lt;chr&gt;, ethnicity_flagging_score &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   low_confidence_ethnicity &lt;chr&gt;, .aggregated_cells &lt;int&gt;, imputed_ethnicity &lt;chr&gt;, atlas_id &lt;chr&gt;, original_cell_ &lt;chr&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'seurat_obj' not found</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="portable-output-examples">Portable output examples<a class="anchor" aria-label="anchor" href="#portable-output-examples"></a>
@@ -369,106 +228,74 @@ analyses.</li>
 <span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; attached base packages:</span></span>
-<span><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] RcppSpdlog_0.0.28               cellNexus_0.99.30               purrr_1.2.2                    </span></span>
-<span><span class="co">#&gt;  [4] HPCell_0.6.0                    ggplot2_4.0.2                   tidyr_1.3.2                    </span></span>
-<span><span class="co">#&gt;  [7] tidySingleCellExperiment_1.20.1 ttservice_0.5.3                 SingleCellExperiment_1.32.0    </span></span>
-<span><span class="co">#&gt; [10] anndataR_1.3.1                  arrow_23.0.1.2                  SummarizedExperiment_1.40.0    </span></span>
-<span><span class="co">#&gt; [13] Biobase_2.70.0                  GenomicRanges_1.62.1            Seqinfo_1.0.0                  </span></span>
-<span><span class="co">#&gt; [16] IRanges_2.44.0                  S4Vectors_0.49.1-1              BiocGenerics_0.56.0            </span></span>
-<span><span class="co">#&gt; [19] generics_0.1.4                  MatrixGenerics_1.22.0           matrixStats_1.5.0              </span></span>
-<span><span class="co">#&gt; [22] dplyr_1.2.1                    </span></span>
+<span><span class="co">#&gt; [1] BiocStyle_2.38.0  RcppSpdlog_0.0.28 ggplot2_4.0.2     dplyr_1.2.1       cellNexus_0.99.34</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] igraph_2.2.3                    ica_1.0-3                       plotly_4.12.0                  </span></span>
-<span><span class="co">#&gt;   [4] SingleR_2.12.0                  scater_1.38.1                   devtools_2.5.0                 </span></span>
-<span><span class="co">#&gt;   [7] tidyselect_1.2.1                bit_4.6.0                       lattice_0.22-9                 </span></span>
-<span><span class="co">#&gt;  [10] rjson_0.2.21                    blob_1.3.0                      stringr_1.6.0                  </span></span>
-<span><span class="co">#&gt;  [13] S4Arrays_1.10.1                 rclipboard_0.2.1                parallel_4.5.3                 </span></span>
-<span><span class="co">#&gt;  [16] png_0.1-9                       cli_3.6.6                       ProtGenerics_1.42.0            </span></span>
-<span><span class="co">#&gt;  [19] askpass_1.2.1                   openssl_2.4.2                   goftest_1.2-3                  </span></span>
-<span><span class="co">#&gt;  [22] BiocIO_1.20.0                   bluster_1.20.0                  BiocNeighbors_2.4.0            </span></span>
-<span><span class="co">#&gt;  [25] tarchetypes_0.14.1              uwot_0.2.4                      curl_7.0.0                     </span></span>
-<span><span class="co">#&gt;  [28] mime_0.13                       evaluate_1.0.5                  stringi_1.8.7                  </span></span>
-<span><span class="co">#&gt;  [31] ids_1.0.1                       backports_1.5.1                 desc_1.4.3                     </span></span>
-<span><span class="co">#&gt;  [34] XML_3.99-0.23                   httpuv_1.6.17                   AnnotationDbi_1.72.0           </span></span>
-<span><span class="co">#&gt;  [37] magrittr_2.0.5                  rappdirs_0.3.4                  splines_4.5.3                  </span></span>
-<span><span class="co">#&gt;  [40] nanonext_1.8.2                  aws.signature_0.6.0             DT_0.34.0                      </span></span>
-<span><span class="co">#&gt;  [43] sctransform_0.4.3               ggbeeswarm_0.7.3                sessioninfo_1.2.3              </span></span>
-<span><span class="co">#&gt;  [46] DBI_1.3.0                       HDF5Array_1.38.0                jquerylib_0.1.4                </span></span>
-<span><span class="co">#&gt;  [49] withr_3.0.2                     reformulas_0.4.4                rprojroot_2.1.1                </span></span>
-<span><span class="co">#&gt;  [52] xgboost_3.2.1.1                 tidySummarizedExperiment_1.20.1 lmtest_0.9-40                  </span></span>
-<span><span class="co">#&gt;  [55] brio_1.1.5                      BiocManager_1.30.27             rtracklayer_1.70.1             </span></span>
-<span><span class="co">#&gt;  [58] duckdb_1.4.3                    htmlwidgets_1.6.4               fs_2.0.1                       </span></span>
-<span><span class="co">#&gt;  [61] biomaRt_2.66.2                  ggrepel_0.9.8                   SparseArray_1.10.10            </span></span>
-<span><span class="co">#&gt;  [64] tidyseurat_0.8.10               h5mread_1.2.1                   reticulate_1.46.0              </span></span>
-<span><span class="co">#&gt;  [67] zoo_1.8-15                      tiledbsoma_2.1.2                XVector_0.50.0                 </span></span>
-<span><span class="co">#&gt;  [70] knitr_1.51                      RcppCCTZ_0.2.14                 UCSC.utils_1.6.1               </span></span>
-<span><span class="co">#&gt;  [73] secretbase_1.2.1                fansi_1.0.7                     patchwork_1.3.2                </span></span>
-<span><span class="co">#&gt;  [76] pak_0.11.1                      grid_4.5.3                      data.table_1.18.2.1            </span></span>
-<span><span class="co">#&gt;  [79] rhdf5_2.54.1                    R.oo_1.27.1                     RSpectra_0.16-2                </span></span>
-<span><span class="co">#&gt;  [82] irlba_2.3.7                     tiledb_0.33.1                   commonmark_2.0.0               </span></span>
-<span><span class="co">#&gt;  [85] fastDummies_1.7.5               ellipsis_0.3.3                  base64url_1.4                  </span></span>
-<span><span class="co">#&gt;  [88] lazyeval_0.2.3                  yaml_2.3.12                     conflicted_1.2.0               </span></span>
-<span><span class="co">#&gt;  [91] survival_3.8-6                  scattermore_1.2                 crayon_1.5.3                   </span></span>
-<span><span class="co">#&gt;  [94] mirai_2.6.1                     RcppAnnoy_0.0.23                RColorBrewer_1.1-3             </span></span>
-<span><span class="co">#&gt;  [97] progressr_0.19.0                later_1.4.8                     ggridges_0.5.7                 </span></span>
-<span><span class="co">#&gt; [100] codetools_0.2-20                base64enc_0.1-6                 tidybulk_2.1.0                 </span></span>
-<span><span class="co">#&gt; [103] Seurat_5.5.0.9002               KEGGREST_1.50.0                 Rtsne_0.17                     </span></span>
-<span><span class="co">#&gt; [106] limma_3.66.0                    Rsamtools_2.26.0                filelock_1.0.3                 </span></span>
-<span><span class="co">#&gt; [109] pkgconfig_2.0.3                 xml2_1.5.2                      spatstat.univar_3.1-7          </span></span>
-<span><span class="co">#&gt; [112] GenomicAlignments_1.46.0        spatstat.sparse_3.1-0           viridisLite_0.4.3              </span></span>
-<span><span class="co">#&gt; [115] xtable_1.8-8                    plyr_1.8.9                      httr_1.4.8                     </span></span>
-<span><span class="co">#&gt; [118] rbibutils_2.4.1                 tools_4.5.3                     globals_0.19.1                 </span></span>
-<span><span class="co">#&gt; [121] SeuratObject_5.4.0              pkgbuild_1.4.8                  beeswarm_0.4.0                 </span></span>
-<span><span class="co">#&gt; [124] checkmate_2.3.4                 nlme_3.1-168                    dbplyr_2.5.2                   </span></span>
-<span><span class="co">#&gt; [127] assertthat_0.2.1                lme4_2.0-1                      digest_0.6.39                  </span></span>
-<span><span class="co">#&gt; [130] Matrix_1.7-4                    dir.expiry_1.18.0               farver_2.1.2                   </span></span>
-<span><span class="co">#&gt; [133] tzdb_0.5.0                      AnnotationFilter_1.34.0         reshape2_1.4.5                 </span></span>
-<span><span class="co">#&gt; [136] viridis_0.6.5                   glue_1.8.0                      cachem_1.1.0                   </span></span>
-<span><span class="co">#&gt; [139] BiocFileCache_3.0.0             polyclip_1.10-7                 rjsoncons_1.3.2                </span></span>
-<span><span class="co">#&gt; [142] Biostrings_2.78.0               parallelly_1.46.1               aws.s3_0.3.22                  </span></span>
-<span><span class="co">#&gt; [145] pkgload_1.5.1                   statmod_1.5.1                   here_1.0.2                     </span></span>
-<span><span class="co">#&gt; [148] RcppHNSW_0.6.0                  ScaledMatrix_1.18.0             minqa_1.2.8                    </span></span>
-<span><span class="co">#&gt; [151] pbapply_1.7-4                   httr2_1.2.2                     job_0.3.1                      </span></span>
-<span><span class="co">#&gt; [154] spam_2.11-3                     dqrng_0.4.1                     utf8_1.2.6                     </span></span>
-<span><span class="co">#&gt; [157] scDblFinder_1.24.10             basilisk_1.22.0                 crew_1.3.0                     </span></span>
-<span><span class="co">#&gt; [160] gridExtra_2.3                   shiny_1.13.0                    R.utils_2.13.0                 </span></span>
-<span><span class="co">#&gt; [163] rhdf5filters_1.22.0             RCurl_1.98-1.18                 memoise_2.0.1                  </span></span>
-<span><span class="co">#&gt; [166] rmarkdown_2.31                  nanoarrow_0.8.0                 scales_1.4.0                   </span></span>
-<span><span class="co">#&gt; [169] R.methodsS3_1.8.2               future_1.70.0                   RANN_2.6.2                     </span></span>
-<span><span class="co">#&gt; [172] renv_1.2.1                      spatstat.data_3.1-9             rstudioapi_0.18.0              </span></span>
-<span><span class="co">#&gt; [175] cluster_2.1.8.2                 zellkonverter_1.20.1            spatstat.utils_3.2-2           </span></span>
-<span><span class="co">#&gt; [178] hms_1.1.4                       fitdistrplus_1.2-6              cowplot_1.2.0                  </span></span>
-<span><span class="co">#&gt; [181] rlang_1.2.0                     GenomeInfoDb_1.46.2             crew.cluster_0.4.0             </span></span>
-<span><span class="co">#&gt; [184] DelayedMatrixStats_1.32.0       sparseMatrixStats_1.22.0        shinyWidgets_0.9.1             </span></span>
-<span><span class="co">#&gt; [187] dotCall64_1.2                   scuttle_1.20.0                  xfun_0.57                      </span></span>
-<span><span class="co">#&gt; [190] abind_1.4-8                     spdl_0.0.5                      tibble_3.3.1                   </span></span>
-<span><span class="co">#&gt; [193] EnsDb.Hsapiens.v86_2.99.0       Rhdf5lib_1.32.0                 readr_2.2.0                    </span></span>
-<span><span class="co">#&gt; [196] bitops_1.0-9                    Rdpack_2.6.6                    ps_1.9.2                       </span></span>
-<span><span class="co">#&gt; [199] promises_1.5.0                  RSQLite_2.4.6                   cellxgenedp_1.14.0             </span></span>
-<span><span class="co">#&gt; [202] DelayedArray_0.36.1             proxy_0.4-29                    compiler_4.5.3                 </span></span>
-<span><span class="co">#&gt; [205] prettyunits_1.2.0               boot_1.3-32                     beachmat_2.26.0                </span></span>
-<span><span class="co">#&gt; [208] listenv_0.10.1                  Rcpp_1.1.1-1                    edgeR_4.8.2                    </span></span>
-<span><span class="co">#&gt; [211] roxygen2_7.3.3                  BiocSingular_1.26.1             tensor_1.5.1                   </span></span>
-<span><span class="co">#&gt; [214] usethis_3.2.1                   MASS_7.3-65                     progress_1.2.3                 </span></span>
-<span><span class="co">#&gt; [217] uuid_1.2-2                      BiocParallel_1.44.0             ggupset_0.4.1                  </span></span>
-<span><span class="co">#&gt; [220] nanotime_0.3.13                 spatstat.random_3.4-5           R6_2.6.1                       </span></span>
-<span><span class="co">#&gt; [223] fastmap_1.2.0                   vipor_0.4.7                     ensembldb_2.34.0               </span></span>
-<span><span class="co">#&gt; [226] ROCR_1.0-12                     targets_1.12.0                  rsvd_1.0.5                     </span></span>
-<span><span class="co">#&gt; [229] gtable_0.3.6                    KernSmooth_2.23-26              miniUI_0.1.2                   </span></span>
-<span><span class="co">#&gt; [232] deldir_2.0-4                    htmltools_0.5.9                 bit64_4.6.0-1                  </span></span>
-<span><span class="co">#&gt; [235] spatstat.explore_3.8-0          lifecycle_1.0.5                 S7_0.2.1-1                     </span></span>
-<span><span class="co">#&gt; [238] processx_3.8.7                  nloptr_2.2.1                    callr_3.7.6                    </span></span>
-<span><span class="co">#&gt; [241] restfulr_0.0.16                 sass_0.4.10                     vctrs_0.7.3                    </span></span>
-<span><span class="co">#&gt; [244] testthat_3.3.2                  rsconnect_1.10.1                spatstat.geom_3.7-3            </span></span>
-<span><span class="co">#&gt; [247] scran_1.38.1                    sp_2.2-1                        future.apply_1.20.2            </span></span>
-<span><span class="co">#&gt; [250] bslib_0.10.0                    pillar_1.11.1                   GenomicFeatures_1.62.0         </span></span>
-<span><span class="co">#&gt; [253] DropletUtils_1.30.0             cellxgene.census_1.16.1         collections_0.3.12             </span></span>
-<span><span class="co">#&gt; [256] metapod_1.18.0                  locfit_1.5-9.12                 otel_0.2.0                     </span></span>
-<span><span class="co">#&gt; [259] BiocStyle_2.38.0                jsonlite_2.0.0                  cigarillo_1.0.0</span></span></code></pre></div>
+<span><span class="co">#&gt;   [1] fs_2.0.1                        matrixStats_1.5.0               spatstat.sparse_3.1-0          </span></span>
+<span><span class="co">#&gt;   [4] fontawesome_0.5.3               httr_1.4.8                      RColorBrewer_1.1-3             </span></span>
+<span><span class="co">#&gt;   [7] tools_4.5.3                     sctransform_0.4.3               backports_1.5.1                </span></span>
+<span><span class="co">#&gt;  [10] utf8_1.2.6                      R6_2.6.1                        DT_0.34.0                      </span></span>
+<span><span class="co">#&gt;  [13] HDF5Array_1.38.0                lazyeval_0.2.3                  uwot_0.2.4                     </span></span>
+<span><span class="co">#&gt;  [16] rhdf5filters_1.22.0             withr_3.0.2                     sp_2.2-1                       </span></span>
+<span><span class="co">#&gt;  [19] gridExtra_2.3                   nanoarrow_0.8.0                 progressr_0.19.0               </span></span>
+<span><span class="co">#&gt;  [22] cli_3.6.6                       Biobase_2.70.0                  spatstat.explore_3.8-0         </span></span>
+<span><span class="co">#&gt;  [25] fastDummies_1.7.5               sass_0.4.10                     Seurat_5.5.0.9002              </span></span>
+<span><span class="co">#&gt;  [28] arrow_23.0.1.2                  S7_0.2.1-1                      spatstat.data_3.1-9            </span></span>
+<span><span class="co">#&gt;  [31] ggridges_0.5.7                  pbapply_1.7-4                   commonmark_2.0.0               </span></span>
+<span><span class="co">#&gt;  [34] parallelly_1.46.1               rstudioapi_0.18.0               generics_0.1.4                 </span></span>
+<span><span class="co">#&gt;  [37] ica_1.0-3                       spatstat.random_3.4-5           Matrix_1.7-4                   </span></span>
+<span><span class="co">#&gt;  [40] fansi_1.0.7                     S4Vectors_0.49.1-1              rclipboard_0.2.1               </span></span>
+<span><span class="co">#&gt;  [43] abind_1.4-8                     lifecycle_1.0.5                 yaml_2.3.12                    </span></span>
+<span><span class="co">#&gt;  [46] SummarizedExperiment_1.40.0     rhdf5_2.54.1                    SparseArray_1.10.10            </span></span>
+<span><span class="co">#&gt;  [49] Rtsne_0.17                      grid_4.5.3                      blob_1.3.0                     </span></span>
+<span><span class="co">#&gt;  [52] promises_1.5.0                  dir.expiry_1.18.0               miniUI_0.1.2                   </span></span>
+<span><span class="co">#&gt;  [55] lattice_0.22-9                  cowplot_1.2.0                   pillar_1.11.1                  </span></span>
+<span><span class="co">#&gt;  [58] knitr_1.51                      GenomicRanges_1.62.1            future.apply_1.20.2            </span></span>
+<span><span class="co">#&gt;  [61] codetools_0.2-20                glue_1.8.0                      spatstat.univar_3.1-7          </span></span>
+<span><span class="co">#&gt;  [64] tiledb_0.33.1                   data.table_1.18.2.1             tidySingleCellExperiment_1.20.1</span></span>
+<span><span class="co">#&gt;  [67] vctrs_0.7.3                     png_0.1-9                       spam_2.11-3                    </span></span>
+<span><span class="co">#&gt;  [70] gtable_0.3.6                    aws.s3_0.3.22                   assertthat_0.2.1               </span></span>
+<span><span class="co">#&gt;  [73] cachem_1.1.0                    xfun_0.57                       S4Arrays_1.10.1                </span></span>
+<span><span class="co">#&gt;  [76] mime_0.13                       Seqinfo_1.0.0                   survival_3.8-6                 </span></span>
+<span><span class="co">#&gt;  [79] SingleCellExperiment_1.32.0     ellipsis_0.3.3                  fitdistrplus_1.2-6             </span></span>
+<span><span class="co">#&gt;  [82] ROCR_1.0-12                     nlme_3.1-168                    tiledbsoma_2.1.2               </span></span>
+<span><span class="co">#&gt;  [85] RcppCCTZ_0.2.14                 bit64_4.6.0-1                   filelock_1.0.3                 </span></span>
+<span><span class="co">#&gt;  [88] RcppAnnoy_0.0.23                GenomeInfoDb_1.46.2             rprojroot_2.1.1                </span></span>
+<span><span class="co">#&gt;  [91] bslib_0.10.0                    irlba_2.3.7                     KernSmooth_2.23-26             </span></span>
+<span><span class="co">#&gt;  [94] otel_0.2.0                      BiocGenerics_0.56.0             DBI_1.3.0                      </span></span>
+<span><span class="co">#&gt;  [97] zellkonverter_1.20.1            duckdb_1.4.3                    tidyselect_1.2.1               </span></span>
+<span><span class="co">#&gt; [100] processx_3.8.7                  cellxgene.census_1.16.1         bit_4.6.0                      </span></span>
+<span><span class="co">#&gt; [103] compiler_4.5.3                  curl_7.0.0                      rjsoncons_1.3.2                </span></span>
+<span><span class="co">#&gt; [106] h5mread_1.2.1                   xml2_1.5.2                      nanotime_0.3.13                </span></span>
+<span><span class="co">#&gt; [109] DelayedArray_0.36.1             plotly_4.12.0                   bookdown_0.46                  </span></span>
+<span><span class="co">#&gt; [112] checkmate_2.3.4                 scales_1.4.0                    lmtest_0.9-40                  </span></span>
+<span><span class="co">#&gt; [115] callr_3.7.6                     spdl_0.0.5                      stringr_1.6.0                  </span></span>
+<span><span class="co">#&gt; [118] anndataR_1.3.1                  digest_0.6.39                   goftest_1.2-3                  </span></span>
+<span><span class="co">#&gt; [121] spatstat.utils_3.2-2            rmarkdown_2.31                  basilisk_1.22.0                </span></span>
+<span><span class="co">#&gt; [124] XVector_0.50.0                  htmltools_0.5.9                 pkgconfig_2.0.3                </span></span>
+<span><span class="co">#&gt; [127] base64enc_0.1-6                 MatrixGenerics_1.22.0           dbplyr_2.5.2                   </span></span>
+<span><span class="co">#&gt; [130] fastmap_1.2.0                   rlang_1.2.0                     htmlwidgets_1.6.4              </span></span>
+<span><span class="co">#&gt; [133] UCSC.utils_1.6.1                shiny_1.13.0                    farver_2.1.2                   </span></span>
+<span><span class="co">#&gt; [136] jquerylib_0.1.4                 zoo_1.8-15                      jsonlite_2.0.0                 </span></span>
+<span><span class="co">#&gt; [139] magrittr_2.0.5                  dotCall64_1.2                   patchwork_1.3.2                </span></span>
+<span><span class="co">#&gt; [142] Rhdf5lib_1.32.0                 Rcpp_1.1.1-1                    reticulate_1.46.0              </span></span>
+<span><span class="co">#&gt; [145] stringi_1.8.7                   brio_1.1.5                      MASS_7.3-65                    </span></span>
+<span><span class="co">#&gt; [148] plyr_1.8.9                      parallel_4.5.3                  listenv_0.10.1                 </span></span>
+<span><span class="co">#&gt; [151] ggrepel_0.9.8                   forcats_1.0.1                   deldir_2.0-4                   </span></span>
+<span><span class="co">#&gt; [154] splines_4.5.3                   tensor_1.5.1                    ps_1.9.2                       </span></span>
+<span><span class="co">#&gt; [157] cellxgenedp_1.14.0              igraph_2.2.3                    spatstat.geom_3.7-3            </span></span>
+<span><span class="co">#&gt; [160] RcppHNSW_0.6.0                  reshape2_1.4.5                  stats4_4.5.3                   </span></span>
+<span><span class="co">#&gt; [163] evaluate_1.0.5                  ttservice_0.5.3                 SeuratObject_5.4.0             </span></span>
+<span><span class="co">#&gt; [166] BiocManager_1.30.27             httpuv_1.6.17                   RANN_2.6.2                     </span></span>
+<span><span class="co">#&gt; [169] tidyr_1.3.2                     purrr_1.2.2                     polyclip_1.10-7                </span></span>
+<span><span class="co">#&gt; [172] future_1.70.0                   scattermore_1.2                 xtable_1.8-8                   </span></span>
+<span><span class="co">#&gt; [175] RSpectra_0.16-2                 later_1.4.8                     viridisLite_0.4.3              </span></span>
+<span><span class="co">#&gt; [178] tibble_3.3.1                    memoise_2.0.1                   aws.signature_0.6.0            </span></span>
+<span><span class="co">#&gt; [181] IRanges_2.44.0                  cluster_2.1.8.2                 shinyWidgets_0.9.1             </span></span>
+<span><span class="co">#&gt; [184] globals_0.19.1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

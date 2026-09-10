@@ -9,7 +9,9 @@ keep_quality_cells(
   data,
   empty_droplet_col = "empty_droplet",
   alive_col = "alive",
-  doublet_col = "scDblFinder.class"
+  doublet_col = "scDblFinder.class",
+  nfeature_col = "feature_count",
+  min_features = 5000L
 )
 ```
 
@@ -40,6 +42,14 @@ al.,2023](https://www.biorxiv.org/content/10.1101/2023.06.08.542671v3)
   `"scDblFinder.class"`). Expected character vector: `"doublet"` and/or
   `"singlet"` and/or `"unknown"`.
 
+- nfeature_col:
+
+  Column containing the number of detected features per dataset
+
+- min_features:
+
+  Minimum number of detected features required.
+
 ## Value
 
 A filtered data frame containing only cells that pass all QC checks.
@@ -50,14 +60,14 @@ A filtered data frame containing only cells that pass all QC checks.
 get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) |>
   head(2) |>
   keep_quality_cells()
-#> # A query:  ?? x 29
+#> # A query:  ?? x 31
 #> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]
-#>   cell_id dataset_id     sample_id age_days tissue_groups nFeature_expressed_i…¹
-#>     <dbl> <chr>          <chr>        <int> <chr>                          <int>
-#> 1      18 842c6f5d-4a94… 1119f482…    14600 breast                          1894
-#> 2      19 842c6f5d-4a94… 1119f482…    14600 breast                          1876
+#>   cell_id dataset_id     sample_id feature_count age_days nFeature_expressed_i…¹
+#>     <dbl> <chr>          <chr>             <int>    <int>                  <int>
+#> 1      14 842c6f5d-4a94… 1119f482…         33145    14600                   1547
+#> 2      15 842c6f5d-4a94… 1119f482…         33145    14600                   1701
 #> # ℹ abbreviated name: ¹​nFeature_expressed_in_sample
-#> # ℹ 23 more variables: nCount_RNA <dbl>, empty_droplet <lgl>,
+#> # ℹ 25 more variables: nCount_RNA <dbl>, empty_droplet <lgl>,
 #> #   cell_type_unified_ensemble <chr>, is_immune <lgl>,
 #> #   subsets_Mito_percent <int>, subsets_Ribo_percent <int>,
 #> #   high_mitochondrion <lgl>, high_ribosome <lgl>, alive <lgl>,

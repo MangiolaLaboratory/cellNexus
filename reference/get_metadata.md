@@ -82,22 +82,22 @@ Through harmonisation and curation we introduced custom columns not
 present in the original CELLxGENE metadata:
 
 `sample_id`: Sample identifier. `age_days`: Donor age in days.
-`tissue_groups`: Coarse tissue grouping for analysis. `empty_droplet`:
-Whether a cell is called an empty droplet from expressed-gene count per
-sample (default threshold 200; targeted panels may differ). `alive`:
-Whether a cell passes viability / mitochondrial QC. `scDblFinder.class`:
-Doublet, singlet, or unknown (`scDblFinder` default parameters).
-`cell_type_unified_ensemble`: Consensus immune identity from Azimuth and
-SingleR (Blueprint, Monaco). `cell_annotation_azimuth_l2`: Azimuth cell
-annotation. `cell_annotation_blueprint_singler`: SingleR annotation
-(Blueprint). `cell_annotation_monaco_singler`: SingleR annotation
-(Monaco). `subsets_Mito_percent`: Percent of each cell’s total counts
-coming from mitochondrial genes in a sample. `subsets_Ribo_percent`:
-Percent of each cell’s total counts coming from ribosomal genes in a
-sample. `high_mitochondrion`: TRUE if the cell’s mitochondrial percent
-exceeds the QC cutoff. `high_ribosome`: TRUE if the cell’s ribosomal
-percent exceeds the QC cutoff. `count_upper_bound`: Count capping
-threshold used in counts transformation. `inverse_transform`:
+`empty_droplet`: Whether a cell is called an empty droplet from
+expressed-gene count per sample (default threshold 200; targeted panels
+may differ). `alive`: Whether a cell passes viability / mitochondrial
+QC. `scDblFinder.class`: Doublet, singlet, or unknown (`scDblFinder`
+default parameters). `cell_type_unified_ensemble`: Consensus immune
+identity from Azimuth and SingleR (Blueprint, Monaco).
+`cell_annotation_azimuth_l2`: Azimuth cell annotation.
+`cell_annotation_blueprint_singler`: SingleR annotation (Blueprint).
+`cell_annotation_monaco_singler`: SingleR annotation (Monaco).
+`subsets_Mito_percent`: Percent of each cell’s total counts coming from
+mitochondrial genes in a sample. `subsets_Ribo_percent`: Percent of each
+cell’s total counts coming from ribosomal genes in a sample.
+`high_mitochondrion`: TRUE if the cell’s mitochondrial percent exceeds
+the QC cutoff. `high_ribosome`: TRUE if the cell’s ribosomal percent
+exceeds the QC cutoff. `count_upper_bound`: Count capping threshold used
+in counts transformation. `inversed_inferred_distribution`:
 Transformation method used in pre-processing pipeline.
 `nfeature_expressed_thresh`: Threshold of the number of expressed
 features per cell. `is_immune`: Curated logical flag for immune-cell
@@ -145,7 +145,6 @@ library(dplyr)
 filtered_metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL) |>
   filter(
     imputed_ethnicity == "African" &
-      tissue_groups == "breast" &
       cell_type_unified_ensemble %LIKE% "%cd14%"
   )
 ```

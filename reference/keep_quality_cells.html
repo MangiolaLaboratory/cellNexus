@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cellNexus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.35</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,9 @@
 <span>  <span class="va">data</span>,</span>
 <span>  empty_droplet_col <span class="op">=</span> <span class="st">"empty_droplet"</span>,</span>
 <span>  alive_col <span class="op">=</span> <span class="st">"alive"</span>,</span>
-<span>  doublet_col <span class="op">=</span> <span class="st">"scDblFinder.class"</span></span>
+<span>  doublet_col <span class="op">=</span> <span class="st">"scDblFinder.class"</span>,</span>
+<span>  nfeature_col <span class="op">=</span> <span class="st">"feature_count"</span>,</span>
+<span>  min_features <span class="op">=</span> <span class="fl">5000L</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -90,6 +92,14 @@ Expected logical vector</p></dd>
 that indicates doublets (default: <code>"scDblFinder.class"</code>).
 Expected character vector: <code>"doublet"</code> and/or <code>"singlet"</code> and/or <code>"unknown"</code>.</p></dd>
 
+
+<dt id="arg-nfeature-col">nfeature_col<a class="anchor" aria-label="anchor" href="#arg-nfeature-col"></a></dt>
+<dd><p>Column containing the number of detected features per dataset</p></dd>
+
+
+<dt id="arg-min-features">min_features<a class="anchor" aria-label="anchor" href="#arg-min-features"></a></dt>
+<dd><p>Minimum number of detected features required.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -101,14 +111,14 @@ Expected character vector: <code>"doublet"</code> and/or <code>"singlet"</code> 
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="get_metadata.html">get_metadata</a></span><span class="op">(</span>cloud_metadata <span class="op">=</span> <span class="va">SAMPLE_DATABASE_URL</span>, cache_directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">keep_quality_cells</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A query:  ?? x 29</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A query:  ?? x 31</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   cell_id dataset_id     sample_id age_days tissue_groups nFeature_expressed_i…¹</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      18 842c6f5d-4a94… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>894</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      19 842c6f5d-4a94… 1119f482…    <span style="text-decoration: underline;">14</span>600 breast                          <span style="text-decoration: underline;">1</span>876</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cell_id dataset_id     sample_id feature_count age_days nFeature_expressed_i…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      14 842c6f5d-4a94… 1119f482…         <span style="text-decoration: underline;">33</span>145    <span style="text-decoration: underline;">14</span>600                   <span style="text-decoration: underline;">1</span>547</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      15 842c6f5d-4a94… 1119f482…         <span style="text-decoration: underline;">33</span>145    <span style="text-decoration: underline;">14</span>600                   <span style="text-decoration: underline;">1</span>701</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​nFeature_expressed_in_sample</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 23 more variables: nCount_RNA &lt;dbl&gt;, empty_droplet &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 25 more variables: nCount_RNA &lt;dbl&gt;, empty_droplet &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cell_type_unified_ensemble &lt;chr&gt;, is_immune &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   subsets_Mito_percent &lt;int&gt;, subsets_Ribo_percent &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   high_mitochondrion &lt;lgl&gt;, high_ribosome &lt;lgl&gt;, alive &lt;lgl&gt;,</span></span>

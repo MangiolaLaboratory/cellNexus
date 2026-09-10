@@ -78,8 +78,8 @@ Human Cell Atlas data." bioRxiv (2026). doi:10.64898/2026.04.14.718336.
 
 ``` r
 get_atlas_versions()
-#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/atlas_versions.parquet to /tmp/Rtmp2jiZKp/atlas_versions.parquet
-#> # A tibble: 6 × 6
+#> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/atlas_versions.parquet to /tmp/RtmpGVsAjc/atlas_versions.parquet
+#> # A tibble: 7 × 6
 #>   atlas_id          census_version change_type description modified_at container
 #>   <chr>             <chr>          <chr>       <chr>       <chr>       <chr>    
 #> 1 cellxgene_2024/0… 01-07-2024     initial     Initial re… 2026-03-26  cellNexu…
@@ -88,4 +88,5 @@ get_atlas_versions()
 #> 4 cellxgene_2024/0… 01-07-2024     bug         Fixed cell… 2026-04-21  cellNexu…
 #> 5 cellxgene_2024/0… 01-07-2024     minor       Updated tr… 2026-05-26  cellNexu…
 #> 6 hca_2024/0.4.1    01-07-2024     minor       Updated th… 2026-07-22  cellNexu…
+#> 7 hca_2024/0.5.0    01-07-2024     minor       Updated tr… 2026-09-09  NA       
 ```

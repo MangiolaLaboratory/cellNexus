@@ -39,10 +39,11 @@ annotation, aggregation and analytical layers for the Human Cell Atlas
 data.” *bioRxiv*.
 [doi:10.64898/2026.04.14.718336](https://doi.org/10.64898/2026.04.14.718336).
 
-    @Article{,
-      title = {cellNexus: Quality control, annotation, aggregation and analytical layers for the Human Cell Atlas data},
-      author = {Stefano Mangiola and Mengyuan Shen and Yingnan Gao and Ning Liu and Dharmesh Bhuva and Michael Milton and Juan Henao and Jared Andrews and Edward Yang and Chen Zhan and Nora Liu and S Si and J. William Hutchison and Haroon M. Shakeel and Martin Morgan and Anthony T. Papenfuss and Julie Iskander and Jose M. Polo},
-      year = {2026},
-      journal = {bioRxiv},
-      doi = {10.64898/2026.04.14.718336},
-    }
+@Article{, title = {cellNexus: Quality control, annotation, aggregation
+and analytical layers for the Human Cell Atlas data}, author = {Stefano
+Mangiola and Mengyuan Shen and Yingnan Gao and Ning Liu and Dharmesh
+Bhuva and Michael Milton and Juan Henao and Jared Andrews and Edward
+Yang and Chen Zhan and Nora Liu and S Si and J. William Hutchison and
+Haroon M. Shakeel and Martin Morgan and Anthony T. Papenfuss and Julie
+Iskander and Jose M. Polo}, year = {2026}, journal = {bioRxiv}, doi =
+{10.64898/2026.04.14.718336}, }

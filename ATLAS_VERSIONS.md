@@ -77,18 +77,7 @@ e.g. `cellxgene_2024/0.1.0`.
 
 When a new data version is released, run the following in R:
 
-``` r
-
-cellNexus:::register_atlas_version(
-  atlas_id       = "cellxgene_YEAR/0.2.0",
-  census_version = "DD-MM-YY",
-  container      = "cellNexus-metadata",
-  change_type    = "minor",
-  description    = "Describe what changed.",
-  credential_id     = Sys.getenv("NECTAR_CREDENTIAL_ID"),
-  credential_secret = Sys.getenv("NECTAR_CREDENTIAL_SECRET")
-)
-```
+`cellNexus``:::``register_atlas_version``(`` `` atlas_id ``=`` ``"cellxgene_YEAR/0.2.0"``,`` `` census_version ``=`` ``"DD-MM-YY"``,`` `` container ``=`` ``"cellNexus-metadata"``,`` `` change_type ``=`` ``"minor"``,`` `` description ``=`` ``"Describe what changed."``,`` `` credential_id ``=`` `[`Sys.getenv`](https://rdrr.io/r/base/Sys.getenv.html)`(``"NECTAR_CREDENTIAL_ID"``)``,`` `` credential_secret ``=`` `[`Sys.getenv`](https://rdrr.io/r/base/Sys.getenv.html)`(``"NECTAR_CREDENTIAL_SECRET"``)`` ``)`
 
 This appends a new entry to the file stored on the Nectar object store
 and refreshes the corresponding data in the cloud.

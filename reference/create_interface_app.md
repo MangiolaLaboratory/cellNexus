@@ -39,7 +39,7 @@ Jared Andrews
 
 ``` r
 get_default_cache_dir()
-#> [1] "/home/runner/.cache/R/cellNexus"
+#> [1] "/github/home/.cache/R/cellNexus"
 if (FALSE) { # interactive()
 # Create the interface app with metadata
 metadata <- get_metadata(cloud_metadata = SAMPLE_DATABASE_URL)

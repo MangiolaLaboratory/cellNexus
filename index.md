@@ -139,7 +139,33 @@ schema](https://github.com/chanzuckerberg/cellxgene-census/blob/main/docs/cellxg
 
 ### R client (`cellNexus`)
 
-[`library`](https://rdrr.io/r/base/library.html)`(`[`cellNexus`](https://github.com/MangiolaLaboratory/cellNexus)`)`` `[`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`` `[`library`](https://rdrr.io/r/base/library.html)`(`[`stringr`](https://stringr.tidyverse.org)`)`` `` ``metadata`` ``<-`` `[`get_metadata`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metadata.md)`(``)`` `` ``metadata`` ``<-`` ``metadata`` ``|>`` `` `[`keep_quality_cells`](https://mangiolalaboratory.github.io/cellNexus/reference/keep_quality_cells.md)`(``)`` `` `` ``census_metadata`` ``<-`` ``cellNexus``:::``get_census_metadata``(``"2024-07-01"``)`` ``con`` ``<-`` ``dbplyr``::`[`remote_con`](https://dbplyr.tidyverse.org/reference/remote_name.html)`(``metadata``)`` ``duckdb``::`[`duckdb_register_arrow`](https://r.duckdb.org/reference/duckdb_register_arrow.html)`(``con``, ``"census_metadata"``, ``census_metadata``)`` `` ``metadata`` ``<-`` ``metadata`` ``|>`` `` ``dplyr``::`[`left_join`](https://dplyr.tidyverse.org/reference/mutate-joins.html)`(`[`tbl`](https://dplyr.tidyverse.org/reference/tbl.html)`(``con``, ``"census_metadata"``)``)`` `` ``query`` ``<-`` ``metadata`` ``|>`` `` `[`filter`](https://dplyr.tidyverse.org/reference/filter.html)`(`` `` ``self_reported_ethnicity`` ``==`` ``"African"``,`` `` `[`str_like`](https://stringr.tidyverse.org/reference/str_like.html)`(``assay``, ``"%10x%"``)``,`` `` ``tissue`` ``==`` ``"lung parenchyma"``,`` `` `[`str_like`](https://stringr.tidyverse.org/reference/str_like.html)`(``cell_type``, ``"%CD4%"``)`` `` ``)`` `` ``sce`` ``<-`` `[`get_single_cell_experiment`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md)`(``query``, assays ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"counts"``, ``"cpm"``)``)`` ``pb`` ``<-`` `[`get_pseudobulk`](https://mangiolalaboratory.github.io/cellNexus/reference/get_pseudobulk.md)`(``query``)`
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`cellNexus`](https://github.com/MangiolaLaboratory/cellNexus)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`stringr`](https://stringr.tidyverse.org)`)`\
+\
+`metadata`` ``<-`` `[`get_metadata`](https://mangiolalaboratory.github.io/cellNexus/reference/get_metadata.md)`(``)`\
+\
+`metadata`` ``<-`` ``metadata`` ``|>`\
+`  `[`keep_quality_cells`](https://mangiolalaboratory.github.io/cellNexus/reference/keep_quality_cells.md)`(``)`\
+`  `\
+`census_metadata`` ``<-`` ``cellNexus``:::``get_census_metadata``(``"2024-07-01"``)`\
+`con`` ``<-`` ``dbplyr``::`[`remote_con`](https://dbplyr.tidyverse.org/reference/remote_name.html)`(``metadata``)`\
+`duckdb``::`[`duckdb_register_arrow`](https://r.duckdb.org/reference/duckdb_register_arrow.html)`(``con``, ``"census_metadata"``, ``census_metadata``)`\
+\
+`metadata`` ``<-`` ``metadata`` ``|>`\
+`  ``dplyr``::`[`left_join`](https://dplyr.tidyverse.org/reference/mutate-joins.html)`(`[`tbl`](https://dplyr.tidyverse.org/reference/tbl.html)`(``con``, ``"census_metadata"``)``)`\
+\
+`query`` ``<-`` ``metadata`` ``|>`\
+`  `[`filter`](https://dplyr.tidyverse.org/reference/filter.html)`(`\
+`    ``self_reported_ethnicity`` ``==`` ``"African"``,`\
+`    `[`str_like`](https://stringr.tidyverse.org/reference/str_like.html)`(``assay``, ``"%10x%"``)``,`\
+`    ``tissue`` ``==`` ``"lung parenchyma"``,`\
+`    `[`str_like`](https://stringr.tidyverse.org/reference/str_like.html)`(``cell_type``, ``"%CD4%"``)`\
+`  ``)`\
+\
+`sce`` ``<-`` `[`get_single_cell_experiment`](https://mangiolalaboratory.github.io/cellNexus/reference/get_single_cell_experiment.md)`(``query``, assays ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"counts"``, ``"cpm"``)``)`\
+`pb`` ``<-`` `[`get_pseudobulk`](https://mangiolalaboratory.github.io/cellNexus/reference/get_pseudobulk.md)`(``query``)`
 
 ### Python client (`cellNexusPy`)
 

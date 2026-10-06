@@ -54,7 +54,7 @@ sce <- get_single_cell_experiment(filtered_metadata)
 
 \strong{Important:} The Human Cell Atlas data accessed through this package
 is subject to its own licensing terms, which differ from the package license.
-The \code{cellNexus} package itself is licensed under GPL-3. However, the
+The \code{cellNexus} package itself is licensed under GPL-2. However, the
 underlying Human Cell Atlas data is typically licensed under Creative Commons
 Attribution (CC-BY) or similar open data licenses as specified by the
 Human Cell Atlas Data Use Agreement. Users should review the specific

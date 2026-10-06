@@ -1,7 +1,7 @@
 Type: Package
 Package: cellNexus
 Title: Queries the Human Cell Atlas
-Version: 0.99.36
+Version: 0.99.37
 Authors@R: c(
     person(
         "Stefano",
@@ -78,8 +78,8 @@ Description: Provides access to a copy of the Human Cell Atlas, but with
     accessed through this package is subject to its own licensing terms (typically
     Creative Commons Attribution or similar open data licenses as specified by the
     Human Cell Atlas Data Use Agreement), which differ from the package license
-    (GPL-3). See the package documentation for details. 
-License: GPL-3
+    (GPL-2). See the package documentation for details. 
+License: GPL-2
 Additional_repositories: https://chanzuckerberg.r-universe.dev
 Depends:
     R (>= 4.5.0)

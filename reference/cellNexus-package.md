@@ -21,11 +21,13 @@ The cellNexus package (invisibly).
 To get started with `cellNexus`, first load the package and retrieve the
 metadata:
 
+
     library(cellNexus)
     metadata <- get_metadata()
 
 Then filter the metadata to find cells of interest and download the
 data:
+
 
     filtered_metadata <- metadata |>
         dplyr::filter(
@@ -57,7 +59,7 @@ data:
 
 **Important:** The Human Cell Atlas data accessed through this package
 is subject to its own licensing terms, which differ from the package
-license. The `cellNexus` package itself is licensed under GPL-3.
+license. The `cellNexus` package itself is licensed under GPL-2.
 However, the underlying Human Cell Atlas data is typically licensed
 under Creative Commons Attribution (CC-BY) or similar open data licenses
 as specified by the Human Cell Atlas Data Use Agreement. Users should

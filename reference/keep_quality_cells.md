@@ -61,7 +61,7 @@ get_metadata(cloud_metadata = SAMPLE_DATABASE_URL, cache_directory = tempdir()) 
   head(2) |>
   keep_quality_cells()
 #> # A query:  ?? x 31
-#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]
+#> # Database: DuckDB 1.5.6 [unknown@Linux 6.17.0-1022-azure:R 4.6.1/:memory:]
 #>   cell_id dataset_id     sample_id feature_count age_days nFeature_expressed_i…¹
 #>     <dbl> <chr>          <chr>             <int>    <int>                  <int>
 #> 1      14 842c6f5d-4a94… 1119f482…         33145    14600                   1547

@@ -41,10 +41,7 @@ jobs:
     - name: Set Windows env vars
       if: runner.os == 'Windows'
       run: echo "_R_CHECK_FORCE_SUGGESTS_=false" >> $env:GITHUB_ENV
-    # Local copy of neurogenomics/rworkflows@6aaf493 (master, 2026-05-06).
-    # The upstream composite always downloads catchpoint/workflow-telemetry-action,
-    # which no longer exists, so that step is omitted here.
-    - uses: ./.github/actions/rworkflows
+    - uses: neurogenomics/rworkflows@master
       with:
         run_bioccheck: ${{ false }}
         run_rcmdcheck: ${{ true }}

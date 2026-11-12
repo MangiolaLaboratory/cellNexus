@@ -95,7 +95,7 @@ meta <- get_metadata(cloud_metadata = cellNexus::SAMPLE_DATABASE_URL) |> head(2)
 #> ℹ Downloading 1 file, totalling 0 GB
 #> ℹ Downloading https://object-store.rc.nectar.org.au/v1/AUTH_06d6e008e3e642da99d806ba3ea629c5/cellNexus-metadata/sample_hca2024_v2.4.0.parquet to /home/runner/.cache/R/cellNexus/sample_hca2024_v2.4.0.parquet
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmpgw4qzk/duckdb
+#> ℹ /tmp/RtmpzxCZd9/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.

@@ -175,20 +175,23 @@ Python support is available in the companion repository:
 [`MangiolaLaboratory/cellNexusPy`](https://github.com/MangiolaLaboratory/cellNexusPy).
 
 ``` python
-from cellnexuspy import get_metadata, join_census_table, keep_quality_cells, get_anndata, get_pseudobulk
+from cellnexuspy import get_metadata, keep_quality_cells, get_census_metadata, get_anndata, get_pseudobulk
 
-conn, table = get_metadata()
-metadata = join_census_table(conn, table)
+conn, metadata = get_metadata()
 metadata = keep_quality_cells(metadata)
 
+census_metadata = get_census_metadata("2024-07-01")
+census_rel = conn.from_df(census_metadata)
+metadata = metadata.join(census_rel, ["dataset_id", "observation_joinid"], how="left")
+
 query = metadata.filter("""
-                     self_reported_ethnicity == 'African' AND
-                     assay LIKE '%10x%' AND
-                     tissue == 'lung parenchyma' AND
-                     cell_type LIKE '%CD4%'
+                     self_reported_ethnicity == 'African American' AND
+                     assay == '10x 3'' v3' AND
+                     tissue == 'breast' AND
+                     cell_type == 'T cell'
                      """)
 
-sce = get_anndata(query, assays=["counts","cpm"])
+sc = get_anndata(query, ["counts","cpm"])
 pb = get_pseudobulk(query)
 
 conn.close()
